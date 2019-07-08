@@ -9,6 +9,9 @@ const create = async gigParams => {
   return _gig.id;
 };
 
+const getAll = async () =>  await Gig.find();
+
 module.exports = {
-  create
+  create,
+  getAll
 };

@@ -7,5 +7,6 @@ mongoose.connect(process.env.MONGODB_URI || config.connectionString, {
 mongoose.Promise = global.Promise;
 
 module.exports = {
+  Gig: require("../gigs/gig.model"),
   User: require("../users/user.model")
 };

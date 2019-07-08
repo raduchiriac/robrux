@@ -2,6 +2,7 @@ var HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   mode: "development",
+  entry: ["./client/index.jsx"],
   resolve: {
     extensions: [".js", ".jsx"]
   },
@@ -15,7 +16,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./src/index.html"
+      template: "./client/index.html"
     })
   ],
   devServer: {

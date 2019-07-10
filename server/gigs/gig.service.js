@@ -1,17 +1,17 @@
-const db = require("../_helpers/db");
-const Gig = db.Gig;
+const Gig = require('../_helpers/db').Gig;
 
-const create = async gigParams => {
+const createGig = async gigParams => {
   const gig = new Gig(gigParams);
-
-  // save gig
-  const _gig = await gig.save();
-  return _gig.id;
+  const gigResult = await gig.save();
+  return gigResult;
 };
 
-const getAll = async () =>  await Gig.find();
+const getAll = async (limit = 0, sort = {}) =>
+  await Gig.find()
+    .sort(sort)
+    .limit(limit);
 
 module.exports = {
-  create,
-  getAll
+  createGig,
+  getAll,
 };

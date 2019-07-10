@@ -1,23 +1,27 @@
-const graphqlHTTP = require("express-graphql");
-const { buildSchema } = require("graphql");
+const graphqlHTTP = require('express-graphql');
+const { GraphQLObjectType, GraphQLSchema } = require('graphql');
 
-const schema = buildSchema(`
-  type Query {
-    gigs: [Gig]
-  }
-  type Gig {
-    _userId: ID,
-    _providerName: String,
-    _rating: Float,
-    title: String,
-    image: [String],
-    price: Int
-  }
-`);
+const gigQueries = require('../gigs/gig.graphql.queries');
+const gigMutations = require('../gigs/gig.graphql.mutations');
+
+const schema = new GraphQLSchema({
+  query: new GraphQLObjectType({
+    name: 'Query',
+    fields: () => ({
+      ...gigQueries,
+    }),
+  }),
+  mutation: new GraphQLObjectType({
+    name: 'Mutation',
+    fields: () => ({
+      ...gigMutations,
+    }),
+  }),
+});
 
 const graph_http = graphqlHTTP({
   schema,
-  graphiql: true
+  graphiql: process.env.NODE_ENV !== 'production',
 });
 
 module.exports = graph_http;

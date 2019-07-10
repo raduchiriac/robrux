@@ -1,13 +1,12 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const config = require("../../config.json");
+const config = require('../../config.json');
 mongoose.connect(process.env.MONGODB_URI || config.connectionString, {
   useCreateIndex: true,
-  useNewUrlParser: true
+  useNewUrlParser: true,
 });
 mongoose.Promise = global.Promise;
 
 module.exports = {
-  Gig: require("../gigs/gig.model"),
-  User: require("../users/user.model")
+  Gig: require('../gigs/gig.model').Gig,
 };

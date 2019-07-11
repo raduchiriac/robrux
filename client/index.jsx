@@ -1,18 +1,13 @@
-import React from "react";
-import { render } from "react-dom";
-import { Provider } from "react-redux";
+import React from 'react';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
 
-import { store } from "./_helpers";
-import { App } from "./App";
-
-// TODO: Remove these lines and files
-// Setup fake backend
-// import { configureFakeBackend } from "./_helpers";
-// configureFakeBackend();
+import { store } from './_helpers';
+import { App } from './App.jsx';
 
 render(
   <Provider store={store}>
     <App />
   </Provider>,
-  document.getElementById("app")
+  document.getElementById('app')
 );

@@ -18,7 +18,7 @@ const GIG_CREATE = () => `
       description: "${faker.lorem.paragraph()}",
       location: {
         address: "${faker.address.streetAddress()}, ${faker.address.country()}",
-        coordinates: [${randomIntFromInterval(4.28, 4.45)}, ${randomIntFromInterval(50.75, 50.91)}]
+        coordinates: [${randomIntFromInterval(50.75, 50.91)}, ${randomIntFromInterval(4.28, 4.45)}]
       },
       tags: [${faker.lorem
         .words()

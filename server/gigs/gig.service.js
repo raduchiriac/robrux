@@ -1,4 +1,4 @@
-const Gig = require('../_helpers/db').Gig;
+const Gig = require('./gig.model').Gig;
 
 const createGig = async gigParams => {
   const gig = new Gig(gigParams);

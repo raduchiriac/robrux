@@ -1,4 +1,5 @@
 ﻿require('rootpath')();
+require('pretty-error').start();
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -12,25 +13,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use('/graphql', require('./_helpers/graphql'));
+// Start MongoDB and Express
+const initDBConnection = require('./_helpers/db').initDBConnection;
+initDBConnection(process.env.MONGO_URI, () => {
+  const port = process.env.NODE_ENV === 'production' ? process.env.PORT || 80 : 4000;
+  app.listen(port, () => {
+    app.use('/graphql', require('./_helpers/graphql'));
+    // const generate_fake_data = require('./faker');
 
-/*
-// Faker ENGINE
-const { GraphQLClient } = require('graphql-request');
-
-const client = new GraphQLClient('http://localhost:4000/graphql', {
-  // headers: {
-  //   Authorization: 'Bearer my-jwt-token',
-  // },
-});
-
-const query = require('./gigs/gig.graphql.strings').GIG_CREATE();
-
-client.request(query).then(data => console.log(data));
-//*/
-
-// start server
-const port = process.env.NODE_ENV === 'production' ? process.env.PORT || 80 : 4000;
-app.listen(port, function() {
-  console.info(`Server listening on port ${port}`);
+    console.info(`Server listening on port ${port}`);
+  });
 });

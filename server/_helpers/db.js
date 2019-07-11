@@ -1,12 +1,20 @@
 const mongoose = require('mongoose');
 
-const config = require('../../config.json');
-mongoose.connect(process.env.MONGODB_URI || config.connectionString, {
-  useCreateIndex: true,
-  useNewUrlParser: true,
-});
-mongoose.Promise = global.Promise;
-
 module.exports = {
-  Gig: require('../gigs/gig.model').Gig,
+  initDBConnection: (MONGODB_URI, callback) => {
+    mongoose.connect(MONGODB_URI, {
+      useCreateIndex: true,
+      useNewUrlParser: true,
+    });
+    var db = mongoose.connection;
+    db.on('error', function(err) {
+      console.error('☆ Failed to connect to database:', err);
+      process.exit(1);
+    });
+
+    db.once('open', function() {
+      console.info('★ Connected to MongoDB');
+      callback();
+    });
+  },
 };

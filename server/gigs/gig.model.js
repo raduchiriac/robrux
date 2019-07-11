@@ -1,16 +1,26 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
+const {
+  GraphQLID,
+  GraphQLNonNull,
+  GraphQLInt,
+  GraphQLString,
+  GraphQLList,
+  GraphQLFloat,
+  GraphQLObjectType,
+  GraphQLInputObjectType,
+} = require('graphql');
 
 // Read more about types here https://mongoosejs.com/docs/schematypes.html
 const schema = new Schema({
-  _userId: { type: ObjectId, unique: true, required: true },
+  _userId: { type: ObjectId, required: true },
   _providerName: { type: String },
   _rating: { type: Number },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date },
   validUntil: { type: Date },
-  title: { type: String },
+  title: { type: String, required: true },
   slug: { type: String },
   description: { type: String },
   description_short: { type: String },
@@ -19,31 +29,60 @@ const schema = new Schema({
   tags: { type: [String] },
   location: {
     address: { type: String },
-    geometry: {
-      type: { type: String, default: 'Point' },
-      coordinates: [[Number]],
-    },
+    coordinates: [Number],
   },
 });
 
 schema.set('toJSON', { virtuals: true });
 
-// GraphQL below
+// GraphQL declarations
+const fields = {
+  _id: { type: GraphQLID },
+  _userId: { type: GraphQLNonNull(GraphQLID) },
+  _providerName: { type: GraphQLString },
+  _rating: { type: GraphQLFloat },
+  title: { type: GraphQLString },
+  description: { type: GraphQLString },
+  images: { type: GraphQLList(GraphQLString) },
+  tags: { type: GraphQLList(GraphQLString) },
+  price: { type: GraphQLInt },
+};
 
-const { GraphQLID, GraphQLInt, GraphQLString, GraphQLObjectType, GraphQLList, GraphQLFloat } = require('graphql');
+const fields_location = {
+  address: { type: GraphQLString },
+  coordinates: { type: GraphQLList(GraphQLFloat) },
+};
+
+// Nested fields needed for Queries
+const GigLocationTypeOutput = new GraphQLObjectType({
+  name: 'GigLocationOutput',
+  fields: fields_location,
+});
+
+// Nested fields needed for Mutations
+const GigLocationTypeInput = new GraphQLInputObjectType({
+  name: 'GigLocationInput',
+  fields: fields_location,
+});
+
+// Used to create the regular Query {} fields
+const fieldsOutput = Object.assign({}, fields, {
+  location: {
+    type: GigLocationTypeOutput,
+  },
+});
+
+// Used to create the Mutation {} fields
+const fieldsInput = Object.assign({}, fields, {
+  location: {
+    type: GigLocationTypeInput,
+  },
+});
 
 const GigType = new GraphQLObjectType({
   name: 'Gig',
   description: 'Gig type definition',
-  fields: {
-    _id: { type: GraphQLID },
-    _userId: { type: GraphQLID },
-    _providerName: { type: GraphQLString },
-    _rating: { type: GraphQLFloat },
-    title: { type: GraphQLString },
-    images: { type: GraphQLList(GraphQLString) },
-    price: { type: GraphQLInt },
-  },
+  fields: fieldsOutput,
 });
 
-module.exports = { Gig: mongoose.model('Gig', schema), GigType };
+module.exports = { Gig: mongoose.model('Gig', schema), GigType, fieldsInput };

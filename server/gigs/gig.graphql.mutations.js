@@ -1,18 +1,11 @@
-const { GraphQLNonNull, GraphQLInputObjectType, GraphQLString } = require('graphql');
+const { GraphQLNonNull, GraphQLInputObjectType } = require('graphql');
 const GigType = require('./gig.model').GigType;
 const GigService = require('./gig.service');
 
 const GigInputType = new GraphQLInputObjectType({
   name: 'GigInputType',
   description: 'Gig payload definition',
-  fields: () => ({
-    _userId: {
-      type: GraphQLNonNull(GraphQLString),
-    },
-    _providerName: {
-      type: GraphQLNonNull(GraphQLString),
-    },
-  }),
+  fields: require('./gig.model').fieldsInput,
 });
 
 const gigMutations = {

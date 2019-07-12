@@ -11,6 +11,7 @@ import BRUX_CENTER from '../_constants/brux_center';
 import STYLES from '../_constants/styles';
 import config from 'config';
 import ApolloClient, { gql } from 'apollo-boost';
+import './Map.css';
 
 // Return map bounds based on list of places
 const getMapBounds = (map, maps, places) => {
@@ -73,7 +74,11 @@ class Map extends Component {
           {
             gigs {
               _id
+              _providerName
+              _rating
               title
+              price
+              images
               location {
                 coordinates
               }
@@ -121,9 +126,21 @@ class Map extends Component {
             </GoogleMap>
           </div>
         )}
+        {places.length &&
+          places.map(place => {
+            return (
+              <div className="pro" key="{place._id}">
+                <h4 class="title">{place.title}</h4>
+                <img class="avatar" src={place.images[0]} alt="" />
+                <p className="name">{place._providerName}</p>
+                <p className="rating">{place._rating}</p>
+                <div className="price">{place.price}€/ora</div>
+              </div>
+            );
+          })}
       </Fragment>
     );
   }
 }
 
-export default Map;
+export { Map };

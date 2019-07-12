@@ -3,7 +3,7 @@ const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   mode: 'development',
-  entry: ['./client/index.jsx'],
+  entry: ['./client/index.js'],
   resolve: {
     extensions: ['.js', '.jsx'],
   },

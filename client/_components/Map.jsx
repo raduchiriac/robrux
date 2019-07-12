@@ -12,11 +12,11 @@ import STYLES from '../_constants/styles';
 import config from 'config';
 import ApolloClient, { gql } from 'apollo-boost';
 
-// Return map bounds based on list of places
-const getMapBounds = (map, maps, places) => {
+// Return map bounds based on list of gigs
+const getMapBounds = (map, maps, gigs) => {
   const bounds = new maps.LatLngBounds();
 
-  places.forEach(place => {
+  gigs.forEach(place => {
     bounds.extend(new maps.LatLng(place.location.coordinates[0], place.location.coordinates[1]));
   });
   return bounds;
@@ -32,17 +32,13 @@ const bindResizeListener = (map, maps, bounds) => {
 };
 
 // Fit map to its bounds after the api is loaded
-const apiIsLoaded = (map, maps, places) => {
-  // Get bounds by our places
-  const bounds = getMapBounds(map, maps, places);
+const apiIsLoaded = (map, maps, gigs) => {
+  // Get bounds by our gigs
+  const bounds = getMapBounds(map, maps, gigs);
   // Fit map to bounds
   map.fitBounds(bounds);
   // Bind the resize listener
   bindResizeListener(map, maps, bounds);
-};
-
-const onChange = (center, zoom, bounds, marginBounds) => {
-  console.log({ center, zoom, bounds, marginBounds });
 };
 
 const createMapOptions = maps => {
@@ -59,19 +55,27 @@ class Map extends Component {
     super(props);
 
     this.state = {
-      places: [],
+      limit: 20,
+      gigs: [],
+      bbox: [],
     };
+    this._fetchGigs = this._fetchGigs.bind(this);
+    this._onChange = this._onChange.bind(this);
+    this._onMarkerClick = this._onMarkerClick.bind(this);
+    this._onChildMouseEnter = this._onChildMouseEnter.bind(this);
+    this._onChildMouseLeave = this._onChildMouseLeave.bind(this);
   }
 
-  componentDidMount() {
+  _fetchGigs() {
     const client = new ApolloClient({
       uri: `${config.WEBPACK_SERVER_URL}/graphql`,
     });
+
     client
       .query({
         query: gql`
           {
-            gigs {
+            gigs(limit: ${this.state.limit}, sort: "-_rating", bbox: ${JSON.stringify(this.state.bbox)}) {
               _id
               title
               location {
@@ -81,46 +85,81 @@ class Map extends Component {
           }
         `,
       })
-      .then(result => this.setState({ places: result.data.gigs }));
+      .then(result => this.setState({ gigs: result.data.gigs }));
   }
 
+  _onChange(center, zoom, bounds, marginBounds) {
+    // NW [lat, long] + NE + SE + SW + NW (again)
+    const bbox = [
+      [marginBounds.nw.lat, marginBounds.nw.lng],
+      [marginBounds.ne.lat, marginBounds.ne.lng],
+      [marginBounds.se.lat, marginBounds.se.lng],
+      [marginBounds.sw.lat, marginBounds.sw.lng],
+      [marginBounds.nw.lat, marginBounds.nw.lng],
+    ];
+    this.setState({ bbox }, () => {
+      this._fetchGigs();
+    });
+  }
+
+  _onMarkerClick(gig) {
+    console.log(gig);
+  }
+
+  _onChildMouseEnter(key, childProps) {
+    console.log(key, childProps);
+    // const index = this.props.markers.findIndex(m => m.get('_id') === markerId);
+    // if (this.props.onMarkerHover) {
+    //   this.props.onMarkerHover(index);
+    // }
+  }
+
+  _onChildMouseLeave() {
+    if (this.props.onMarkerHover) {
+      // this.props.onMarkerHover(-1);
+    }
+  }
+
+  componentDidMount() {}
+
   render() {
-    const { places } = this.state;
+    const { gigs } = this.state;
     return (
       <Fragment>
-        {places.length && (
-          <div
-            className="map-container"
-            style={{
-              borderRadius: '12px',
-              height: '400px',
-              width: 'calc(100% - 20px)',
-              margin: '10px',
-              overflow: 'hidden',
-            }}
+        <div
+          className="map-container"
+          style={{
+            borderRadius: '12px',
+            height: '400px',
+            width: 'calc(100% - 20px)',
+            margin: '10px',
+            overflow: 'hidden',
+          }}
+        >
+          <GoogleMap
+            defaultZoom={13}
+            defaultCenter={BRUX_CENTER}
+            resetBoundsOnResize={true}
+            onChildMouseEnter={this._onChildMouseEnter}
+            onChildMouseLeave={this._onChildMouseLeave}
+            onChange={({ center, zoom, bounds, marginBounds }) => this._onChange(center, zoom, bounds, marginBounds)}
+            yesIWantToUseGoogleMapApiInternals
+            options={createMapOptions}
+            // onGoogleApiLoaded={({ map, maps }) => apiIsLoaded(map, maps, gigs)}
           >
-            <GoogleMap
-              defaultZoom={13}
-              defaultCenter={BRUX_CENTER}
-              resetBoundsOnResize={true}
-              onChange={({ center, zoom, bounds, marginBounds }) => onChange(center, zoom, bounds, marginBounds)}
-              yesIWantToUseGoogleMapApiInternals
-              options={createMapOptions}
-              onGoogleApiLoaded={({ map, maps }) => apiIsLoaded(map, maps, places)}
-            >
-              {places.map(place => {
-                return (
-                  <Marker
-                    key={place._id}
-                    text={place.title}
-                    lat={place.location.coordinates[0]}
-                    lng={place.location.coordinates[1]}
-                  />
-                );
-              })}
-            </GoogleMap>
-          </div>
-        )}
+            {gigs.map(gig => {
+              return (
+                <Marker
+                  key={gig._id}
+                  text={gig.title}
+                  lat={gig.location.coordinates[0]}
+                  lng={gig.location.coordinates[1]}
+                  onClick={() => this._onMarkerClick(gig)}
+                />
+              );
+            })}
+          </GoogleMap>
+        </div>
       </Fragment>
     );
   }

@@ -1,3 +1,4 @@
+// File used for GraphQL mutations (DB Updates)
 const { GraphQLNonNull, GraphQLInputObjectType } = require('graphql');
 const GigType = require('./gig.model').GigType;
 const GigService = require('./gig.service');

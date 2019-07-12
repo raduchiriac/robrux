@@ -1,8 +1,7 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Map } from '../_components';
-import { NavBar } from '../_components';
+import { Map, NavBar, SmallGigsList } from '../_components';
 
 // import { userActions } from '../_actions';
 
@@ -21,6 +20,7 @@ class HomePage extends React.Component {
       <Fragment>
         <NavBar />
         <Map />
+        <SmallGigsList />
       </Fragment>
     );
   }

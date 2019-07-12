@@ -138,9 +138,9 @@ class Map extends Component {
           className="map-container"
           style={{
             borderRadius: '12px',
-            height: '400px',
-            width: 'calc(100% - 20px)',
-            margin: '10px',
+            height: '300px',
+            width: '100%',
+            // margin: '10px',
             overflow: 'hidden',
           }}
         >
@@ -160,6 +160,7 @@ class Map extends Component {
                 <Marker
                   key={gig._id}
                   text={gig.title}
+                  onClick={()=>this._onMarkerClick(gig)}
                   lat={gig.location.coordinates[0]}
                   lng={gig.location.coordinates[1]}
                 />
@@ -171,8 +172,8 @@ class Map extends Component {
           gigs.map(gig => {
             return (
               <div className="pro" key="{gig._id}">
-                <h4 class="title">{gig.title}</h4>
-                <img class="avatar" src={gig.images[0]} alt="" />
+                <h4 className="title">{gig.title}</h4>
+                <img className="avatar" src={gig.images[0]} alt="" />
                 <p className="name">{gig._providerName}</p>
                 <p className="rating">{gig._rating}</p>
                 <div className="price">{gig.price}€/ora</div>
@@ -183,18 +184,5 @@ class Map extends Component {
     );
   }
 }
-
-//
-//     {gigs.map(gig => {
-//       return (
-//         <Marker
-//           key={gig._id}
-//           text={gig.title}
-//           lat={gig.location.coordinates[0]}
-//           lng={gig.location.coordinates[1]}
-//           onClick={() => this._onMarkerClick(gig)}
-//         />
-//       );
-//     })}
 
 export { Map };

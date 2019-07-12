@@ -7,29 +7,20 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
   },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-  },
-  dense: {
-    marginTop: theme.spacing(2),
-  },
-  menu: {
-    width: 200,
-  },
 });
 
 class NavBar extends Component {
   render() {
     return (
-      <div style={{ backgroundColor: '#5E594A', flex: 1 }}>
-        <TextField
+      <div style={{ backgroundColor: '#666', flex: 1 }}>
+        &nbsp;
+        {/* <TextField
           id="outlined-bare"
           defaultValue="Fuzzy search"
           margin="normal"
           variant="outlined"
           inputProps={{ 'aria-label': 'bare' }}
-        />
+        /> */}
       </div>
     );
   }

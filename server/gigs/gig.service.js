@@ -6,10 +6,24 @@ const createGig = async gigParams => {
   return gigResult;
 };
 
-const getAll = async (limit = 0, sort = {}) =>
-  await Gig.find()
+const getAll = async (limit = 0, sort = '', bbox = []) => {
+  let selector = {};
+  if (bbox.length) {
+    selector = {
+      location: {
+        $geoWithin: {
+          $geometry: {
+            type: 'Polygon',
+            coordinates: [bbox],
+          },
+        },
+      },
+    };
+  }
+  return await Gig.find(selector)
     .sort(sort)
     .limit(limit);
+};
 
 module.exports = {
   createGig,

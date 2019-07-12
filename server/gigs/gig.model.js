@@ -29,6 +29,7 @@ const schema = new Schema({
   tags: { type: [String] },
   location: {
     address: { type: String },
+    type: { type: String },
     coordinates: [Number],
   },
 });
@@ -50,6 +51,7 @@ const fields = {
 
 const fields_location = {
   address: { type: GraphQLString },
+  type: { type: GraphQLString },
   coordinates: { type: GraphQLList(GraphQLFloat) },
 };
 

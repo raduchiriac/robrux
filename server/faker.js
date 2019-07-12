@@ -6,7 +6,7 @@ const client = new GraphQLClient('http://localhost:4000/graphql', {
   // },
 });
 
-for (let i = 0; i < 10; i++) {
-  const query = require('./gigs/gig.graphql.strings').GIG_CREATE();
+for (let i = 0; i < 100; i++) {
+  const query = require('./gigs/gig.graphql.strings').GIG_CREATE_FAKE();
   client.request(query).then(data => console.log(data));
 }

@@ -1,14 +1,14 @@
-import { userConstants } from "../_constants";
-import { userService } from "../_services";
-import { alertActions } from "./";
-import { history } from "../_helpers";
+import { userConstants } from '../_constants';
+import { userService } from '../_services';
+import { alertActions } from './';
+import { history } from '../_helpers';
 
 export const userActions = {
   login,
   logout,
   register,
   getAll,
-  delete: _delete
+  delete: _delete,
 };
 
 function login(username, password) {
@@ -18,7 +18,7 @@ function login(username, password) {
     userService.login(username, password).then(
       user => {
         dispatch(success(user));
-        history.push("/");
+        history.push('/');
       },
       error => {
         dispatch(failure(error.toString()));
@@ -50,8 +50,8 @@ function register(user) {
     userService.register(user).then(
       user => {
         dispatch(success());
-        history.push("/login");
-        dispatch(alertActions.success("Registration successful"));
+        history.push('/login');
+        dispatch(alertActions.success('Registration successful'));
       },
       error => {
         dispatch(failure(error.toString()));
@@ -75,12 +75,7 @@ function getAll() {
   return dispatch => {
     dispatch(request());
 
-    userService
-      .getAll()
-      .then(
-        users => dispatch(success(users)),
-        error => dispatch(failure(error.toString()))
-      );
+    userService.getAll().then(users => dispatch(success(users)), error => dispatch(failure(error.toString())));
   };
 
   function request() {
@@ -99,12 +94,7 @@ function _delete(id) {
   return dispatch => {
     dispatch(request(id));
 
-    userService
-      .delete(id)
-      .then(
-        user => dispatch(success(id)),
-        error => dispatch(failure(id, error.toString()))
-      );
+    userService.delete(id).then(user => dispatch(success(id)), error => dispatch(failure(id, error.toString())));
   };
 
   function request(id) {

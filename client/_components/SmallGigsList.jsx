@@ -1,13 +1,9 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 export class SmallGigsList extends Component {
   render() {
-    return (
-      <div>
-        SmallGigsList Container
-      </div>
-    )
+    return <div>SmallGigsList Container</div>;
   }
 }
 
-export default {SmallGigsList}
+export default { SmallGigsList };

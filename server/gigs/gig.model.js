@@ -27,6 +27,7 @@ const schema = new Schema({
   images: { type: [String] },
   price: { type: Number },
   tags: { type: [String] },
+  categories: { type: [String] },
   location: {
     address: { type: String },
     type: { type: String },

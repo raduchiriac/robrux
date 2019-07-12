@@ -51,6 +51,7 @@ const createMapOptions = maps => {
     mapTypeControl: false,
     scrollwheel: false,
     styles: STYLES,
+    clickableIcons: false,
   };
 };
 
@@ -105,7 +106,7 @@ class Map extends Component {
       [marginBounds.sw.lat, marginBounds.sw.lng],
       [marginBounds.nw.lat, marginBounds.nw.lng],
     ];
-    console.log(zoom);
+    // console.log(zoom);
 
     this.setState({ bbox }, () => {
       this._fetchGigs();
@@ -113,11 +114,11 @@ class Map extends Component {
   }
 
   _onMarkerClick(gig) {
-    console.log(gig);
+    // console.log(gig);
   }
 
   _onChildMouseEnter(key, childProps) {
-    console.log(key, childProps);
+    // console.log(key, childProps);
     // const index = this.props.markers.findIndex(m => m.get('_id') === markerId);
     // if (this.props.onMarkerHover) {
     //   this.props.onMarkerHover(index);
@@ -140,7 +141,6 @@ class Map extends Component {
             borderRadius: '12px',
             height: '300px',
             width: '100%',
-            // margin: '10px',
             overflow: 'hidden',
           }}
         >
@@ -160,7 +160,7 @@ class Map extends Component {
                 <Marker
                   key={gig._id}
                   text={gig.title}
-                  onClick={()=>this._onMarkerClick(gig)}
+                  onClick={() => this._onMarkerClick(gig)}
                   lat={gig.location.coordinates[0]}
                   lng={gig.location.coordinates[1]}
                 />

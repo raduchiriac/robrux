@@ -1,0 +1,10 @@
+{
+  "[javascript]": {
+    "editor.formatOnSave": false
+  },
+  "eslint.autoFixOnSave": true,
+  "prettier.disableLanguages": [
+    "js"
+  ],
+  "eslint.enable": true
+}

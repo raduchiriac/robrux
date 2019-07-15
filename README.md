@@ -14,3 +14,7 @@
 - [ ] Payment System
 - [ ] Category collection
 - [ ] Mailing system
+- [ ] Roles management
+- [ ]
+- [ ]
+- [ ]

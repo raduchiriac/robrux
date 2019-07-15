@@ -48,6 +48,7 @@ const createMapOptions = maps => {
     // minZoom: 9,
     // minZoomOverride: true,
     panControl: false,
+    fullscreenControl: false,
     mapTypeControl: false,
     scrollwheel: false,
     styles: STYLES,

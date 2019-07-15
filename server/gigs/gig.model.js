@@ -27,6 +27,7 @@ const schema = new Schema({
   images: { type: [String] },
   price: { type: Number },
   tags: { type: [String] },
+  status: { type: [String], required: true },
   categories: { type: [String] },
   location: {
     address: { type: String },
@@ -35,7 +36,24 @@ const schema = new Schema({
   },
 });
 
+const mongoose_fuzzy_searching = require('mongoose-fuzzy-searching');
 schema.set('toJSON', { virtuals: true });
+schema.plugin(mongoose_fuzzy_searching, {
+  fields: [
+    {
+      name: 'title',
+      minSize: 4,
+    },
+    {
+      name: 'description',
+      minSize: 4,
+    },
+  ],
+});
+const Gig = mongoose.model('Gig', schema);
+Gig.fuzzySearch('face')
+  .then(data => data.map(d => console.log(d.title)))
+  .catch(err => console.error(err));
 
 // GraphQL declarations
 const fields = {
@@ -88,4 +106,4 @@ const GigType = new GraphQLObjectType({
   fields: fieldsOutput,
 });
 
-module.exports = { Gig: mongoose.model('Gig', schema), GigType, fieldsInput };
+module.exports = { Gig, GigType, schema, fieldsInput };

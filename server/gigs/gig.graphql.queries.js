@@ -17,6 +17,16 @@ const gigQueries = {
       return await GigService.getAll(limit, sort, bbox);
     },
   },
+  search: {
+    type: GraphQLList(GigType),
+    args: {
+      string: { type: GraphQLString },
+    },
+    resolve: async (root, args, context, info) => {
+      const { string } = args;
+      return await GigService.fuzzySearch(string);
+    },
+  },
 };
 
 module.exports = gigQueries;

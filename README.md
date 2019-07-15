@@ -9,7 +9,7 @@
 - [ ] My profile Page
 - [ ] My-Gig Page
 - [ ] Image Upload
-- [ ] Fuzzy Search (title, description, tags)
+- [x] Fuzzy Search (title, description, tags)
 - [ ] Rating system
 - [ ] Payment System
 - [ ] Category collection

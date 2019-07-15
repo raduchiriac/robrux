@@ -16,7 +16,7 @@ const {
 const schema = new Schema({
   _userId: { type: ObjectId, required: true },
   _providerName: { type: String },
-  _rating: { type: Number },
+  _rating: { type: Number, index: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date },
   validUntil: { type: Date },
@@ -26,34 +26,34 @@ const schema = new Schema({
   description_short: { type: String },
   images: { type: [String] },
   price: { type: Number },
+  status: { type: String, required: true, enum: ['processing', 'valid', 'rejected', 'expired'], index: true },
+  statusInformation: { type: [String] },
   tags: { type: [String] },
-  status: { type: [String], required: true },
   categories: { type: [String] },
   location: {
     address: { type: String },
-    type: { type: String },
-    coordinates: [Number],
+    type: { type: String, default: 'Point' },
+    coordinates: { type: [Number] },
   },
 });
 
-const mongoose_fuzzy_searching = require('mongoose-fuzzy-searching');
-schema.set('toJSON', { virtuals: true });
-schema.plugin(mongoose_fuzzy_searching, {
-  fields: [
-    {
-      name: 'title',
-      minSize: 4,
+// Create "text" Indexes
+schema.index(
+  {
+    title: 'text',
+    description: 'text',
+    tags: 'text',
+  },
+  {
+    weights: {
+      title: 5,
+      description: 1,
+      tags: 6,
     },
-    {
-      name: 'description',
-      minSize: 4,
-    },
-  ],
-});
+  }
+);
+
 const Gig = mongoose.model('Gig', schema);
-Gig.fuzzySearch('face')
-  .then(data => data.map(d => console.log(d.title)))
-  .catch(err => console.error(err));
 
 // GraphQL declarations
 const fields = {
@@ -65,6 +65,7 @@ const fields = {
   description: { type: GraphQLString },
   images: { type: GraphQLList(GraphQLString) },
   tags: { type: GraphQLList(GraphQLString) },
+  status: { type: GraphQLString },
   price: { type: GraphQLInt },
 };
 
@@ -106,4 +107,4 @@ const GigType = new GraphQLObjectType({
   fields: fieldsOutput,
 });
 
-module.exports = { Gig, GigType, schema, fieldsInput };
+module.exports = { Gig, GigType, fieldsInput };

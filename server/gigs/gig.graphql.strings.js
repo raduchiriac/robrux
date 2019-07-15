@@ -21,11 +21,12 @@ const GIG_CREATE_FAKE = () => `
         address: "${faker.address.streetAddress()}, ${faker.address.country()}",
         coordinates: [${randomIntFromInterval(50.75, 50.91)}, ${randomIntFromInterval(4.28, 4.45)}]
       },
+      status: "valid",
       tags: [${faker.lorem
-    .words()
-    .split(' ')
-    .map(w => `"${w}"`)
-    .join(', ')}],
+        .words()
+        .split(' ')
+        .map(w => `"${w}"`)
+        .join(', ')}],
       price: ${Math.ceil(Math.random() * 5 + 1) * 10}
     }) {
       _id
@@ -33,16 +34,4 @@ const GIG_CREATE_FAKE = () => `
   }
 `;
 
-const GIG_GET_WITHIN_BOUNDS = () => `
-  {
-    gigs {
-      _id
-      title
-      location {
-        coordinates
-      }
-    }
-  }
-`;
-
-module.exports = { GIG_CREATE_FAKE, GIG_GET_WITHIN_BOUNDS };
+module.exports = { GIG_CREATE_FAKE };

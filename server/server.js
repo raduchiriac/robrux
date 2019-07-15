@@ -19,7 +19,7 @@ initDBConnection(process.env.MONGO_URI, () => {
   const port = process.env.NODE_ENV === 'production' ? process.env.PORT || 80 : 4000;
   app.listen(port, () => {
     app.use('/graphql', require('./_helpers/graphql'));
-    if (false) {
+    if (0) {
       const generate_fake_data = require('./faker');
     }
 

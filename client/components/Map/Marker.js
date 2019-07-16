@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import THEME from '../_constants/theme';
+import THEME from '../../__TEMP/_constants/theme';
 
 const Wrapper = styled.div`
   transition: all 0.3s ease;

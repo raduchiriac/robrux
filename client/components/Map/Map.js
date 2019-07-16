@@ -7,11 +7,26 @@ import Marker from './Marker';
 import GoogleMap from './GoogleMap';
 
 // consts
-import BRUX_CENTER from '../_constants/brux_center';
-import STYLES from '../_constants/styles';
+import BRUX_CENTER from '../../__TEMP/_constants/brux_center';
+import STYLES from '../../__TEMP/_constants/styles';
 import config from 'config';
 import ApolloClient, { gql } from 'apollo-boost';
-import './Map.css';
+
+import { withStyles, makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    height: 140,
+    width: 100,
+  },
+  control: {
+    padding: theme.spacing(2),
+  },
+}));
 
 // Return map bounds based on list of gigs
 const getMapBounds = (map, maps, gigs) => {
@@ -134,8 +149,9 @@ class Map extends Component {
 
   render() {
     const { gigs } = this.state;
+    const classes = useStyles();
     return (
-      <Fragment>
+      <Grid container className={classes.root} spacing={2}>
         <div
           className="map-container"
           style={{
@@ -181,9 +197,14 @@ class Map extends Component {
               </div>
             );
           })}
-      </Fragment>
+      </Grid>
     );
   }
 }
 
-export { Map };
+// Map.propTypes = {
+//   classes: PropTypes.object.isRequired,
+// };
+
+// export default withStyles(useStyles)(Map);
+export default Map;

@@ -1,9 +1,23 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Map, NavBar, SmallGigsList } from '../_components';
+import Map, { NavBar, SmallGigsList } from '../__TEMP/_components';
+import gql from 'graphql-tag';
 
-// import { userActions } from '../_actions';
+const searchGigs = string => {
+  const gql = `
+  {
+    search(string: "${string}") {
+      title
+      description
+      tags
+      location {
+        coordinates
+      }
+    }
+  }
+  `;
+};
 
 class HomePage extends React.Component {
   componentDidMount() {

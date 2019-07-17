@@ -1,21 +1,21 @@
 import React, { Component, Fragment } from 'react';
+import config from 'config';
 
-// components:
+import GoogleMap from './GoogleMap';
 import Marker from './Marker';
 
-// examples:
-import GoogleMap from './GoogleMap';
-
-// consts
 import BRUX_CENTER from '../../__TEMP/_constants/brux_center';
 import STYLES from '../../__TEMP/_constants/styles';
-import config from 'config';
 import ApolloClient, { gql } from 'apollo-boost';
 
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
+const hover = {
+  transform: 'scale(1.06)',
+  backgroundColor: '#DDD',
+};
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -24,7 +24,7 @@ const styles = theme => ({
     borderRadius: `${theme.shape.borderRadius * 3}px`,
     height: '300px',
     margin: theme.spacing(1),
-    boxShadow: theme.shadows[2],
+    boxShadow: theme.shadows[1],
     overflow: 'hidden',
   },
   gigslist: {
@@ -36,13 +36,20 @@ const styles = theme => ({
     backgroundColor: '#EEE',
     position: 'relative',
     display: 'flex',
+    cursor: 'pointer',
+    minHeight: '130px',
+    transition: 'all 0.3s ease',
+    boxShadow: theme.shadows[1],
+    backgroundColor: theme.palette.grey['200'],
+    '&:hover': hover,
   },
   title: { fontWeight: 'bold' },
   name: {
     color: 'gray',
   },
   rating: {
-    color: 'darkorange',
+    color: '#db8555',
+    fontWeight: 'bold',
     marginBottom: theme.spacing(2),
   },
   price: {
@@ -99,8 +106,8 @@ const apiIsLoaded = (map, maps, gigs) => {
 const createMapOptions = maps => {
   return {
     maxZoom: 15,
-    // minZoom: 9,
-    // minZoomOverride: true,
+    minZoom: 9,
+    minZoomOverride: true,
     panControl: false,
     fullscreenControl: false,
     mapTypeControl: false,
@@ -118,12 +125,16 @@ class Map extends Component {
       limit: 20,
       gigs: [],
       bbox: [],
+      hoveredGig: null,
+      hoveredIndex: null,
     };
     this._fetchGigs = this._fetchGigs.bind(this);
     this._onChange = this._onChange.bind(this);
     this._onMarkerClick = this._onMarkerClick.bind(this);
     this._onChildMouseEnter = this._onChildMouseEnter.bind(this);
     this._onChildMouseLeave = this._onChildMouseLeave.bind(this);
+    this._onPaperEnter = this._onPaperEnter.bind(this);
+    this._onPaperLeave = this._onPaperLeave.bind(this);
   }
 
   _fetchGigs() {
@@ -161,7 +172,6 @@ class Map extends Component {
       [marginBounds.sw.lat, marginBounds.sw.lng],
       [marginBounds.nw.lat, marginBounds.nw.lng],
     ];
-    // console.log(zoom);
 
     this.setState({ bbox }, () => {
       this._fetchGigs();
@@ -169,21 +179,24 @@ class Map extends Component {
   }
 
   _onMarkerClick(gig) {
-    // console.log(gig);
+    console.log('You clicked a marker:', gig._id);
   }
 
   _onChildMouseEnter(key, childProps) {
-    // console.log(key, childProps);
-    // const index = this.props.markers.findIndex(m => m.get('_id') === markerId);
-    // if (this.props.onMarkerHover) {
-    //   this.props.onMarkerHover(index);
-    // }
+    const index = this.state.gigs.findIndex(m => m._id === key);
+    this.setState({ hoveredIndex: index });
   }
 
   _onChildMouseLeave() {
-    if (this.props.onMarkerHover) {
-      // this.props.onMarkerHover(-1);
-    }
+    this.setState({ hoveredIndex: null });
+  }
+
+  _onPaperEnter(gig) {
+    this.setState({ hoveredGig: gig._id });
+  }
+
+  _onPaperLeave() {
+    this.setState({ hoveredGig: null });
   }
 
   render() {
@@ -208,6 +221,8 @@ class Map extends Component {
                 <Marker
                   key={gig._id}
                   text={gig.title}
+                  id={gig._id}
+                  hovered={this.state.hoveredGig === gig._id}
                   onClick={() => this._onMarkerClick(gig)}
                   lat={gig.location.coordinates[0]}
                   lng={gig.location.coordinates[1]}
@@ -216,21 +231,24 @@ class Map extends Component {
             })}
           </GoogleMap>
         </div>
-        {gigs.length && (
+        {!!gigs.length && (
           <Grid container spacing={2} className={classes.gigslist}>
-            {gigs.map(gig => {
+            {gigs.map((gig, index) => {
               return (
                 <Grid item xs={6} sm={4} md={3} key={gig._id}>
-                  <Paper className={classes.pro}>
+                  <Paper
+                    className={classes.pro}
+                    style={this.state.hoveredIndex === index ? hover : {}}
+                    onMouseEnter={() => this._onPaperEnter(gig)}
+                    onMouseLeave={() => this._onPaperLeave()}
+                  >
                     <div className={classes.avatar}>
                       <img className={classes.avatarImg} src={gig.images[0]} alt={gig._providerName} />
                     </div>
                     <div className={classes.details}>
                       <p className={classes.title}>{gig.title}</p>
                       <p className={classes.name}>{gig._providerName}</p>
-                      <p className={classes.rating}>
-                        <label>★ {Math.round(gig._rating * 100) / 100}</label>
-                      </p>
+                      <p className={classes.rating}>★ {Math.round(gig._rating * 100) / 100}</p>
                       <div className={classes.price}>{gig.price}€/h</div>
                     </div>
                   </Paper>
@@ -249,4 +267,3 @@ class Map extends Component {
 // };
 
 export default withStyles(styles)(Map);
-// export default Map;

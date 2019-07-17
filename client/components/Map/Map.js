@@ -21,19 +21,48 @@ const styles = theme => ({
     flexGrow: 1,
   },
   mapContainer: {
-    borderRadius: '12px',
+    borderRadius: `${theme.shape.borderRadius * 3}px`,
     height: '300px',
-    margin: '10px',
+    margin: theme.spacing(1),
+    boxShadow: theme.shadows[2],
     overflow: 'hidden',
+  },
+  gigslist: {
+    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
   },
   pro: {
     padding: theme.spacing(2),
     color: theme.palette.alternateColor,
     backgroundColor: '#EEE',
+    position: 'relative',
+    display: 'flex',
+  },
+  title: { fontWeight: 'bold' },
+  name: {
+    color: 'gray',
+  },
+  rating: {
+    color: 'darkorange',
+    marginBottom: theme.spacing(2),
+  },
+  price: {
+    position: 'absolute',
+    background: theme.palette.alternateColor,
+    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
+    bottom: 0,
+    right: 0,
+    color: 'white',
+    borderRadius: `0 0 ${theme.shape.borderRadius}px 0`,
+  },
+  details: {
+    flexGrow: 1,
   },
   avatar: {
-    width: 80,
-    height: 80,
+    width: '64px',
+    height: '64px',
+    marginRight: theme.spacing(1),
+  },
+  avatarImg: {
     borderRadius: '50%',
   },
 });
@@ -188,16 +217,22 @@ class Map extends Component {
           </GoogleMap>
         </div>
         {gigs.length && (
-          <Grid container spacing={2}>
+          <Grid container spacing={2} className={classes.gigslist}>
             {gigs.map(gig => {
               return (
-                <Grid item xs={6} sm={4} md={3}>
+                <Grid item xs={6} sm={4} md={3} key={gig._id}>
                   <Paper className={classes.pro}>
-                    <p className="title">{gig.title}</p>
-                    <img className={classes.avatar} src={gig.images[0]} alt="" />
-                    <p className="name">{gig._providerName}</p>
-                    <p className="rating">{gig._rating}</p>
-                    <div className="price">{gig.price}€/ora</div>
+                    <div className={classes.avatar}>
+                      <img className={classes.avatarImg} src={gig.images[0]} alt={gig._providerName} />
+                    </div>
+                    <div className={classes.details}>
+                      <p className={classes.title}>{gig.title}</p>
+                      <p className={classes.name}>{gig._providerName}</p>
+                      <p className={classes.rating}>
+                        <label>★ {Math.round(gig._rating * 100) / 100}</label>
+                      </p>
+                      <div className={classes.price}>{gig.price}€/h</div>
+                    </div>
                   </Paper>
                 </Grid>
               );
@@ -207,13 +242,6 @@ class Map extends Component {
       </div>
     );
   }
-}
-
-{
-  /* <Grid container spacing={4} direction="row" justify="center" alignItems="center">
-
-
-      </Grid> */
 }
 
 // Map.propTypes = {

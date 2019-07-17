@@ -11,6 +11,9 @@ import ApolloClient, { gql } from 'apollo-boost';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import Back from '@material-ui/icons/KeyboardArrowLeft';
+import clsx from 'clsx';
 
 const hover = {
   transform: 'scale(1.06)',
@@ -19,15 +22,35 @@ const hover = {
 const styles = theme => ({
   root: {
     flexGrow: 1,
+    display: 'flex',
+    transition: 'all 0.3s ease',
+    flexDirection: 'column',
+  },
+  rootProduct: {
+    transition: 'all 0.3s ease',
+    flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'row',
   },
   mapContainer: {
     borderRadius: `${theme.shape.borderRadius * 3}px`,
     height: '300px',
+    transition: 'all 0.3s ease',
     margin: theme.spacing(1),
     boxShadow: theme.shadows[1],
     overflow: 'hidden',
   },
+  mapContainerProduct: {
+    boxShadow: theme.shadows[1],
+    transition: 'all 0.3s ease',
+    margin: theme.spacing(1),
+    overflow: 'hidden',
+    borderRadius: `${theme.shape.borderRadius * 3}px`,
+    flex: '0 1 30%',
+    height: `calc(100vh - ${theme.spacing(2)}px)`,
+  },
   gigslist: {
+    flex: 1,
     padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
   },
   pro: {
@@ -37,7 +60,8 @@ const styles = theme => ({
     position: 'relative',
     display: 'flex',
     cursor: 'pointer',
-    minHeight: '130px',
+    minHeight: '140px',
+    maxHeight: '140px',
     transition: 'all 0.3s ease',
     boxShadow: theme.shadows[1],
     backgroundColor: theme.palette.grey['200'],
@@ -50,7 +74,14 @@ const styles = theme => ({
   rating: {
     color: '#db8555',
     fontWeight: 'bold',
-    marginBottom: theme.spacing(2),
+    bottom: 0,
+    background: '#FFE',
+    position: 'absolute',
+    padding: theme.spacing(1),
+    left: 0,
+    right: 0,
+    borderRadius: `0 0 0 ${theme.shape.borderRadius}px`,
+    textIndent: '10px',
   },
   price: {
     position: 'absolute',
@@ -93,16 +124,6 @@ const bindResizeListener = (map, maps, bounds) => {
   });
 };
 
-// Fit map to its bounds after the api is loaded
-const apiIsLoaded = (map, maps, gigs) => {
-  // Get bounds by our gigs
-  const bounds = getMapBounds(map, maps, gigs);
-  // Fit map to bounds
-  map.fitBounds(bounds);
-  // Bind the resize listener
-  bindResizeListener(map, maps, bounds);
-};
-
 const createMapOptions = maps => {
   return {
     maxZoom: 15,
@@ -127,9 +148,11 @@ class Map extends Component {
       bbox: [],
       hoveredGig: null,
       hoveredIndex: null,
+      autoRefresh: true,
     };
     this._fetchGigs = this._fetchGigs.bind(this);
     this._onChange = this._onChange.bind(this);
+    this._apiIsLoaded = this._apiIsLoaded.bind(this);
     this._onMarkerClick = this._onMarkerClick.bind(this);
     this._onChildMouseEnter = this._onChildMouseEnter.bind(this);
     this._onChildMouseLeave = this._onChildMouseLeave.bind(this);
@@ -137,7 +160,17 @@ class Map extends Component {
     this._onPaperLeave = this._onPaperLeave.bind(this);
   }
 
+  _apiIsLoaded(map, maps) {
+    this.setState({
+      maps,
+      map,
+    });
+    // Bind the resize listener
+    // bindResizeListener(map, maps, bounds);
+  }
+
   _fetchGigs() {
+    // TODO: Initiate once
     const client = new ApolloClient({
       uri: `${config.WEBPACK_SERVER_URL}/graphql`,
     });
@@ -174,7 +207,9 @@ class Map extends Component {
     ];
 
     this.setState({ bbox }, () => {
-      this._fetchGigs();
+      if (this.state.autoRefresh) {
+        this._fetchGigs();
+      }
     });
   }
 
@@ -203,8 +238,8 @@ class Map extends Component {
     const { gigs } = this.state;
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
-        <div className={classes.mapContainer}>
+      <div className={this.state.product ? classes.rootProduct : classes.root}>
+        <div className={this.state.product ? classes.mapContainerProduct : classes.mapContainer}>
           <GoogleMap
             defaultZoom={13}
             defaultCenter={BRUX_CENTER}
@@ -214,7 +249,7 @@ class Map extends Component {
             onChange={({ center, zoom, bounds, marginBounds }) => this._onChange(center, zoom, bounds, marginBounds)}
             yesIWantToUseGoogleMapApiInternals
             options={createMapOptions}
-            // onGoogleApiLoaded={({ map, maps }) => apiIsLoaded(map, maps, gigs)}
+            onGoogleApiLoaded={({ map, maps }) => this._apiIsLoaded(map, maps)}
           >
             {gigs.map(gig => {
               return (
@@ -231,7 +266,7 @@ class Map extends Component {
             })}
           </GoogleMap>
         </div>
-        {!!gigs.length && (
+        {!!gigs.length && !this.state.product && (
           <Grid container spacing={2} className={classes.gigslist}>
             {gigs.map((gig, index) => {
               return (
@@ -241,6 +276,21 @@ class Map extends Component {
                     style={this.state.hoveredIndex === index ? hover : {}}
                     onMouseEnter={() => this._onPaperEnter(gig)}
                     onMouseLeave={() => this._onPaperLeave()}
+                    onClick={() => {
+                      this.setState(
+                        {
+                          gigs: this.state.gigs.filter(g => g._id === gig._id),
+                          product: true,
+                          autoRefresh: false,
+                        },
+                        () => {
+                          // Get bounds by our gigs
+                          const bounds = getMapBounds(this.state.map, this.state.maps, this.state.gigs);
+                          // Fit map to bounds
+                          this.state.map.fitBounds(bounds);
+                        }
+                      );
+                    }}
                   >
                     <div className={classes.avatar}>
                       <img className={classes.avatarImg} src={gig.images[0]} alt={gig._providerName} />
@@ -256,6 +306,21 @@ class Map extends Component {
               );
             })}
           </Grid>
+        )}
+        {this.state.product && (
+          <div>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                this.setState({ product: false, autoRefresh: true, hoveredGig: null, hoveredIndex: null });
+              }}
+            >
+              <Back />
+              Înapoi
+            </Button>
+            <h2>{this.state.gigs[0].title}</h2>
+          </div>
         )}
       </div>
     );

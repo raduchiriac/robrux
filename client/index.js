@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ApolloProvider } from 'react-apollo';
-import SettingsProvider from './context/Settings/SettingsProvider';
+import client from './_helpers/apollo';
+import SettingsProvider from './_helpers/context/Settings/SettingsProvider';
 import App from './App.js';
-import client from './_apollo';
 
 ReactDOM.render(
   <ApolloProvider client={client}>

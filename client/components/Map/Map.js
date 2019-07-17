@@ -14,19 +14,29 @@ import ApolloClient, { gql } from 'apollo-boost';
 
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     flexGrow: 1,
   },
-  paper: {
-    height: 140,
-    width: 100,
+  mapContainer: {
+    borderRadius: '12px',
+    height: '300px',
+    margin: '10px',
+    overflow: 'hidden',
   },
-  control: {
+  pro: {
     padding: theme.spacing(2),
+    color: theme.palette.alternateColor,
+    backgroundColor: '#EEE',
   },
-}));
+  avatar: {
+    width: 80,
+    height: 80,
+    borderRadius: '50%',
+  },
+});
 
 // Return map bounds based on list of gigs
 const getMapBounds = (map, maps, gigs) => {
@@ -149,18 +159,10 @@ class Map extends Component {
 
   render() {
     const { gigs } = this.state;
-    const classes = useStyles();
+    const { classes } = this.props;
     return (
-      <Grid container className={classes.root} spacing={2}>
-        <div
-          className="map-container"
-          style={{
-            borderRadius: '12px',
-            height: '300px',
-            width: '100%',
-            overflow: 'hidden',
-          }}
-        >
+      <div className={classes.root}>
+        <div className={classes.mapContainer}>
           <GoogleMap
             defaultZoom={13}
             defaultCenter={BRUX_CENTER}
@@ -185,26 +187,38 @@ class Map extends Component {
             })}
           </GoogleMap>
         </div>
-        {gigs.length &&
-          gigs.map(gig => {
-            return (
-              <div className="pro" key="{gig._id}">
-                <h4 className="title">{gig.title}</h4>
-                <img className="avatar" src={gig.images[0]} alt="" />
-                <p className="name">{gig._providerName}</p>
-                <p className="rating">{gig._rating}</p>
-                <div className="price">{gig.price}€/ora</div>
-              </div>
-            );
-          })}
-      </Grid>
+        {gigs.length && (
+          <Grid container spacing={2}>
+            {gigs.map(gig => {
+              return (
+                <Grid item xs={6} sm={4} md={3}>
+                  <Paper className={classes.pro}>
+                    <p className="title">{gig.title}</p>
+                    <img className={classes.avatar} src={gig.images[0]} alt="" />
+                    <p className="name">{gig._providerName}</p>
+                    <p className="rating">{gig._rating}</p>
+                    <div className="price">{gig.price}€/ora</div>
+                  </Paper>
+                </Grid>
+              );
+            })}
+          </Grid>
+        )}
+      </div>
     );
   }
+}
+
+{
+  /* <Grid container spacing={4} direction="row" justify="center" alignItems="center">
+
+
+      </Grid> */
 }
 
 // Map.propTypes = {
 //   classes: PropTypes.object.isRequired,
 // };
 
-// export default withStyles(useStyles)(Map);
-export default Map;
+export default withStyles(styles)(Map);
+// export default Map;

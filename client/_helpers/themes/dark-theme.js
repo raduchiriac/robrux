@@ -1,6 +1,6 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
-const theme = createMuiTheme({
+export const DarkTheme = createMuiTheme({
   typography: {
     useNextVariants: true,
   },
@@ -8,5 +8,3 @@ const theme = createMuiTheme({
     type: 'dark',
   },
 });
-
-export default theme;

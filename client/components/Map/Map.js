@@ -41,13 +41,14 @@ const styles = theme => ({
     overflow: 'hidden',
   },
   mapContainerProduct: {
-    boxShadow: theme.shadows[1],
+    boxShadow: 'none',
     transition: 'all 0.3s ease',
-    margin: theme.spacing(1),
+    margin: 0,
+    marginRight: theme.spacing(1),
     overflow: 'hidden',
-    borderRadius: `${theme.shape.borderRadius * 3}px`,
+    borderRadius: 0,
     flex: '0 1 30%',
-    height: `calc(100vh - ${theme.spacing(2)}px)`,
+    height: '100vh',
   },
   gigslist: {
     flex: 1,

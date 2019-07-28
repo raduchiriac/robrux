@@ -1,6 +1,6 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
-export const DarkTheme = createMuiTheme({
+export const MobileTheme = createMuiTheme({
   typography: {
     useNextVariants: true,
   },

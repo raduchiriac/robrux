@@ -6,11 +6,7 @@ import Map from '../components/Map/Map';
 
 class HomePage extends Component {
   render() {
-    return (
-      <Grid container>
-        <Map />
-      </Grid>
-    );
+    return <Grid container>{/* <Map /> */}</Grid>;
   }
 }
 

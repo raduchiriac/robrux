@@ -12,8 +12,8 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   output: {
-    path: path.join(__dirname, 'public'),
     filename: 'bundle.js',
+    path: path.join(__dirname, 'public'),
     publicPath: '/',
   },
   module: {
@@ -36,7 +36,6 @@ module.exports = {
   ],
   devServer: {
     historyApiFallback: true,
-    contentBase: path.join(__dirname, 'public'),
     filename: 'bundle.js',
     port: dev_client_port,
   },

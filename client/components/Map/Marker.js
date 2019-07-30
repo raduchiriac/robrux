@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import THEME from '../../__TEMP/_constants/theme';
+import COLOR_PALETTE from '../../_helpers/constants/COLOR_PALETTE';
 import { withStyles } from '@material-ui/core/styles';
 
 const hover = { transform: 'scale(2.5)', backgroundColor: '#000', borderWidth: '2px', zIndex: 1 };
@@ -12,7 +12,7 @@ const styles = theme => ({
     left: '50%',
     width: '18px',
     height: '18px',
-    backgroundColor: THEME.alternateColor,
+    backgroundColor: COLOR_PALETTE.alternateColor,
     border: '3px solid #fff',
     boxShadow: '2px 2px 2px 0px rgba(0, 0, 0, 0.3)',
     borderRadius: '50%',

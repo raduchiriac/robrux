@@ -1,15 +1,16 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 
+const devMode = process.env.NODE_ENV !== 'production';
 const dev_server_port = 4000;
 const dev_client_port = 8080;
 
 module.exports = {
-  mode: 'development',
   entry: ['./client/index.js'],
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.css', '.scss'],
   },
   output: {
     filename: 'bundle.js',
@@ -19,12 +20,22 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.(js|jsx)$/,
+        exclude: /(node_modules|server)/,
         loader: 'babel-loader',
       },
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: devMode,
+            },
+          },
+          'css-loader',
+          'sass-loader',
+        ],
       },
     ],
   },
@@ -32,6 +43,12 @@ module.exports = {
     new Dotenv(),
     new HtmlWebpackPlugin({
       template: './client/index.html',
+    }),
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: devMode ? '[name].css' : '[name].[hash].css',
+      chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
     }),
   ],
   devServer: {

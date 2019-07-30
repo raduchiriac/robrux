@@ -1,19 +1,18 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
+import ApolloClient, { gql } from 'apollo-boost';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import Back from '@material-ui/icons/KeyboardArrowLeft';
+import clsx from 'clsx';
 import config from 'config';
 
 import GoogleMap from './GoogleMap';
 import Marker from './Marker';
+import SmallGig from './SmallGig';
 
-import BRUX_CENTER from '../../__TEMP/_constants/brux_center';
-import STYLES from '../../__TEMP/_constants/styles';
-import ApolloClient, { gql } from 'apollo-boost';
-
-import { withStyles, makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
-import Back from '@material-ui/icons/KeyboardArrowLeft';
-import clsx from 'clsx';
+import BRUX_CENTER from '../../_helpers/constants/BRUX_CENTER';
+import GOOGLE_MAP_SKIN from '../../_helpers/constants/GOOGLE_MAP_SKIN';
 
 const hover = {
   transform: 'scale(1.06)',
@@ -134,7 +133,7 @@ const createMapOptions = maps => {
     fullscreenControl: false,
     mapTypeControl: false,
     scrollwheel: false,
-    styles: STYLES,
+    styles: GOOGLE_MAP_SKIN,
     clickableIcons: false,
   };
 };
@@ -272,37 +271,7 @@ class Map extends Component {
             {gigs.map((gig, index) => {
               return (
                 <Grid item xs={6} sm={4} md={3} key={gig._id}>
-                  <Paper
-                    className={classes.pro}
-                    style={this.state.hoveredIndex === index ? hover : {}}
-                    onMouseEnter={() => this._onPaperEnter(gig)}
-                    onMouseLeave={() => this._onPaperLeave()}
-                    onClick={() => {
-                      this.setState(
-                        {
-                          gigs: this.state.gigs.filter(g => g._id === gig._id),
-                          product: true,
-                          autoRefresh: false,
-                        },
-                        () => {
-                          // Get bounds by our gigs
-                          const bounds = getMapBounds(this.state.map, this.state.maps, this.state.gigs);
-                          // Fit map to bounds
-                          this.state.map.fitBounds(bounds);
-                        }
-                      );
-                    }}
-                  >
-                    <div className={classes.avatar}>
-                      <img className={classes.avatarImg} src={gig.images[0]} alt={gig._providerName} />
-                    </div>
-                    <div className={classes.details}>
-                      <p className={classes.title}>{gig.title}</p>
-                      <p className={classes.name}>{gig._providerName}</p>
-                      <p className={classes.rating}>★ {Math.round(gig._rating * 100) / 100}</p>
-                      <div className={classes.price}>{gig.price}€/h</div>
-                    </div>
-                  </Paper>
+                  <SmallGig gig={gig} classes={classes} />
                 </Grid>
               );
             })}
@@ -327,9 +296,5 @@ class Map extends Component {
     );
   }
 }
-
-// Map.propTypes = {
-//   classes: PropTypes.object.isRequired,
-// };
 
 export default withStyles(styles)(Map);

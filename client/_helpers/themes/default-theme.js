@@ -6,10 +6,5 @@ export const DefaultTheme = createMuiTheme({
   },
   palette: {
     type: 'light',
-    mainColor: '#DED1AD',
-    alternateColor: '#546291',
-    alternateColorLight: '#ADB8DE',
-    secondaryColor: '#918563',
-    secondaryColorLight: '#FFF7E0',
   },
 });

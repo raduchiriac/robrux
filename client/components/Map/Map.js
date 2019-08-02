@@ -1,23 +1,18 @@
 import React, { Component } from 'react';
 import ApolloClient, { gql } from 'apollo-boost';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import config from 'config';
+import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Back from '@material-ui/icons/KeyboardArrowLeft';
-import clsx from 'clsx';
-import config from 'config';
 
 import GoogleMap from './GoogleMap';
 import Marker from './Marker';
-import SmallGig from './SmallGig';
+import SmallGigsList from './SmallGigsList';
 
 import BRUX_CENTER from '../../_helpers/constants/BRUX_CENTER';
 import GOOGLE_MAP_SKIN from '../../_helpers/constants/GOOGLE_MAP_SKIN';
 
-const hover = {
-  transform: 'scale(1.06)',
-  backgroundColor: '#DDD',
-};
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -48,60 +43,6 @@ const styles = theme => ({
     borderRadius: 0,
     flex: '0 1 30%',
     height: '100vh',
-  },
-  gigslist: {
-    flex: 1,
-    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
-  },
-  pro: {
-    padding: theme.spacing(2),
-    color: theme.palette.alternateColor,
-    backgroundColor: '#EEE',
-    position: 'relative',
-    display: 'flex',
-    cursor: 'pointer',
-    minHeight: '140px',
-    maxHeight: '140px',
-    transition: 'all 0.3s ease',
-    boxShadow: theme.shadows[1],
-    backgroundColor: theme.palette.grey['200'],
-    '&:hover': hover,
-  },
-  title: { fontWeight: 'bold' },
-  name: {
-    color: 'gray',
-  },
-  rating: {
-    color: '#db8555',
-    fontWeight: 'bold',
-    bottom: 0,
-    background: '#FFE',
-    position: 'absolute',
-    padding: theme.spacing(1),
-    left: 0,
-    right: 0,
-    borderRadius: `0 0 0 ${theme.shape.borderRadius}px`,
-    textIndent: '10px',
-  },
-  price: {
-    position: 'absolute',
-    background: theme.palette.alternateColor,
-    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
-    bottom: 0,
-    right: 0,
-    color: 'white',
-    borderRadius: `0 0 ${theme.shape.borderRadius}px 0`,
-  },
-  details: {
-    flexGrow: 1,
-  },
-  avatar: {
-    width: '64px',
-    height: '64px',
-    marginRight: theme.spacing(1),
-  },
-  avatarImg: {
-    borderRadius: '50%',
   },
 });
 
@@ -149,6 +90,7 @@ class Map extends Component {
       hoveredGig: null,
       hoveredIndex: null,
       autoRefresh: true,
+      loading: false,
     };
     this._fetchGigs = this._fetchGigs.bind(this);
     this._onChange = this._onChange.bind(this);
@@ -175,9 +117,10 @@ class Map extends Component {
       uri: `${config.WEBPACK_SERVER_URL}/graphql`,
     });
 
-    client
-      .query({
-        query: gql`
+    this.setState({ loading: true, gigs: [] }, () => {
+      client
+        .query({
+          query: gql`
           {
             gigs(limit: ${this.state.limit}, sort: "-_rating", bbox: ${JSON.stringify(this.state.bbox)}) {
               _id
@@ -192,8 +135,9 @@ class Map extends Component {
             }
           }
         `,
-      })
-      .then(result => this.setState({ gigs: result.data.gigs }));
+        })
+        .then(result => this.setState({ gigs: result.data.gigs, loading: false }));
+    });
   }
 
   _onChange(center, zoom, bounds, marginBounds) {
@@ -266,16 +210,8 @@ class Map extends Component {
             })}
           </GoogleMap>
         </div>
-        {!!gigs.length && !this.state.product && (
-          <Grid container spacing={2} className={classes.gigslist}>
-            {gigs.map((gig, index) => {
-              return (
-                <Grid item xs={6} sm={4} md={3} key={gig._id}>
-                  <SmallGig gig={gig} classes={classes} />
-                </Grid>
-              );
-            })}
-          </Grid>
+        {!this.state.product && (
+          <SmallGigsList loading={this.state.loading} gigs={(gigs.length && gigs) || [false, false]} />
         )}
         {this.state.product && (
           <div>

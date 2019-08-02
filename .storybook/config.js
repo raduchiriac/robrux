@@ -1,7 +1,7 @@
 import { configure } from '@storybook/react';
 
 function loadStories() {
-  require('../client/stories/demo.js');
+  require('../client/stories/small-gig.js');
 }
 
 configure(loadStories, module);

@@ -9,10 +9,12 @@ import UserGigsPage from './pages/UserGigsPage';
 import UserEditGigPage from './pages/UserEditGigPage';
 import NotFoundPage from './pages/NotFoundPage';
 
+import { DefaultTheme } from './_helpers/themes';
+
 function App() {
   return (
     <Router>
-      <MuiThemeProvider>
+      <MuiThemeProvider theme={DefaultTheme}>
         <CssBaseline />
         <Switch>
           <Route path="/" component={HomePage} exact={true} />

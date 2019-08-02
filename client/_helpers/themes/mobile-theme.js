@@ -1,4 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles';
+import COLOR_PALETTE from '../constants/COLOR_PALETTE';
 
 export const MobileTheme = createMuiTheme({
   typography: {
@@ -7,4 +8,5 @@ export const MobileTheme = createMuiTheme({
   palette: {
     type: 'dark',
   },
+  custom_palette: COLOR_PALETTE,
 });

@@ -27,7 +27,7 @@ const styles = theme => ({
 });
 
 const SmallGig = props => {
-  const { gig, hovered, classes, loading } = props;
+  const { gig, hovered, classes, loading, _onMouseEnter, _onMouseLeave, _onClick } = props;
   return (
     <Paper
       className={clsx(
@@ -36,23 +36,9 @@ const SmallGig = props => {
         hovered && 'small-gig__container--hover',
         loading && 'small-gig__container--loading'
       )}
-      // onMouseEnter={() => this._onPaperEnter(gig)}
-      // onMouseLeave={() => this._onPaperLeave()}
-      // onClick={() => {
-      //   this.setState(
-      //     {
-      //       gigs: this.state.gigs.filter(g => g._id === gig._id),
-      //       product: true,
-      //       autoRefresh: false,
-      //     },
-      //     () => {
-      //       // Get bounds by our gigs
-      //       const bounds = getMapBounds(this.state.map, this.state.maps, this.state.gigs);
-      //       // Fit map to bounds
-      //       this.state.map.fitBounds(bounds);
-      //     }
-      //   );
-      // }}
+      onMouseEnter={() => _onMouseEnter(gig._id, gig)}
+      onMouseLeave={() => _onMouseLeave()}
+      onClick={() => _onClick(gig)}
     >
       <div className={clsx('small-gig__avatar-container', classes['small-gig__avatar-container'])}>
         {gig ? (

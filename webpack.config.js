@@ -22,7 +22,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules|server)/,
-        loader: 'babel-loader',
+        loader: ['react-hot-loader/webpack', 'babel-loader'],
       },
       {
         test: /\.(sa|sc|c)ss$/,

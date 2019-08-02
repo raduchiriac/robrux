@@ -2,10 +2,10 @@
 
 - [x] Map with "\$geoWithin" query
 - [ ] minZoom for Google Maps
-- [ ] Material UI Grid + styling
+- [x] Material UI Grid + styling
 - [ ] Login system + fake_data
 - [ ] Login with social-media
-- [ ] React Context API
+- [x] React Context API, Hooks
 - [ ] My profile Page
 - [ ] My-Gig Page
 - [ ] Image Upload

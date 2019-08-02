@@ -11,7 +11,7 @@
     "start:server": "node ./server/server.js",
     "start:server:dev": "nodemon --ignore './client' ./server/server.js",
     "build:client": "webpack --mode production",
-    "start:client:dev": "webpack-dev-server --mode development --devtool inline-source-map --hot",
+    "start:client:dev": "webpack-dev-server --mode development --devtool inline-source-map --hot --inline",
     "dev": "npm-run-all --parallel start:server:dev start:client:dev",
     "start": "npm run start:server",
     "storybook": "start-storybook"
@@ -68,6 +68,7 @@
     "nodemon": "1.19.1",
     "path": "0.12.7",
     "prettier": "1.18.2",
+    "react-hot-loader": "4.12.10",
     "sass-loader": "7.1.0",
     "style-loader": "0.23.1",
     "webpack": "4.39.0",

@@ -5,9 +5,9 @@
   min-height: 140px;
   max-height: 140px;
   transition: all 0.3s ease !important;
-  cursor: pointer;
-  &:hover,
+  &:not(.small-gig__container--loading):hover,
   &.small-gig__container--hover {
+    cursor: pointer;
     transform: scale(1.06);
     background-color: #ddd;
   }
@@ -48,10 +48,10 @@
   .small-gig__avatar {
     width: 64px;
     height: 64px;
-    background-color: #ddd;
   }
   .small-gig__title,
-  .small-gig__provider {
+  .small-gig__provider,
+  .small-gig__avatar {
     background: repeating-linear-gradient(to right, #ccc 0%, #eee 50%, #ccc 100%);
     width: 100%;
     background-size: 200% auto;

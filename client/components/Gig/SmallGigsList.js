@@ -11,14 +11,20 @@ const styles = theme => ({
 });
 
 const SmallGigsList = props => {
-  const { classes, loading, gigs } = props;
-  console.log(classes);
+  const { classes, loading, gigs, hovered, _onMouseEnter, _onMouseLeave, _onClick } = props;
   return (
     <Grid container spacing={2} className={classes['small-gigs-list__container']}>
-      {((gigs.length && gigs) || [false, false]).map((gig, index) => {
+      {((gigs.length && gigs) || [false, false, false]).map((gig, index) => {
         return (
-          <Grid item xs={6} sm={4} md={3} key={index}>
-            <SmallGig hovered={false} gig={gig} loading={loading} />
+          <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+            <SmallGig
+              hovered={hovered === gig._id}
+              gig={gig}
+              loading={loading}
+              _onMouseEnter={_onMouseEnter}
+              _onMouseLeave={_onMouseLeave}
+              _onClick={_onClick}
+            />
           </Grid>
         );
       })}

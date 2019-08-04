@@ -1,7 +1,7 @@
 import React from 'react';
 
-const NotFoundPage = () => {
-  const { classes } = this.props;
+const NotFoundPage = props => {
+  const { classes } = props;
 
   return <div>NotFoundPage</div>;
 };

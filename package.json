@@ -20,7 +20,7 @@
     "node": ">=11.14.0"
   },
   "dependencies": {
-    "@material-ui/core": "4.3.0",
+    "@material-ui/core": "4.3.1",
     "@material-ui/icons": "4.2.1",
     "apollo-boost": "0.4.3",
     "bcryptjs": "2.4.3",
@@ -36,7 +36,7 @@
     "history": "4.9.0",
     "jsonwebtoken": "8.5.1",
     "mongodb": "3.2.7",
-    "mongoose": "5.6.7",
+    "mongoose": "5.6.8",
     "npm-run-all": "4.1.5",
     "pretty-error": "2.1.1",
     "prop-types": "15.7.2",
@@ -71,7 +71,7 @@
     "react-hot-loader": "4.12.10",
     "sass-loader": "7.1.0",
     "style-loader": "0.23.1",
-    "webpack": "4.39.0",
+    "webpack": "4.39.1",
     "webpack-cli": "3.3.6",
     "webpack-dev-server": "3.7.2"
   }

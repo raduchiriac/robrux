@@ -1,15 +1,27 @@
 {
-  "name": "next-auth-apollo",
+  "name": "robrux",
   "version": "0.1.0",
-  "description": "Authentication Example with Next.js and Apollo GraphQL",
-  "main": "index.js",
+  "description": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raduchiriac/robrux"
+  },
+  "engines": {
+    "node": ">=11.14.0"
+  },
+  "author": {
+    "name": "Radu Chiriac",
+    "email": "contact@raduchiriac.me"
+  },
   "scripts": {
+    "seed": "SEED=true node ./server/server.js",
+    "lint": "",
+    "storybook": "start-storybook",
     "dev": "nodemon server",
     "build": "next build",
     "start": "NODE_ENV=production node server"
   },
-  "author": "",
-  "license": "MIT",
   "dependencies": {
     "apollo-client-preset": "1.0.8",
     "apollo-link-context": "1.0.18",
@@ -35,6 +47,10 @@
     "react-dom": "16.8.6"
   },
   "devDependencies": {
+    "@storybook/react": "5.1.10",
+    "eslint": "6.1.0",
+    "faker": "4.1.0",
+    "prettier": "1.18.2",
     "nodemon": "1.19.1"
   }
 }

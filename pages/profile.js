@@ -1,18 +1,18 @@
-import React from 'react'
-import Link from 'next/link'
+import React from 'react';
+import Link from 'next/link';
 
-import checkLoggedIn from '../lib/checkLoggedIn'
-import withData from '../lib/withData'
+import checkLoggedIn from '../lib/checkLoggedIn';
+import withData from '../lib/withData';
 
 class Profile extends React.Component {
   static async getInitialProps(context, apolloClient) {
-    const { loggedInUser } = await checkLoggedIn(context, apolloClient)
+    const { loggedInUser } = await checkLoggedIn(context, apolloClient);
 
-    return { user: loggedInUser.profile }
+    return { user: loggedInUser.profile };
   }
 
   render() {
-    const { user } = this.props
+    const { user } = this.props;
 
     if (user) {
       return (
@@ -24,11 +24,11 @@ class Profile extends React.Component {
           <p> Fullname: {user.fullname}</p>
           <p> Email: {user.email}</p>
         </div>
-      )
+      );
     }
 
-    return <div>Not found!</div>
+    return <div>Not found!</div>;
   }
 }
 
-export default withData(Profile)
+export default withData(Profile);

@@ -1,6 +1,6 @@
-import Link from 'next/link'
-import withData from '../lib/withData'
-import SignupForm from '../components/forms/signup'
+import Link from 'next/link';
+import withData from '../lib/withData';
+import SignupForm from '../components/forms/signup';
 
 export default withData(() => (
   <div>
@@ -10,4 +10,4 @@ export default withData(() => (
     </Link>
     <SignupForm />
   </div>
-))
+));

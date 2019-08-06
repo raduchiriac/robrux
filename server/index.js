@@ -1,66 +1,71 @@
 require('dotenv').config();
 const express = require('express');
 const next = require('next');
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const passport = require('passport');
+const MongoDBStore = require('connect-mongodb-session')(session);
+const mongoose = require('mongoose');
 
-require('./services/passport');
-
-mongoose.set('useCreateIndex', true);
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/robrux', {
-  useNewUrlParser: true
-});
-
-const port = process.env.PORT || 3000;
-
+require('./_helpers/passport');
 const dev = process.env.NODE_ENV !== 'production';
 
-const app = next({
-  dev
-});
-
-const handle = app.getRequestHandler();
+const app = next({ dev });
 
 app.prepare().then(() => {
   const server = express();
 
-  // Exposes a bunch of methods for validating data. Used heavily on userController.validateRegister
+  // Start MongoDB and Express
+  const initDBConnection = require('./_helpers/db').initDBConnection;
+  initDBConnection(process.env.MONGO_URI, () => {
+    const errorHandler = require('./_helpers/error-handler');
+    server.use(errorHandler);
+    server.use(bodyParser.urlencoded({ extended: false }));
+    server.use(bodyParser.json());
+    server.use(cookieParser());
+    server.use(cors());
 
-  // populates req.cookies with any cookies that came along with the request
-  server.use(cookieParser());
+    server.listen(process.env.PORT, () => {
+      server.use('/graphql', require('./_helpers/graphql'));
 
-  // Sessions allow us to store data on visitors from request to request
-  // This keeps users logged in
-  server.use(
-    session({
-      secret: 'keyboard cat',
-      key: 'token',
-      resave: false,
-      saveUninitialized: false,
-      store: new MongoStore({
-        mongooseConnection: mongoose.connection
-      })
-    })
-  );
+      // Sessions allow us to store data on visitors from request to request
+      const store = new MongoDBStore({
+        uri: process.env.MONGO_URI,
+        collection: 'sessions',
+      });
+      store.on('error', function(error) {
+        console.log(error);
+      });
 
-  // Passport JS is what we use to handle our logins
-  server.use(passport.initialize());
-  server.use(passport.session());
+      server.use(
+        session({
+          secret: process.env.SECRET,
+          cookie: {
+            maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+          },
+          store,
+          resave: true,
+          saveUninitialized: true,
+        })
+      );
 
-  server.use('/graphql', require('./_helpers/graphql'));
+      server.use(passport.initialize());
+      server.use(passport.session());
+      require('./_helpers/routes')(server, passport);
 
-  require('./routes')(server, passport);
+      const handle = app.getRequestHandler();
+      server.get('*', (req, res) => {
+        return handle(req, res);
+      });
 
-  server.get('*', (req, res) => {
-    return handle(req, res);
+      // Did you run the seed command?
+      if (process.env.SEED === 'true') {
+        const seed = require('./_helpers/seed');
+      }
+
+      console.log(`[✓] Server listening on port: ${process.env.PORT}`);
+    });
   });
-
-  // Start express server
-  server.listen(port, () =>
-    console.log('> GraphQL Server Listening on Port', port)
-  );
 });

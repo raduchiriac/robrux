@@ -55,7 +55,9 @@ schema.index(
 
 const Gig = mongoose.model('Gig', schema);
 
+// -----------------------------------------------------------
 // GraphQL declarations
+// -----------------------------------------------------------
 const fields = {
   _id: { type: GraphQLID },
   _userId: { type: GraphQLNonNull(GraphQLID) },

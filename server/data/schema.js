@@ -1,5 +1,5 @@
-const { makeExecutableSchema } = require('graphql-tools')
-const resolvers = require('./resolvers')
+const { makeExecutableSchema } = require('graphql-tools');
+const resolvers = require('./resolvers');
 
 const typeDefs = `
 	type User {
@@ -13,6 +13,6 @@ const typeDefs = `
 		createUser(email: String!, fullname: String, password: String!): User
 		login(email: String!, password: String!): User
 	}
-`
+`;
 
-module.exports = makeExecutableSchema({ typeDefs, resolvers })
+module.exports = makeExecutableSchema({ typeDefs, resolvers });

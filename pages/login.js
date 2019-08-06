@@ -1,6 +1,6 @@
-import Link from 'next/link'
-import withData from '../lib/withData'
-import LoginForm from '../components/forms/login'
+import Link from 'next/link';
+import withData from '../lib/withData';
+import LoginForm from '../components/forms/login';
 
 export default withData(() => (
   <div>
@@ -10,4 +10,4 @@ export default withData(() => (
     </Link>
     <LoginForm />
   </div>
-))
+));

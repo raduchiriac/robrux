@@ -29,8 +29,6 @@ class Index extends React.Component {
             culpa qui officia deserunt mollit anim id est laborum.
             <br />
             <br />
-            <a href="/connect/github">Link Account With GitHub</a>
-            <br />
             <a href="/logout">Logout</a>
             <br />
             <Link href="/profile">
@@ -53,7 +51,6 @@ class Index extends React.Component {
         </Link>{' '}
         to view hidden resources
         <br /> <br />
-        <a href="/auth/github">Auth With GitHub</a>
       </div>
     )
   }

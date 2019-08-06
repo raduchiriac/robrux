@@ -21,9 +21,8 @@ class Profile extends React.Component {
             <a>Home</a>
           </Link>
           <p>My Profile</p>
-          {user.github.id ? 'GitHub Connected' : 'GitHub Not Linked'}
-          <p> Fullname: {user.fullname || user.github.name}</p>
-          <p> Email: {user.email || user.github.email}</p>
+          <p> Fullname: {user.fullname}</p>
+          <p> Email: {user.email}</p>
         </div>
       )
     }

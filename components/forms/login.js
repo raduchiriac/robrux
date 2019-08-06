@@ -102,11 +102,7 @@ class login extends React.Component {
 						}
 					`}
 				</style>
-			</form>,
-			<a key="btn" href="/auth/github">
-				{' '}
-				Auth With GitHub{' '}
-			</a>
+			</form>
 		]
 	}
 }

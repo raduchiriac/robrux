@@ -3,18 +3,18 @@
 - [x] Map with "\$geoWithin" query
 - [ ] minZoom for Google Maps
 - [x] Material UI Grid + styling
-- [ ] Login system + fake_data
 - [ ] Login with social-media
 - [x] React Context API, Hooks
-- [ ] My profile Page
-- [ ] My-Gig Page
+- [ ] My Profile Page
+- [ ] Gig Page (use transition animations)
 - [ ] Image Upload
-- [x] Fuzzy Search (title, description, tags)
+- [x] Fuzzy Search (include tags)
+- [ ] Create an import seed script
+- [ ] Login system (+update seed)
 - [ ] Rating system
 - [ ] Payment System
-- [ ] Category collection
 - [ ] Mailing system
+- [ ] Create a Gig Category collection
 - [ ] Roles management
-- [ ]
 - [ ]
 - [ ]

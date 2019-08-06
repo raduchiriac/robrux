@@ -14,6 +14,7 @@
     "start:client:dev": "webpack-dev-server --mode development --devtool inline-source-map --hot --inline",
     "dev": "npm-run-all --parallel start:server:dev start:client:dev",
     "start": "npm run start:server",
+    "seed": "SEED=true node ./server/server.js",
     "storybook": "start-storybook"
   },
   "engines": {
@@ -41,7 +42,7 @@
     "pretty-error": "2.1.1",
     "prop-types": "15.7.2",
     "react": "16.8.6",
-    "react-apollo": "2.5.8",
+    "react-apollo": "3.0.0",
     "react-dom": "16.8.6",
     "react-router-dom": "5.0.1",
     "rootpath": "0.1.2",
@@ -53,7 +54,7 @@
     "@babel/preset-react": "7.0.0",
     "@storybook/react": "5.1.10",
     "babel-loader": "8.0.6",
-    "css-loader": "3.1.0",
+    "css-loader": "3.2.0",
     "eslint": "6.1.0",
     "eslint-config-prettier": "6.0.0",
     "eslint-plugin-import": "2.18.2",
@@ -70,7 +71,7 @@
     "prettier": "1.18.2",
     "react-hot-loader": "4.12.10",
     "sass-loader": "7.1.0",
-    "style-loader": "0.23.1",
+    "style-loader": "1.0.0",
     "webpack": "4.39.1",
     "webpack-cli": "3.3.6",
     "webpack-dev-server": "3.7.2"

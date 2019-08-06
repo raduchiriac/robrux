@@ -1,1 +1,1 @@
-export default [50.8461, 4.3509];
+export default [50.8461, 4.355];

@@ -1,57 +1,19 @@
 import React from 'react';
-import Link from 'next/link';
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
+import Link from './src/Link';
 
-import withData from '../lib/withData';
-import checkLoggedIn from '../lib/checkLoggedIn';
+import { ApolloProvider } from '@apollo/react-hooks';
+import { WithHeaderLayout } from './layouts';
+import client from '../lib/apollo';
+import IndexPage from './IndexPage';
 
-class Index extends React.Component {
-  static async getInitialProps(context, apolloClient) {
-    const { loggedInUser } = await checkLoggedIn(context, apolloClient);
-
-    return {
-      user: loggedInUser.profile,
-    };
-  }
-
-  render() {
-    const { user } = this.props;
-    if (user) {
-      return (
-        <div>
-          <h1> Hello {user.email}! </h1>
-          <div>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.
-            <br />
-            <br />
-            <a href="/logout">Logout</a>
-            <br />
-            <Link href="/profile">
-              <a>Go to Profile</a>
-            </Link>
-          </div>
-        </div>
-      );
-    }
-
-    return (
-      <div>
-        <h1> Auth Example with Next.js and Apollo </h1>
-        <Link href="/login">
-          <a>Login</a>
-        </Link>{' '}
-        or{' '}
-        <Link href="/signup">
-          <a>Signup</a>
-        </Link>{' '}
-        to view hidden resources
-        <br /> <br />
-      </div>
-    );
-  }
+export default function Index() {
+  return (
+    <ApolloProvider client={client}>
+      <WithHeaderLayout>
+        <IndexPage />
+      </WithHeaderLayout>
+    </ApolloProvider>
+  );
 }
-
-export default withData(Index);

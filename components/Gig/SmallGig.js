@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 
-import style from './SmallGig.styles.scss';
+import './SmallGig.styles.scss';
 
 const styles = theme => ({
   'small-gig__container': {

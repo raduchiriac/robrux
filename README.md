@@ -1,6 +1,7 @@
 #### General TODO
 
 - [x] Map with "\$geoWithin" query
+- [ ] Attach next.js
 - [ ] minZoom for Google Maps
 - [x] Material UI Grid + styling
 - [ ] Login with social-media

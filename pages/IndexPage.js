@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { gql } from 'apollo-boost';
 import Grid from '@material-ui/core/Grid';
 import Map from '../components/Map/Map';
-import client from '../_helpers/apollo';
+import client from '../lib/apollo';
 
 import SmallGigsList from '../components/Gig/SmallGigsList';
-import style from './HomePage.styles.scss';
+import './IndexPage.styles.scss';
 
-const HomePage = () => {
+const IndexPage = () => {
   const limit = 20;
   const [loading, setLoading] = useState(true);
   const [bbox, setBbox] = useState([]);
@@ -48,7 +48,7 @@ const HomePage = () => {
   };
 
   const onMapBoundsChange = (center, zoom, bounds, marginBounds) => {
-    // INFO: NW [lat, long] + NE + SE + SW + NW (again)
+    // INFO: This is how coordinates are stored NW [lat, long] + NE + SE + SW + NW (again)
     const bbox = [
       [marginBounds.nw.lat, marginBounds.nw.lng],
       [marginBounds.ne.lat, marginBounds.ne.lng],
@@ -57,7 +57,7 @@ const HomePage = () => {
       [marginBounds.nw.lat, marginBounds.nw.lng],
     ];
 
-    setBbox(bbox);
+    // setBbox(bbox);
   };
 
   const onGigClick = gig => {
@@ -95,4 +95,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default IndexPage;

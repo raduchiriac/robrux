@@ -7,9 +7,6 @@
     "type": "git",
     "url": "https://github.com/raduchiriac/robrux"
   },
-  "engines": {
-    "node": ">=11.14.0"
-  },
   "author": {
     "name": "Radu Chiriac",
     "email": "contact@raduchiriac.me"

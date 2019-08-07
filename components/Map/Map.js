@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
-import { gql } from 'apollo-boost';
 import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import Back from '@material-ui/icons/KeyboardArrowLeft';
 
 import GoogleMap from './GoogleMap';
 import Marker from './Marker';
-import SmallGigsList from '../Gig/SmallGigsList';
 
 import BRUX_CENTER from '../../lib/constants/BRUX_CENTER';
 import GOOGLE_MAP_SKIN from '../../lib/constants/GOOGLE_MAP_SKIN';
@@ -83,6 +78,7 @@ class Map extends Component {
 
     return (
       <div className={classes.mapContainer}>
+        {process.env.GOOGLE_MAPS_API || 'G_NOTFOUND!!'}
         <GoogleMap
           defaultZoom={13}
           defaultCenter={BRUX_CENTER}

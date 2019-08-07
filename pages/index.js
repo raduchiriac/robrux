@@ -6,7 +6,7 @@ import Link from './src/Link';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { WithHeaderLayout } from '../layouts/WithHeaderLayout';
 import client from '../lib/apollo';
-import IndexPage from './IndexPage';
+import IndexPage from '../components/IndexPage';
 
 export default function Index() {
   return (

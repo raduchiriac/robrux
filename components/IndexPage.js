@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { gql } from 'apollo-boost';
 import Grid from '@material-ui/core/Grid';
-import Map from '../components/Map/Map';
+import Map from './Map/Map';
 import client from '../lib/apollo';
 
-import SmallGigsList from '../components/Gig/SmallGigsList';
+import SmallGigsList from './Gig/SmallGigsList';
 import './IndexPage.styles.scss';
 
 const IndexPage = () => {

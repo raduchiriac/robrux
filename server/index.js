@@ -62,7 +62,7 @@ app.prepare().then(() => {
 
       // Did you run the seed command?
       if (process.env.SEED === 'true') {
-        const seed = require('./_helpers/seed');
+        const seed = require('./seed');
       }
 
       console.log(`[✓] Server listening on port: ${process.env.PORT}`);

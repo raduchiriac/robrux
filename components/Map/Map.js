@@ -78,7 +78,6 @@ class Map extends Component {
 
     return (
       <div className={classes.mapContainer}>
-        {process.env.GOOGLE_MAPS_API || 'G_NOTFOUND!!'}
         <GoogleMap
           defaultZoom={13}
           defaultCenter={BRUX_CENTER}

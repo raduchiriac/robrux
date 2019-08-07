@@ -57,7 +57,7 @@ const IndexPage = () => {
       [marginBounds.nw.lat, marginBounds.nw.lng],
     ];
 
-    // setBbox(bbox);
+    setBbox(bbox);
   };
 
   const onGigClick = gig => {

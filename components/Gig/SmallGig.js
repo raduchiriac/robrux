@@ -36,9 +36,9 @@ const SmallGig = props => {
         hovered && 'small-gig__container--hover',
         loading && 'small-gig__container--loading'
       )}
-      onMouseEnter={() => _onMouseEnter(gig._id, gig)}
+      onMouseEnter={() => (loading ? null : _onMouseEnter(gig._id, gig))}
       onMouseLeave={() => _onMouseLeave()}
-      onClick={() => _onClick(gig)}
+      onClick={() => (loading ? null : _onClick(gig))}
     >
       <div className={clsx('small-gig__avatar-container', classes['small-gig__avatar-container'])}>
         {gig ? (

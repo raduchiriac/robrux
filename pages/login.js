@@ -8,7 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { DefaultLayout } from './layouts';
+import { DefaultLayout } from '../layouts/DefaultLayout';
 import Link from './src/Link';
 
 const useStyles = makeStyles(theme => ({
@@ -86,7 +86,7 @@ export default function Login() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <Link href="/forgot" variant="body2">
                     Am uitat parola.
                   </Link>
                 </Grid>

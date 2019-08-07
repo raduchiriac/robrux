@@ -4,7 +4,7 @@ import Box from '@material-ui/core/Box';
 import Link from './src/Link';
 
 import { ApolloProvider } from '@apollo/react-hooks';
-import { WithHeaderLayout } from './layouts';
+import { WithHeaderLayout } from '../layouts/WithHeaderLayout';
 import client from '../lib/apollo';
 import IndexPage from './IndexPage';
 

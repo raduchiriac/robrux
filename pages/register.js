@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from './src/Link';
-import { DefaultLayout } from './layouts';
+import { DefaultLayout } from '../layouts/DefaultLayout';
 
 const useStyles = makeStyles(theme => ({
   '@global': {

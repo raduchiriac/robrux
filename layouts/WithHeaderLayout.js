@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import Container from '@material-ui/core/Container';
-import Header from '../../components/Header';
+import Header from '../components/Header';
 
 export const WithHeaderLayout = ({ children }) => {
   return (

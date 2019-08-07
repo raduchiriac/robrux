@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import getConfig from 'next/config';
 import GoogleMapReact from 'google-map-react';
+const { publicRuntimeConfig } = getConfig();
 
 const GoogleMap = ({ children, ...props }) => (
   <div style={{ width: '100%', height: '100%' }}>
     <GoogleMapReact
       bootstrapURLKeys={{
-        key: process.env.GOOGLE_MAPS_API,
+        key: publicRuntimeConfig.GOOGLE_MAPS_API,
       }}
       {...props}
     >

@@ -4,5 +4,5 @@
   },
   "eslint.autoFixOnSave": true,
   "prettier.disableLanguages": ["js"],
-  "eslint.enable": false
+  "eslint.enable": true
 }

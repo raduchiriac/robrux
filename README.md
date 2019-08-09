@@ -1,21 +1,21 @@
 #### General TODO
 
 - [x] Map with "\$geoWithin" query
-- [ ] Attach next.js
+- [x] Attach next.js
 - [ ] minZoom for Google Maps
 - [x] Material UI Grid + styling
 - [ ] Login with social-media
-- [x] React Context API, Hooks
+- [x] Convert Classes to functions (Context API, Hooks)
 - [ ] My Profile Page
-- [ ] Gig Page (use transition animations)
+- [ ] Gig Page (use React Spring)
 - [ ] Image Upload
-- [x] Fuzzy Search (include tags)
+- [ ] Fuzzy Search (include tags)
 - [ ] Create an import seed script
 - [ ] Login system (+update seed)
 - [ ] Rating system
-- [ ] Payment System
+- [ ] Payment System (Stripe)
 - [ ] Mailing system
 - [ ] Create a Gig Category collection
 - [ ] Roles management
-- [ ]
+- [x] i18n (using Context API)
 - [ ]

@@ -3,10 +3,11 @@ import App, { Container } from 'next/app';
 import Head from 'next/head';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ApolloProvider } from '@apollo/react-hooks';
-import client from '../lib/apollo';
-
 import { ThemeProvider } from '@material-ui/styles';
+import { LanguagesContextProvider } from '../lib/contexts/LanguagesContext';
+
 import { DefaultTheme } from '../lib/themes/default-theme';
+import client from '../lib/apollo';
 
 class MyApp extends App {
   componentDidMount() {
@@ -22,13 +23,15 @@ class MyApp extends App {
 
     return (
       <ApolloProvider client={client}>
-        <Head>
-          <title>ro:bux</title>
-        </Head>
-        <ThemeProvider theme={DefaultTheme}>
-          <CssBaseline />
-          <Component {...pageProps} />
-        </ThemeProvider>
+        <LanguagesContextProvider>
+          <Head>
+            <title>ro:bux</title>
+          </Head>
+          <ThemeProvider theme={DefaultTheme}>
+            <CssBaseline />
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </LanguagesContextProvider>
       </ApolloProvider>
     );
   }

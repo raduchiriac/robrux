@@ -1,6 +1,28 @@
 const mongoose = require('mongoose');
+const validate = require('mongoose-validator');
 const mongodbErrorHandler = require('mongoose-mongodb-errors');
 const passportLocalMongoose = require('passport-local-mongoose');
+
+const dummyRandomGenerator = (loops = 1, prefix = '') => {
+  return [...Array(loops)].reduce(
+    (t, acc) =>
+      t +
+      Math.random()
+        .toString(36)
+        .replace('0.', ''),
+    prefix
+  );
+};
+
+const dummyForgotGenerator = () => {
+  const forgotCode = dummyRandomGenerator(3);
+
+  // You have 10 minutes to change your password
+  const now = new Date();
+  const forgotCodeLimit = now.setMinutes(now.getMinutes() + 10);
+
+  return { forgotCode, forgotCodeLimit };
+};
 
 const {
   GraphQLID,
@@ -22,11 +44,46 @@ const schema = new Schema({
     unique: true,
     lowercase: true,
     trim: true,
+    index: true,
+    validate: [validate({ validator: 'isEmail', message: 'Please enter a valid email address' })],
     required: 'Please supply an email address',
   },
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
+  firstName: {
+    type: String,
+    required: true,
+    validate: [
+      validate({
+        validator: 'isLength',
+        arguments: [3, 50],
+        message: 'Should be between {ARGS[0]} and {ARGS[1]} characters',
+      }),
+    ],
+  },
+  lastName: {
+    type: String,
+    required: true,
+    validate: [
+      validate({
+        validator: 'isLength',
+        arguments: [3, 50],
+        message: 'Should be between {ARGS[0]} and {ARGS[1]} characters',
+      }),
+    ],
+  },
+  role: { type: String, enum: ['admin', 'user', 'pro', 'deleted'], default: 'user' },
+  validated: { type: Boolean, default: false },
+  validationCode: {
+    index: true,
+    type: String,
+    default: () => dummyRandomGenerator(2),
+    unique: true,
+  },
+  phone: { type: String },
+  forgotCode: { type: String },
+  forgotCodeLimit: { type: Date },
+  lastLogin: { type: Date },
   createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date },
 });
 
 schema.plugin(passportLocalMongoose, {

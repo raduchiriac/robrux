@@ -7,6 +7,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import useForm from '../lib/hooks/useForm';
+import { useMutation } from '@apollo/react-hooks';
+import { CREATE_USER } from '../lib/graphql/user.strings';
 import Container from '@material-ui/core/Container';
 import Link from './src/Link';
 import { DefaultLayout } from '../layouts/DefaultLayout';
@@ -36,17 +39,36 @@ const useStyles = makeStyles(theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  subtitle2: {
+    color: theme.palette.error.main,
+  },
+  'input--has_errors': {
+    borderColor: theme.palette.error.main,
+  },
 }));
-
-const confirm = evt => {
-  evt.stopPropagation();
-  evt.preventDefault();
-  // process.env.JWT_SECRET
-  console.log('... youll implement this 🔜');
-};
 
 export default function SignUp() {
   const classes = useStyles();
+
+  const _register = () => {
+    console.log(createUser({ variables: { input: values } }));
+  };
+  const _validate = values => {
+    let errors = {};
+    if (!values.email) {
+      errors.email = 'Email address is required';
+    } else if (!/\S+@\S+\.\S+/.test(values.email)) {
+      errors.email = 'Email address is invalid';
+    }
+    if (!values.password) {
+      errors.password = 'Password is required';
+    } else if (values.password.length < 3) {
+      errors.password = 'Password must be 3 or more characters';
+    }
+    return errors;
+  };
+  const { values, errors, handleChange, handleSubmit } = useForm(_register, _validate);
+  const [createUser, { data }] = useMutation(CREATE_USER);
 
   return (
     <DefaultLayout>
@@ -58,17 +80,19 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Înregistrare
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onSubmit={handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  autoComplete="fname"
+                  autoComplete="off"
                   name="firstName"
                   variant="outlined"
                   required
                   fullWidth
                   id="firstName"
                   label="Prenume"
+                  onChange={handleChange}
+                  value={values.firstName}
                   autoFocus
                 />
               </Grid>
@@ -80,7 +104,9 @@ export default function SignUp() {
                   id="lastName"
                   label="Nume"
                   name="lastName"
-                  autoComplete="lname"
+                  onChange={handleChange}
+                  value={values.lastName}
+                  autoComplete="off"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -91,8 +117,12 @@ export default function SignUp() {
                   id="email"
                   label="Adresa de mail"
                   name="email"
-                  autoComplete="email"
+                  onChange={handleChange}
+                  value={values.email || ''}
+                  error={(errors.email && true) || false}
+                  autoComplete="off"
                 />
+                {errors.email && <Typography variant="subtitle2">{errors.email}</Typography>}
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -103,8 +133,12 @@ export default function SignUp() {
                   label="Parola"
                   type="password"
                   id="password"
-                  autoComplete="current-password"
+                  onChange={handleChange}
+                  value={values.password}
+                  error={(errors.password && true) || false}
+                  autoComplete="off"
                 />
+                {errors.password && <Typography variant="subtitle2">{errors.password}</Typography>}
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
@@ -113,14 +147,7 @@ export default function SignUp() {
                 />
               </Grid>
             </Grid>
-            <Button
-              onClick={evt => confirm(evt)}
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
+            <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
               Continua
             </Button>
             <Grid container justify="flex-end">

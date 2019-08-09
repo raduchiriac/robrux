@@ -8,6 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import useForm from '../lib/hooks/useForm';
 import { DefaultLayout } from '../layouts/DefaultLayout';
 import Link from './src/Link';
 
@@ -45,6 +46,11 @@ const useStyles = makeStyles(theme => ({
 export default function Login() {
   const classes = useStyles();
 
+  const _login = () => {
+    console.log(values);
+  };
+  const { values, handleChange, handleSubmit } = useForm(_login);
+
   return (
     <DefaultLayout>
       <Grid container component="main" className={classes.root}>
@@ -57,7 +63,7 @@ export default function Login() {
             <Typography component="h1" variant="h5">
               ro:brux
             </Typography>
-            <form className={classes.form} noValidate>
+            <form className={classes.form} noValidate onSubmit={handleSubmit}>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -66,6 +72,8 @@ export default function Login() {
                 id="email"
                 label="Email"
                 name="email"
+                onChange={handleChange}
+                value={values.email}
                 autoComplete="email"
                 autoFocus
               />
@@ -77,6 +85,8 @@ export default function Login() {
                 name="password"
                 label="Parola"
                 type="password"
+                onChange={handleChange}
+                value={values.password}
                 id="password"
                 autoComplete="current-password"
               />

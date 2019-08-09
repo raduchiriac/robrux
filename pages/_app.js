@@ -2,6 +2,9 @@ import React from 'react';
 import App, { Container } from 'next/app';
 import Head from 'next/head';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { ApolloProvider } from '@apollo/react-hooks';
+import client from '../lib/apollo';
+
 import { ThemeProvider } from '@material-ui/styles';
 import { DefaultTheme } from '../lib/themes/default-theme';
 
@@ -18,7 +21,7 @@ class MyApp extends App {
     const { Component, pageProps } = this.props;
 
     return (
-      <Container>
+      <ApolloProvider client={client}>
         <Head>
           <title>ro:bux</title>
         </Head>
@@ -26,7 +29,7 @@ class MyApp extends App {
           <CssBaseline />
           <Component {...pageProps} />
         </ThemeProvider>
-      </Container>
+      </ApolloProvider>
     );
   }
 }

@@ -1,5 +1,5 @@
 const { GraphQLClient } = require('graphql-request');
-const client = new GraphQLClient(`http://localhost:${process.env.PORT}/graphql`, {});
+const client = new GraphQLClient(`${process.env.HOSTNAME}:${process.env.PORT}/graphql`, {});
 
 // Seed some 100 Gigs
 for (let i = 0; i < 100; i++) {

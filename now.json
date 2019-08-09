@@ -1,7 +1,8 @@
 {
   "build": {
     "env": {
-      "GOOGLE_MAPS_API": "@google_maps_api"
+      "GOOGLE_MAPS_API": "@google_maps_api",
+      "MONGO_URI": "@mongo_uri"
     }
   }
 }

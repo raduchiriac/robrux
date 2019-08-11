@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -16,6 +16,9 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import ResultList from './Header/ResultsList';
+import useDebounce from '../lib/hooks/useDebounce';
+import client from '../lib/apollo';
+import { gql } from 'apollo-boost';
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -32,6 +35,7 @@ const useStyles = makeStyles(theme => ({
   },
   search: {
     position: 'relative',
+    // TODO: move round borders to a higher component
     borderRadius: false ? theme.shape.borderRadius : `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0 0`,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     '&:hover': {
@@ -85,8 +89,48 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function PrimarySearchAppBar() {
+export default function HeaderContainer() {
   const classes = useStyles();
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [results, setResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const debouncedSearchTerm = useDebounce(searchTerm, 310);
+
+  useEffect(() => {
+    // Make sure we have a value (user has entered something in input)
+    if (debouncedSearchTerm) {
+      searchGigs(debouncedSearchTerm);
+    } else {
+      setResults([]);
+    }
+  }, [debouncedSearchTerm]);
+
+  const searchGigs = term => {
+    setIsSearching(true);
+    setResults([]);
+    // TODO: move this to a file
+    client
+      .query({
+        query: gql`
+          {
+            search(string: "${term}") {
+              title
+              description
+            }
+          }
+        `,
+      })
+      .then(result => {
+        setIsSearching(false);
+        if (result.data.search.length) {
+          setResults(result.data.search);
+        } else {
+          setResults([{ title: 'Nu s-a gasit niciun rezultat', description: 'Incercati din nou' }]);
+        }
+      });
+  };
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -108,6 +152,11 @@ export default function PrimarySearchAppBar() {
 
   function handleMobileMenuOpen(event) {
     setMobileMoreAnchorEl(event.currentTarget);
+  }
+
+  function handleClearSearch() {
+    setSearchTerm('');
+    setResults([]);
   }
 
   const menuId = 'primary-search-account-menu';
@@ -188,13 +237,17 @@ export default function PrimarySearchAppBar() {
                   root: classes.inputRoot,
                   input: classes.inputInput,
                 }}
+                value={searchTerm}
+                onChange={e => setSearchTerm(e.target.value)}
                 inputProps={{ 'aria-label': 'search' }}
               />
-              <IconButton className={classes.clearIcon} aria-label="search">
-                <ClearIcon />
-              </IconButton>
+              {!!results.length && (
+                <IconButton className={classes.clearIcon} aria-label="clear" onClick={handleClearSearch}>
+                  <ClearIcon />
+                </IconButton>
+              )}
             </div>
-            <ResultList />
+            <ResultList results={results} />
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>

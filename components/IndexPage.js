@@ -25,6 +25,7 @@ const IndexPage = () => {
   const fetchGigs = () => {
     setLoading(true);
     setGigs([]);
+    // TODO: move this to a file
     client
       .query({
         query: gql`

@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 import Container from '@material-ui/core/Container';
-import Header from '../components/Header';
+import HeaderContainer from '../components/HeaderContainer';
 
 export const WithHeaderLayout = ({ children }) => {
   return (
     <Fragment>
-      <Header />
+      <HeaderContainer />
       <Container maxWidth="lg" style={{ marginTop: 80 }}>
         {children}
       </Container>

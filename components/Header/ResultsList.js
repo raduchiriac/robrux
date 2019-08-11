@@ -14,16 +14,15 @@ const useStyles = makeStyles(theme => ({
   }),
 }));
 
-export default function ResultsList() {
+export default function ResultsList(props) {
   const classes = useStyles();
+  const { results } = props;
   return (
     <Grid item>
       <List dense={true} className={clsx('result-list__container', classes['result-list__container'])}>
-        <Result key="1" />
-        <Result key="2" />
-        <Result key="3" />
-        <Result key="4" />
-        <Result key="5" />
+        {results.map((result, idx) => (
+          <Result key={idx} result={result} />
+        ))}
       </List>
     </Grid>
   );

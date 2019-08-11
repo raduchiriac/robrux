@@ -5,6 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { ThemeProvider } from '@material-ui/styles';
 import { LanguagesContextProvider } from '../lib/contexts/LanguagesContext';
+import { GlobalContextProvider } from '../lib/contexts/GlobalContext';
 
 import { DefaultTheme } from '../lib/themes/default-theme';
 import client from '../lib/apollo';
@@ -23,15 +24,17 @@ class MyApp extends App {
 
     return (
       <ApolloProvider client={client}>
-        <LanguagesContextProvider>
-          <Head>
-            <title>ro:bux</title>
-          </Head>
-          <ThemeProvider theme={DefaultTheme}>
-            <CssBaseline />
-            <Component {...pageProps} />
-          </ThemeProvider>
-        </LanguagesContextProvider>
+        <GlobalContextProvider>
+          <LanguagesContextProvider>
+            <Head>
+              <title>ro:bux</title>
+            </Head>
+            <ThemeProvider theme={DefaultTheme}>
+              <CssBaseline />
+              <Component {...pageProps} />
+            </ThemeProvider>
+          </LanguagesContextProvider>
+        </GlobalContextProvider>
       </ApolloProvider>
     );
   }

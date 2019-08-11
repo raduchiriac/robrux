@@ -3,6 +3,7 @@ import { gql } from 'apollo-boost';
 import Grid from '@material-ui/core/Grid';
 import Map from './Map/Map';
 import client from '../lib/apollo';
+import { GlobalContext } from '../lib/contexts/GlobalContext';
 
 import SmallGigsList from './Gig/SmallGigsList';
 import './IndexPage.styles.scss';
@@ -13,6 +14,7 @@ const IndexPage = () => {
   const [bbox, setBbox] = useState([]);
   const [gigs, setGigs] = useState([]);
   const [hovered, setHovered] = useState(0);
+  const { showMap } = React.useContext(GlobalContext).state;
 
   useEffect(() => {
     if (bbox.length) {
@@ -74,15 +76,17 @@ const IndexPage = () => {
 
   return (
     <Grid container className={'home-page__container'}>
-      <Map
-        gigs={gigs}
-        loading={loading}
-        hovered={hovered}
-        _onMapBoundsChange={onMapBoundsChange}
-        _onMarkerClick={onGigClick}
-        _onMapChildMouseEnter={onHoverEnters}
-        _onMapChildMouseLeave={onHoverLeaves}
-      />
+      {showMap && (
+        <Map
+          gigs={gigs}
+          loading={loading}
+          hovered={hovered}
+          _onMapBoundsChange={onMapBoundsChange}
+          _onMarkerClick={onGigClick}
+          _onMapChildMouseEnter={onHoverEnters}
+          _onMapChildMouseLeave={onHoverLeaves}
+        />
+      )}
       <SmallGigsList
         gigs={gigs}
         loading={loading}

@@ -2,20 +2,22 @@
 
 - [x] Map with "\$geoWithin" query
 - [x] Attach next.js
-- [ ] minZoom for Google Maps
-- [x] Material UI Grid + styling
-- [ ] Login with social-media
+- [x] Material UI Grid + themes
+- [x] Create an import seed script
 - [x] Convert Classes to functions (Context API, Hooks)
-- [ ] My Profile Page
-- [ ] Gig Page (use React Spring)
-- [ ] Image Upload
 - [ ] Fuzzy Search (include tags)
-- [ ] Create an import seed script
-- [ ] Login system (+update seed)
-- [ ] Rating system
-- [ ] Payment System (Stripe)
-- [ ] Mailing system
-- [ ] Create a Gig Category collection
-- [ ] Roles management
+- [ ] My Profile Page
+- [ ] Add a new Gig (use Formik)
+- [ ] Image Upload Storage (Cloudinary)
+- [ ] Gig Page (use React Spring to transition)
 - [x] i18n (using Context API)
+- [ ] Fully fledged User system and roles (+update seed)
+- [ ] Login with social-media (at least: Facebook Strategy)
+- [ ] Sessions, JWT, graphql-cookie-headers
+- [ ] Pretty Mongoose errors
+- [ ] Rating Collection (+update seed)
+- [ ] Payment System (Stripe API)
+- [ ] Mailing System (Mailchimp)
+- [ ] Create a Category Collection
+- [ ] minZoom for Google Maps
 - [ ]

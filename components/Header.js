@@ -10,10 +10,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import ClearIcon from '@material-ui/icons/Clear';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import ResultList from './Header/ResultsList';
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -30,7 +32,7 @@ const useStyles = makeStyles(theme => ({
   },
   search: {
     position: 'relative',
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: false ? theme.shape.borderRadius : `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0 0`,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     '&:hover': {
       backgroundColor: fade(theme.palette.common.white, 0.25),
@@ -44,6 +46,9 @@ const useStyles = makeStyles(theme => ({
       width: 'auto',
     },
   },
+  searchFlex: {
+    display: 'flex',
+  },
   searchIcon: {
     width: theme.spacing(7),
     height: '100%',
@@ -55,6 +60,7 @@ const useStyles = makeStyles(theme => ({
   },
   inputRoot: {
     color: 'inherit',
+    flexGrow: 1,
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 7),
@@ -64,6 +70,7 @@ const useStyles = makeStyles(theme => ({
       width: 200,
     },
   },
+  clearIcon: { color: 'white', transform: 'scale(0.66)' },
   sectionDesktop: {
     display: 'none',
     [theme.breakpoints.up('md')]: {
@@ -171,17 +178,23 @@ export default function PrimarySearchAppBar() {
             ro:brux
           </Typography>
           <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+            <div className={classes.searchFlex}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Caută…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+              />
+              <IconButton className={classes.clearIcon} aria-label="search">
+                <ClearIcon />
+              </IconButton>
             </div>
-            <InputBase
-              placeholder="Caută…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
+            <ResultList />
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>

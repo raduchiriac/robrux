@@ -48,7 +48,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Form = props => {
-  const { classes, errors, formErrors, values, handleChange, handleSubmit, strings } = props;
+  const { classes, errors, formErrors, values, handleChange, handleSubmit, STRINGS } = props;
 
   return (
     <Fragment>
@@ -56,7 +56,7 @@ const Form = props => {
         <img src="/static/robrux.png" />
       </Avatar>
       <Typography component="h1" variant="h5">
-        {strings.REGISTER_TOP}
+        {STRINGS.REGISTER_TOP}
       </Typography>
       <form className={classes.form} noValidate onSubmit={handleSubmit}>
         <Grid container spacing={2}>
@@ -121,20 +121,33 @@ const Form = props => {
             {errors.password && <Typography variant="subtitle2">{errors.password}</Typography>}
           </Grid>
           <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              required
+              fullWidth
+              name="confirm-password"
+              label="Confirmă parola"
+              type="password"
+              id="confirm-password"
+              autoComplete="off"
+            />
+            {errors.password && <Typography variant="subtitle2">{errors['confirm-password']}</Typography>}
+          </Grid>
+          <Grid item xs={12}>
             <FormControlLabel
-              control={<Checkbox value="allowExtraEmails" color="primary" required />}
-              label="Regulament"
+              control={<Checkbox value="acceptTerms" color="primary" required />}
+              label={STRINGS.REGISTER_ACC_TERMS}
             />
           </Grid>
         </Grid>
         <Typography>{formErrors}</Typography>
         <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
-          Login
+          {STRINGS.REGISTER_NOW}
         </Button>
         <Grid container justify="flex-end">
           <Grid item>
             <Link href="/login" variant="body2">
-              Am deja un cont. Login
+              {STRINGS.REGISTER_ALREADY}
             </Link>
           </Grid>
         </Grid>
@@ -144,10 +157,10 @@ const Form = props => {
 };
 
 const EmailSent = props => {
-  const { strings } = props;
+  const { STRINGS } = props;
   return (
     <Typography component="h1" align="center" variant="h5">
-      {strings.EMAIL_SUCC}
+      {STRINGS.REGISTER_EMAIL_SUCC}
     </Typography>
   );
 };
@@ -192,14 +205,14 @@ export default function RegisterPage() {
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
         {formValidated ? (
-          <EmailSent strings={STRINGS} />
+          <EmailSent STRINGS={STRINGS} />
         ) : (
           <Form
             classes={classes}
             errors={errors}
             formErrors={formErrors}
             values={values}
-            strings={STRINGS}
+            STRINGS={STRINGS}
             handleChange={handleChange}
             handleSubmit={handleSubmit}
           ></Form>

@@ -18,7 +18,11 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import ResultList from './Header/ResultsList';
 import useDebounce from '../lib/hooks/useDebounce';
 import client from '../lib/apollo';
-import { gql } from 'apollo-boost';
+import { useLazyQuery } from '@apollo/react-hooks';
+import { SEARCH_GIG } from '../lib/graphql/gigs.strings';
+import { LanguagesContext } from '../lib/contexts/LanguagesContext';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { spacing } from '@material-ui/system';
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -52,6 +56,10 @@ const useStyles = makeStyles(theme => ({
   },
   searchFlex: {
     display: 'flex',
+    alignItems: 'center',
+  },
+  circularSearch: {
+    marginRight: theme.spacing(1),
   },
   searchIcon: {
     width: theme.spacing(7),
@@ -93,46 +101,27 @@ export default function HeaderContainer() {
   const classes = useStyles();
 
   const [searchTerm, setSearchTerm] = useState('');
-  const [results, setResults] = useState([]);
-  const [isSearching, setIsSearching] = useState(false);
-  const debouncedSearchTerm = useDebounce(searchTerm, 310);
+  const debouncedSearchTerm = useDebounce(searchTerm, 550);
+  const [searchGigs, { data, error, loading }] = useLazyQuery(SEARCH_GIG, {
+    variables: { term: debouncedSearchTerm },
+  });
 
   useEffect(() => {
-    // Make sure we have a value (user has entered something in input)
-    if (debouncedSearchTerm) {
-      searchGigs(debouncedSearchTerm);
-    } else {
-      setResults([]);
-    }
-  }, [debouncedSearchTerm]);
+    searchGigs();
+  }, [debouncedSearchTerm, searchGigs]);
 
-  const searchGigs = term => {
-    setIsSearching(true);
-    setResults([]);
-    // TODO: move this to a file
-    client
-      .query({
-        query: gql`
-          {
-            search(string: "${term}") {
-              title
-              description
-            }
-          }
-        `,
-      })
-      .then(result => {
-        setIsSearching(false);
-        if (result.data.search.length) {
-          setResults(result.data.search);
-        } else {
-          setResults([{ title: 'Nu s-a gasit niciun rezultat', description: 'Incercati din nou' }]);
-        }
-      });
-  };
+  let results = [];
+  if (data && data.search) {
+    results = data.search;
+    if (debouncedSearchTerm.length) {
+      results = [{ title: 'Nu s-a gasit niciun rezultat', description: 'Incercati din nou' }];
+    }
+  }
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  const { STRINGS } = React.useContext(LanguagesContext).state;
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -156,7 +145,6 @@ export default function HeaderContainer() {
 
   function handleClearSearch() {
     setSearchTerm('');
-    setResults([]);
   }
 
   const menuId = 'primary-search-account-menu';
@@ -224,7 +212,7 @@ export default function HeaderContainer() {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            ro:brux
+            {STRINGS.SITE_NAME}
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchFlex}>
@@ -232,7 +220,7 @@ export default function HeaderContainer() {
                 <SearchIcon />
               </div>
               <InputBase
-                placeholder="Caută…"
+                placeholder={STRINGS.SEARCH}
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,
@@ -241,7 +229,8 @@ export default function HeaderContainer() {
                 onChange={e => setSearchTerm(e.target.value)}
                 inputProps={{ 'aria-label': 'search' }}
               />
-              {!!results.length && (
+              {loading && <CircularProgress size={20} className={classes.circularSearch} />}
+              {!!debouncedSearchTerm.length && (
                 <IconButton className={classes.clearIcon} aria-label="clear" onClick={handleClearSearch}>
                   <ClearIcon />
                 </IconButton>

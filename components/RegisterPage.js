@@ -56,7 +56,7 @@ const Form = props => {
         <img src="/static/robrux.png" />
       </Avatar>
       <Typography component="h1" variant="h5">
-        {STRINGS.REGISTER_TOP}
+        {STRINGS.SITE_NAME}
       </Typography>
       <form className={classes.form} noValidate onSubmit={handleSubmit}>
         <Grid container spacing={2}>

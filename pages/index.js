@@ -1,12 +1,12 @@
 import React from 'react';
 
 import { WithHeaderLayout } from '../layouts/WithHeaderLayout';
-import IndexPage from '../components/IndexPage';
+import IndexPageContainer from '../components/IndexPageContainer';
 
 export default function Index() {
   return (
     <WithHeaderLayout>
-      <IndexPage />
+      <IndexPageContainer />
     </WithHeaderLayout>
   );
 }

@@ -21,7 +21,7 @@ export default function ResultsList(props) {
     <Grid item>
       <List dense={true} className={clsx('result-list__container', classes['result-list__container'])}>
         {results.map((result, idx) => (
-          <Result key={idx} result={result} />
+          <Result key={idx} result={result} isLast={results.length === idx + 1} isClickable={!!result._id} />
         ))}
       </List>
     </Grid>

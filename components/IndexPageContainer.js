@@ -6,9 +6,9 @@ import client from '../lib/apollo';
 import { GlobalContext } from '../lib/contexts/GlobalContext';
 
 import SmallGigsList from './Gig/SmallGigsList';
-import './IndexPage.styles.scss';
+import './IndexPageContainer.styles.scss';
 
-const IndexPage = () => {
+const IndexPageContainer = () => {
   const limit = 20;
   const [loading, setLoading] = useState(true);
   const [bbox, setBbox] = useState([]);
@@ -18,17 +18,12 @@ const IndexPage = () => {
 
   useEffect(() => {
     if (bbox.length) {
-      fetchGigs();
-    }
-  }, [bbox]);
-
-  const fetchGigs = () => {
-    setLoading(true);
-    setGigs([]);
-    // TODO: move this to a file
-    client
-      .query({
-        query: gql`
+      setLoading(true);
+      setGigs([]);
+      // TODO: move this to a file
+      client
+        .query({
+          query: gql`
           {
             gigs(limit: ${limit}, sort: "-_rating", bbox: ${JSON.stringify(bbox)}) {
               _id
@@ -43,12 +38,13 @@ const IndexPage = () => {
             }
           }
         `,
-      })
-      .then(result => {
-        setLoading(false);
-        setGigs(result.data.gigs);
-      });
-  };
+        })
+        .then(result => {
+          setLoading(false);
+          setGigs(result.data.gigs);
+        });
+    }
+  }, [bbox]);
 
   const onMapBoundsChange = (center, zoom, bounds, marginBounds) => {
     // INFO: This is how coordinates are stored NW [lat, long] + NE + SE + SW + NW (again)
@@ -100,4 +96,4 @@ const IndexPage = () => {
   );
 };
 
-export default IndexPage;
+export default IndexPageContainer;

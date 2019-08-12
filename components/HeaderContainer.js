@@ -1,28 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
-import ClearIcon from '@material-ui/icons/Clear';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import ResultList from './Header/ResultsList';
-import useDebounce from '../lib/hooks/useDebounce';
-import client from '../lib/apollo';
-import { useLazyQuery } from '@apollo/react-hooks';
-import { SEARCH_GIG } from '../lib/graphql/gigs.strings';
+import SearchBox from './Header/SearchBox';
 import { LanguagesContext } from '../lib/contexts/LanguagesContext';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { spacing } from '@material-ui/system';
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -37,52 +27,6 @@ const useStyles = makeStyles(theme => ({
       display: 'block',
     },
   },
-  search: {
-    position: 'relative',
-    // TODO: move round borders to a higher component
-    borderRadius: false ? theme.shape.borderRadius : `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0 0`,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: '100%',
-    flexGrow: 1,
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
-      width: 'auto',
-    },
-  },
-  searchFlex: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  circularSearch: {
-    marginRight: theme.spacing(1),
-  },
-  searchIcon: {
-    width: theme.spacing(7),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputRoot: {
-    color: 'inherit',
-    flexGrow: 1,
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 7),
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: 200,
-    },
-  },
-  clearIcon: { color: 'white', transform: 'scale(0.66)' },
   sectionDesktop: {
     display: 'none',
     [theme.breakpoints.up('md')]: {
@@ -100,54 +44,28 @@ const useStyles = makeStyles(theme => ({
 export default function HeaderContainer() {
   const classes = useStyles();
 
-  const [searchTerm, setSearchTerm] = useState('');
-  const debouncedSearchTerm = useDebounce(searchTerm, 550);
-  const [searchGigs, { data, error, loading }] = useLazyQuery(SEARCH_GIG, {
-    variables: { term: debouncedSearchTerm },
-  });
-
-  useEffect(() => {
-    searchGigs();
-  }, [debouncedSearchTerm, searchGigs]);
-
-  let results = [];
-  if (data && data.search) {
-    results = data.search;
-    if (debouncedSearchTerm.length) {
-      results = [{ title: 'Nu s-a gasit niciun rezultat', description: 'Incercati din nou' }];
-    }
-  }
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
   const { STRINGS } = React.useContext(LanguagesContext).state;
 
+  // TODO: Refactor all of this below (what's the use?)
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  function handleProfileMenuOpen(event) {
+  function handleProfileMenuOpen(event, mine) {
     setAnchorEl(event.currentTarget);
   }
-
   function handleMobileMenuClose() {
     setMobileMoreAnchorEl(null);
   }
-
   function handleMenuClose() {
     setAnchorEl(null);
     handleMobileMenuClose();
   }
-
   function handleMobileMenuOpen(event) {
     setMobileMoreAnchorEl(event.currentTarget);
   }
-
-  function handleClearSearch() {
-    setSearchTerm('');
-  }
-
-  const menuId = 'primary-search-account-menu';
+  const menuId = 'header-container__account-menu';
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -162,8 +80,7 @@ export default function HeaderContainer() {
       <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
     </Menu>
   );
-
-  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const mobileMenuId = 'header-container__account-menu--mobile';
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
@@ -203,50 +120,25 @@ export default function HeaderContainer() {
       </MenuItem>
     </Menu>
   );
+  // -----------------------------------
 
   return (
     <div className={classes.grow}>
       <AppBar position="fixed">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="open drawer">
-            <MenuIcon />
-          </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
             {STRINGS.SITE_NAME}
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchFlex}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder={STRINGS.SEARCH}
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
-                inputProps={{ 'aria-label': 'search' }}
-              />
-              {loading && <CircularProgress size={20} className={classes.circularSearch} />}
-              {!!debouncedSearchTerm.length && (
-                <IconButton className={classes.clearIcon} aria-label="clear" onClick={handleClearSearch}>
-                  <ClearIcon />
-                </IconButton>
-              )}
-            </div>
-            <ResultList results={results} />
-          </div>
+          <SearchBox />
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
+            <IconButton aria-label="" color="inherit">
+              <Badge badgeContent={2} color="secondary">
                 <MailIcon />
               </Badge>
             </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
+            <IconButton aria-label="" color="inherit">
+              <Badge badgeContent={10} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>

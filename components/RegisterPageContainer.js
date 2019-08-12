@@ -165,7 +165,7 @@ const EmailSent = props => {
   );
 };
 
-export default function RegisterPage() {
+export default function RegisterPageContainer() {
   const classes = useStyles();
   const { STRINGS } = React.useContext(LanguagesContext).state;
 

@@ -1,21 +1,13 @@
 .result-list__container {
+  background-color: white !important;
   position: absolute !important;
   padding: 0 !important;
   width: 100%;
   overflow: hidden;
 }
 .result-list__result {
-  background-color: white !important;
   color: #444 !important;
-  &:hover {
+  &:not(.result-list__result--no-link):hover {
     background-color: #eee !important;
-  }
-  &:not(:last-child):after {
-    content: '';
-    border-bottom: 1px solid #eee !important;
-    position: absolute;
-    bottom: 0;
-    left: 60px;
-    right: 1%;
   }
 }

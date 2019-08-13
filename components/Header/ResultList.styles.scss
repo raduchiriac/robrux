@@ -10,4 +10,8 @@
   &:not(.result-list__result--no-link):hover {
     background-color: #eee !important;
   }
+  .result-list__result-highlighted {
+    background-color: #ddd;
+    padding: 0.1em 0;
+  }
 }

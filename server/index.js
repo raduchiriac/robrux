@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
 const MongoDBStore = require('connect-mongodb-session')(session);
-const mongoose = require('mongoose');
 
 require('./_helpers/passport');
 const dev = process.env.NODE_ENV !== 'production';
@@ -27,9 +26,10 @@ app.prepare().then(() => {
     server.use(cookieParser());
     server.use(cors());
 
-    server.listen(process.env.PORT, () => {
-      server.use('/graphql', require('./_helpers/graphql'));
+    const apollo = require('./_helpers/graphql');
+    apollo.applyMiddleware({ app: server, path: '/graphql' });
 
+    server.listen(process.env.PORT, () => {
       // Sessions allow us to store data on visitors from request to request
       const store = new MongoDBStore({
         uri: process.env.MONGO_URI,

@@ -20,9 +20,21 @@ export default function Result(props) {
           </ListItemAvatar>
         )}
         <ListItemText
-          primary={<Highlighter highlightTag="strong" searchWords={[searching]} textToHighlight={result.title} />}
+          primary={
+            <Highlighter
+              highlightClassName="result-list__result-highlighted"
+              highlightTag="strong"
+              searchWords={[searching]}
+              textToHighlight={result.title}
+            />
+          }
           secondary={
-            <Highlighter highlightTag="strong" searchWords={[searching]} textToHighlight={result.description} />
+            <Highlighter
+              highlightClassName="result-list__result-highlighted"
+              highlightTag="strong"
+              searchWords={[searching]}
+              textToHighlight={result.description}
+            />
           }
         />
       </ListItem>

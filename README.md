@@ -1,20 +1,20 @@
-#### General TODO
+#### Roadmap
 
 - [x] Map with "\$geoWithin" query
 - [x] Attach next.js
 - [x] Material UI Grid + themes
 - [x] Create an import seed script
 - [x] Convert Classes to functions (Context API, Hooks)
+- [x] i18n (using Context API)
 - [ ] Fuzzy Search (include tags)
 - [ ] My Profile Page
 - [ ] Add a new Gig (use Formik)
-- [ ] Image Upload Storage (Cloudinary)
+- [ ] Image Upload to Storage (Cloudinary)
 - [ ] Gig Page (use React Spring to transition)
-- [x] i18n (using Context API)
 - [ ] Fully fledged User system and roles (+update seed)
 - [ ] Login with social-media (at least: Facebook Strategy)
 - [ ] Sessions, JWT, graphql-cookie-headers
-- [ ] Pretty Mongoose errors
+- [ ] Prettier Mongoose errors
 - [ ] Rating Collection (+update seed)
 - [ ] Payment System (Stripe API)
 - [ ] Mailing System (Mailchimp)

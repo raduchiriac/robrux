@@ -1,4 +1,4 @@
-const graphqlHTTP = require('express-graphql');
+const { ApolloServer } = require('apollo-server-express');
 const { GraphQLObjectType, GraphQLSchema } = require('graphql');
 
 const userQueries = require('../models/users/user.graphql.queries');
@@ -24,10 +24,18 @@ const schema = new GraphQLSchema({
   }),
 });
 
-const graph_http = graphqlHTTP((req, res) => ({
-  schema,
-  context: { login: req.login.bind(req), user: req.user },
-  graphiql: process.env.NODE_ENV !== 'production',
-}));
+const GRAPHQL_PLAYGROUND_CONFIG = {
+  settings: {
+    'editor.cursorShape': 'line',
+    'editor.fontSize': 12,
+    'editor.reuseHeaders': true,
+    'editor.theme': 'light',
+  },
+};
 
-module.exports = graph_http;
+const apollo = new ApolloServer({
+  schema,
+  playground: process.env.NODE_ENV === 'production' ? false : GRAPHQL_PLAYGROUND_CONFIG,
+});
+
+module.exports = apollo;

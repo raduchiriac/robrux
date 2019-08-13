@@ -1,9 +1,11 @@
 import React, { Fragment } from 'react';
 import { ListItem, ListItemAvatar, Avatar, ListItemText, Divider } from '@material-ui/core';
+import Highlighter from 'react-highlight-words';
 
 export default function Result(props) {
   const handleResultClick = () => {};
-  const { result, isLast, isClickable } = props;
+  const { searching, result, isLast, isClickable } = props;
+
   return (
     <Fragment>
       <ListItem
@@ -17,7 +19,12 @@ export default function Result(props) {
             <Avatar src={result.images[0]} />
           </ListItemAvatar>
         )}
-        <ListItemText primary={result.title} secondary={result.description} />
+        <ListItemText
+          primary={<Highlighter highlightTag="strong" searchWords={[searching]} textToHighlight={result.title} />}
+          secondary={
+            <Highlighter highlightTag="strong" searchWords={[searching]} textToHighlight={result.description} />
+          }
+        />
       </ListItem>
       {!isLast && <Divider variant="inset" component="li" />}
     </Fragment>

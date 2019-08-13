@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -16,13 +16,11 @@ export default function SearchBox() {
     makeStyles(theme => ({
       searchContainer: {
         position: 'relative',
+        transition: 'all 0.3s ease',
         borderRadius: !props.results
           ? theme.shape.borderRadius
           : `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0 0`,
-        backgroundColor: fade(theme.palette.common.white, 0.15),
-        '&:hover': {
-          backgroundColor: fade(theme.palette.common.white, 0.25),
-        },
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
         marginRight: theme.spacing(2),
         marginLeft: 0,
         width: '100%',
@@ -60,7 +58,7 @@ export default function SearchBox() {
           width: 200,
         },
       },
-      clearIcon: { color: 'white', transform: 'scale(0.66)' },
+      clearIcon: { color: 'white', transform: 'scale(0.5)' },
     }))(props);
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -115,7 +113,7 @@ export default function SearchBox() {
           </IconButton>
         )}
       </div>
-      <ResultList results={results} />
+      {!!searchTerm.length && <ResultList searching={searchTerm} results={results} />}
     </div>
   );
 }

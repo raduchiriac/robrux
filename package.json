@@ -51,10 +51,11 @@
     "prop-types": "15.7.2",
     "react": "16.9.0",
     "react-apollo": "3.0.0",
-    "react-dom": "16.9.0"
+    "react-dom": "16.9.0",
+    "react-highlight-words": "0.16.0"
   },
   "devDependencies": {
-    "@storybook/react": "5.1.10",
+    "@storybook/react": "5.1.11",
     "dotenv": "8.0.0",
     "eslint": "6.1.0",
     "eslint-config-prettier": "6.0.0",

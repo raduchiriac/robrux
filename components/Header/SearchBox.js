@@ -17,7 +17,7 @@ export default function SearchBox() {
       searchContainer: {
         position: 'relative',
         transition: 'all 0.3s ease',
-        borderRadius: !props.results
+        borderRadius: !props.searchTermLength
           ? theme.shape.borderRadius
           : `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0 0`,
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
@@ -88,7 +88,7 @@ export default function SearchBox() {
     setSearchTerm('');
   };
 
-  const classes = useStyles({ results: results.length });
+  const classes = useStyles({ searchTermLength: searchTerm.length });
 
   return (
     <div className={classes.searchContainer}>

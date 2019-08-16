@@ -7,16 +7,17 @@
 - [x] Convert Classes to functions (Context API, Hooks)
 - [x] i18n (using Context API)
 - [ ] Fuzzy Search (include tags)
-- [ ] My Profile Page
-- [ ] Add a new Gig (use Formik)
+- [ ] [Page] My Profile (_secure_)
+- [ ] [Page] New Gig (use Formik, _secure_, Stripe)
+- [ ] Payment System (Stripe API)
+- [ ] [Page] Preview Gig (use React Spring to transition, _secure_)
 - [ ] Image Upload to Storage (Cloudinary)
-- [ ] Gig Page (use React Spring to transition)
-- [ ] Fully fledged User system and roles (+update seed)
+- [ ] Fully fledged User Auth system and roles (+update seed)
 - [ ] Login with social-media (at least: Facebook Strategy)
 - [ ] Sessions, JWT, graphql-cookie-headers
-- [ ] Prettier Mongoose errors
+- [ ] Prettier Mongoose errors (i18n)
+- [ ] Form validation errors (yup)
 - [ ] Rating Collection (+update seed)
-- [ ] Payment System (Stripe API)
 - [ ] Mailing System (Mailchimp)
 - [ ] Create a Category Collection
 - [ ] minZoom for Google Maps

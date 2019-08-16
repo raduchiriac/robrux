@@ -4,6 +4,7 @@ const GigService = require('./gig.service');
 const GigType = require('./gig.model').GigType;
 
 const gigQueries = {
+  // Get Gigs in a bounding box
   gigs: {
     type: GraphQLList(GigType),
     args: {
@@ -14,10 +15,11 @@ const gigQueries = {
     resolve: async (root, args, context, info) => {
       // Limit of returned results, sort by a field ('rating' or '-rating'), coordinates bounding box
       const { limit = 0, sort = '', bbox = [] } = args;
-      return await GigService.getAll(limit, sort, bbox);
+      return await GigService.getBboxGigs(limit, sort, bbox);
     },
   },
   search: {
+    // Search for Gigs with a term
     type: GraphQLList(GigType),
     args: {
       term: { type: GraphQLString },

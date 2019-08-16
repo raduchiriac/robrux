@@ -24,16 +24,7 @@ const dummyForgotGenerator = () => {
   return { forgotCode, forgotCodeLimit };
 };
 
-const {
-  GraphQLID,
-  GraphQLNonNull,
-  GraphQLInt,
-  GraphQLString,
-  GraphQLList,
-  GraphQLFloat,
-  GraphQLObjectType,
-  GraphQLInputObjectType,
-} = require('graphql');
+const { GraphQLID, GraphQLString, GraphQLObjectType } = require('graphql');
 
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
@@ -70,15 +61,18 @@ const schema = new Schema({
       }),
     ],
   },
-  role: { type: String, enum: ['admin', 'user', 'pro', 'deleted'], default: 'user' },
+  role: { type: String, enum: ['admin', 'user', 'pro', 'blocked'], default: 'user' },
   validated: { type: Boolean, default: false },
+  gigs: { type: [ObjectId] },
   validationCode: {
     index: true,
     type: String,
     default: () => dummyRandomGenerator(2),
     unique: true,
   },
-  phone: { type: String },
+  bio: {
+    phone: { type: String },
+  },
   forgotCode: { type: String },
   forgotCodeLimit: { type: Date },
   lastLogin: { type: Date },
@@ -90,7 +84,14 @@ schema.plugin(passportLocalMongoose, {
   usernameField: 'email',
   errorMessages: {
     UserExistsError: 'Email already exists',
+    IncorrectPasswordError: 'Email or username are incorrect',
+    IncorrectUsernameError: 'Email or username are incorrect',
+    MissingUsernameError: 'No email was given',
   },
+  // findByUsername: function(model, queryParameters) {
+  // queryParameters.validated = true;
+  //   return model.findOne(queryParameters);
+  // },
 });
 schema.plugin(mongodbErrorHandler);
 
@@ -102,6 +103,9 @@ const User = mongoose.model('User', schema);
 const fieldsInputLogin = {
   email: { type: GraphQLString },
   password: { type: GraphQLString },
+};
+const fieldsAuth = {
+  token: { type: GraphQLString },
 };
 const fieldsInputRegister = Object.assign({}, fieldsInputLogin, {
   firstName: { type: GraphQLString },
@@ -117,4 +121,10 @@ const UserType = new GraphQLObjectType({
   fields,
 });
 
-module.exports = { User, UserType, fieldsInputLogin, fieldsInputRegister };
+const UserAuthType = new GraphQLObjectType({
+  name: 'UserAuth',
+  description: 'Auth token after loginUser',
+  fields: fieldsAuth,
+});
+
+module.exports = { User, UserType, UserAuthType, fieldsInputLogin, fieldsInputRegister };

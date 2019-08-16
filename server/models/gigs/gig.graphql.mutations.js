@@ -18,7 +18,7 @@ const gigMutations = {
         type: new GraphQLNonNull(GigInputType),
       },
     },
-    resolve: async (rootValue, { input }) => {
+    resolve: async (rootValue, { input }, context) => {
       return await GigService.createGig(input);
     },
   },

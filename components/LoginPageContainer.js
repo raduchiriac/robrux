@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -6,6 +6,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useMutation } from '@apollo/react-hooks';
@@ -45,9 +46,67 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Form = props => {};
+const Form = props => {
+  const { classes, errors, formErrors, values, handleChange, handleSubmit, STRINGS } = props;
 
-export default function LoginPageContainer() {
+  return (
+    <Fragment>
+      <form className={classes.form} noValidate onSubmit={handleSubmit}>
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="email"
+          label="Adresa de mail"
+          name="email"
+          onChange={evt => handleChange(evt)}
+          value={values.email || ''}
+          error={(errors.email && true) || false}
+          autoFocus
+        />
+        {errors.email && <Typography variant="subtitle2">{errors.email}</Typography>}
+
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          name="password"
+          label="Parola"
+          type="password"
+          onChange={evt => handleChange(evt)}
+          error={(errors.password && true) || false}
+          value={values.password || ''}
+          id="password"
+        />
+        {errors.password && <Typography variant="subtitle2">{errors.password}</Typography>}
+
+        <FormControlLabel control={<Checkbox value="remember" color="primary" />} label={STRINGS.LOGIN_REMEMBER} />
+        <Box>
+          <Typography>{formErrors}</Typography>
+        </Box>
+        <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
+          Login
+        </Button>
+        <Grid container>
+          <Grid item xs>
+            <Link href="/forgot" variant="body2">
+              {STRINGS.LOGIN_FORGOT}
+            </Link>
+          </Grid>
+          <Grid item>
+            <Link href="/register" variant="body2">
+              {STRINGS.LOGIN_NO_ACCOUNT}
+            </Link>
+          </Grid>
+        </Grid>
+      </form>
+    </Fragment>
+  );
+};
+
+const LoginPageContainer = () => {
   const classes = useStyles();
   const { STRINGS } = React.useContext(LanguagesContext).state;
 
@@ -71,12 +130,12 @@ export default function LoginPageContainer() {
   const { values, errors, handleChange, handleSubmit } = useForm(_login, _validate);
   const [loginUser, { data }] = useMutation(LOGIN_USER, {
     onCompleted({ login }) {
-      if (login.email) {
-        setFormValidated(true);
+      if (login.token) {
+        setFormValidated(login.token);
       }
     },
     onError(error) {
-      setFormErrors(error.message);
+      setFormErrors(error.graphQLErrors.map(e => e.message).join(','));
     },
   });
 
@@ -88,54 +147,23 @@ export default function LoginPageContainer() {
           <Avatar className={classes.avatar}>
             <img src="/static/robrux.png" />
           </Avatar>
-          {formValidated && 'Yes'}
+          {formValidated && '👏'}
           <Typography component="h1" variant="h5">
             ro:brux
           </Typography>
-          <form className={classes.form} noValidate onSubmit={handleSubmit}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Adresa de mail"
-              name="email"
-              onChange={handleChange}
-              value={values.email || ''}
-              autoFocus
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Parola"
-              type="password"
-              onChange={handleChange}
-              value={values.password || ''}
-              id="password"
-            />
-            <FormControlLabel control={<Checkbox value="remember" color="primary" />} label={STRINGS.LOGIN_REMEMBER} />
-            <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
-              Login
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="/forgot" variant="body2">
-                  {STRINGS.LOGIN_FORGOT}
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="/register" variant="body2">
-                  {STRINGS.LOGIN_NO_ACCOUNT}
-                </Link>
-              </Grid>
-            </Grid>
-          </form>
+          <Form
+            classes={classes}
+            errors={errors}
+            formErrors={formErrors}
+            values={values}
+            STRINGS={STRINGS}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+          />
         </div>
       </Grid>
     </Grid>
   );
-}
+};
+
+export { Form, LoginPageContainer };

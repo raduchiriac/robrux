@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -121,6 +121,7 @@ const Form = props => {
             {errors.password && <Typography variant="subtitle2">{errors.password}</Typography>}
           </Grid>
           <Grid item xs={12}>
+            {/* // TODO: Confirm pass */}
             <TextField
               variant="outlined"
               required

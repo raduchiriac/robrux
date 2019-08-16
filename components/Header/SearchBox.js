@@ -73,7 +73,7 @@ export default function SearchBox() {
     if (debouncedSearchTerm.length) {
       searchGigs();
     }
-  }, [debouncedSearchTerm, searchGigs]);
+  }, [debouncedSearchTerm]);
 
   let results = [];
   if (data && data.search) {

@@ -6,7 +6,7 @@ const createGig = async gigParams => {
   return gigResult;
 };
 
-const getAll = async (limit = 0, sort = '', bbox = []) => {
+const getBboxGigs = async (limit = 0, sort = '', bbox = []) => {
   let selector = {};
   if (bbox.length) {
     selector = {
@@ -38,6 +38,6 @@ const fuzzySearch = async string => {
 
 module.exports = {
   createGig,
-  getAll,
+  getBboxGigs,
   fuzzySearch,
 };

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 module.exports = {
   initDBConnection: (MONGODB_URI, callback) => {
+    mongoose.Promise = global.Promise;
     mongoose.connect(MONGODB_URI, {
       useCreateIndex: true,
       useNewUrlParser: true,

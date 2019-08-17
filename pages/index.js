@@ -3,10 +3,14 @@ import React from 'react';
 import { WithHeaderLayout } from '../layouts/WithHeaderLayout';
 import IndexPageContainer from '../components/IndexPageContainer';
 
-export default function Index() {
+const Index = props => {
   return (
     <WithHeaderLayout>
       <IndexPageContainer />
     </WithHeaderLayout>
   );
-}
+};
+
+// Index.getInitialProps = ctx => ({ client: ctx.apolloClient });
+
+export default Index;

@@ -74,6 +74,7 @@ const Form = props => {
               error={(errors.firstName && true) || false}
               autoFocus
             />
+            {errors.firstName && <Typography variant="subtitle2">{errors.firstName}</Typography>}
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -88,6 +89,7 @@ const Form = props => {
               error={(errors.lastName && true) || false}
               autoComplete="off"
             />
+            {errors.lastName && <Typography variant="subtitle2">{errors.lastName}</Typography>}
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -121,18 +123,20 @@ const Form = props => {
             {errors.password && <Typography variant="subtitle2">{errors.password}</Typography>}
           </Grid>
           <Grid item xs={12}>
-            {/* // TODO: Confirm pass */}
             <TextField
               variant="outlined"
               required
               fullWidth
-              name="confirm-password"
+              name="confirmPassword"
               label="Confirmă parola"
               type="password"
-              id="confirm-password"
+              id="confirmPassword"
+              onChange={evt => handleChange(evt)}
+              value={values.confirmPassword || ''}
+              error={(errors.confirmPassword && true) || false}
               autoComplete="off"
             />
-            {errors.password && <Typography variant="subtitle2">{errors['confirm-password']}</Typography>}
+            {errors.confirmPassword && <Typography variant="subtitle2">{errors.confirmPassword}</Typography>}
           </Grid>
           <Grid item xs={12}>
             <FormControlLabel
@@ -175,6 +179,12 @@ export default function RegisterPageContainer() {
   };
   const _validate = values => {
     let errors = {};
+    if (!values.firstName) {
+      errors.firstName = 'First Name is required';
+    }
+    if (!values.lastName) {
+      errors.lastName = 'Last Name is required';
+    }
     if (!values.email) {
       errors.email = 'Email address is required';
     } else if (!/\S+@\S+\.\S+/.test(values.email)) {
@@ -185,6 +195,10 @@ export default function RegisterPageContainer() {
     } else if (values.password.length < 3) {
       errors.password = 'Password must be 3 or more characters';
     }
+    if (values.confirmPassword !== values.password) {
+      errors.confirmPassword = 'Your passwords do not match';
+    }
+
     return errors;
   };
 

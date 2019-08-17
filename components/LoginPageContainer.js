@@ -131,6 +131,7 @@ const LoginPageContainer = () => {
   const [loginUser, { data }] = useMutation(LOGIN_USER, {
     onCompleted({ login }) {
       if (login.token) {
+        localStorage.setItem('token', login.token);
         setFormValidated(login.token);
       }
     },
@@ -147,7 +148,6 @@ const LoginPageContainer = () => {
           <Avatar className={classes.avatar}>
             <img src="/static/robrux.png" />
           </Avatar>
-          {formValidated && '👏'}
           <Typography component="h1" variant="h5">
             ro:brux
           </Typography>

@@ -107,10 +107,17 @@ const fieldsInputLogin = {
 const fieldsAuth = {
   token: { type: GraphQLString },
 };
-const fieldsInputRegister = Object.assign({}, fieldsInputLogin, {
-  firstName: { type: GraphQLString },
-  lastName: { type: GraphQLString },
-});
+const fieldsInputRegister = Object.assign(
+  {},
+  fieldsInputLogin,
+  {
+    confirmPassword: { type: GraphQLString },
+  },
+  {
+    firstName: { type: GraphQLString },
+    lastName: { type: GraphQLString },
+  }
+);
 const fields = Object.assign({}, fieldsInputRegister, {
   _id: { type: GraphQLID },
 });

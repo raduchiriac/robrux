@@ -8,7 +8,7 @@ import { LanguagesContextProvider } from '../lib/contexts/LanguagesContext';
 import { GlobalContextProvider } from '../lib/contexts/GlobalContext';
 
 import { DefaultTheme } from '../lib/themes/default-theme';
-import client from '../lib/apollo';
+import withApollo from '../lib/apollo';
 
 class MyApp extends App {
   componentDidMount() {
@@ -18,12 +18,21 @@ class MyApp extends App {
       jssStyles.parentNode.removeChild(jssStyles);
     }
   }
+  static async getInitialProps({ Component, ctx }) {
+    let pageProps = {};
+
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx);
+    }
+    pageProps.query = ctx.query;
+    return { pageProps };
+  }
 
   render() {
-    const { Component, pageProps } = this.props;
+    const { Component, pageProps, apollo } = this.props;
 
     return (
-      <ApolloProvider client={client}>
+      <ApolloProvider client={apollo}>
         <GlobalContextProvider>
           <LanguagesContextProvider>
             <Head>
@@ -40,4 +49,4 @@ class MyApp extends App {
   }
 }
 
-export default MyApp;
+export default withApollo(MyApp);

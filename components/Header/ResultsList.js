@@ -23,7 +23,7 @@ export default function ResultsList(props) {
         {results.map((result, idx) => (
           <Result
             key={idx}
-            searching={!!result._id && searching}
+            searching={(!!result._id && searching) || ''}
             result={result}
             isLast={results.length === idx + 1}
             isClickable={!!result._id}

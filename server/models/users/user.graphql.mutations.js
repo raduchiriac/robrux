@@ -38,7 +38,7 @@ const userMutations = {
       },
     },
     resolve: async (rootValue, { input }, context) => {
-      return await UserService.loginUser(input);
+      return await UserService.loginUser(input, context.res);
     },
   },
 };

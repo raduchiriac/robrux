@@ -1,50 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { gql } from 'apollo-boost';
 import Grid from '@material-ui/core/Grid';
+import { useLazyQuery } from '@apollo/react-hooks';
+
 import Map from './Map/Map';
-import client from '../lib/apollo';
 import { GlobalContext } from '../lib/contexts/GlobalContext';
+import { SEARCH_BBOX_GIG } from '../lib/graphql/gigs.strings';
 
 import SmallGigsList from './Gig/SmallGigsList';
 import './IndexPageContainer.styles.scss';
 
-const IndexPageContainer = () => {
-  const limit = 20;
-  const [loading, setLoading] = useState(true);
+const IndexPageContainer = props => {
   const [bbox, setBbox] = useState([]);
-  const [gigs, setGigs] = useState([]);
   const [hovered, setHovered] = useState(0);
+  const [searchBboxGigs, { data, error, loading }] = useLazyQuery(SEARCH_BBOX_GIG, {
+    variables: { limit: 20, sort: '-rating', bbox },
+  });
+
   const { showMap } = React.useContext(GlobalContext).state;
 
   useEffect(() => {
     if (bbox.length) {
-      setLoading(true);
-      setGigs([]);
-      // TODO: move this to a file
-      client
-        .query({
-          query: gql`
-          {
-            gigs(limit: ${limit}, sort: "-_rating", bbox: ${JSON.stringify(bbox)}) {
-              _id
-              _providerName
-              _rating
-              title
-              price
-              images
-              location {
-                coordinates
-              }
-            }
-          }
-        `,
-        })
-        .then(result => {
-          setLoading(false);
-          setGigs(result.data.gigs);
-        });
+      searchBboxGigs();
     }
   }, [bbox]);
+
+  let gigs = [];
+  if (data && data.gigs) {
+    if (data.gigs.length) {
+      gigs = data.gigs;
+    }
+  }
 
   const onMapBoundsChange = (center, zoom, bounds, marginBounds) => {
     // INFO: This is how coordinates are stored NW [lat, long] + NE + SE + SW + NW (again)

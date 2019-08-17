@@ -1,5 +1,6 @@
-const { ApolloServer, AuthenticationError } = require('apollo-server-express');
+const { ApolloServer, AuthenticationError, PubSub } = require('apollo-server-express');
 const { GraphQLObjectType, GraphQLSchema } = require('graphql');
+const jwt = require('jsonwebtoken');
 
 const userQueries = require('../models/users/user.graphql.queries');
 const userMutations = require('../models/users/user.graphql.mutations');
@@ -24,6 +25,26 @@ const schema = new GraphQLSchema({
   }),
 });
 
+const context = ({ req, res, connection }) => {
+  if (connection) {
+    // check connection for metadata
+    return connection.context;
+  } else {
+    const token = req.headers.token || '';
+
+    return { req, res, token };
+  }
+};
+
+const formatError = err => {
+  // Don't give the specific errors to the client.
+  if (err.message.startsWith('Database Error: ')) {
+    return new Error('Internal server error');
+  }
+  // Otherwise return the original error.
+  return err;
+};
+
 const GRAPHQL_PLAYGROUND_CONFIG = {
   settings: {
     'editor.cursorShape': 'line',
@@ -34,24 +55,21 @@ const GRAPHQL_PLAYGROUND_CONFIG = {
   },
 };
 
-const context = ({ req }) => {
-  // get the user token from the headers
-  const token = req.headers.authorization || '';
-
-  // try to retrieve a user with the token
-  // const user = getUser(token);
-  const user = {};
-
-  // add the user to the context
-  // optionally block the user
-  // we could also check user roles/permissions here
-  if (!user) throw new AuthenticationError('You must be logged in');
-  return { user };
-};
-
 const apollo = new ApolloServer({
   schema,
   context,
+  onConnect: async (params, socket, context) => {
+    const token = params.authToken;
+    if (token) {
+      const user = jwt.verify(token, process.env.JWT_SECRET);
+      if (user) {
+        return Object.assign({}, socket.upgradeReq, { subUser: user });
+      }
+    }
+    throw new Error('User is not authenticated');
+  },
+  onDisconnect: (socket, context) => {},
+  formatError,
   playground: process.env.NODE_ENV === 'production' ? false : GRAPHQL_PLAYGROUND_CONFIG,
 });
 

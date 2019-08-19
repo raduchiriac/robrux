@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { useLazyQuery } from '@apollo/react-hooks';
+import Router from 'next/router';
 
 import Map from './Map/Map';
 import { GlobalContext } from '../lib/contexts/GlobalContext';
@@ -45,7 +46,9 @@ const IndexPageContainer = props => {
   };
 
   const onGigClick = gig => {
-    console.log('You clicked a marker:', gig.title);
+    Router.push({
+      pathname: `/service/${gig._id}`,
+    });
   };
 
   const onHoverEnters = (key, childProps) => {

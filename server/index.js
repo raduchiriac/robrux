@@ -35,8 +35,6 @@ app.prepare().then(() => {
         // put the userId onto the req for future requests to access
         req.userId = id;
       }
-      // console.log('isetheaders', req.userId);
-
       next();
     });
 
@@ -84,7 +82,7 @@ app.prepare().then(() => {
         return handle(req, res, parsedUrl);
       });
       // Did you run the seed command?
-      if (process.env.SEED === 'true') {
+      if (process.env.SEED === 'true' && dev) {
         const seed = require('./seed');
       }
 

@@ -12,7 +12,7 @@ import { LanguagesContext } from '../lib/contexts/LanguagesContext';
 import { useMutation } from '@apollo/react-hooks';
 import { CREATE_USER } from '../lib/graphql/user.strings';
 import Container from '@material-ui/core/Container';
-import Link from '../pages/src/Link';
+import Link from '../lib/hocs/withLink';
 
 const useStyles = makeStyles(theme => ({
   '@global': {

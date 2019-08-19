@@ -13,7 +13,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { LOGIN_USER } from '../lib/graphql/user.strings';
 import useForm from '../lib/hooks/useForm';
 import { LanguagesContext } from '../lib/contexts/LanguagesContext';
-import Link from '../pages/src/Link';
+import Link from '../lib/hocs/withLink';
 
 const useStyles = makeStyles(theme => ({
   root: {

@@ -5,6 +5,8 @@ import Avatar from '@material-ui/core/Avatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import Highlighter from 'react-highlight-words';
+import Link from '../../lib/hocs/withLink';
+import ConditionalWrap from '../../lib/hocs/ConditionalWrap';
 
 export default function Result(props) {
   const handleResultClick = () => {};
@@ -12,36 +14,45 @@ export default function Result(props) {
 
   return (
     <Fragment>
-      <ListItem
-        alignItems="flex-start"
-        button={isClickable}
-        onClick={handleResultClick}
-        className={`result-list__result ${!isClickable ? 'result-list__result--no-link' : ''}`}
-      >
-        {result.images && (
-          <ListItemAvatar>
-            <Avatar src={result.images[0]} />
-          </ListItemAvatar>
+      <ConditionalWrap
+        condition={result._id}
+        wrap={children => (
+          <Link href={`/service/${result._id}`} underline="none">
+            {children}
+          </Link>
         )}
-        <ListItemText
-          primary={
-            <Highlighter
-              highlightClassName="result-list__result-highlighted"
-              highlightTag="strong"
-              searchWords={[searching]}
-              textToHighlight={result.title}
-            />
-          }
-          secondary={
-            <Highlighter
-              highlightClassName="result-list__result-highlighted"
-              highlightTag="strong"
-              searchWords={[searching]}
-              textToHighlight={result.description}
-            />
-          }
-        />
-      </ListItem>
+      >
+        <ListItem
+          alignItems="flex-start"
+          button={isClickable}
+          onClick={handleResultClick}
+          className={`result-list__result ${!isClickable ? 'result-list__result--no-link' : ''}`}
+        >
+          {result.images && (
+            <ListItemAvatar>
+              <Avatar src={result.images[0]} />
+            </ListItemAvatar>
+          )}
+          <ListItemText
+            primary={
+              <Highlighter
+                highlightClassName="result-list__result-highlighted"
+                highlightTag="strong"
+                searchWords={[searching]}
+                textToHighlight={result.title}
+              />
+            }
+            secondary={
+              <Highlighter
+                highlightClassName="result-list__result-highlighted"
+                highlightTag="strong"
+                searchWords={[searching]}
+                textToHighlight={result.description}
+              />
+            }
+          />
+        </ListItem>
+      </ConditionalWrap>
       {!isLast && <Divider variant="inset" component="li" />}
     </Fragment>
   );

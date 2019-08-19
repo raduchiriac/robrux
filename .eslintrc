@@ -16,6 +16,7 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
+  "parser": "babel-eslint",
   "plugins": ["react", "react-hooks"],
   "rules": { "react-hooks/rules-of-hooks": "warn", "react-hooks/exhaustive-deps": "off" }
 }

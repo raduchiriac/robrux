@@ -31,9 +31,14 @@ app.prepare().then(() => {
       const { token } = req.cookies;
 
       if (token) {
-        const { id } = jwt.verify(token, process.env.JWT_SECRET);
-        // put the userId onto the req for future requests to access
-        req.userId = id;
+        try {
+          // put the userId onto the req for future requests to access
+          const { id } = jwt.verify(token, process.env.JWT_SECRET);
+          req.userId = id;
+        } catch (err) {
+          // Error verifing the token
+          // (err.message)
+        }
       }
       next();
     });

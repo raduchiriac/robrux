@@ -8,7 +8,7 @@ import { LanguagesContextProvider } from '../lib/contexts/LanguagesContext';
 import { GlobalContextProvider } from '../lib/contexts/GlobalContext';
 
 import { DefaultTheme } from '../lib/themes/default-theme';
-import withApollo from '../lib/apollo';
+import withApollo from '../lib/hocs/withApollo';
 
 class MyApp extends App {
   componentDidMount() {

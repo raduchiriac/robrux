@@ -1,7 +1,7 @@
-const Service = ({ service }) => <div>{service.id}</div>;
+const Service = ({ service }) => <div>idOrSlug: {service.idOrSlug}</div>;
 
 Service.getInitialProps = async ({ query: { id } }, res) => {
-  return { service: { id } };
+  return { service: { idOrSlug: id } };
 };
 
 export default Service;

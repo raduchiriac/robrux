@@ -59,14 +59,7 @@ const apollo = new ApolloServer({
   schema,
   context,
   onConnect: async (params, socket, context) => {
-    const token = params.authToken;
-    if (token) {
-      const user = jwt.verify(token, process.env.JWT_SECRET);
-      if (user) {
-        return Object.assign({}, socket.upgradeReq, { subUser: user });
-      }
-    }
-    throw new Error('User is not authenticated');
+    // throw new Error('User is not authenticated');
   },
   onDisconnect: (socket, context) => {},
   formatError,

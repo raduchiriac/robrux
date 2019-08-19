@@ -14,6 +14,7 @@ import { LOGIN_USER } from '../lib/graphql/user.strings';
 import useForm from '../lib/hooks/useForm';
 import { LanguagesContext } from '../lib/contexts/LanguagesContext';
 import Link from '../lib/hocs/withLink';
+import Router from 'next/router';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -60,6 +61,7 @@ const Form = props => {
           id="email"
           label="Adresa de mail"
           name="email"
+          autoComplete="email"
           onChange={evt => handleChange(evt)}
           value={values.email || ''}
           error={(errors.email && true) || false}
@@ -75,6 +77,7 @@ const Form = props => {
           name="password"
           label="Parola"
           type="password"
+          autoComplete="current-password"
           onChange={evt => handleChange(evt)}
           error={(errors.password && true) || false}
           value={values.password || ''}
@@ -125,14 +128,13 @@ const LoginPageContainer = () => {
     return errors;
   };
 
-  const [formValidated, setFormValidated] = useState(false);
   const [formErrors, setFormErrors] = useState('');
   const { values, errors, handleChange, handleSubmit } = useForm(_login, _validate);
   const [loginUser, { data }] = useMutation(LOGIN_USER, {
     onCompleted({ login }) {
       if (login.token) {
         localStorage.setItem('token', login.token);
-        setFormValidated(login.token);
+        Router.push('/');
       }
     },
     onError(error) {

@@ -13,6 +13,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import SearchBox from './Header/SearchBox';
 import { LanguagesContext } from '../lib/contexts/LanguagesContext';
+import Link from '../lib/hocs/withLink';
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -41,7 +42,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function HeaderContainer() {
+const HeaderContainer = () => {
   const classes = useStyles();
 
   const { STRINGS } = React.useContext(LanguagesContext).state;
@@ -52,15 +53,15 @@ export default function HeaderContainer() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  function handleProfileMenuOpen(event, mine) {
+  function handleProfileMenuOpen(event) {
     setAnchorEl(event.currentTarget);
-  }
-  function handleMobileMenuClose() {
-    setMobileMoreAnchorEl(null);
   }
   function handleMenuClose() {
     setAnchorEl(null);
     handleMobileMenuClose();
+  }
+  function handleMobileMenuClose() {
+    setMobileMoreAnchorEl(null);
   }
   function handleMobileMenuOpen(event) {
     setMobileMoreAnchorEl(event.currentTarget);
@@ -76,8 +77,12 @@ export default function HeaderContainer() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profil</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+      <MenuItem href="/user/profile" onClick={handleMenuClose}>
+        Profil
+      </MenuItem>
+      <MenuItem href="/logout" onClick={handleMenuClose}>
+        Deconectare
+      </MenuItem>
     </Menu>
   );
   const mobileMenuId = 'header-container__account-menu--mobile';
@@ -97,7 +102,7 @@ export default function HeaderContainer() {
             <MailIcon />
           </Badge>
         </IconButton>
-        <p>Messages</p>
+        <p>Mesaje</p>
       </MenuItem>
       <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit">
@@ -105,7 +110,7 @@ export default function HeaderContainer() {
             <NotificationsIcon />
           </Badge>
         </IconButton>
-        <p>Notifications</p>
+        <p>{STRINGS.HEADER_NOTIFICATIONS}</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -116,7 +121,7 @@ export default function HeaderContainer() {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <p>Contul meu</p>
       </MenuItem>
     </Menu>
   );
@@ -170,4 +175,11 @@ export default function HeaderContainer() {
       {renderMenu}
     </div>
   );
-}
+};
+
+HeaderContainer.getInitialProps = async ({ req, query }) => {
+  console.log('header', req);
+  return {};
+};
+
+export default HeaderContainer;

@@ -14,7 +14,7 @@ const IndexPageContainer = props => {
   const [bbox, setBbox] = useState([]);
   const [hovered, setHovered] = useState(0);
   const [searchBboxGigs, { data, error, loading }] = useLazyQuery(SEARCH_BBOX_GIG, {
-    variables: { limit: 20, sort: '-rating', bbox },
+    variables: { limit: 20, sort: '-_rating', bbox },
   });
 
   const { showMap } = React.useContext(GlobalContext).state;

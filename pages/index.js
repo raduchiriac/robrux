@@ -11,6 +11,4 @@ const Index = props => {
   );
 };
 
-// Index.getInitialProps = ctx => ({ client: ctx.apolloClient });
-
 export default Index;

@@ -1,13 +1,8 @@
 import React from 'react';
-import { DefaultLayout } from '../layouts/DefaultLayout';
 import { withProtectedRoute } from '../lib/hocs/withAuth';
 
 const Verify = () => {
-  return (
-    <DefaultLayout>
-      <div>Verify</div>
-    </DefaultLayout>
-  );
+  return <div>Verify</div>;
 };
 
 export default withProtectedRoute(Verify);

@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, useApolloClient } from '@apollo/react-hooks';
 import { LOGIN_USER } from '../lib/graphql/user.strings';
 import useForm from '../lib/hooks/useForm';
 import { LanguagesContext } from '../lib/contexts/LanguagesContext';
@@ -128,13 +128,18 @@ const LoginPageContainer = () => {
     return errors;
   };
 
+  const client = useApolloClient();
   const [formErrors, setFormErrors] = useState('');
   const { values, errors, handleChange, handleSubmit } = useForm(_login, _validate);
   const [loginUser, { data }] = useMutation(LOGIN_USER, {
     onCompleted({ login }) {
       if (login.token) {
         localStorage.setItem('token', login.token);
-        Router.push('/');
+        // Force a reload of all the current queries now that the user is logged
+        client.cache.reset().then(() => {
+          redirect({}, '/');
+          // Router.push('/');
+        });
       }
     },
     onError(error) {

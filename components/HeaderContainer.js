@@ -132,7 +132,9 @@ const HeaderContainer = () => {
       <AppBar position="fixed">
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>
-            {STRINGS.SITE_NAME}
+            <Link href="/" underline="none" color="inherit">
+              {STRINGS.SITE_NAME}
+            </Link>
           </Typography>
           <SearchBox />
           <div className={classes.grow} />

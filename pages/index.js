@@ -1,14 +1,12 @@
 import React from 'react';
 
-import { WithHeaderLayout } from '../layouts/WithHeaderLayout';
+import { WithHeaderLayout } from '../lib/layouts/WithHeaderLayout';
 import IndexPageContainer from '../components/IndexPageContainer';
 
 const Index = props => {
-  return (
-    <WithHeaderLayout>
-      <IndexPageContainer />
-    </WithHeaderLayout>
-  );
+  return <IndexPageContainer />;
 };
+
+Index.Layout = WithHeaderLayout;
 
 export default Index;

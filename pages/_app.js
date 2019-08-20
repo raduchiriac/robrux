@@ -1,13 +1,13 @@
 import React from 'react';
-import App, { Container } from 'next/app';
+import App from 'next/app';
 import Head from 'next/head';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { ThemeProvider } from '@material-ui/styles';
 import { LanguagesContextProvider } from '../lib/contexts/LanguagesContext';
 import { GlobalContextProvider } from '../lib/contexts/GlobalContext';
-
 import { DefaultTheme } from '../lib/themes/default-theme';
+import { EmptyLayout } from '../lib/layouts/EmptyLayout';
 import withApollo from '../lib/hocs/withApollo';
 
 class MyApp extends App {
@@ -18,17 +18,10 @@ class MyApp extends App {
       jssStyles.parentNode.removeChild(jssStyles);
     }
   }
-  static async getInitialProps({ Component, ctx }) {
-    let pageProps = {};
-
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx);
-    }
-    return { pageProps };
-  }
 
   render() {
     const { Component, pageProps, apollo } = this.props;
+    const Layout = Component.Layout || EmptyLayout;
 
     return (
       <ApolloProvider client={apollo}>
@@ -39,7 +32,9 @@ class MyApp extends App {
             </Head>
             <ThemeProvider theme={DefaultTheme}>
               <CssBaseline />
-              <Component {...pageProps} />
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
             </ThemeProvider>
           </LanguagesContextProvider>
         </GlobalContextProvider>

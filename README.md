@@ -1,3 +1,5 @@
+![screenshot](./static/screenshot.png?raw=true)
+
 #### Roadmap
 
 - [x] Map with "\$geoWithin" query

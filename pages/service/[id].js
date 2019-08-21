@@ -15,7 +15,7 @@ const Service = ({ service }) => {
           <h1>Title magic carpet maker</h1>
         </Paper>
         <Paper>
-          <img src="/static/brux-full.jpg" alt="" />
+          <img src="/static/robrux-full.jpeg" alt="" />
         </Paper>
         <Paper>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis delectus minima velit assumenda, quaerat

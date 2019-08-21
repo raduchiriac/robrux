@@ -134,11 +134,11 @@ const LoginPageContainer = () => {
   const [loginUser, { data }] = useMutation(LOGIN_USER, {
     onCompleted({ login }) {
       if (login.token) {
-        localStorage.setItem('token', login.token);
         // Force a reload of all the current queries now that the user is logged
         client.cache.reset().then(() => {
-          redirect({}, '/');
-          // Router.push('/');
+          localStorage.setItem('token', login.token);
+          // TODO: Cannot send to '/' at the moment. Not sure why Router.replace('/') does not work
+          Router.push('/login');
         });
       }
     },

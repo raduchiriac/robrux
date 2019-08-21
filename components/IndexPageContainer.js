@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { useLazyQuery } from '@apollo/react-hooks';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Typography from '@material-ui/core/Typography';
 import Router from 'next/router';
 
 import Map from './Map/Map';
@@ -32,8 +37,6 @@ const IndexPageContainer = props => {
     }
   }
 
-  console.log(gigs);
-
   const onMapBoundsChange = (center, zoom, bounds, marginBounds) => {
     // INFO: This is how coordinates are stored NW [lat, long] + NE + SE + SW + NW (again)
     const bbox = [
@@ -64,6 +67,11 @@ const IndexPageContainer = props => {
   return (
     <Grid container className={'home-page__container'}>
       {showMap && (
+        // <ExpansionPanel>
+        //   <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
+        //     <Typography>Show Map</Typography>
+        //   </ExpansionPanelSummary>
+        //   <ExpansionPanelDetails>
         <Map
           gigs={gigs}
           loading={loading}
@@ -73,6 +81,8 @@ const IndexPageContainer = props => {
           _onMapChildMouseEnter={onHoverEnters}
           _onMapChildMouseLeave={onHoverLeaves}
         />
+        //   </ExpansionPanelDetails>
+        // </ExpansionPanel>
       )}
       <SmallGigsList
         gigs={gigs}

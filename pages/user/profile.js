@@ -8,7 +8,7 @@ const Profile = props => {
 
 Profile.getInitialProps = ctx => {
   // console.log(Object.keys(ctx));
-  return { cookies: ctx.req.cookies, userId: ctx.req.userId };
+  // return { cookies: ctx.req.cookies, userId: ctx.req.userId };
 };
 
 Profile.Layout = WithHeaderLayout;

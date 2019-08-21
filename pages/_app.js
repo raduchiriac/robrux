@@ -11,6 +11,8 @@ import { EmptyLayout } from '../lib/layouts/EmptyLayout';
 import withApollo from '../lib/hocs/withApollo';
 
 class MyApp extends App {
+  static displayName = 'MyApp';
+
   componentDidMount() {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
@@ -20,11 +22,11 @@ class MyApp extends App {
   }
 
   render() {
-    const { Component, pageProps, apollo } = this.props;
+    const { Component, pageProps, apolloClient } = this.props;
     const Layout = Component.Layout || EmptyLayout;
 
     return (
-      <ApolloProvider client={apollo}>
+      <ApolloProvider client={apolloClient}>
         <GlobalContextProvider>
           <LanguagesContextProvider>
             <Head>

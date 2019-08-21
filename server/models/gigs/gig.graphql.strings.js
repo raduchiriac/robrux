@@ -12,6 +12,7 @@ const randomColor = () => {
 };
 const GIG_CREATE_FAKE = () => {
   const userID = new ObjectID();
+  const subscriptionID = new ObjectID();
   const title = faker.company.catchPhrase();
   return `
     mutation {
@@ -19,6 +20,7 @@ const GIG_CREATE_FAKE = () => {
         _userId: "${userID}",
         _providerName: "${faker.name.firstName()} ${faker.name.lastName()}",
         _rating: ${Math.random() * 4 + 1},
+        _subscription: "${Math.random() >= 0.5 ? subscriptionID : ''}",
         title: "${title}",
         images: [
           "https://i.pravatar.cc/256?u=${userID}",

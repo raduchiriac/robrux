@@ -58,9 +58,7 @@ const GRAPHQL_PLAYGROUND_CONFIG = {
 const apollo = new ApolloServer({
   schema,
   context,
-  onConnect: async (params, socket, context) => {
-    // throw new Error('User is not authenticated');
-  },
+  onConnect: async (params, socket, context) => {},
   onDisconnect: (socket, context) => {},
   formatError,
   playground: process.env.NODE_ENV === 'production' ? false : GRAPHQL_PLAYGROUND_CONFIG,

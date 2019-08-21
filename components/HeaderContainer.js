@@ -14,6 +14,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import SearchBox from './Header/SearchBox';
 import { LanguagesContext } from '../lib/contexts/LanguagesContext';
 import Link from '../lib/hocs/withLink';
+import Router from 'next/router';
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -57,6 +58,8 @@ const HeaderContainer = () => {
     setAnchorEl(event.currentTarget);
   }
   function handleMenuClose() {
+    // TODO: Get href prop from MenuItem
+    Router.push('/user/profile');
     setAnchorEl(null);
     handleMobileMenuClose();
   }

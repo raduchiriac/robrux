@@ -76,16 +76,15 @@ app.prepare().then(() => {
     server.use(passport.initialize());
     server.use(passport.session());
     require('./_helpers/routes')(server, passport);
-
     const handle = app.getRequestHandler();
+    server.get('*', (req, res) => {
+      const { parse } = require('url');
+      //   const parsedUrl = parse(req.url, true);
+      //   const { pathname, query } = parsedUrl;
+      return handle(req, res, parse(req.url, true));
+    });
 
     server.listen(process.env.PORT, () => {
-      server.get('*', (req, res) => {
-        const { parse } = require('url');
-        const parsedUrl = parse(req.url, true);
-        const { pathname, query } = parsedUrl;
-        return handle(req, res, parsedUrl);
-      });
       // Did you run the seed command?
       if (process.env.SEED === 'true' && dev) {
         const seed = require('./seed');

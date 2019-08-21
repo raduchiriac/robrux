@@ -59,7 +59,7 @@ const Form = props => {
           required
           fullWidth
           id="email"
-          label="Adresa de mail"
+          label={STRINGS.LOGIN_EMAIL}
           name="email"
           autoComplete="email"
           onChange={evt => handleChange(evt)}
@@ -75,7 +75,7 @@ const Form = props => {
           required
           fullWidth
           name="password"
-          label="Parola"
+          label={STRINGS.LOGIN_PASS}
           type="password"
           autoComplete="current-password"
           onChange={evt => handleChange(evt)}
@@ -84,7 +84,7 @@ const Form = props => {
           id="password"
         />
         {errors.password && <Typography variant="subtitle2">{errors.password}</Typography>}
-
+        {/* TODO: Remember Me (extend cookie life?) */}
         <FormControlLabel control={<Checkbox value="remember" color="primary" />} label={STRINGS.LOGIN_REMEMBER} />
         <Box>
           <Typography>{formErrors}</Typography>
@@ -137,8 +137,8 @@ const LoginPageContainer = () => {
         // Force a reload of all the current queries now that the user is logged
         client.cache.reset().then(() => {
           localStorage.setItem('token', login.token);
-          // TODO: Cannot send to '/' at the moment. Not sure why Router.replace('/') does not work
-          Router.push('/login');
+          // TODO: Better if you could redirect to a referral link
+          Router.push('/browse');
         });
       }
     },
@@ -152,12 +152,14 @@ const LoginPageContainer = () => {
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <img src="/static/robrux.png" />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            ro:brux
-          </Typography>
+          <Link href="/" underline="none" color="inherit" align="center">
+            <Avatar className={classes.avatar}>
+              <img src="/static/robrux.png" />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              {STRINGS.SITE_NAME}
+            </Typography>
+          </Link>
           <Form
             classes={classes}
             errors={errors}

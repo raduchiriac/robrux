@@ -13,10 +13,6 @@ const randomColor = () => {
 const GIG_CREATE_FAKE = () => {
   const userID = new ObjectID();
   const title = faker.company.catchPhrase();
-  const slug = title
-    .split(' ')
-    .join('-')
-    .toLowerCase();
   return `
     mutation {
       createGig(input: {
@@ -24,16 +20,13 @@ const GIG_CREATE_FAKE = () => {
         _providerName: "${faker.name.firstName()} ${faker.name.lastName()}",
         _rating: ${Math.random() * 4 + 1},
         title: "${title}",
-        slug: "${slug}",
         images: [
           "https://i.pravatar.cc/256?u=${userID}",
           "https://via.placeholder.com/256x256/${randomColor()}/${randomColor()}?text=${title
-    .match(/\b(\w)/g)
-    .join('')
+    .slice(0, 2)
     .toUpperCase()}",
           "https://via.placeholder.com/256x256/${randomColor()}/${randomColor()}?text=${title
-    .match(/\b(\w)/g)
-    .join('')
+    .slice(0, 2)
     .toUpperCase()}"
         ],
         description: "${faker.lorem.paragraph()}",

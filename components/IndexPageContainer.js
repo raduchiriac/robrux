@@ -32,6 +32,8 @@ const IndexPageContainer = props => {
     }
   }
 
+  console.log(gigs);
+
   const onMapBoundsChange = (center, zoom, bounds, marginBounds) => {
     // INFO: This is how coordinates are stored NW [lat, long] + NE + SE + SW + NW (again)
     const bbox = [
@@ -47,7 +49,7 @@ const IndexPageContainer = props => {
 
   const onGigClick = gig => {
     Router.push({
-      pathname: `/service/${gig._id}`,
+      pathname: `/service/${gig.slug || gig._id}`,
     });
   };
 

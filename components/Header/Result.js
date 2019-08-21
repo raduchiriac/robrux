@@ -17,7 +17,7 @@ export default function Result(props) {
       <ConditionalWrap
         condition={result._id}
         wrap={children => (
-          <Link href={`/service/${result._id}`} underline="none">
+          <Link href={`/service/${result.slug || result._id}`} underline="none">
             {children}
           </Link>
         )}

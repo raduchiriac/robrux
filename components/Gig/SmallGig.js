@@ -2,6 +2,8 @@ import React, { Fragment } from 'react';
 import clsx from 'clsx';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
+import Link from '../../lib/hocs/withLink';
+import ConditionalWrap from '../../lib/hocs/ConditionalWrap';
 
 import './SmallGig.styles.scss';
 
@@ -29,37 +31,45 @@ const styles = theme => ({
 const SmallGig = props => {
   const { gig, hovered, classes, loading, _onMouseEnter, _onMouseLeave, _onClick } = props;
   return (
-    <Paper
-      className={clsx(
-        'small-gig__container',
-        classes['small-gig__container'],
-        hovered && 'small-gig__container--hover',
-        loading && 'small-gig__container--loading'
+    <ConditionalWrap
+      condition={!loading}
+      wrap={children => (
+        <Link className={'small-gig__link'} href={`/service/${gig.slug || gig._id}`} underline="none">
+          {children}
+        </Link>
       )}
-      onMouseEnter={() => (loading ? null : _onMouseEnter(gig._id, gig))}
-      onMouseLeave={() => _onMouseLeave()}
-      onClick={() => (loading ? null : _onClick(gig))}
     >
-      <div className={clsx('small-gig__avatar-container', classes['small-gig__avatar-container'])}>
-        {gig ? (
-          <img className={'small-gig__avatar'} src={gig.images[0]} alt={gig._providerName} />
-        ) : (
-          <div className="small-gig__avatar"></div>
+      <Paper
+        className={clsx(
+          'small-gig__container',
+          classes['small-gig__container'],
+          hovered && 'small-gig__container--hover',
+          loading && 'small-gig__container--loading'
         )}
-      </div>
-      <div className={'small-gig__details-container'}>
-        <p className={'small-gig__title'}>{(gig && gig.title) || ''}</p>
-        <p className={'small-gig__provider'}>{(gig && gig._providerName) || ''}</p>
-        {gig && (
-          <Fragment>
-            <p className={clsx('small-gig__rating', classes['small-gig__rating'])}>
-              ★ {Math.round(gig._rating * 100) / 100}
-            </p>
-            <div className={clsx('small-gig__price', classes['small-gig__price'])}>{gig.price}€/h</div>
-          </Fragment>
-        )}
-      </div>
-    </Paper>
+        onMouseEnter={() => (loading ? null : _onMouseEnter(gig._id, gig))}
+        onMouseLeave={() => _onMouseLeave()}
+      >
+        <div className={clsx('small-gig__avatar-container', classes['small-gig__avatar-container'])}>
+          {!loading && gig ? (
+            <img className={'small-gig__avatar'} src={gig.images[0]} alt={gig._providerName} />
+          ) : (
+            <div className="small-gig__avatar"></div>
+          )}
+        </div>
+        <div className={'small-gig__details-container'}>
+          <p className={'small-gig__title'}>{(!loading && gig && gig.title) || ''}</p>
+          <p className={'small-gig__provider'}>{(!loading && gig && gig._providerName) || ''}</p>
+          {!loading && gig && (
+            <Fragment>
+              <p className={clsx('small-gig__rating', classes['small-gig__rating'])}>
+                ★ {Math.round(gig._rating * 100) / 100}
+              </p>
+              <div className={clsx('small-gig__price', classes['small-gig__price'])}>{gig.price}€/h</div>
+            </Fragment>
+          )}
+        </div>
+      </Paper>
+    </ConditionalWrap>
   );
 };
 

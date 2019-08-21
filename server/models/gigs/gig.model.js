@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const latinize = require('latinize');
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 const {
@@ -51,6 +52,15 @@ schema.index(
     },
   }
 );
+
+schema.pre('save', function(next) {
+  this.slug = encodeURI(
+    latinize(this.title)
+      .replace(/ /g, '-')
+      .toLowerCase()
+  );
+  next();
+});
 
 const Gig = mongoose.model('Gig', schema);
 

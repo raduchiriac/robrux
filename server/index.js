@@ -36,8 +36,7 @@ app.prepare().then(() => {
           const { id } = jwt.verify(token, process.env.JWT_SECRET);
           req.userId = id;
         } catch (err) {
-          // Error verifing the token
-          // (err.message)
+          // Error verifing the token (err.message)
         }
       }
       next();
@@ -48,7 +47,7 @@ app.prepare().then(() => {
     const apollo = require('./_helpers/apollo');
     apollo.applyMiddleware({
       app: server,
-      path: '/graphql',
+      path: process.env.GRAPHQL_ROUTE,
       cors: { origin: `${process.env.HOSTNAME}:${process.env.PORT}`, credentials: true },
     });
 
@@ -65,7 +64,7 @@ app.prepare().then(() => {
       session({
         secret: process.env.SESS_SECRET,
         cookie: {
-          maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+          maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
         },
         store,
         resave: true,
@@ -73,14 +72,12 @@ app.prepare().then(() => {
       })
     );
 
+    const handle = app.getRequestHandler();
     server.use(passport.initialize());
     server.use(passport.session());
     require('./_helpers/routes')(server, passport);
-    const handle = app.getRequestHandler();
     server.get('*', (req, res) => {
       const { parse } = require('url');
-      //   const parsedUrl = parse(req.url, true);
-      //   const { pathname, query } = parsedUrl;
       return handle(req, res, parse(req.url, true));
     });
 

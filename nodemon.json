@@ -1,0 +1,4 @@
+{
+  "ignore": ["components/**/*.js", "lib/**/*.js", "pages/**/*.js"],
+  "watch": ["server/*"]
+}

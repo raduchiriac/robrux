@@ -182,9 +182,4 @@ const HeaderContainer = () => {
   );
 };
 
-HeaderContainer.getInitialProps = async ({ req, query }) => {
-  console.log('header', req);
-  return {};
-};
-
 export default HeaderContainer;

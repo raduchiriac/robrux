@@ -1,6 +1,7 @@
 import { WithHeaderLayout } from '../../lib/layouts/WithHeaderLayout';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import { withProtectedRoute } from '../../lib/hocs/withAuth';
 
 const Service = ({ service }) => {
   return (
@@ -14,9 +15,7 @@ const Service = ({ service }) => {
         <Paper>
           <h1>Title magic carpet maker</h1>
         </Paper>
-        <Paper>
-          <img src="/static/robrux-full.jpeg" alt="" />
-        </Paper>
+        <Paper>{/* <img src="/static/robrux-full.jpeg" alt="" /> */}</Paper>
         <Paper>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis delectus minima velit assumenda, quaerat
           obcaecati, recusandae dolorum corrupti repellat id aspernatur facere. A numquam quasi ipsa beatae culpa,
@@ -36,4 +35,4 @@ Service.getInitialProps = async ({ query: { id } }, res) => {
 
 Service.Layout = WithHeaderLayout;
 
-export default Service;
+export default withProtectedRoute(Service);

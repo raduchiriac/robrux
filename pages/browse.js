@@ -2,11 +2,12 @@ import React from 'react';
 
 import { WithHeaderLayout } from '../lib/layouts/WithHeaderLayout';
 import IndexPageContainer from '../components/IndexPageContainer';
+import { withProtectedRoute } from '../lib/hocs/withAuth';
 
-const Index = props => {
+const Browse = props => {
   return <IndexPageContainer />;
 };
 
-Index.Layout = WithHeaderLayout;
+Browse.Layout = WithHeaderLayout;
 
-export default Index;
+export default Browse;

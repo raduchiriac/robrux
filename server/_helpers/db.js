@@ -9,12 +9,12 @@ module.exports = {
     });
     const db = mongoose.connection;
     db.on('error', function(err) {
-      console.error('[☆] Failed to connect to database:', err);
+      console.log('[☆] Failed to connect to database:', err);
       process.exit(1);
     });
 
     db.once('open', function() {
-      console.info('[★] Connected to MongoDB');
+      console.log('[★] Connected to MongoDB');
       callback();
     });
   },

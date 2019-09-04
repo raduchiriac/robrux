@@ -16,7 +16,7 @@ const SmallGigsList = props => {
     <Grid container spacing={2} className={classes['small-gigs-list__container']}>
       {((gigs.length && gigs) || [false, false, false]).map((gig, index) => {
         return (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+          <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={index}>
             <SmallGig
               hovered={hovered === gig._id}
               gig={gig}

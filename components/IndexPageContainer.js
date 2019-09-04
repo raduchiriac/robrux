@@ -13,7 +13,7 @@ import { GlobalContext } from '../lib/contexts/GlobalContext';
 import { SEARCH_BBOX_GIG } from '../lib/graphql/gigs.strings';
 
 import SmallGigsList from './Gig/SmallGigsList';
-import './IndexPageContainer.styles.scss';
+import './IndexPageContainer.scss';
 
 const IndexPageContainer = props => {
   const [bbox, setBbox] = useState([]);

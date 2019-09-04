@@ -23,6 +23,8 @@ class MyApp extends App {
 
   render() {
     const { Component, pageProps, apolloClient } = this.props;
+    console.log('[🚨_app] props', Object.keys(this.props));
+    console.log('[🚨_app] Page Props', Object.keys(pageProps));
     const Layout = Component.Layout || EmptyLayout;
 
     return (

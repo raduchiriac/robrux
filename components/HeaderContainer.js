@@ -59,7 +59,7 @@ const HeaderContainer = () => {
   }
   function handleMenuClose() {
     // TODO: Get href prop from MenuItem
-    Router.push('/user/profile');
+    Router.push('/login');
     setAnchorEl(null);
     handleMobileMenuClose();
   }
@@ -81,7 +81,7 @@ const HeaderContainer = () => {
       onClose={handleMenuClose}
     >
       <MenuItem href="/user/profile" onClick={handleMenuClose}>
-        Profil
+        Login / Profile
       </MenuItem>
       <MenuItem href="/logout" onClick={handleMenuClose}>
         Deconectare

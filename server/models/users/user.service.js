@@ -26,6 +26,7 @@ const loginUser = async (userParams, res) => {
         reject(err);
       } else if (user) {
         const token = jwt.sign({ email: user.email, id: user._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
+        console.log('🚨[loginUser] I am setting a cookie with token:', token);
         res.cookie('token', token, {
           httpOnly: true,
           maxAge: 1000 * 60 * 60 * 24 * 1, // 1 day cookie

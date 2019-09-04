@@ -8,11 +8,21 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+const withSass = require('@zeit/next-sass');
 
 require('./_helpers/passport');
 const dev = process.env.NODE_ENV !== 'production';
 
-const app = next({ dev });
+const app = next({
+  dev,
+  quiet: !dev,
+  conf: withSass({
+    env: {
+      GOOGLE_MAPS_API: process.env.GOOGLE_MAPS_API,
+      GRAPHQL_ROUTE: process.env.GRAPHQL_ROUTE,
+    },
+  }),
+});
 
 app.prepare().then(() => {
   const server = express();
@@ -35,6 +45,7 @@ app.prepare().then(() => {
           // put the userId onto the req for future requests to access
           const { id } = jwt.verify(token, process.env.JWT_SECRET);
           req.userId = id;
+          console.log('🚨[server.use] Setting userId from "token" in the req.userId:', id);
         } catch (err) {
           // Error verifing the token (err.message)
         }
@@ -57,7 +68,7 @@ app.prepare().then(() => {
       collection: 'sessions',
     });
     store.on('error', function(error) {
-      console.log(`MongoDBStore: ${JSON.stringify(error)}`);
+      console.log(`🚨MongoDBStore error: ${JSON.stringify(error)}`);
     });
 
     server.use(

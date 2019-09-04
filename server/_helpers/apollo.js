@@ -1,6 +1,5 @@
 const { ApolloServer, AuthenticationError, PubSub } = require('apollo-server-express');
 const { GraphQLObjectType, GraphQLSchema } = require('graphql');
-const jwt = require('jsonwebtoken');
 
 const userQueries = require('../models/users/user.graphql.queries');
 const userMutations = require('../models/users/user.graphql.mutations');
@@ -28,9 +27,16 @@ const schema = new GraphQLSchema({
 const context = ({ req, res, connection }) => {
   if (connection) {
     // check connection for metadata
+    console.log(
+      '🚨[Apollo context] There is a connection:',
+      Object.keys(connection),
+      'connection.context:',
+      Object.keys(connection.context)
+    );
     return connection.context;
   } else {
-    const token = req.headers.token || '';
+    const token = req.headers.token || null;
+    console.log('🚨[Apollo context] no connection, token:', token);
 
     return { req, res, token };
   }
@@ -58,9 +64,9 @@ const GRAPHQL_PLAYGROUND_CONFIG = {
 const apollo = new ApolloServer({
   schema,
   context,
+  formatError,
   onConnect: async (params, socket, context) => {},
   onDisconnect: (socket, context) => {},
-  formatError,
   playground: process.env.NODE_ENV === 'production' ? false : GRAPHQL_PLAYGROUND_CONFIG,
 });
 

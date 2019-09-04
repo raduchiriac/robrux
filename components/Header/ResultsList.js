@@ -4,7 +4,7 @@ import List from '@material-ui/core/List';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/styles';
 
-import './ResultList.styles.scss';
+import './ResultList.scss';
 import Result from './Result';
 
 const useStyles = makeStyles(theme => ({

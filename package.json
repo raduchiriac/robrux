@@ -1,6 +1,6 @@
 {
   "name": "robrux",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "license": "MIT",
   "repository": {
@@ -22,7 +22,7 @@
   "dependencies": {
     "@apollo/react-hooks": "3.0.1",
     "@apollo/react-ssr": "3.0.1",
-    "@material-ui/core": "4.3.3",
+    "@material-ui/core": "4.4.0",
     "@material-ui/icons": "4.2.1",
     "@zeit/next-sass": "1.0.1",
     "apollo-boost": "0.4.4",
@@ -32,7 +32,6 @@
     "connect-mongodb-session": "2.2.0",
     "cookie-parser": "1.4.4",
     "cors": "2.8.5",
-    "css-loader": "1.0.1",
     "express": "4.17.1",
     "express-session": "1.16.2",
     "google-map-react": "1.1.4",
@@ -61,7 +60,7 @@
     "@storybook/react": "5.1.11",
     "babel-eslint": "10.0.3",
     "dotenv": "8.1.0",
-    "eslint": "6.2.2",
+    "eslint": "6.3.0",
     "eslint-config-prettier": "6.1.0",
     "eslint-plugin-prettier": "3.1.0",
     "eslint-plugin-react": "7.14.3",

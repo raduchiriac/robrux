@@ -5,7 +5,7 @@ import { ServerStyleSheets } from '@material-ui/styles';
 class MyDocument extends Document {
   render() {
     return (
-      <html lang="en">
+      <html lang="ro">
         <Head>
           <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no" />
           <meta charSet="UTF-8" />
@@ -56,6 +56,8 @@ MyDocument.getInitialProps = async ctx => {
     });
 
   const initialProps = await Document.getInitialProps(ctx);
+
+  console.log('[🚨_document]', Object.keys(initialProps));
 
   return {
     ...initialProps,

@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Link from '../../lib/hocs/withLink';
 import ConditionalWrap from '../../lib/hocs/ConditionalWrap';
 
-import './SmallGig.styles.scss';
+import './SmallGig.scss';
 
 const styles = theme => ({
   'small-gig__container': {

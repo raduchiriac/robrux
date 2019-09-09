@@ -2,7 +2,6 @@ import React from 'react';
 import App from 'next/app';
 import Head from 'next/head';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { ApolloProvider } from '@apollo/react-hooks';
 import { ThemeProvider } from '@material-ui/styles';
 import { LanguagesContextProvider } from '../lib/contexts/LanguagesContext';
 import { GlobalContextProvider } from '../lib/contexts/GlobalContext';
@@ -28,21 +27,19 @@ class MyApp extends App {
     const Layout = Component.Layout || EmptyLayout;
 
     return (
-      <ApolloProvider client={apolloClient}>
-        <GlobalContextProvider>
-          <LanguagesContextProvider>
-            <Head>
-              <title>ro:bux</title>
-            </Head>
-            <ThemeProvider theme={DefaultTheme}>
-              <CssBaseline />
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
-            </ThemeProvider>
-          </LanguagesContextProvider>
-        </GlobalContextProvider>
-      </ApolloProvider>
+      <GlobalContextProvider>
+        <LanguagesContextProvider>
+          <Head>
+            <title>ro:bux</title>
+          </Head>
+          <ThemeProvider theme={DefaultTheme}>
+            <CssBaseline />
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </ThemeProvider>
+        </LanguagesContextProvider>
+      </GlobalContextProvider>
     );
   }
 }

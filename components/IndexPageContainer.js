@@ -28,7 +28,7 @@ const IndexPageContainer = props => {
     if (bbox.length) {
       searchBboxGigs();
     }
-  }, [bbox]);
+  }, [bbox, searchBboxGigs]);
 
   let gigs = [];
   if (data && data.gigs) {

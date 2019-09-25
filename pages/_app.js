@@ -9,8 +9,8 @@ import { DefaultTheme } from '../lib/themes/default-theme';
 import { EmptyLayout } from '../lib/layouts/EmptyLayout';
 import withApollo from '../lib/hocs/withApollo';
 
-class MyApp extends App {
-  static displayName = 'MyApp';
+class NextApp extends App {
+  static displayName = 'App';
 
   componentDidMount() {
     // Remove the server-side injected CSS.
@@ -44,4 +44,4 @@ class MyApp extends App {
   }
 }
 
-export default withApollo(MyApp);
+export default withApollo(NextApp);

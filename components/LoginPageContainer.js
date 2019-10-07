@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, useContext, Fragment } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -111,7 +111,7 @@ const Form = props => {
 
 const LoginPageContainer = () => {
   const classes = useStyles();
-  const { STRINGS } = React.useContext(LanguagesContext).state;
+  const { STRINGS } = useContext(LanguagesContext).state;
 
   const _login = () => {
     loginUser({ variables: { input: values } });

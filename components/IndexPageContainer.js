@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { useLazyQuery } from '@apollo/react-hooks';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -22,7 +22,7 @@ const IndexPageContainer = props => {
     variables: { limit: 20, sort: '-_rating', bbox },
   });
 
-  const { showMap } = React.useContext(GlobalContext).state;
+  const { showMap } = useContext(GlobalContext).state;
 
   useEffect(() => {
     if (bbox.length) {

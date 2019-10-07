@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, useContext, Fragment } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -172,7 +172,7 @@ const EmailSent = props => {
 
 export default function RegisterPageContainer() {
   const classes = useStyles();
-  const { STRINGS } = React.useContext(LanguagesContext).state;
+  const { STRINGS } = useContext(LanguagesContext).state;
 
   const _register = () => {
     createUser({ variables: { input: values } });

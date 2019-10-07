@@ -14,34 +14,36 @@ const {
 } = require('graphql');
 
 // Read more about types here https://mongoosejs.com/docs/schematypes.html
-const schema = new Schema({
-  _userId: { type: ObjectId, required: true },
-  _providerName: { type: String },
-  _rating: { type: Number, index: true },
-  _subscription: { type: String },
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date },
-  title: { type: String, required: true },
-  slug: { type: String, index: true },
-  description: { type: String },
-  images: { type: [String] },
-  price: { type: Number },
-  status: {
-    type: String,
-    required: true,
-    default: 'processing',
-    enum: ['processing', 'valid', 'rejected', 'expired'],
-    index: true,
+const schema = new Schema(
+  {
+    _userId: { type: ObjectId, required: true },
+    _providerName: { type: String },
+    _rating: { type: Number, index: true },
+    _subscription: { type: String },
+    title: { type: String, required: true },
+    slug: { type: String, index: true },
+    description: { type: String },
+    images: { type: [String] },
+    price: { type: Number },
+    status: {
+      type: String,
+      required: true,
+      default: 'processing',
+      enum: ['processing', 'valid', 'rejected', 'expired'],
+      index: true,
+    },
+    statusInformation: { type: String },
+    tags: { type: [String], index: true },
+    categories: { type: [String] },
+    location: {
+      address: { type: String },
+      type: { type: String, default: 'Point' },
+      coordinates: { type: [Number] },
+    },
   },
-  statusInformation: { type: String },
-  tags: { type: [String], index: true },
-  categories: { type: [String] },
-  location: {
-    address: { type: String },
-    type: { type: String, default: 'Point' },
-    coordinates: { type: [Number] },
-  },
-});
+  // Read more here https://mongoosejs.com/docs/guide.html#options
+  { timestamps: true }
+);
 
 // Create "text" Indexes
 schema.index(

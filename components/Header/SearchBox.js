@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
@@ -67,13 +67,13 @@ export default function SearchBox() {
     variables: { term: debouncedSearchTerm },
   });
 
-  const { STRINGS } = React.useContext(LanguagesContext).state;
+  const { STRINGS } = useContext(LanguagesContext).state;
 
   useEffect(() => {
     if (debouncedSearchTerm.length) {
       searchGigs();
     }
-  }, [debouncedSearchTerm]);
+  }, [debouncedSearchTerm, searchGigs]);
 
   let results = [];
   if (data && data.search) {

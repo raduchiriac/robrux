@@ -18,5 +18,5 @@
   },
   "parser": "babel-eslint",
   "plugins": ["react", "react-hooks"],
-  "rules": { "react-hooks/rules-of-hooks": "warn", "react-hooks/exhaustive-deps": "warn", "no-console": "warn" }
+  "rules": { "react-hooks/rules-of-hooks": "error", "react-hooks/exhaustive-deps": "error", "no-console": "warn" }
 }

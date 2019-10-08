@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(/static/robrux-full.jpeg)',
+    backgroundImage: 'url(/robrux-full.jpeg)',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
@@ -154,7 +154,7 @@ const LoginPageContainer = () => {
         <div className={classes.paper}>
           <Link href="/" underline="none" color="inherit" align="center">
             <Avatar className={classes.avatar}>
-              <img src="/static/robrux.png" />
+              <img src="/robrux.png" />
             </Avatar>
             <Typography component="h1" variant="h5">
               {STRINGS.SITE_NAME}

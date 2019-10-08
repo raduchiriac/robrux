@@ -10,7 +10,7 @@ import './SmallGig.scss';
 const styles = theme => ({
   'small-gig__container': {
     padding: theme.spacing(2),
-    color: theme.custom_palette.alternateColor,
+    color: theme.custom_palette && theme.custom_palette.alternateColor,
     boxShadow: theme.shadows[1],
     backgroundColor: theme.palette.grey['200'],
   },
@@ -22,14 +22,14 @@ const styles = theme => ({
     borderRadius: `0 0 ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px`,
   },
   'small-gig__price': {
-    background: theme.custom_palette.alternateColor,
+    background: theme.custom_palette && theme.custom_palette.alternateColor,
     padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
     borderRadius: `0 0 ${theme.shape.borderRadius}px 0`,
   },
 });
 
 const SmallGig = props => {
-  const { gig, hovered, classes, loading, _onMouseEnter, _onMouseLeave, _onClick } = props;
+  const { gig, hovered, classes, loading, _onMouseEnter = () => {}, _onMouseLeave = () => {} } = props;
   return (
     <ConditionalWrap
       condition={!loading}

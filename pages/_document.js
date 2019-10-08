@@ -10,8 +10,8 @@ class MyDocument extends Document {
           <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no" />
           <meta charSet="UTF-8" />
           <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
-          <link rel="icon" type="image/png" href="/static/favicon.png" />
-          <link rel="stylesheet" href="/static/reset.css" />
+          <link rel="icon" type="image/png" href="/favicon.png" />
+          <link rel="stylesheet" href="/reset.css" />
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
         </Head>
         <body>

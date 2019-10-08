@@ -1,4 +1,4 @@
-![screenshot](./static/screenshot.png?raw=true)
+![screenshot](./public/screenshot.png?raw=true)
 
 #### Roadmap
 
@@ -8,11 +8,14 @@
 - [x] Create an import seed script
 - [x] Convert Classes to Functions (Context API, use Hooks)
 - [x] i18n (using Context API)
-- [x] Add Storybook to sketch components
+- [x] Add Storybook and start sketching components
 - [x] Sessions, JWT, graphql-cookie-headers (withApollo)
 - [ ] Fuzzy-Search on MongoDB (include tags)
 - [ ] Convert all forms to `Formik`
+- [ ] Pre-commit eslint (husky)
 - [ ] Payment System (Stripe API)
+- [ ] Test out `next-i18next` (mainly the ssr)
+- [ ] Rewrite the GraphQL schemas (more readable)
 - [ ] (_Route_) My Profile (_secure route_)
 - [ ] (_Route_) New Gig (use Formik, _secure route_, Stripe API)
 - [ ] (_Route_) Preview Gig (use React Spring to transition, _secure_)

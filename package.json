@@ -17,7 +17,7 @@
     "build": "next build",
     "start:dev": "nodemon server",
     "start": "NODE_ENV=production node server",
-    "storybook": "start-storybook"
+    "storybook": "start-storybook -p 10001"
   },
   "dependencies": {
     "@apollo/react-hooks": "3.1.2",

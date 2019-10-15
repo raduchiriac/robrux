@@ -1,7 +1,6 @@
 import React from 'react';
+import { storiesOf } from '@storybook/react';
 import Map from '../Map/Map';
-
-export default { title: 'Google Maps' };
 
 const gigs = [
   {
@@ -15,4 +14,4 @@ const gigs = [
   },
 ];
 
-export const oneMarker = () => <Map gigs={gigs} />;
+storiesOf('Google Maps', module).add('With one marker', () => <Map gigs={gigs} />);

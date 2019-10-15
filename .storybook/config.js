@@ -1,6 +1,10 @@
 import { configure, addDecorator } from '@storybook/react';
-import withThemeProvider from '../components/_stories/withThemeProvider';
 import '../public/reset.css';
 
-addDecorator(withThemeProvider);
-configure(require.context('../components/_stories', true, /\.story\.js$/), module);
+const req = require.context('../components/_stories', true, /\.stories\.js$/);
+
+function loadStories() {
+  req.keys().forEach(filename => req(filename));
+}
+
+configure(loadStories, module);

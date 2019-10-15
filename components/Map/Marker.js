@@ -11,7 +11,7 @@ const styles = theme => ({
     left: '50%',
     width: '18px',
     height: '18px',
-    backgroundColor: theme.custom_palette.alternateColor,
+    backgroundColor: (theme.custom_palette && theme.custom_palette.alternateColor) || 'black',
     border: '3px solid #fff',
     boxShadow: '2px 2px 2px 0px rgba(0, 0, 0, 0.3)',
     borderRadius: '50%',

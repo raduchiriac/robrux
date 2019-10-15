@@ -1,3 +1,4 @@
+if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 const path = require('path');
 
 // Export a function. Accept the base config as the only param.

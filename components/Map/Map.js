@@ -50,11 +50,11 @@ class Map extends Component {
     const {
       classes,
       gigs,
-      hovered,
-      _onMapBoundsChange,
-      _onMarkerClick,
-      _onMapChildMouseEnter,
-      _onMapChildMouseLeave,
+      hovered = 0,
+      _onMapBoundsChange = () => {},
+      _onMarkerClick = () => {},
+      _onMapChildMouseEnter = () => {},
+      _onMapChildMouseLeave = () => {},
     } = this.props;
 
     // Return map bounds based on list of gigs

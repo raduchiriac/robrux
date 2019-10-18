@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Map from '../Map/Map';
+import StaticMap from '../Map/StaticMap';
 
 const gigs = [
   {
@@ -14,4 +15,6 @@ const gigs = [
   },
 ];
 
-storiesOf('Google Maps', module).add('With one marker', () => <Map gigs={gigs} />);
+storiesOf('Google Maps', module)
+  .add('With one marker', () => <Map gigs={gigs} />)
+  .add('Static map', () => <StaticMap gig={gigs[0]} size={[300, 650]} zoom={16} />);

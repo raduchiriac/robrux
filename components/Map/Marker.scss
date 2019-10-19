@@ -1,0 +1,15 @@
+.map-marker {
+  transition: all 0.3s ease;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  border: 3px solid #fff;
+  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  user-select: none;
+  transform-origin: center;
+  &:hover {
+  }
+}

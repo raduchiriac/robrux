@@ -1,6 +1,6 @@
 .map-static__container {
   position: relative;
-  display: flex;
+  flex-direction: column;
   display: inline-flex;
   align-items: flex-start;
   max-width: 100%;
@@ -10,5 +10,15 @@
     left: 50%;
     transform-origin: center;
     transform: translateX(-50%) translateY(-50%) scale(0.4);
+    transition: transform 0.1s ease;
+    cursor: pointer;
+    &:hover {
+      transform: translateX(-50%) translateY(-50%) scale(0.66);
+    }
+  }
+  .map-static__address {
+    margin-top: 1em;
+    vertical-align: middle;
+    display: flex;
   }
 }

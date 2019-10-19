@@ -18,6 +18,17 @@ const gigQueries = {
       return await GigService.getBboxGigs(limit, sort, bbox);
     },
   },
+  oneGig: {
+    // Give me on Gig
+    type: GigType,
+    args: {
+      idOrSlug: { type: GraphQLString },
+    },
+    resolve: async (root, args, context, info) => {
+      const { idOrSlug } = args;
+      return await GigService.oneGig(idOrSlug);
+    },
+  },
   search: {
     // Search for Gigs with a term
     type: GraphQLList(GigType),

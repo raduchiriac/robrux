@@ -7,7 +7,19 @@ import Box from '@material-ui/core/Box';
 // https://material-ui.com/components/rating/#rating
 
 const StarRating = props => {
-  const { title, score, maxStars, size, disabled, readOnly, precision, onChange, color, hoverColor, icon } = props;
+  const {
+    title,
+    score,
+    maxStars,
+    size,
+    disabled,
+    readOnly,
+    precision,
+    color,
+    hoverColor,
+    icon,
+    onChange = () => {},
+  } = props;
   const [value, setValue] = React.useState(parseInt(score, 10));
 
   const StyledStarRating = withStyles({
@@ -34,7 +46,7 @@ const StarRating = props => {
           icon={icon}
           onChange={(event, newValue) => {
             setValue(newValue);
-            onChange && onChange(newValue);
+            onChange(newValue);
           }}
         />
       </Box>

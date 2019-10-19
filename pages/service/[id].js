@@ -1,14 +1,33 @@
 import { WithHeaderLayout } from '../../lib/layouts/WithHeaderLayout';
+import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import { withProtectedRoute } from '../../lib/hocs/withAuth';
+import { GET_ONE_GIG } from '../../lib/graphql/gigs.strings';
+import { useLazyQuery } from '@apollo/react-hooks';
+import StaticMap from '../../components/Map/StaticMap';
 
 const Service = ({ service }) => {
+  const [searchGig, { data, error, loading }] = useLazyQuery(GET_ONE_GIG, {
+    variables: { idOrSlug: service.idOrSlug },
+  });
+  let gig = {};
+
+  useEffect(() => {
+    if (service.idOrSlug) {
+      searchGig();
+    }
+  }, [service, searchGig]);
+
+  if (data && data.oneGig) {
+    gig = data.oneGig;
+  }
+
   return (
     <Grid container alignItems="center" spacing={2}>
       <Grid item xs={12} sm={4} md={4} lg={3}>
-        <Paper>Map</Paper>
-        <Paper>Address: Rue 21 Bruxelles</Paper>
+        <Paper>
+          <StaticMap gig={gig} size={[300, 450]} zoom={16} />
+        </Paper>
         <Paper>Reviews</Paper>
       </Grid>
       <Grid item xs={12} sm={8} md={8} lg={9}>
@@ -35,4 +54,4 @@ Service.getInitialProps = async ({ query: { id } }, res) => {
 
 Service.Layout = WithHeaderLayout;
 
-export default withProtectedRoute(Service);
+export default Service;

@@ -51,7 +51,7 @@ const SmallGig = props => {
       >
         <div className={clsx('small-gig__avatar-container', classes['small-gig__avatar-container'])}>
           {!loading && gig ? (
-            <img className={'small-gig__avatar'} src={gig.images[0]} alt={gig._providerName} />
+            <img className={'small-gig__avatar'} src={gig._providerAvatar} alt={gig._providerName} />
           ) : (
             <div className="small-gig__avatar"></div>
           )}

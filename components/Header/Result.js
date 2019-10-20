@@ -28,9 +28,9 @@ export default function Result(props) {
           onClick={handleResultClick}
           className={`result-list__result ${!isClickable ? 'result-list__result--no-link' : ''}`}
         >
-          {result.images && (
+          {result._providerAvatar && (
             <ListItemAvatar>
-              <Avatar src={result.images[0]} />
+              <Avatar src={result._providerAvatar} />
             </ListItemAvatar>
           )}
           <ListItemText

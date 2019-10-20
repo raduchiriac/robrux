@@ -1,0 +1,33 @@
+.service__container {
+  padding: 0.66em 1em 0;
+  overflow: hidden;
+}
+.service__map {
+  text-align: center;
+}
+.map-static__hover {
+  border-radius: 4px;
+  overflow: hidden;
+}
+.service-price {
+  background: blue;
+  color: white;
+  padding: 1em;
+  margin: 1em -1em 0 -1em;
+}
+.service-avatar {
+  display: flex;
+  margin: 1em 0;
+  .service-avatar__image {
+    width: 64px;
+    height: 64px;
+    margin-right: 1em;
+    border-radius: 50%;
+  }
+  .service-avatar__details {
+    .service-avatar__name {
+      font-size: 1.2em;
+      font-weight: 500;
+    }
+  }
+}

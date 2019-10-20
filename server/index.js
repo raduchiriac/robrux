@@ -9,6 +9,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const withSass = require('@zeit/next-sass');
+const withCSS = require('@zeit/next-css');
 const withImages = require('next-images');
 
 require('./_helpers/passport');
@@ -18,12 +19,14 @@ const app = next({
   dev,
   quiet: !dev,
   conf: withImages(
-    withSass({
-      env: {
-        GOOGLE_MAPS_API: process.env.GOOGLE_MAPS_API,
-        GRAPHQL_ROUTE: process.env.GRAPHQL_ROUTE,
-      },
-    })
+    withCSS(
+      withSass({
+        env: {
+          GOOGLE_MAPS_API: process.env.GOOGLE_MAPS_API,
+          GRAPHQL_ROUTE: process.env.GRAPHQL_ROUTE,
+        },
+      })
+    )
   ),
 });
 

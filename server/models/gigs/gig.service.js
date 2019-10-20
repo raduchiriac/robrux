@@ -27,15 +27,11 @@ const getBboxGigs = async (limit = 0, sort = '', bbox = []) => {
 };
 
 const oneGig = async idOrSlug => {
-  return {
-    _id: '5d5d9bd9df1ff244fc754ebf',
-    location: {
-      type: 'Point',
-      coordinates: [50.841001, 4.355055],
-      address: '3475 Eichmann Avenue, Isle of Man',
-    },
-    title: 'Ergonomic asymmetric functionalities',
-  };
+  let query = { status: 'valid', $or: [{ slug: idOrSlug }] };
+  if (idOrSlug.match(/^[0-9a-fA-F]{24}$/)) {
+    query.$or.push({ _id: idOrSlug });
+  }
+  return await Gig.findOne(query);
 };
 
 const fuzzySearch = async string => {

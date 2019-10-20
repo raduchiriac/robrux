@@ -5,6 +5,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 const {
   GraphQLID,
   GraphQLNonNull,
+  GraphQLBoolean,
   GraphQLInt,
   GraphQLString,
   GraphQLList,
@@ -18,6 +19,7 @@ const schema = new Schema(
   {
     _userId: { type: ObjectId, required: true },
     _providerName: { type: String },
+    _providerAvatar: { type: String },
     _rating: { type: Number, index: true },
     _subscription: { type: String },
     title: { type: String, required: true },
@@ -32,6 +34,7 @@ const schema = new Schema(
       enum: ['processing', 'valid', 'rejected', 'expired'],
       index: true,
     },
+    featured: { type: Boolean, index: true },
     statusInformation: { type: String },
     tags: { type: [String], index: true },
     categories: { type: [String] },
@@ -41,7 +44,7 @@ const schema = new Schema(
       coordinates: { type: [Number] },
     },
   },
-  // Read more here https://mongoosejs.com/docs/guide.html#options
+  // Read more here: https://mongoosejs.com/docs/guide.html#options
   { timestamps: true }
 );
 
@@ -79,6 +82,7 @@ const fields = {
   _id: { type: GraphQLID },
   _userId: { type: GraphQLNonNull(GraphQLID) },
   _providerName: { type: GraphQLString },
+  _providerAvatar: { type: GraphQLString },
   _rating: { type: GraphQLFloat },
   _subscription: { type: GraphQLString },
   title: { type: GraphQLString },
@@ -88,6 +92,7 @@ const fields = {
   tags: { type: GraphQLList(GraphQLString) },
   status: { type: GraphQLString },
   price: { type: GraphQLInt },
+  featured: { type: GraphQLBoolean },
 };
 
 const fields_location = {

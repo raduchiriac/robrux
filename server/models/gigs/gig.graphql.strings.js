@@ -19,17 +19,15 @@ const GIG_CREATE_FAKE = () => {
       createGig(input: {
         _userId: "${userID}",
         _providerName: "${faker.name.firstName()} ${faker.name.lastName()}",
+        _providerAvatar: "https://i.pravatar.cc/256?u=${userID}",
         _rating: ${Math.random() * 4 + 1},
         _subscription: "${Math.random() >= 0.5 ? subscriptionID : ''}",
         title: "${title}",
         images: [
-          "https://i.pravatar.cc/256?u=${userID}",
-          "https://via.placeholder.com/256x256/${randomColor()}/${randomColor()}?text=${title
-    .slice(0, 2)
-    .toUpperCase()}",
-          "https://via.placeholder.com/256x256/${randomColor()}/${randomColor()}?text=${title
-    .slice(0, 2)
-    .toUpperCase()}"
+          "https://loremflickr.com/640/240?lock=${Math.round(Math.random() * 1000)}",
+          "https://loremflickr.com/640/240?lock=${Math.round(Math.random() * 1000)}",
+          "https://loremflickr.com/640/240?lock=${Math.round(Math.random() * 1000)}",
+          "https://loremflickr.com/640/240?lock=${Math.round(Math.random() * 1000)}",
         ],
         description: "${faker.lorem.paragraph()}",
         location: {

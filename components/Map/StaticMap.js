@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Typography from '@material-ui/core/Typography';
 import LocationIcon from '@material-ui/icons/LocationOn';
 import GOOGLE_MAP_SKIN from '../../lib/constants/GOOGLE_MAP_SKIN';
 import markerLocation from '../../public/marker.png';
+import ConditionalWrap from '../../lib/hocs/ConditionalWrap';
+
 import './StaticMap.scss';
 
 const StaticMap = props => {
-  const { gig = {}, size = [300, 300], zoom = 13 } = props;
+  const { gig = {}, size = [300, 300], zoom = 13, withLink, withAddress } = props;
   if (!gig.location) {
-    return <div></div>;
+    return <Fragment></Fragment>;
   }
   const location = gig.location.coordinates.join(',');
 
@@ -33,19 +35,31 @@ const StaticMap = props => {
   }).join('&');
   return (
     <div className="map-static__container">
-      <img
-        width={size[0]}
-        height={size[1]}
-        src={`https://maps.googleapis.com/maps/api/staticmap?center=${location}&zoom=${zoom}&scale=2&size=${size.join(
-          'x'
-        )}&maptype=roadmap&key=${process.env.GOOGLE_MAPS_API}&format=png&visual_refresh=true&${styling}`}
-        alt={gig.location.address}
-      />
-      <img src={markerLocation} alt={gig.location.address} className="map-static__marker" />
-
-      <Typography className="map-static__address">
-        <LocationIcon /> {gig.location.address}
-      </Typography>
+      <ConditionalWrap
+        condition={withLink}
+        wrap={children => (
+          <a target="_blank" href={`https://maps.google.com/?q=${location}`}>
+            {children}
+          </a>
+        )}
+      >
+        <div className="map-static__hover">
+          <img
+            width={size[0]}
+            height={size[1]}
+            src={`https://maps.googleapis.com/maps/api/staticmap?center=${location}&zoom=${zoom}&scale=2&size=${size.join(
+              'x'
+            )}&maptype=roadmap&key=${process.env.GOOGLE_MAPS_API}&format=png&visual_refresh=true&${styling}`}
+            alt={gig.location.address}
+          />
+          <img src={markerLocation} alt={gig.location.address} className="map-static__marker" />
+        </div>
+      </ConditionalWrap>
+      {withAddress && (
+        <Typography className="map-static__address">
+          <LocationIcon /> {gig.location.address}
+        </Typography>
+      )}
     </div>
   );
 };

@@ -1,8 +1,10 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
+
+import './StarRating.scss';
 
 // https://material-ui.com/components/rating/#rating
 
@@ -15,12 +17,14 @@ const StarRating = props => {
     disabled,
     readOnly,
     precision,
+    comment,
     color,
     hoverColor,
     icon,
     onChange = () => {},
   } = props;
-  const [value, setValue] = React.useState(parseInt(score, 10));
+
+  const [value, setValue] = useState(Math.round(score));
 
   const StyledStarRating = withStyles({
     iconFilled: {
@@ -49,6 +53,7 @@ const StarRating = props => {
             onChange(newValue);
           }}
         />
+        <p className="star-rating__comment">{comment}</p>
       </Box>
     </Fragment>
   );

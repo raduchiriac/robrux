@@ -10,9 +10,9 @@
 - [x] i18n (using Context API)
 - [x] Add Storybook and start sketching components
 - [x] Sessions, JWT, graphql-cookie-headers (withApollo)
-- [ ] (_Route_) New Gig (use Formik, _secure route_, Stripe API)
-- [ ] (_Route_) My Profile (_secure route_)
-- [ ] (_Route_) Preview Gig (use React Spring to transition, _secure route_)
+- [ ] (_Route_) New Gig (use Formik, _protected route_, Stripe API)
+- [ ] (_Route_) My Profile (_protected route_)
+- [ ] (_Route_) Preview Gig (use React Spring to transition, _protected route_)
 - [ ] Fuzzy-Search on MongoDB (include tags)
 - [ ] Payment System (Stripe API)
 - [ ] Rewrite the GraphQL schemas (more readable)
@@ -25,6 +25,7 @@
 - [ ] Login with social-media (at least Facebook Strategy)
 - [ ] Create a Rating Collection (make seed file)
 - [ ] Create a Category Collection
+- [ ] Store the Static Map PNGs rather than asking Google API everytime
 - [ ] Mailing System (Mailchimp API)
 - [ ] Pre-commit eslint (husky)
 - [ ] Write a better `.eslintrc`

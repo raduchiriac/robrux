@@ -1,16 +1,31 @@
 import { WithHeaderLayout } from '../../lib/layouts/WithHeaderLayout';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import Grid from '@material-ui/core/Grid';
+import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import { GET_ONE_GIG } from '../../lib/graphql/gigs.strings';
 import { useLazyQuery } from '@apollo/react-hooks';
 import StaticMap from '../../components/Map/StaticMap';
+import StarRating from '../../components/Rating/StarRating';
+import Carousel from '../../components/Carousel/Carousel';
 
-const Service = ({ service }) => {
+import './id.scss';
+
+const useStyles = makeStyles(theme => ({
+  servicePrice: {
+    background: theme.custom_palette && theme.custom_palette.alternateColor,
+  },
+}));
+
+const Service = ({ service, props }) => {
+  let gig = false;
+  const classes = useStyles();
   const [searchGig, { data, error, loading }] = useLazyQuery(GET_ONE_GIG, {
     variables: { idOrSlug: service.idOrSlug },
   });
-  let gig = {};
 
   useEffect(() => {
     if (service.idOrSlug) {
@@ -22,26 +37,51 @@ const Service = ({ service }) => {
     gig = data.oneGig;
   }
 
+  if (!service.idOrSlug || !gig) {
+    return <Fragment></Fragment>;
+  }
+
   return (
-    <Grid container alignItems="center" spacing={2}>
+    <Grid container alignItems="flex-start" spacing={2}>
       <Grid item xs={12} sm={4} md={4} lg={3}>
-        <Paper>
-          <StaticMap gig={gig} size={[300, 450]} zoom={16} />
-        </Paper>
-        <Paper>Reviews</Paper>
+        <Box className="service__map">
+          <StaticMap gig={gig} size={[300, 450]} zoom={16} withLink={true} withAddress={true} />
+        </Box>
       </Grid>
       <Grid item xs={12} sm={8} md={8} lg={9}>
-        <Paper>
-          <h1>Title magic carpet maker</h1>
+        <Box mb={2}>
+          <Carousel images={gig.images} width={600} height={100}></Carousel>
+        </Box>
+
+        <Paper className="service__container">
+          <Typography variant="h5">{gig.title}</Typography>
+          <div className="service-avatar">
+            <img className="service-avatar__image" src={gig._providerAvatar} alt="" />
+            <div className="service-avatar__details">
+              <Typography variant="h6" className="service-avatar__name">
+                {gig._providerName}
+              </Typography>
+              <StarRating score={gig._rating} readOnly="true" size="small" />
+            </div>
+          </div>
+          {gig.description}
+          <div className={clsx('service-price', classes['servicePrice'])}>{gig.price}€/h</div>
         </Paper>
-        <Paper>{/* <img src="/robrux-full.jpeg" alt="" /> */}</Paper>
+        <Box m={2}>
+          {Array.apply(null, Array(4)).map((el, idx) => (
+            <Box mb={2} key={idx}>
+              <StarRating
+                score={Math.random() * 5}
+                readOnly="true"
+                color="#f7a918"
+                title="Anonymous User"
+                comment="Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio ea laudantium at! Officia aliquam sunt nulla? Eum totam velit ipsa molestias. Nihil aliquid temporibus voluptates eligendi ratione, nam corporis illum!"
+              />
+            </Box>
+          ))}
+        </Box>
         <Paper>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis delectus minima velit assumenda, quaerat
-          obcaecati, recusandae dolorum corrupti repellat id aspernatur facere. A numquam quasi ipsa beatae culpa,
-          necessitatibus suscipit.
-        </Paper>
-        <Paper>
-          <button>Buy</button>
+          <button>Contact</button>
         </Paper>
       </Grid>
     </Grid>

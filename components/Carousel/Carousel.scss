@@ -1,0 +1,31 @@
+.carousel__zoom-image-overlay,
+.carousel__zoom-image {
+  background-position: center;
+}
+.carousel {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.buttonBack {
+  left: 1.33em;
+}
+.buttonNext {
+  right: 1.33em;
+}
+
+.buttonBack,
+.buttonNext {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.88);
+  border: none;
+  padding: 0.5em;
+  border-radius: 50%;
+  display: flex;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.33);
+  &:focus {
+    outline: none;
+  }
+}

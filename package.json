@@ -1,6 +1,6 @@
 {
   "name": "robrux",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "",
   "license": "MIT",
   "repository": {
@@ -26,6 +26,7 @@
     "@material-ui/icons": "4.5.1",
     "@material-ui/lab": "4.0.0-alpha.28",
     "@material-ui/styles": "4.5.0",
+    "@zeit/next-css": "1.0.1",
     "@zeit/next-sass": "1.0.1",
     "apollo-cache-inmemory": "1.6.3",
     "apollo-client": "2.6.4",
@@ -62,6 +63,7 @@
     "passport-local": "1.0.0",
     "passport-local-mongoose": "5.0.1",
     "prop-types": "15.7.2",
+    "pure-react-carousel": "1.23.0",
     "react": "16.10.2",
     "react-dom": "16.10.2",
     "react-highlight-words": "0.16.0",

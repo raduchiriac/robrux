@@ -1,9 +1,19 @@
 .map-static__container {
-  position: relative;
   flex-direction: column;
   display: inline-flex;
   align-items: flex-start;
   max-width: 100%;
+  .map-static__hover {
+    position: relative;
+    img {
+      object-fit: cover;
+    }
+    &:hover {
+      .map-static__marker {
+        transform: translateX(-50%) translateY(-50%) scale(0.66);
+      }
+    }
+  }
   .map-static__marker {
     position: absolute;
     top: 50%;
@@ -12,12 +22,9 @@
     transform: translateX(-50%) translateY(-50%) scale(0.4);
     transition: transform 0.1s ease;
     cursor: pointer;
-    &:hover {
-      transform: translateX(-50%) translateY(-50%) scale(0.66);
-    }
   }
   .map-static__address {
-    margin-top: 1em;
+    margin: 0.5em 0;
     vertical-align: middle;
     display: flex;
   }

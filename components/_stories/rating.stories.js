@@ -17,6 +17,7 @@ storiesOf('Rating', module)
   .add('With all other props', () => (
     <StarRating
       title="Hi, how much do you like me?"
+      comment="Great experience with this person"
       score="1.823442"
       size="large"
       disabled="false"

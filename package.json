@@ -11,6 +11,9 @@
     "name": "Radu Chiriac",
     "email": "contact@raduchiriac.me"
   },
+  "engines": {
+    "node": "11.15.0"
+  },
   "scripts": {
     "seed": "SEED=true node server",
     "lint": "eslint '**/*.js' --ignore-pattern node_modules/",

@@ -24,10 +24,11 @@ const GIG_CREATE_FAKE = () => {
         _subscription: "${Math.random() >= 0.5 ? subscriptionID : ''}",
         title: "${title}",
         images: [
-          "https://loremflickr.com/640/240?lock=${Math.round(Math.random() * 1000)}",
-          "https://loremflickr.com/640/240?lock=${Math.round(Math.random() * 1000)}",
-          "https://loremflickr.com/640/240?lock=${Math.round(Math.random() * 1000)}",
-          "https://loremflickr.com/640/240?lock=${Math.round(Math.random() * 1000)}",
+          "https://picsum.photos/id/${Math.round(Math.random() * 1000)}/640/400",
+          "https://picsum.photos/id/${Math.round(Math.random() * 1000)}/640/400",
+          "https://picsum.photos/id/${Math.round(Math.random() * 1000)}/640/400",
+          "https://picsum.photos/id/${Math.round(Math.random() * 1000)}/640/400",
+          "https://picsum.photos/id/${Math.round(Math.random() * 1000)}/640/400",
         ],
         description: "${faker.lorem.paragraph()}",
         location: {

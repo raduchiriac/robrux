@@ -11,10 +11,14 @@ import { useLazyQuery } from '@apollo/react-hooks';
 import StaticMap from '../../components/Map/StaticMap';
 import StarRating from '../../components/Rating/StarRating';
 import Carousel from '../../components/Carousel/Carousel';
+import Button from '@material-ui/core/Button';
 
 import './id.scss';
 
 const useStyles = makeStyles(theme => ({
+  button: {
+    backgroundColor: theme.custom_palette && theme.custom_palette.alternateColor,
+  },
   servicePrice: {
     background: theme.custom_palette && theme.custom_palette.alternateColor,
   },
@@ -80,9 +84,11 @@ const Service = ({ service, props }) => {
             </Box>
           ))}
         </Box>
-        <Paper>
-          <button>Contact</button>
-        </Paper>
+        <Box mt={2}>
+          <Button variant="contained" color="secondary" className={classes['servicePrice']}>
+            Contact
+          </Button>
+        </Box>
       </Grid>
     </Grid>
   );

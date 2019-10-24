@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import Typography from '@material-ui/core/Typography';
 import LocationIcon from '@material-ui/icons/LocationOn';
 import GOOGLE_MAP_SKIN from '../../lib/constants/GOOGLE_MAP_SKIN';
-import markerLocation from '../../public/marker.png';
 import ConditionalWrap from '../../lib/hocs/ConditionalWrap';
 
 import './StaticMap.scss';
@@ -52,7 +51,7 @@ const StaticMap = props => {
             )}&maptype=roadmap&key=${process.env.GOOGLE_MAPS_API}&format=png&visual_refresh=true&${styling}`}
             alt={gig.location.address}
           />
-          <img src={markerLocation} alt={gig.location.address} className="map-static__marker" />
+          <img src="/marker.png" alt={gig.location.address} className="map-static__marker" />
         </div>
       </ConditionalWrap>
       {withAddress && (

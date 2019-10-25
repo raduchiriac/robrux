@@ -1,9 +1,8 @@
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
-const path = require('path');
+const webpack = require('webpack');
 const withSass = require('@zeit/next-sass');
 const withCSS = require('@zeit/next-css');
-const Dotenv = require('dotenv-webpack');
 
 module.exports = withCSS(
   withSass({
@@ -13,8 +12,9 @@ module.exports = withCSS(
       config.plugins = [
         ...config.plugins,
 
-        new Dotenv({
-          path: path.join(__dirname, './.env'),
+        new webpack.EnvironmentPlugin({
+          GRAPHQL_ROUTE: JSON.stringify(process.env.GRAPHQL_ROUTE),
+          GOOGLE_MAPS_API: JSON.stringify(process.env.GOOGLE_MAPS_API),
         }),
       ];
 

@@ -154,7 +154,7 @@ const LoginPageContainer = () => {
         <div className={classes.paper}>
           <Link href="/" underline="none" color="inherit" align="center">
             <Avatar className={classes.avatar}>
-              <img src="/robrux.png" />
+              <img src="/robrux.png" alt="Login Page" />
             </Avatar>
             <Typography component="h1" variant="h5">
               {STRINGS.SITE_NAME}

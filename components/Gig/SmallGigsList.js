@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import SmallGig from './SmallGig';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import { trackWindowScroll } from 'react-lazy-load-image-component';
 
 const styles = theme => ({
   'small-gigs-list__container': {
@@ -10,7 +11,7 @@ const styles = theme => ({
   },
 });
 
-const SmallGigsList = props => {
+const SmallGigsList = (props, { scrollPosition }) => {
   const { classes, loading, gigs, hovered, _onMouseEnter, _onMouseLeave, _onClick } = props;
   return (
     <Grid container spacing={2} className={classes['small-gigs-list__container']}>
@@ -18,6 +19,7 @@ const SmallGigsList = props => {
         return (
           <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={index}>
             <SmallGig
+              scrollPosition={scrollPosition}
               hovered={hovered === gig._id}
               gig={gig}
               loading={loading}
@@ -32,4 +34,4 @@ const SmallGigsList = props => {
   );
 };
 
-export default withStyles(styles)(SmallGigsList);
+export default withStyles(styles)(trackWindowScroll(SmallGigsList));

@@ -24,7 +24,7 @@ const Carousel = props => {
       <Slider>
         {images.map((img, idx) => (
           <Slide key={idx} index={idx}>
-            <ImageWithZoom src={img} />
+            <ImageWithZoom src={img} alt={`Slide ${idx}`} />
           </Slide>
         ))}
       </Slider>

@@ -1,4 +1,5 @@
 import { WithHeaderLayout } from '../../lib/layouts/WithHeaderLayout';
+import withApollo from '../../lib/hocs/withApollo';
 import React, { useState, useEffect, Fragment } from 'react';
 import Grid from '@material-ui/core/Grid';
 import clsx from 'clsx';
@@ -24,24 +25,24 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Service = ({ service, props }) => {
+const Service = ({ params }) => {
   let gig = false;
   const classes = useStyles();
   const [searchGig, { data, error, loading }] = useLazyQuery(GET_ONE_GIG, {
-    variables: { idOrSlug: service.idOrSlug },
+    variables: { idOrSlug: params.idOrSlug },
   });
 
   useEffect(() => {
-    if (service.idOrSlug) {
+    if (params.idOrSlug) {
       searchGig();
     }
-  }, [service, searchGig]);
+  }, [params, searchGig]);
 
   if (data && data.oneGig) {
     gig = data.oneGig;
   }
 
-  if (!service.idOrSlug || !gig) {
+  if (!params.idOrSlug || !gig) {
     return <Fragment></Fragment>;
   }
 
@@ -49,7 +50,7 @@ const Service = ({ service, props }) => {
     <Grid container alignItems="flex-start" spacing={2}>
       <Grid item xs={12} sm={4} md={4} lg={3}>
         <Box className="service__map">
-          <StaticMap gig={gig} size={[300, 450]} zoom={16} withLink={true} withAddress={true} />
+          <StaticMap gig={gig} size={[500, 400]} zoom={16} withLink={true} withAddress={true} />
         </Box>
       </Grid>
       <Grid item xs={12} sm={8} md={8} lg={9}>
@@ -94,10 +95,12 @@ const Service = ({ service, props }) => {
   );
 };
 
+const Layout = WithHeaderLayout;
+
 Service.getInitialProps = async ({ query: { id } }, res) => {
-  return { service: { idOrSlug: id } };
+  return { params: { idOrSlug: id } };
 };
 
-Service.Layout = WithHeaderLayout;
+Service.Layout = Layout;
 
-export default Service;
+export default withApollo(Service);

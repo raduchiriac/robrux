@@ -19,7 +19,7 @@ const GIG_CREATE_FAKE = () => {
       createGig(input: {
         _userId: "${userID}",
         _providerName: "${faker.name.firstName()} ${faker.name.lastName()}",
-        _providerAvatar: "https://i.pravatar.cc/256?u=${userID}",
+        _providerAvatar: "https://i.pravatar.cc/128?u=${userID}",
         _rating: ${Math.random() * 4 + 1},
         _subscription: "${Math.random() >= 0.5 ? subscriptionID : ''}",
         title: "${title}",

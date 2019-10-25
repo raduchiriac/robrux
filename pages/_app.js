@@ -7,10 +7,9 @@ import { LanguagesContextProvider } from '../lib/contexts/LanguagesContext';
 import { GlobalContextProvider } from '../lib/contexts/GlobalContext';
 import { DefaultTheme } from '../lib/themes/default-theme';
 import { EmptyLayout } from '../lib/layouts/EmptyLayout';
-import withApollo from '../lib/hocs/withApollo';
 
 class NextApp extends App {
-  static displayName = 'App';
+  static displayName = 'NextApp';
 
   componentDidMount() {
     // Remove the server-side injected CSS.
@@ -22,8 +21,10 @@ class NextApp extends App {
 
   render() {
     const { Component, pageProps, apolloClient } = this.props;
-    console.log('[🚨_app] props', Object.keys(this.props));
-    console.log('[🚨_app] Page Props', Object.keys(pageProps));
+
+    // console.log('[🚨_app] props', this.props);
+    // console.log('[🚨_app] Component', Component);
+    // console.log('[🚨_app] PageProps', pageProps);
     const Layout = Component.Layout || EmptyLayout;
 
     return (
@@ -44,4 +45,4 @@ class NextApp extends App {
   }
 }
 
-export default withApollo(NextApp);
+export default NextApp;

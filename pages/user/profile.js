@@ -1,6 +1,6 @@
 import React from 'react';
-import { withProtectedRoute } from '../../lib/hocs/withAuth';
 import { WithHeaderLayout } from '../../lib/layouts/WithHeaderLayout';
+import withApollo from '../lib/hocs/withApollo';
 
 const Profile = props => {
   return <div>{Object.keys(props).join(',')}</div>;
@@ -8,4 +8,4 @@ const Profile = props => {
 
 Profile.Layout = WithHeaderLayout;
 
-export default withProtectedRoute(Profile);
+export default withApollo(Profile);

@@ -53,7 +53,7 @@ const Form = props => {
   return (
     <Fragment>
       <Avatar className={classes.avatar}>
-        <img src="/robrux.png" />
+        <img src="/robrux.png" alt="Register Page" />
       </Avatar>
       <Typography component="h1" variant="h5">
         {STRINGS.SITE_NAME}

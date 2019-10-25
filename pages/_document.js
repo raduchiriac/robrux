@@ -8,6 +8,7 @@ class MyDocument extends Document {
       <html lang="ro">
         <Head>
           <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no" />
+          <meta name="description" content="Romanian Professionals in Bruxelles, Belgium" />
           <meta charSet="UTF-8" />
           <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
           <link rel="icon" type="image/png" href="/favicon.png" />
@@ -57,7 +58,7 @@ MyDocument.getInitialProps = async ctx => {
 
   const initialProps = await Document.getInitialProps(ctx);
 
-  console.log('[🚨_document]', Object.keys(initialProps));
+  // console.log('[🚨_document]', Object.keys(initialProps));
 
   return {
     ...initialProps,

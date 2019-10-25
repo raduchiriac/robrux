@@ -38,7 +38,7 @@ app.prepare().then(() => {
           // put the userId onto the req for future requests to access
           const { id } = jwt.verify(token, process.env.JWT_SECRET);
           req.userId = id;
-          console.log('🚨[server.use] Setting userId from "token" in the req.userId:', id);
+          // console.log('🚨[server.use] Setting userId from "token" in the req.userId:', id);
         } catch (err) {
           // Error verifing the token (err.message)
         }

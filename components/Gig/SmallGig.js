@@ -4,6 +4,8 @@ import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import Link from '../../lib/hocs/withLink';
 import ConditionalWrap from '../../lib/hocs/ConditionalWrap';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 import './SmallGig.scss';
 
@@ -29,7 +31,7 @@ const styles = theme => ({
 });
 
 const SmallGig = props => {
-  const { gig, hovered, classes, loading, _onMouseEnter = () => {}, _onMouseLeave = () => {} } = props;
+  const { scrollPosition, gig, hovered, classes, loading, _onMouseEnter = () => {}, _onMouseLeave = () => {} } = props;
   return (
     <ConditionalWrap
       condition={!loading}
@@ -51,7 +53,13 @@ const SmallGig = props => {
       >
         <div className={clsx('small-gig__avatar-container', classes['small-gig__avatar-container'])}>
           {!loading && gig ? (
-            <img className={'small-gig__avatar'} src={gig._providerAvatar} alt={gig._providerName} />
+            <LazyLoadImage
+              effect="blur"
+              scrollPosition={scrollPosition}
+              className={'small-gig__avatar'}
+              src={gig._providerAvatar}
+              alt={gig._providerName}
+            />
           ) : (
             <div className="small-gig__avatar"></div>
           )}

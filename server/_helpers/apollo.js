@@ -36,7 +36,7 @@ const context = ({ req, res, connection }) => {
     return connection.context;
   } else {
     const token = req.headers.token || null;
-    console.log('🚨[Apollo context] no connection, token:', token);
+    // console.log('🚨[Apollo context] no connection, token:', token);
 
     return { req, res, token };
   }

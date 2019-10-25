@@ -1,8 +1,8 @@
 import React from 'react';
-import { withProtectedRoute } from '../lib/hocs/withAuth';
+import withApollo from '../lib/hocs/withApollo';
 
 const Verify = () => {
   return <div>Verify</div>;
 };
 
-export default withProtectedRoute(Verify);
+export default withApollo(Verify);

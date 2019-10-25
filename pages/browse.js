@@ -2,6 +2,7 @@ import React from 'react';
 
 import { WithHeaderLayout } from '../lib/layouts/WithHeaderLayout';
 import IndexPageContainer from '../components/IndexPageContainer';
+import withApollo from '../lib/hocs/withApollo';
 
 const Browse = props => {
   return <IndexPageContainer />;
@@ -9,4 +10,4 @@ const Browse = props => {
 
 Browse.Layout = WithHeaderLayout;
 
-export default Browse;
+export default withApollo(Browse);

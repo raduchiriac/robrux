@@ -1,9 +1,9 @@
 import React from 'react';
 import RegisterPageContainer from '../components/RegisterPageContainer';
-import { withProtectedRoute } from '../lib/hocs/withAuth';
+import withApollo from '../lib/hocs/withApollo';
 
 const Register = () => {
   return <RegisterPageContainer />;
 };
 
-export default withProtectedRoute(Register);
+export default withApollo(Register);

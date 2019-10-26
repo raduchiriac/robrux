@@ -50,7 +50,7 @@ const Service = ({ params }) => {
     <Grid container alignItems="flex-start" spacing={2}>
       <Grid item xs={12} sm={4} md={4} lg={3}>
         <Box className="service__map">
-          <StaticMap gig={gig} size={[500, 400]} zoom={16} withLink={true} withAddress={true} />
+          <StaticMap gig={gig} size={[600, 400]} zoom={16} withLink={true} withAddress={true} />
         </Box>
       </Grid>
       <Grid item xs={12} sm={8} md={8} lg={9}>
@@ -85,8 +85,8 @@ const Service = ({ params }) => {
             </Box>
           ))}
         </Box>
-        <Box mt={2}>
-          <Button variant="contained" color="secondary" className={classes['servicePrice']}>
+        <Box mt={2} className="service-actions">
+          <Button variant="contained" color="primary" className={classes['servicePrice']}>
             Contact
           </Button>
         </Box>

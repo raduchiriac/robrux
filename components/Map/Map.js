@@ -81,6 +81,21 @@ class Map extends Component {
       });
     };
 
+    const markers = gigs.map(gig => {
+      return (
+        <Marker
+          mapServiceProvider={mapServiceProvider}
+          key={gig._id}
+          text={gig.title}
+          id={gig._id}
+          hovered={hovered === gig._id}
+          onClick={() => _onMarkerClick(gig)}
+          lat={gig.location.coordinates[0]}
+          lng={gig.location.coordinates[1]}
+        />
+      );
+    });
+
     return (
       <div className={classes.mapContainer}>
         {mapServiceProvider == 'google' && (
@@ -97,23 +112,13 @@ class Map extends Component {
             }
             onGoogleApiLoaded={({ map, maps }) => this._apiIsLoaded(map, maps)}
           >
-            {gigs.map(gig => {
-              return (
-                <Marker
-                  key={gig._id}
-                  text={gig.title}
-                  id={gig._id}
-                  hovered={hovered === gig._id}
-                  onClick={() => _onMarkerClick(gig)}
-                  lat={gig.location.coordinates[0]}
-                  lng={gig.location.coordinates[1]}
-                />
-              );
-            })}
+            {markers}
           </GoogleMap>
         )}
         {mapServiceProvider == 'leaflet' && (
-          <LeafletMap defaultZoom={this.state.defaultZoom} defaultCenter={BRUX_CENTER} />
+          <LeafletMap defaultZoom={this.state.defaultZoom} defaultCenter={BRUX_CENTER}>
+            {markers}
+          </LeafletMap>
         )}
       </div>
     );

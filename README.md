@@ -1,5 +1,15 @@
 ![screenshot](./public/screenshot.png?raw=true)
 
+### Are you here for the first time?
+
+Run `npm run storyboard` to see some of the components in action.
+
+### Development urge?
+
+Create and edit a valid `.env` file by doing `cp .env.sample .env`. Start your local MongoDB server or setup a remote one in the said `.env` file. Run `npm run seed` once, wait for the data to be imported, then terminate this process.
+
+Now run `npm run start:dev` and create something nice.
+
 #### Roadmap
 
 - [x] Fetch data with a Mongo `$geoWithin` a query

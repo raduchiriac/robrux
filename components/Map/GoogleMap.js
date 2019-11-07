@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import GoogleMapReact from 'google-map-react';
 
+import './GoogleMap.scss';
+
 const GoogleMap = ({ children, ...props }) => (
-  <div style={{ width: '100%', height: '100%' }}>
+  <div className="map-container__google">
     <GoogleMapReact
       bootstrapURLKeys={{
         key: process.env.GOOGLE_MAPS_API,

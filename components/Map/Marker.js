@@ -1,8 +1,10 @@
 import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import './Marker.scss';
 import { withStyles } from '@material-ui/core/styles';
+import { Marker as LeafletMarker } from 'react-leaflet';
+
+import './Marker.scss';
 
 const hover = { transform: 'scale(2.5)', backgroundColor: '#000', borderWidth: '2px', zIndex: 1 };
 const styles = theme => ({
@@ -14,15 +16,20 @@ const styles = theme => ({
 });
 
 const Marker = props => {
-  const { classes } = props;
-  return (
-    <div
-      className={clsx('map-marker', classes.marker)}
-      style={props.hovered ? hover : {}}
-      title={props.text}
-      {...(props.onClick ? { onClick: props.onClick } : {})}
-    />
-  );
+  const { classes, hovered, text, onClick, lat, lng, mapServiceProvider } = props;
+
+  if (mapServiceProvider == 'google') {
+    return (
+      <div
+        className={clsx('map-marker', classes.marker)}
+        style={hovered ? hover : {}}
+        title={text}
+        {...(onClick ? { onClick: onClick } : {})}
+      />
+    );
+  } else if (mapServiceProvider == 'leaflet') {
+    return <LeafletMarker position={[lat, lng]}></LeafletMarker>;
+  }
 };
 
 Marker.defaultProps = {

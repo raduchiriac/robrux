@@ -19,8 +19,8 @@ storiesOf('Small Gig', module)
         _rating: 3.1111,
 
         price: 1000,
-        title: 'Abba in 74',
-        images: ['https://upload.wikimedia.org/wikipedia/commons/c/cb/ABBA_-_TopPop_1974_5.png'],
+        title: "Abba in '74",
+        _providerAvatar: 'https://upload.wikimedia.org/wikipedia/commons/c/cb/ABBA_-_TopPop_1974_5.png',
       }}
     />
   ));

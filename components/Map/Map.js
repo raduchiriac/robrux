@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Fragment, Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
 import GoogleMap from './GoogleMap';
+import LeafletMap from './LeafletMap';
 import Marker from './Marker';
 
 import BRUX_CENTER from '../../lib/constants/BRUX_CENTER';
@@ -35,6 +36,9 @@ const createMapOptions = maps => {
 class Map extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      defaultZoom: 13,
+    };
 
     this._apiIsLoaded = this._apiIsLoaded.bind(this);
   }
@@ -51,6 +55,7 @@ class Map extends Component {
       classes,
       gigs,
       hovered = 0,
+      mapServiceProvider = 'google',
       _onMapBoundsChange = () => {},
       _onMarkerClick = () => {},
       _onMapChildMouseEnter = () => {},
@@ -78,31 +83,38 @@ class Map extends Component {
 
     return (
       <div className={classes.mapContainer}>
-        <GoogleMap
-          defaultZoom={13}
-          defaultCenter={BRUX_CENTER}
-          resetBoundsOnResize={true}
-          onChildMouseEnter={_onMapChildMouseEnter}
-          onChildMouseLeave={_onMapChildMouseLeave}
-          options={createMapOptions}
-          yesIWantToUseGoogleMapApiInternals
-          onChange={({ center, zoom, bounds, marginBounds }) => _onMapBoundsChange(center, zoom, bounds, marginBounds)}
-          onGoogleApiLoaded={({ map, maps }) => this._apiIsLoaded(map, maps)}
-        >
-          {gigs.map(gig => {
-            return (
-              <Marker
-                key={gig._id}
-                text={gig.title}
-                id={gig._id}
-                hovered={hovered === gig._id}
-                onClick={() => _onMarkerClick(gig)}
-                lat={gig.location.coordinates[0]}
-                lng={gig.location.coordinates[1]}
-              />
-            );
-          })}
-        </GoogleMap>
+        {mapServiceProvider == 'google' && (
+          <GoogleMap
+            defaultZoom={this.state.defaultZoom}
+            defaultCenter={BRUX_CENTER}
+            resetBoundsOnResize={true}
+            onChildMouseEnter={_onMapChildMouseEnter}
+            onChildMouseLeave={_onMapChildMouseLeave}
+            options={createMapOptions}
+            yesIWantToUseGoogleMapApiInternals
+            onChange={({ center, zoom, bounds, marginBounds }) =>
+              _onMapBoundsChange(center, zoom, bounds, marginBounds)
+            }
+            onGoogleApiLoaded={({ map, maps }) => this._apiIsLoaded(map, maps)}
+          >
+            {gigs.map(gig => {
+              return (
+                <Marker
+                  key={gig._id}
+                  text={gig.title}
+                  id={gig._id}
+                  hovered={hovered === gig._id}
+                  onClick={() => _onMarkerClick(gig)}
+                  lat={gig.location.coordinates[0]}
+                  lng={gig.location.coordinates[1]}
+                />
+              );
+            })}
+          </GoogleMap>
+        )}
+        {mapServiceProvider == 'leaflet' && (
+          <LeafletMap defaultZoom={this.state.defaultZoom} defaultCenter={BRUX_CENTER} />
+        )}
       </div>
     );
   }

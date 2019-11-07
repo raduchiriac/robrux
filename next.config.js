@@ -13,8 +13,8 @@ module.exports = withCSS(
         ...config.plugins,
 
         new webpack.EnvironmentPlugin({
-          GRAPHQL_ROUTE: JSON.stringify(process.env.GRAPHQL_ROUTE),
-          GOOGLE_MAPS_API: JSON.stringify(process.env.GOOGLE_MAPS_API),
+          GRAPHQL_ROUTE: JSON.stringify(process.env.GRAPHQL_ROUTE || ''),
+          GOOGLE_MAPS_API: JSON.stringify(process.env.GOOGLE_MAPS_API || ''),
         }),
       ];
 

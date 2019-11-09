@@ -1,5 +1,5 @@
 .map-marker {
-  transition: all 0.3s ease;
+  transition: all 0.23s ease;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -12,4 +12,12 @@
   transform-origin: center;
   &:hover {
   }
+}
+.leaflet-marker-icon {
+  transition: all 0.3s ease;
+  &:hover {
+    z-index: 300 !important;
+  }
+}
+.leaflet-marker-icon--hover {
 }

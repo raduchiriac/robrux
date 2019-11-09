@@ -2,11 +2,16 @@ import React, { Fragment, Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
 import GoogleMap from './GoogleMap';
-import LeafletMap from './LeafletMap';
-import Marker from './Marker';
+import MapMarker from './MapMarker';
 
 import BRUX_CENTER from '../../lib/constants/BRUX_CENTER';
 import GOOGLE_MAP_SKIN from '../../lib/constants/GOOGLE_MAP_SKIN';
+
+import dynamic from 'next/dynamic';
+
+const LeafletMapNoSSR = dynamic(() => import('./LeafletMap'), {
+  ssr: false,
+});
 
 const styles = theme => ({
   mapContainer: {
@@ -83,7 +88,7 @@ class Map extends Component {
 
     const markers = gigs.map(gig => {
       return (
-        <Marker
+        <MapMarker
           mapServiceProvider={mapServiceProvider}
           key={gig._id}
           text={gig.title}
@@ -116,9 +121,9 @@ class Map extends Component {
           </GoogleMap>
         )}
         {mapServiceProvider == 'leaflet' && (
-          <LeafletMap defaultZoom={this.state.defaultZoom} defaultCenter={BRUX_CENTER}>
+          <LeafletMapNoSSR defaultZoom={this.state.defaultZoom} defaultCenter={BRUX_CENTER}>
             {markers}
-          </LeafletMap>
+          </LeafletMapNoSSR>
         )}
       </div>
     );

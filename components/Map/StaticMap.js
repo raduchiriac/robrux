@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import LocationIcon from '@material-ui/icons/LocationOn';
 import GOOGLE_MAP_SKIN from '../../lib/constants/GOOGLE_MAP_SKIN';
@@ -9,7 +9,7 @@ import './StaticMap.scss';
 const StaticMap = props => {
   const { gig = {}, size = [300, 300], zoom = 13, withLink, withAddress } = props;
   if (!gig.location) {
-    return <Fragment></Fragment>;
+    return <></>;
   }
   const location = gig.location.coordinates.join(',');
 

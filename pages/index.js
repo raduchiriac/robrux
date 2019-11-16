@@ -1,6 +1,6 @@
 import React from 'react';
-import { redirectToThis } from '../lib/hocs/withAuth';
-import withApollo from '../lib/hocs/withApollo';
+import { redirectToThis } from '~/lib/hocs/withAuth';
+import withApollo from '~/lib/hocs/withApollo';
 
 const Index = () => {
   return (

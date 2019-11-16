@@ -1,22 +1,17 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-
-import GoogleMap from './GoogleMap';
-import MapMarker from './MapMarker';
 
 import BRUX_CENTER from '../../lib/constants/BRUX_CENTER';
 import GOOGLE_MAP_SKIN from '../../lib/constants/GOOGLE_MAP_SKIN';
 
-import dynamic from 'next/dynamic';
+import OSMMap from './OSMMap';
+import Marker from './Marker';
 
-const LeafletMapNoSSR = dynamic(() => import('./LeafletMap'), {
-  ssr: false,
-});
+import GoogleMap from './GoogleMap';
 
 const styles = theme => ({
   mapContainer: {
     borderRadius: `${theme.shape.borderRadius * 3}px`,
-    height: '300px',
     transition: 'all 0.3s ease',
     margin: theme.spacing(1),
     boxShadow: theme.shadows[1],
@@ -24,7 +19,7 @@ const styles = theme => ({
   },
 });
 
-const createMapOptions = maps => {
+const createMapOptions = () => {
   return {
     maxZoom: 15,
     minZoom: 9,
@@ -43,6 +38,7 @@ class Map extends Component {
     super(props);
     this.state = {
       defaultZoom: 13,
+      height: 300,
     };
 
     this._apiIsLoaded = this._apiIsLoaded.bind(this);
@@ -88,7 +84,7 @@ class Map extends Component {
 
     const markers = gigs.map(gig => {
       return (
-        <MapMarker
+        <Marker
           mapServiceProvider={mapServiceProvider}
           key={gig._id}
           text={gig.title}
@@ -102,11 +98,11 @@ class Map extends Component {
     });
 
     return (
-      <div className={classes.mapContainer}>
+      <div className={classes.mapContainer} style={{ height: this.state.height }}>
         {mapServiceProvider == 'google' && (
           <GoogleMap
-            defaultZoom={this.state.defaultZoom}
             defaultCenter={BRUX_CENTER}
+            defaultZoom={this.state.defaultZoom}
             resetBoundsOnResize={true}
             onChildMouseEnter={_onMapChildMouseEnter}
             onChildMouseLeave={_onMapChildMouseLeave}
@@ -120,10 +116,10 @@ class Map extends Component {
             {markers}
           </GoogleMap>
         )}
-        {mapServiceProvider == 'leaflet' && (
-          <LeafletMapNoSSR defaultZoom={this.state.defaultZoom} defaultCenter={BRUX_CENTER}>
+        {mapServiceProvider == 'osm' && (
+          <OSMMap defaultCenter={BRUX_CENTER} defaultZoom={this.state.defaultZoom} defaultHeight={this.state.height}>
             {markers}
-          </LeafletMapNoSSR>
+          </OSMMap>
         )}
       </div>
     );

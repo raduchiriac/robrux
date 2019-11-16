@@ -26,6 +26,7 @@ Now run `npm run start:dev` and create something nice.
 - [ ] (_Route_) New Gig (use Formik, _protected route_, Stripe API)
 - [ ] (_Route_) My Profile (_protected route_)
 - [ ] Fuzzy-Search on MongoDB (include tags)
+- [ ] Dynamic <title> using Helmet
 - [ ] Payment System (Stripe API)
 - [ ] Rewrite the GraphQL schemas (more readable)
 - [ ] Image Upload to cloud storage (Cloudinary API)

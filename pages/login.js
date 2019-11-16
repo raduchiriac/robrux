@@ -1,6 +1,6 @@
 import React from 'react';
-import { LoginPageContainer } from '../components/LoginPageContainer';
-import withApollo from '../lib/hocs/withApollo';
+import { LoginPageContainer } from '~/components/LoginPageContainer';
+import withApollo from '~/lib/hocs/withApollo';
 
 const Login = () => {
   return <LoginPageContainer />;

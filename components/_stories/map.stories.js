@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Map from '../Map/Map';
 import StaticMap from '../Map/StaticMap';
-import LeafletMap from '../Map/LeafletMap';
+import LeafletMap from '../Map/OSMMap';
 
 const gigs = [
   {
@@ -21,4 +21,4 @@ storiesOf('Maps: Google Maps', module)
   .add('Static map with address', () => <StaticMap gig={gigs[0]} size={[300, 450]} zoom={16} withAddress={true} />)
   .add('Static map with link', () => <StaticMap gig={gigs[0]} size={[300, 450]} zoom={16} withLink={true} />);
 
-storiesOf('Maps: Leaflet', module).add('With one marker', () => <Map gigs={gigs} mapServiceProvider="leaflet" />);
+storiesOf('Maps: OpenStreetMap', module).add('With one marker', () => <Map gigs={gigs} mapServiceProvider="osm" />);

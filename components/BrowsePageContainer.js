@@ -1,28 +1,27 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { useLazyQuery } from '@apollo/react-hooks';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 import Router from 'next/router';
 
 import Map from './Map/Map';
 import { GlobalContext } from '../lib/contexts/GlobalContext';
+import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
 import { SEARCH_BBOX_GIG } from '../lib/graphql/gigs.strings';
 
 import SmallGigsList from './Gig/SmallGigsList';
-import './IndexPageContainer.scss';
+import './BrowsePageContainer.scss';
 
-const IndexPageContainer = props => {
+const BrowsePageContainer = props => {
   const [bbox, setBbox] = useState([]);
+  const [searchingFor, setSearchingFor] = useState(props.searchingFor || '');
   const [hovered, setHovered] = useState(0);
   const [searchBboxGigs, { data, error, loading }] = useLazyQuery(SEARCH_BBOX_GIG, {
     variables: { limit: 20, sort: '-_rating', bbox },
   });
 
   const { showMap } = useContext(GlobalContext).state;
+  const { STRINGS } = useContext(LanguagesContext).state;
 
   useEffect(() => {
     if (bbox.length) {
@@ -66,23 +65,25 @@ const IndexPageContainer = props => {
 
   return (
     <Grid container className={'home-page__container'}>
+      {!!searchingFor && (
+        <Box component="div" p={1}>
+          {STRINGS.BROWSE_RESULTS_OF}
+          <Box display="inline" ml={0.5} fontStyle="italic">
+            {searchingFor}
+          </Box>
+        </Box>
+      )}
       {showMap && (
-        // <ExpansionPanel>
-        //   <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
-        //     <Typography>Show Map</Typography>
-        //   </ExpansionPanelSummary>
-        //   <ExpansionPanelDetails>
         <Map
           gigs={gigs}
           loading={loading}
           hovered={hovered}
+          mapServiceProvider="google"
           _onMapBoundsChange={onMapBoundsChange}
           _onMarkerClick={onGigClick}
           _onMapChildMouseEnter={onHoverEnters}
           _onMapChildMouseLeave={onHoverLeaves}
         />
-        //   </ExpansionPanelDetails>
-        // </ExpansionPanel>
       )}
       <SmallGigsList
         gigs={gigs}
@@ -96,4 +97,4 @@ const IndexPageContainer = props => {
   );
 };
 
-export default IndexPageContainer;
+export default BrowsePageContainer;

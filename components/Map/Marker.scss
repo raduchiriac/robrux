@@ -13,11 +13,3 @@
   &:hover {
   }
 }
-.leaflet-marker-icon {
-  transition: all 0.3s ease;
-  &:hover {
-    z-index: 300 !important;
-  }
-}
-.leaflet-marker-icon--hover {
-}

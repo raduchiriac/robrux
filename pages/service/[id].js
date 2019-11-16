@@ -1,18 +1,18 @@
-import { WithHeaderLayout } from '../../lib/layouts/WithHeaderLayout';
-import withApollo from '../../lib/hocs/withApollo';
 import React, { useState, useEffect, Fragment } from 'react';
-import Grid from '@material-ui/core/Grid';
+import { WithHeaderLayout } from '~/lib/layouts/WithHeaderLayout';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import { GET_ONE_GIG } from '../../lib/graphql/gigs.strings';
-import { useLazyQuery } from '@apollo/react-hooks';
-import StaticMap from '../../components/Map/StaticMap';
-import StarRating from '../../components/Rating/StarRating';
-import Carousel from '../../components/Carousel/Carousel';
+import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import { useLazyQuery } from '@apollo/react-hooks';
+import withApollo from '~/lib/hocs/withApollo';
+import { GET_ONE_GIG } from '~/lib/graphql/gigs.strings';
+import StaticMap from '~/components/Map/StaticMap';
+import StarRating from '~/components/Rating/StarRating';
+import Carousel from '~/components/Carousel/Carousel';
 
 import './id.scss';
 

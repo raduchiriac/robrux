@@ -1,5 +1,5 @@
 import React from 'react';
-import withApollo from '../lib/hocs/withApollo';
+import withApollo from '~/lib/hocs/withApollo';
 
 const Verify = () => {
   return <div>Verify</div>;

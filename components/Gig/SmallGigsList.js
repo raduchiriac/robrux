@@ -15,9 +15,9 @@ const SmallGigsList = (props, { scrollPosition }) => {
   const { classes, loading, gigs, hovered, _onMouseEnter, _onMouseLeave, _onClick } = props;
   return (
     <Grid container spacing={2} className={classes['small-gigs-list__container']}>
-      {((gigs.length && gigs) || [false, false, false]).map((gig, index) => {
+      {((gigs.length && gigs) || (loading ? [false] : [])).map((gig, index) => {
         return (
-          <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={index}>
+          <Grid item xs={12} sm={4} md={6} lg={6} xl={6} key={index}>
             <SmallGig
               scrollPosition={scrollPosition}
               hovered={hovered === gig._id}

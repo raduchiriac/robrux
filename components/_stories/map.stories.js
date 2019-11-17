@@ -22,3 +22,5 @@ storiesOf('Maps: Google Maps', module)
   .add('Static map with link', () => <StaticMap gig={gigs[0]} size={[300, 450]} zoom={16} withLink={true} />);
 
 storiesOf('Maps: OpenStreetMap', module).add('With one marker', () => <Map gigs={gigs} mapServiceProvider="osm" />);
+
+storiesOf('Maps: Mapbox', module).add('With one marker', () => <Map gigs={gigs} mapServiceProvider="mapbox" />);

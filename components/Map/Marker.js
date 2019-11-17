@@ -8,30 +8,49 @@ import './Marker.scss';
 const hover = { transform: 'scale(2.5)', backgroundColor: '#000', borderWidth: '2px', zIndex: 1 };
 const styles = theme => ({
   marker: {
-    backgroundColor: (theme.custom_palette && theme.custom_palette.alternateColor) || 'black',
+    backgroundColor: (theme.custom_palette && theme.custom_palette.alternateColor) || 'red',
     cursor: props => (props.onClick ? 'pointer' : 'default'),
     '&:hover': hover,
   },
 });
 
 const Marker = props => {
-  const { classes, hovered, text, onClick, lat, lng, mapServiceProvider, id, left, top } = props;
+  const {
+    classes,
+    hovered,
+    text,
+    onClick,
+    lat,
+    lng,
+    mapServiceProvider,
+    payload,
+    left,
+    top,
+    onMouseEnter,
+    onMouseLeave,
+  } = props;
 
   if (mapServiceProvider == 'google') {
     return (
       <div
-        className={clsx('map-marker', classes.marker)}
+        className={clsx('map-marker', 'map-marker__google', classes.marker)}
         style={hovered ? hover : {}}
         title={text}
         {...(onClick ? { onClick: onClick } : {})}
       />
     );
-  } else if (mapServiceProvider == 'osm') {
+  } else if (mapServiceProvider == 'osm' || mapServiceProvider == 'mapbox') {
+    const style = {
+      left: `${left}px`,
+      top: `${top}px`,
+    };
     return (
       <div
-        className={clsx('map-marker', classes.marker)}
-        style={hovered ? hover : {}}
+        className={clsx('map-marker', `map-marker__${mapServiceProvider}`, classes.marker)}
+        style={hovered ? { ...hover, ...style } : style}
         title={text}
+        onMouseEnter={() => onMouseEnter(payload)}
+        onMouseLeave={() => onMouseLeave()}
         {...(onClick ? { onClick: onClick } : {})}
       />
     );

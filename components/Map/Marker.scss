@@ -1,8 +1,4 @@
 .map-marker {
-  transition: all 0.23s ease;
-  position: absolute;
-  top: 50%;
-  left: 50%;
   width: 18px;
   height: 18px;
   border: 3px solid #fff;
@@ -10,6 +6,15 @@
   border-radius: 50%;
   user-select: none;
   transform-origin: center;
+  position: absolute;
+  transition: all 0.23s ease, top 0s, left 0s;
+}
+.map-marker__google {
   &:hover {
   }
+  top: 50%;
+  left: 50%;
+}
+.map-marker__osm,
+.map-marker__mapbox {
 }

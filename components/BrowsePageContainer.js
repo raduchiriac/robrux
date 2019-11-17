@@ -37,15 +37,25 @@ const BrowsePageContainer = props => {
   }
 
   const onMapBoundsChange = (center, zoom, bounds, marginBounds) => {
-    // INFO: This is how coordinates are stored NW [lat, long] + NE + SE + SW + NW (again)
-    const bbox = [
-      [marginBounds.nw.lat, marginBounds.nw.lng],
-      [marginBounds.ne.lat, marginBounds.ne.lng],
-      [marginBounds.se.lat, marginBounds.se.lng],
-      [marginBounds.sw.lat, marginBounds.sw.lng],
-      [marginBounds.nw.lat, marginBounds.nw.lng],
-    ];
-
+    let bbox = [];
+    if (typeof marginBounds == 'boolean') {
+      bbox = [
+        [bounds.sw[0], bounds.ne[1]],
+        bounds.ne,
+        [bounds.ne[0], bounds.sw[1]],
+        bounds.sw,
+        [bounds.sw[0], bounds.ne[1]],
+      ];
+    } else {
+      // INFO: This is how coordinates are stored NW [lat, long] + NE + SE + SW + NW (again)
+      bbox = [
+        [marginBounds.nw.lat, marginBounds.nw.lng],
+        [marginBounds.ne.lat, marginBounds.ne.lng],
+        [marginBounds.se.lat, marginBounds.se.lng],
+        [marginBounds.sw.lat, marginBounds.sw.lng],
+        [marginBounds.nw.lat, marginBounds.nw.lng],
+      ];
+    }
     setBbox(bbox);
   };
 
@@ -64,35 +74,41 @@ const BrowsePageContainer = props => {
   };
 
   return (
-    <Grid container className={'home-page__container'}>
+    <Grid container className={'home-page__container'} spacing={1}>
       {!!searchingFor && (
-        <Box component="div" p={1}>
-          {STRINGS.BROWSE_RESULTS_OF}
-          <Box display="inline" ml={0.5} fontStyle="italic">
-            {searchingFor}
+        <Grid container>
+          <Box component="div" p={1}>
+            {STRINGS.BROWSE_RESULTS_OF}
+            <Box display="inline" ml={0.5} fontStyle="italic">
+              {searchingFor}
+            </Box>
           </Box>
-        </Box>
+        </Grid>
       )}
-      {showMap && (
-        <Map
+      <Grid item xs={12} sm={12} md={6} lg={6} xl={4}>
+        {showMap && (
+          <Map
+            gigs={gigs}
+            loading={loading}
+            hovered={hovered}
+            mapServiceProvider="osm"
+            _onMapBoundsChange={onMapBoundsChange}
+            _onMarkerClick={onGigClick}
+            _onMapChildMouseEnter={onHoverEnters}
+            _onMapChildMouseLeave={onHoverLeaves}
+          />
+        )}
+      </Grid>
+      <Grid item xs={12} sm={12} md={6} lg={6} xl={8}>
+        <SmallGigsList
           gigs={gigs}
           loading={loading}
           hovered={hovered}
-          mapServiceProvider="google"
-          _onMapBoundsChange={onMapBoundsChange}
-          _onMarkerClick={onGigClick}
-          _onMapChildMouseEnter={onHoverEnters}
-          _onMapChildMouseLeave={onHoverLeaves}
+          _onMouseEnter={onHoverEnters}
+          _onMouseLeave={onHoverLeaves}
+          _onClick={onGigClick}
         />
-      )}
-      <SmallGigsList
-        gigs={gigs}
-        loading={loading}
-        hovered={hovered}
-        _onMouseEnter={onHoverEnters}
-        _onMouseLeave={onHoverLeaves}
-        _onClick={onGigClick}
-      />
+      </Grid>
     </Grid>
   );
 };

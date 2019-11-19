@@ -7,9 +7,9 @@ import ClearIcon from '@material-ui/icons/Clear';
 import IconButton from '@material-ui/core/IconButton';
 import { useLazyQuery } from '@apollo/react-hooks';
 import ResultList from './ResultsList';
-import useDebounce from '../../lib/hooks/useDebounce';
-import { SEARCH_GIG } from '../../lib/graphql/gigs.strings';
-import { LanguagesContext } from '../../lib/contexts/LanguagesContext';
+import useDebounce from '~/lib/hooks/useDebounce';
+import { SEARCH_GIG } from '~/lib/graphql/gigs.strings';
+import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
 
 export default function SearchBox() {
   const useStyles = props =>

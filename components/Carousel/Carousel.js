@@ -20,6 +20,7 @@ const Carousel = props => {
       naturalSlideHeight={height}
       totalSlides={images.length}
       lockOnWindowScroll
+      infinite={'false'}
     >
       <Slider>
         {images.map((img, idx) => (

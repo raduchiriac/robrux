@@ -1,8 +1,8 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
-import BRUX_CENTER from '../../lib/constants/BRUX_CENTER';
-import GOOGLE_MAP_SKIN from '../../lib/constants/GOOGLE_MAP_SKIN';
+import BRUX_CENTER from '~/lib/constants/BRUX_CENTER';
+import GOOGLE_MAP_SKIN from '~/lib/constants/GOOGLE_MAP_SKIN';
 
 import GoogleMap from './GoogleMap';
 import OSMMap from './OSMMap';

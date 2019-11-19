@@ -5,9 +5,9 @@ import Box from '@material-ui/core/Box';
 import Router from 'next/router';
 
 import Map from './Map/Map';
-import { GlobalContext } from '../lib/contexts/GlobalContext';
+import { GlobalContext } from '~/lib/contexts/GlobalContext';
 import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
-import { SEARCH_BBOX_GIG } from '../lib/graphql/gigs.strings';
+import { SEARCH_BBOX_GIG } from '~/lib/graphql/gigs.strings';
 
 import SmallGigsList from './Gig/SmallGigsList';
 import './BrowsePageContainer.scss';

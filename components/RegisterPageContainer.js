@@ -7,12 +7,12 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import useForm from '../lib/hooks/useForm';
-import { LanguagesContext } from '../lib/contexts/LanguagesContext';
-import { useMutation } from '@apollo/react-hooks';
-import { CREATE_USER } from '../lib/graphql/user.strings';
 import Container from '@material-ui/core/Container';
-import Link from '../lib/hocs/withLink';
+import { useMutation } from '@apollo/react-hooks';
+import useForm from '~/lib/hooks/useForm';
+import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
+import { CREATE_USER } from '~/lib/graphql/user.strings';
+import Link from '~/lib/hocs/withLink';
 
 const useStyles = makeStyles(theme => ({
   '@global': {

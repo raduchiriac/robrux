@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
-import SmallGig from './SmallGig';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { trackWindowScroll } from 'react-lazy-load-image-component';
+import SmallGig from './SmallGig';
 
 const styles = theme => ({
   'small-gigs-list__container': {

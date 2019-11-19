@@ -2,10 +2,10 @@ import React, { Fragment } from 'react';
 import clsx from 'clsx';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
-import Link from '../../lib/hocs/withLink';
-import ConditionalWrap from '../../lib/hocs/ConditionalWrap';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import Link from '~/lib/hocs/withLink';
+import ConditionalWrap from '~/lib/hocs/ConditionalWrap';
 
 import './SmallGig.scss';
 

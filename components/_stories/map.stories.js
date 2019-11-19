@@ -1,8 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import Map from '../Map/Map';
-import StaticMap from '../Map/StaticMap';
-import LeafletMap from '../Map/OSMMap';
+import Map from '~/components/Map/Map';
+import StaticMap from '~/components/Map/StaticMap';
 
 const gigs = [
   {

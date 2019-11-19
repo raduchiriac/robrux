@@ -12,8 +12,8 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import SearchBox from './Header/SearchBox';
-import { LanguagesContext } from '../lib/contexts/LanguagesContext';
-import Link from '../lib/hocs/withLink';
+import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
+import Link from '~/lib/hocs/withLink';
 import Router from 'next/router';
 
 const useStyles = makeStyles(theme => ({

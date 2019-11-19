@@ -1,7 +1,6 @@
 import React from 'react';
-import SmallGig from '../Gig/SmallGig';
 import { storiesOf } from '@storybook/react';
-import withThemeProvider from './withThemeProvider';
+import SmallGig from '~/components/Gig/SmallGig';
 
 storiesOf('Small Gig', module)
   .add('Skeleton', () => <SmallGig loading="true" />)

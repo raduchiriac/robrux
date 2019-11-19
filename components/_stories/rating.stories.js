@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import StarRating from '../Rating/StarRating';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import StarRating from '~/components/Rating/StarRating';
 
 storiesOf('Rating', module)
   .add('Just the defaults', () => <StarRating />)

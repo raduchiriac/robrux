@@ -7,6 +7,8 @@ module.exports = async ({ config, mode }) => {
   // You can change the configuration based on that.
   // 'PRODUCTION' is used when building the static version of storybook.
 
+  config.resolve.alias['~'] = path.resolve(path.join(__dirname, '../'));
+
   // Make whatever fine-grained changes you need
   config.module.rules.push({
     test: /\.scss$/,

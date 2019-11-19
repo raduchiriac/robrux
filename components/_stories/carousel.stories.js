@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import Carousel from '../Carousel/Carousel';
+import Carousel from '~/components/Carousel/Carousel';
 
 const images = [
   'https://loremflickr.com/640/480?lock=1',

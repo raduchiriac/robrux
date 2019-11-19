@@ -5,8 +5,8 @@ import Avatar from '@material-ui/core/Avatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import Highlighter from 'react-highlight-words';
-import Link from '../../lib/hocs/withLink';
-import ConditionalWrap from '../../lib/hocs/ConditionalWrap';
+import Link from '~/lib/hocs/withLink';
+import ConditionalWrap from '~/lib/hocs/ConditionalWrap';
 
 export default function Result(props) {
   const handleResultClick = () => {};

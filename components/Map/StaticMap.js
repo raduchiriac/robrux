@@ -1,8 +1,8 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import LocationIcon from '@material-ui/icons/LocationOn';
-import GOOGLE_MAP_SKIN from '../../lib/constants/GOOGLE_MAP_SKIN';
-import ConditionalWrap from '../../lib/hocs/ConditionalWrap';
+import GOOGLE_MAP_SKIN from '~/lib/constants/GOOGLE_MAP_SKIN';
+import ConditionalWrap from '~/lib/hocs/ConditionalWrap';
 
 import './StaticMap.scss';
 

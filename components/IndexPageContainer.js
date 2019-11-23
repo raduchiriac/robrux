@@ -84,7 +84,7 @@ export default function IndexPageContainer() {
         </Paper>
         <Box mt={2} mb={0}>
           <Typography>
-            <Link naked={true} href="/" style={{ color: 'white' }}>
+            <Link naked={true} href="/browse" style={{ color: 'white' }}>
               {STRINGS.INDEX_BROWSE_FREE}
             </Link>
           </Typography>

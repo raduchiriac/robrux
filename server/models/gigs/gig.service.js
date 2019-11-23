@@ -6,7 +6,7 @@ const createGig = async gigParams => {
   return gigResult;
 };
 
-const getBboxGigs = async (limit = 0, sort = '', bbox = []) => {
+const getBboxGigs = async (limit = 0, sort = '', bbox = [], searchingFor = '') => {
   let selector = {};
   if (bbox.length) {
     selector = {

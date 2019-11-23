@@ -7,6 +7,7 @@ import Router from 'next/router';
 import Map from './Map/Map';
 import { GlobalContext } from '~/lib/contexts/GlobalContext';
 import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
+import Typography from '@material-ui/core/Typography';
 import { SEARCH_BBOX_GIG } from '~/lib/graphql/gigs.strings';
 
 import SmallGigsList from './Gig/SmallGigsList';
@@ -15,9 +16,10 @@ import './BrowsePageContainer.scss';
 const BrowsePageContainer = props => {
   const [bbox, setBbox] = useState([]);
   const [searchingFor, setSearchingFor] = useState(props.searchingFor || '');
+  const [searchinInLocation, setSearchinInLocation] = useState(props.location || '');
   const [hovered, setHovered] = useState(0);
   const [searchBboxGigs, { data, error, loading }] = useLazyQuery(SEARCH_BBOX_GIG, {
-    variables: { limit: 20, sort: '-_rating', bbox },
+    variables: { limit: 20, sort: '-_rating', bbox, searchingFor },
   });
 
   const { showMap } = useContext(GlobalContext).state;
@@ -56,7 +58,7 @@ const BrowsePageContainer = props => {
         [marginBounds.nw.lat, marginBounds.nw.lng],
       ];
     }
-    setBbox(bbox);
+    setBbox(bbox, searchingFor);
   };
 
   const onGigClick = gig => {
@@ -74,14 +76,13 @@ const BrowsePageContainer = props => {
   };
 
   return (
-    <Grid container className={'home-page__container'} spacing={1}>
+    <Grid container className="home-page__container" spacing={1}>
       {!!searchingFor && (
         <Grid container>
           <Box component="div" p={1}>
-            {STRINGS.BROWSE_RESULTS_OF}
-            <Box display="inline" ml={0.5} fontStyle="italic">
-              {searchingFor}
-            </Box>
+            <Typography variant="subtitle2" component="p">
+              {`${STRINGS.BROWSE_RESULTS_OF} ${searchingFor}`}
+            </Typography>
           </Box>
         </Grid>
       )}

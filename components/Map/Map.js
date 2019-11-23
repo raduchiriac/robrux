@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
-import BRUX_CENTER from '~/lib/constants/BRUX_CENTER';
+import CITIES from '~/lib/constants/CITIES';
 import GOOGLE_MAP_SKIN from '~/lib/constants/GOOGLE_MAP_SKIN';
 
 import GoogleMap from './GoogleMap';
@@ -24,6 +24,7 @@ const Map = props => {
     gigs,
     hovered = 0,
     height = 300,
+    city = 'bruxelles',
     mapServiceProvider = 'google',
     _onMapBoundsChange = () => {},
     _onMarkerClick = () => {},
@@ -92,7 +93,7 @@ const Map = props => {
       {mapServiceProvider == 'google' && (
         <GoogleMap
           yesIWantToUseGoogleMapApiInternals
-          defaultCenter={BRUX_CENTER}
+          defaultCenter={CITIES[city].center}
           defaultZoom={options.defaultZoom}
           resetBoundsOnResize={true}
           onChildMouseEnter={_onMapChildMouseEnter}
@@ -107,7 +108,7 @@ const Map = props => {
       {(mapServiceProvider == 'osm' || mapServiceProvider == 'mapbox') && (
         <OSMMap
           mapServiceProvider={mapServiceProvider}
-          defaultCenter={BRUX_CENTER}
+          defaultCenter={CITIES[city].center}
           defaultZoom={options.defaultZoom}
           maxZoom={options.maxZoom}
           minZoom={options.minZoom}

@@ -14,17 +14,18 @@ const styles = theme => ({
 });
 
 const SmallGigsList = (props, { scrollPosition }) => {
-  const { classes, loading, gigs, hovered, _onMouseEnter, _onMouseLeave, _onClick } = props;
+  const { classes, gigs, hovered, _onMouseEnter, _onMouseLeave, _onClick } = props;
   const { STRINGS } = useContext(LanguagesContext).state;
 
-  const data = loading ? [false] : gigs;
-  if (!data.length) {
+  if (gigs.data !== undefined && gigs.data.length === 0 && gigs.loading === false) {
     return (
       <Typography variant="subtitle1" component="h4" align="left">
         {STRINGS.BROWSE_NO_RESULTS}
       </Typography>
     );
   }
+  const data = gigs.loading ? [false] : gigs.data || [];
+
   return (
     <Grid container spacing={2} className={classes['small-gigs-list__container']}>
       {data.map((gig, index) => (
@@ -33,7 +34,7 @@ const SmallGigsList = (props, { scrollPosition }) => {
             scrollPosition={scrollPosition}
             hovered={hovered === gig._id}
             gig={gig}
-            loading={loading}
+            loading={gigs.loading}
             _onMouseEnter={_onMouseEnter}
             _onMouseLeave={_onMouseLeave}
             _onClick={_onClick}

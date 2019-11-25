@@ -69,7 +69,7 @@ const Map = props => {
     });
   };
 
-  const markers = gigs.map(gig => {
+  const markers = (gigs.data || []).map(gig => {
     return (
       <Marker
         mapServiceProvider={mapServiceProvider}

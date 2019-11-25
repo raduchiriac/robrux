@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { useLazyQuery } from '@apollo/react-hooks';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
 import Router from 'next/router';
 
 import Map from './Map/Map';
 import { GlobalContext } from '~/lib/contexts/GlobalContext';
 import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
 import { SEARCH_BBOX_GIG } from '~/lib/graphql/gigs.strings';
+import CITIES from '~/lib/constants/CITIES';
 
+import Breadcrumb from '~/components/Breadcrumb/Breadcrumb';
 import SmallGigsList from './Gig/SmallGigsList';
 import './BrowsePageContainer.scss';
 
@@ -17,7 +17,7 @@ const BrowsePageContainer = props => {
   const [bbox, setBbox] = useState([]);
   const [searchingFor, setSearchingFor] = useState(props.searchingFor || '');
   const [searchingInLocation, setSearchingInLocation] = useState(props.inLocation || '');
-  const [hovered, setHovered] = useState(0);
+  const [hovered, setHovered] = useState(null);
   const [searchBboxGigs, { data, error, loading }] = useLazyQuery(SEARCH_BBOX_GIG, {
     variables: { limit: 20, sort: '-_rating', bbox, searchingFor },
   });
@@ -29,14 +29,17 @@ const BrowsePageContainer = props => {
     if (bbox.length) {
       searchBboxGigs();
     }
-  }, [bbox, searchBboxGigs]);
+  }, [bbox, searchingFor, searchBboxGigs]);
 
-  let gigs = [];
-  if (data && data.gigs) {
-    if (data.gigs.length) {
-      gigs = data.gigs;
-    }
-  }
+  // Update state when the props change
+  useEffect(() => {
+    setSearchingFor(props.searchingFor);
+  }, [props.searchingFor]);
+  useEffect(() => {
+    setSearchingInLocation(props.inLocation);
+  }, [props.inLocation]);
+
+  let gigs = { data: (data && data.gigs) || undefined, loading };
 
   const onMapBoundsChange = (center, zoom, bounds, marginBounds) => {
     let bbox = [];
@@ -72,18 +75,24 @@ const BrowsePageContainer = props => {
   };
 
   const onHoverLeaves = () => {
-    setHovered(0);
+    setHovered(null);
   };
 
   return (
     <Grid container className="home-page__container" spacing={1}>
       {!!searchingFor && (
         <Grid container>
-          <Box component="div" p={1}>
-            <Typography variant="subtitle2" component="p">
-              {`${STRINGS.BROWSE_RESULTS_OF} ${searchingFor}`}
-            </Typography>
-          </Box>
+          <Breadcrumb
+            links={[
+              { href: '/', text: STRINGS.SITE_NAME },
+              searchingInLocation &&
+                CITIES[searchingInLocation] && {
+                  href: `/browse?location=${searchingInLocation}`,
+                  text: CITIES[searchingInLocation].name,
+                },
+              { href: '', text: searchingFor },
+            ].filter(Boolean)}
+          />
         </Grid>
       )}
       <Grid item xs={12} sm={12} md={6} lg={6} xl={4}>
@@ -91,7 +100,6 @@ const BrowsePageContainer = props => {
           <Map
             gigs={gigs}
             city={searchingInLocation}
-            loading={loading}
             hovered={hovered}
             mapServiceProvider="osm"
             _onMapBoundsChange={onMapBoundsChange}
@@ -104,7 +112,6 @@ const BrowsePageContainer = props => {
       <Grid item xs={12} sm={12} md={6} lg={6} xl={8}>
         <SmallGigsList
           gigs={gigs}
-          loading={loading}
           hovered={hovered}
           _onMouseEnter={onHoverEnters}
           _onMouseLeave={onHoverLeaves}

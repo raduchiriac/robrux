@@ -45,7 +45,6 @@ const useStyles = makeStyles(theme => ({
     },
   },
   indexPageFormField: {
-    marginLeft: theme.spacing(1),
     flex: 1,
     [theme.breakpoints.down('xs')]: {
       margin: theme.spacing(1),

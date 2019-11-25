@@ -1,16 +1,14 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 
 import { WithHeaderLayout } from '~/lib/layouts/WithHeaderLayout';
 import BrowsePageContainer from '~/components/BrowsePageContainer';
 import withApollo from '~/lib/hocs/withApollo';
 
 const Browse = props => {
-  return <BrowsePageContainer searchingFor={props.search} inLocation={props.location} />;
-};
+  const router = useRouter();
 
-Browse.getInitialProps = async (context, res) => {
-  const { search, location } = context.query;
-  return { search, location };
+  return <BrowsePageContainer searchingFor={router.query.search || ''} inLocation={router.query.location || ''} />;
 };
 
 Browse.Layout = WithHeaderLayout;

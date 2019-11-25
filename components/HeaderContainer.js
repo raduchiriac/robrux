@@ -11,10 +11,11 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import Router from 'next/router';
 import SearchBox from './Header/SearchBox';
 import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
 import Link from '~/lib/hocs/withLink';
-import Router from 'next/router';
+import withApollo from '~/lib/hocs/withApollo';
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -182,4 +183,4 @@ const HeaderContainer = () => {
   );
 };
 
-export default HeaderContainer;
+export default withApollo(HeaderContainer);

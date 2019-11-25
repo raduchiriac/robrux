@@ -7,19 +7,19 @@ const createGig = async gigParams => {
 };
 
 const getBboxGigs = async (limit = 0, sort = '', bbox = [], searchingFor = '') => {
-  let selector = {};
+  let selector = { status: 'valid' };
   if (bbox.length) {
-    selector = {
-      status: 'valid',
-      location: {
-        $geoWithin: {
-          $geometry: {
-            type: 'Polygon',
-            coordinates: [bbox],
-          },
+    selector.location = {
+      $geoWithin: {
+        $geometry: {
+          type: 'Polygon',
+          coordinates: [bbox],
         },
       },
     };
+  }
+  if (!!searchingFor.length) {
+    selector['$text'] = { $search: searchingFor };
   }
   return await Gig.find(selector)
     .sort(sort)

@@ -54,10 +54,6 @@ const Service = ({ params }) => {
         </Box>
       </Grid>
       <Grid item xs={12} sm={8} md={8} lg={9}>
-        <Box mb={2}>
-          <Carousel images={gig.images} width={600} height={100}></Carousel>
-        </Box>
-
         <Paper className="service__container">
           <Typography variant="h5">{gig.title}</Typography>
           <div className="service-avatar">
@@ -72,6 +68,9 @@ const Service = ({ params }) => {
           {gig.description}
           <div className={clsx('service-price', classes['servicePrice'])}>{gig.price}€/h</div>
         </Paper>
+        <Box mt={2}>
+          <Carousel images={gig.images} width={600} height={200}></Carousel>
+        </Box>
         <Box m={2}>
           {Array.apply(null, Array(4)).map((el, idx) => (
             <Box mb={2} key={idx}>

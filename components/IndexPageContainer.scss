@@ -5,11 +5,8 @@
 }
 .index-page__content {
   background: rgba(255, 255, 255, 0.19);
-  padding: 2.4em;
   text-align: center;
   width: 100%;
-  margin: 0 4em;
-  border-radius: 4px;
   position: relative;
 }
 .index-page__logo {
@@ -19,10 +16,10 @@
   left: 50%;
   top: 0;
   background: white;
-  transform: translateX(-50%) translateY(-91%);
+  transform: translateX(-50%) translateY(-90%);
   border-radius: 50%;
   padding: 1.5em;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
 }
 .index-page__image {
   background-size: cover;

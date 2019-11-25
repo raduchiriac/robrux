@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useRef } from 'react';
 import clsx from 'clsx';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
@@ -32,6 +32,8 @@ const styles = theme => ({
 
 const SmallGig = props => {
   const { scrollPosition, gig, hovered, classes, loading, _onMouseEnter = () => {}, _onMouseLeave = () => {} } = props;
+  const smallGigElementRef = useRef(null);
+
   return (
     <ConditionalWrap
       condition={!loading}
@@ -48,6 +50,7 @@ const SmallGig = props => {
           hovered && 'small-gig__container--hover',
           loading && 'small-gig__container--loading'
         )}
+        ref={smallGigElementRef}
         onMouseEnter={() => (loading ? null : _onMouseEnter(gig._id, gig))}
         onMouseLeave={() => _onMouseLeave()}
       >

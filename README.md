@@ -4,7 +4,7 @@
 
 Use your favorite package manager to install the dependencies.
 
-Run `npm run storyboard` to see some of the components in action (but some environment variables might be needed).
+Run `npm run storyboard` to see some of the components in action (some environment variables might be needed).
 
 ### Development appetite?
 
@@ -12,7 +12,7 @@ Create and edit a valid `.env` file by doing `cp .env.sample .env`. Start your l
 
 Now run `npm run start:dev` and create something nice. PR are welcome.
 
-#### Roadmap
+#### Features
 
 - [x] Fetch data with a Mongo `$geoWithin` type of query
 - [x] Attach Next.js v9 to Express
@@ -42,6 +42,7 @@ Now run `npm run start:dev` and create something nice. PR are welcome.
 - [ ] Store the Static Map PNGs rather than asking Google API everytime
 - [ ] Mailing System (Mailchimp API)
 - [ ] Audit everything with Lighthouse
+- [ ] Generate a sitemap.xml
 - [ ] Pre-commit eslint (husky)
 - [ ] Write a better `.eslintrc`
 - [ ] minZoom for React Google Maps ([issue](https://github.com/google-map-react/google-map-react/issues/505))

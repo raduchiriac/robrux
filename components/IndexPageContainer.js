@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import Grid from '@material-ui/core/Grid';
+import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
@@ -18,26 +19,51 @@ import './IndexPageContainer.scss';
 import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
 
 const useStyles = makeStyles(theme => ({
-  root: {
+  indexPageContent: {
+    padding: theme.spacing(4),
+    margin: theme.spacing(3),
+    borderRadius: theme.shape.borderRadius,
+    [theme.breakpoints.down('xs')]: {
+      background: 'transparent',
+      margin: 0,
+    },
+  },
+  indexPageForm: {
     padding: '2px 4px',
     display: 'flex',
     alignItems: 'center',
     width: '100%',
+    [theme.breakpoints.down('xs')]: {
+      flexWrap: 'wrap',
+    },
   },
-  input: {
+  indexPageFormSearch: {
+    padding: 10,
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+  },
+  indexPageFormField: {
     marginLeft: theme.spacing(1),
     flex: 1,
+    [theme.breakpoints.down('xs')]: {
+      margin: theme.spacing(1),
+    },
   },
-  iconButton: {
-    padding: 10,
-  },
-  divider: {
+  indexPageDivider: {
     height: 28,
     margin: 4,
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
   },
-  formControl: {
+  indexPageFormControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    minWidth: 150,
+    [theme.breakpoints.down('xs')]: {
+      minWidth: 'auto',
+      flexBasis: '100%',
+    },
   },
 }));
 
@@ -48,28 +74,28 @@ export default function IndexPageContainer() {
   return (
     <Grid container className="index-page__container" alignItems="center">
       <Box style={{ backgroundImage: "url('/index_page.jpeg')" }} className="index-page__image"></Box>
-      <Box className="index-page__content">
+      <Box className={clsx(classes.indexPageContent, 'index-page__content')}>
         <Box className="index-page__logo">
           <img src="/robrux.png" />
         </Box>
-        <Paper component="form" action="/browse" className={classes.root}>
-          <IconButton type="submit" className={classes.iconButton} aria-label="search">
+        <Paper component="form" action="/browse" className={classes.indexPageForm}>
+          <IconButton type="submit" className={classes.indexPageFormSearch} aria-label="search">
             <SearchIcon />
           </IconButton>
           <InputBase
-            className={classes.input}
+            className={classes.indexPageFormField}
             placeholder={STRINGS.SEARCH}
             name="search"
             inputProps={{ 'aria-label': STRINGS.SEARCH }}
           />
-          <Divider className={classes.divider} orientation="vertical" />
-          <FormControl className={classes.formControl}>
+          <Divider className={classes.indexPageDivider} orientation="vertical" />
+          <FormControl className={classes.indexPageFormControl}>
             <NativeSelect
               value="bruxelles"
               onChange={() => {}}
               name="location"
               disableUnderline={true}
-              className={classes.selectEmpty}
+              className={classes.inputPageSelectEmpty}
               inputProps={{ 'aria-label': 'location' }}
             >
               {Object.keys(CITIES)

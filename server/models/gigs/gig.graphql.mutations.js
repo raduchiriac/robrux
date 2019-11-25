@@ -10,6 +10,8 @@ const GigInputType = new GraphQLInputObjectType({
 });
 
 const gigMutations = {
+  updateRating: { type: GigType },
+  updateProvider: { type: GigType },
   createGig: {
     type: GigType,
     description: 'Create a new Gig',

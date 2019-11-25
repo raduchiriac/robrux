@@ -2,12 +2,12 @@ import React, { useState, useEffect, useContext } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { useLazyQuery } from '@apollo/react-hooks';
 import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import Router from 'next/router';
 
 import Map from './Map/Map';
 import { GlobalContext } from '~/lib/contexts/GlobalContext';
 import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
-import Typography from '@material-ui/core/Typography';
 import { SEARCH_BBOX_GIG } from '~/lib/graphql/gigs.strings';
 
 import SmallGigsList from './Gig/SmallGigsList';
@@ -16,7 +16,7 @@ import './BrowsePageContainer.scss';
 const BrowsePageContainer = props => {
   const [bbox, setBbox] = useState([]);
   const [searchingFor, setSearchingFor] = useState(props.searchingFor || '');
-  const [searchinInLocation, setSearchinInLocation] = useState(props.location || '');
+  const [searchingInLocation, setSearchingInLocation] = useState(props.inLocation || '');
   const [hovered, setHovered] = useState(0);
   const [searchBboxGigs, { data, error, loading }] = useLazyQuery(SEARCH_BBOX_GIG, {
     variables: { limit: 20, sort: '-_rating', bbox, searchingFor },
@@ -90,6 +90,7 @@ const BrowsePageContainer = props => {
         {showMap && (
           <Map
             gigs={gigs}
+            city={searchingInLocation}
             loading={loading}
             hovered={hovered}
             mapServiceProvider="osm"

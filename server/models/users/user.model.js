@@ -42,6 +42,7 @@ const schema = new Schema(
     },
     firstName: {
       type: String,
+      trim: true,
       required: true,
       validate: [
         validate({
@@ -53,6 +54,7 @@ const schema = new Schema(
     },
     lastName: {
       type: String,
+      trim: true,
       required: true,
       validate: [
         validate({

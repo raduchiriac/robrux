@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -23,6 +23,7 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(4),
     margin: theme.spacing(3),
     borderRadius: theme.shape.borderRadius,
+    maxWidth: theme.breakpoints.values.md,
     [theme.breakpoints.down('xs')]: {
       background: 'transparent',
       margin: 0,
@@ -70,6 +71,7 @@ const useStyles = makeStyles(theme => ({
 export default function IndexPageContainer() {
   const classes = useStyles();
   const { STRINGS } = useContext(LanguagesContext).state;
+  let [citiesDropDownValue, setCititesDropDownValue] = useState('bruxelles');
 
   return (
     <Grid container className="index-page__container" alignItems="center">
@@ -91,8 +93,10 @@ export default function IndexPageContainer() {
           <Divider className={classes.indexPageDivider} orientation="vertical" />
           <FormControl className={classes.indexPageFormControl}>
             <NativeSelect
-              value="bruxelles"
-              onChange={() => {}}
+              value={citiesDropDownValue}
+              onChange={evt => {
+                setCititesDropDownValue(evt.currentTarget.value);
+              }}
               name="location"
               disableUnderline={true}
               className={classes.inputPageSelectEmpty}

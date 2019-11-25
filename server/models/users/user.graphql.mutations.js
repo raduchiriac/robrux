@@ -17,6 +17,7 @@ const UserInputTypeLogin = new GraphQLInputObjectType({
 });
 
 const userMutations = {
+  updateGigs: { type: UserType },
   register: {
     type: UserType,
     description: 'Create a new user',

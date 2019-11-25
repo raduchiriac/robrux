@@ -93,7 +93,7 @@ const Map = props => {
       {mapServiceProvider == 'google' && (
         <GoogleMap
           yesIWantToUseGoogleMapApiInternals
-          defaultCenter={CITIES[city].center}
+          defaultCenter={CITIES[city] ? CITIES[city].center : CITIES['bruxelles'].center}
           defaultZoom={options.defaultZoom}
           resetBoundsOnResize={true}
           onChildMouseEnter={_onMapChildMouseEnter}
@@ -108,7 +108,7 @@ const Map = props => {
       {(mapServiceProvider == 'osm' || mapServiceProvider == 'mapbox') && (
         <OSMMap
           mapServiceProvider={mapServiceProvider}
-          defaultCenter={CITIES[city].center}
+          defaultCenter={CITIES[city] ? CITIES[city].center : CITIES['bruxelles'].center}
           defaultZoom={options.defaultZoom}
           maxZoom={options.maxZoom}
           minZoom={options.minZoom}

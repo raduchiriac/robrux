@@ -22,9 +22,9 @@ const schema = new Schema(
     _providerAvatar: { type: String },
     _rating: { type: Number, index: true },
     _subscription: { type: String },
-    title: { type: String, required: true },
+    title: { type: String, required: true, trim: true },
     slug: { type: String, index: true },
-    description: { type: String },
+    description: { type: String, trim: true },
     images: { type: [String] },
     price: { type: Number },
     status: {

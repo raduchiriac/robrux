@@ -1,8 +1,12 @@
 const { GraphQLClient } = require('graphql-request');
 const client = new GraphQLClient(`${process.env.HOSTNAME}:${process.env.PORT}${process.env.GRAPHQL_ROUTE}`, {});
 
+// Seed some 20 Users
+let users = [];
+
 // Seed some 100 Gigs
+let gigs = [];
 for (let i = 0; i < 100; i++) {
   const query = require('./models/gigs/gig.graphql.strings').GIG_CREATE_FAKE();
-  client.request(query).then(data => console.log(data));
+  client.request(query).then(data => gigs.push(data));
 }

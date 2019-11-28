@@ -2,14 +2,7 @@ const faker = require('faker');
 var ObjectID = require('mongodb').ObjectID;
 
 const randomIntFromInterval = (min, max) => Math.random() * (max - min) + min;
-const randomColor = () => {
-  let letters = '0123456789ABCDEF';
-  let color = '';
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-};
+
 const GIG_CREATE_FAKE = () => {
   const userID = new ObjectID();
   const subscriptionID = new ObjectID();

@@ -11,6 +11,8 @@ import Box from '@material-ui/core/Box';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import Fade from '@material-ui/core/Fade';
 import Link from '~/lib/hocs/withLink';
 
 import CITIES from '~/lib/constants/CITIES';
@@ -69,6 +71,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function IndexPageContainer() {
   const classes = useStyles();
+  let [stringToBeSearched, setStringToBeSearched] = useState('');
   const { STRINGS } = useContext(LanguagesContext).state;
   let [citiesDropDownValue, setCititesDropDownValue] = useState('bruxelles');
 
@@ -85,10 +88,16 @@ export default function IndexPageContainer() {
           </IconButton>
           <InputBase
             className={classes.indexPageFormField}
-            placeholder={STRINGS.SEARCH}
+            placeholder={STRINGS.LOOKING_FOR}
             name="search"
-            inputProps={{ 'aria-label': STRINGS.SEARCH }}
+            onChange={evt => setStringToBeSearched(evt.target.value)}
+            inputProps={{ 'aria-label': STRINGS.SEARCH_SIMPLE }}
           />
+          <Fade in={!!stringToBeSearched.length}>
+            <Button color="primary" type="submit">
+              {STRINGS.SEARCH_SIMPLE}
+            </Button>
+          </Fade>
           <Divider className={classes.indexPageDivider} orientation="vertical" />
           <FormControl className={classes.indexPageFormControl}>
             <NativeSelect

@@ -34,14 +34,16 @@ const oneGig = async idOrSlug => {
   return await Gig.findOne(query);
 };
 
-const fuzzySearch = async string => {
+const fuzzySearch = async (string, limit) => {
   return await Gig.find(
     {
       status: 'valid',
       $text: { $search: string },
     },
     { score: { $meta: 'textScore' } }
-  ).sort({ score: { $meta: 'textScore' } });
+  )
+    .sort({ score: { $meta: 'textScore' } })
+    .limit(limit);
 };
 
 module.exports = {

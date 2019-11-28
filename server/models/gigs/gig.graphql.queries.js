@@ -35,10 +35,11 @@ const gigQueries = {
     type: GraphQLList(GigType),
     args: {
       term: { type: GraphQLString },
+      limit: { type: GraphQLInt },
     },
     resolve: async (root, args, context, info) => {
-      const { term } = args;
-      return await GigService.fuzzySearch(term);
+      const { term, limit } = args;
+      return await GigService.fuzzySearch(term, limit);
     },
   },
 };

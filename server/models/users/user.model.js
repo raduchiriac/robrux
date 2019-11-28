@@ -74,6 +74,7 @@ const schema = new Schema(
       unique: true,
     },
     bio: {
+      avatar: { type: String },
       phone: { type: String },
     },
     forgotCode: { type: String },

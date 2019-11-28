@@ -64,7 +64,7 @@ export default function SearchBox() {
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm, 550);
   const [searchGigs, { data, error, loading }] = useLazyQuery(SEARCH_GIG, {
-    variables: { term: debouncedSearchTerm },
+    variables: { term: debouncedSearchTerm, limit: 7 },
   });
 
   const { STRINGS } = useContext(LanguagesContext).state;

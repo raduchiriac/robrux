@@ -36,7 +36,7 @@ const schema = new Schema(
     },
     featured: { type: Boolean, index: true },
     statusInformation: { type: String },
-    tags: { type: [String], index: true },
+    tags: { type: [String] },
     categories: { type: [String] },
     location: {
       address: { type: String },
@@ -51,15 +51,19 @@ const schema = new Schema(
 // Create "text" Indexes
 schema.index(
   {
+    status: 'valid',
     title: 'text',
     description: 'text',
     tags: 'text',
   },
   {
+    // You can do: db.collection.dropIndex("MyTextIndex")
+    name: 'MyTextIndex',
+    default_language: 'romanian',
     weights: {
       title: 5,
-      description: 1,
-      tags: 6,
+      description: 2,
+      tags: 4,
     },
   }
 );

@@ -3,7 +3,8 @@
   position: absolute !important;
   padding: 0 !important;
   width: 100%;
-  overflow: hidden;
+  max-height: calc(100vh - 160px);
+  overflow: scroll;
 }
 .result-list__result {
   color: #333 !important;

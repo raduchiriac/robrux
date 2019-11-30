@@ -85,7 +85,7 @@ const Form = props => {
           id="password"
         />
         {errors.password && <Typography variant="subtitle2">{errors.password}</Typography>}
-        {/* TODO: Remember Me (extend cookie life?) */}
+        {/* TODO: Implement Remember Me (extend cookie life?) */}
         <FormControlLabel control={<Checkbox value="remember" color="primary" />} label={STRINGS.LOGIN_REMEMBER} />
         <Box>
           <Typography>{formErrors}</Typography>

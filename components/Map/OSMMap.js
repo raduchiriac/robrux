@@ -6,7 +6,7 @@ import './OSMMap.scss';
 const OSMMap = ({ children, ...props }) => {
   const { defaultZoom, defaultCenter, mapServiceProvider, maxZoom, minZoom, onChange } = props;
 
-  // TODO: How to read window.devicePixelRatio?
+  // TODO: How to read window.devicePixelRatio with SSR?
   const dpr = 2;
 
   const providers = {

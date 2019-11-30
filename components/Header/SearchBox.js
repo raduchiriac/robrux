@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import ClearIcon from '@material-ui/icons/Clear';
 import IconButton from '@material-ui/core/IconButton';
 import { useLazyQuery } from '@apollo/react-hooks';
@@ -12,14 +13,16 @@ import { SEARCH_GIG } from '~/lib/graphql/gigs.strings';
 import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
 
 export default function SearchBox() {
+  // INFO: A way to pass props down to make a custom makeStyle
   const useStyles = props =>
     makeStyles(theme => ({
       searchContainer: {
         position: 'relative',
         transition: 'all 0.3s ease',
-        borderRadius: !props.searchTermLength
-          ? theme.shape.borderRadius
-          : `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0 0`,
+        borderRadius:
+          !props.searchTermLength || !resultsCanBeOpen
+            ? theme.shape.borderRadius
+            : `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0 0`,
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
         marginRight: theme.spacing(2),
         marginLeft: 0,
@@ -62,10 +65,19 @@ export default function SearchBox() {
     }))(props);
 
   const [searchTerm, setSearchTerm] = useState('');
+  const [resultsCanBeOpen, setResultsCanBeOpen] = useState(false);
   const debouncedSearchTerm = useDebounce(searchTerm, 550);
   const [searchGigs, { data, error, loading }] = useLazyQuery(SEARCH_GIG, {
-    variables: { term: debouncedSearchTerm, limit: 7 },
+    variables: { term: debouncedSearchTerm, limit: 8 },
   });
+
+  const handleClickAway = () => {
+    setResultsCanBeOpen(false);
+  };
+
+  const handleInputClick = evt => {
+    setResultsCanBeOpen(true);
+  };
 
   const { STRINGS } = useContext(LanguagesContext).state;
 
@@ -91,29 +103,32 @@ export default function SearchBox() {
   const classes = useStyles({ searchTermLength: searchTerm.length });
 
   return (
-    <div className={classes.searchContainer}>
-      <div className={classes.searchField}>
-        <div className={classes.searchIcon}>
-          <SearchIcon />
+    <ClickAwayListener onClickAway={handleClickAway}>
+      <div className={classes.searchContainer}>
+        <div className={classes.searchField}>
+          <div className={classes.searchIcon}>
+            <SearchIcon />
+          </div>
+          <InputBase
+            placeholder={STRINGS.SEARCH}
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput,
+            }}
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+            onClick={e => handleInputClick(e)}
+            inputProps={{ 'aria-label': 'search' }}
+          />
+          {loading && <CircularProgress size={20} className={classes.circularProgress} />}
+          {!!searchTerm.length && (
+            <IconButton className={classes.clearIcon} aria-label="clear" onClick={handleClearSearch}>
+              <ClearIcon />
+            </IconButton>
+          )}
         </div>
-        <InputBase
-          placeholder={STRINGS.SEARCH}
-          classes={{
-            root: classes.inputRoot,
-            input: classes.inputInput,
-          }}
-          value={searchTerm}
-          onChange={e => setSearchTerm(e.target.value)}
-          inputProps={{ 'aria-label': 'search' }}
-        />
-        {loading && <CircularProgress size={20} className={classes.circularProgress} />}
-        {!!searchTerm.length && (
-          <IconButton className={classes.clearIcon} aria-label="clear" onClick={handleClearSearch}>
-            <ClearIcon />
-          </IconButton>
-        )}
+        {resultsCanBeOpen && !!searchTerm.length && <ResultList searching={searchTerm} results={results} />}
       </div>
-      {!!searchTerm.length && <ResultList searching={searchTerm} results={results} />}
-    </div>
+    </ClickAwayListener>
   );
 }

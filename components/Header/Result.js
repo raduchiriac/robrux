@@ -1,4 +1,6 @@
 import React, { Fragment } from 'react';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
@@ -8,11 +10,13 @@ import Highlighter from 'react-highlight-words';
 import Link from '~/lib/hocs/withLink';
 import ConditionalWrap from '~/lib/hocs/ConditionalWrap';
 
-export default function Result(props) {
+const Result = props => {
   const handleResultClick = () => {};
   const { searching, result, isLast, isClickable } = props;
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const trimWords = (str, search, wordsCount = 5) => {
+  const trimWords = (str, search, wordsCount = matches ? 11 : 5) => {
     const words = str.split(' ');
     const regex = new RegExp(`${search}`, 'ig');
     const index = words.findIndex(word => word.match(regex));
@@ -71,4 +75,6 @@ export default function Result(props) {
       {!isLast && <Divider variant="inset" component="li" />}
     </Fragment>
   );
-}
+};
+
+export default Result;

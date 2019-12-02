@@ -13,6 +13,8 @@ import NativeSelect from '@material-ui/core/NativeSelect';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Fade from '@material-ui/core/Fade';
+import Snackbar from '@material-ui/core/Snackbar';
+import Slide from '@material-ui/core/Slide';
 import Link from '~/lib/hocs/withLink';
 
 import CITIES from '~/lib/constants/CITIES';
@@ -69,7 +71,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function IndexPageContainer() {
+const IndexPageContainer = props => {
   const classes = useStyles();
   let [stringToBeSearched, setStringToBeSearched] = useState('');
   const { STRINGS } = useContext(LanguagesContext).state;
@@ -77,6 +79,18 @@ export default function IndexPageContainer() {
 
   return (
     <Grid container className="index-page__container" alignItems="center">
+      <Snackbar
+        variant="success"
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        TransitionComponent={props => <Slide {...props} direction="left" />}
+        autoHideDuration={3000}
+        open={!!props.login.length}
+        onClose={() => ({})}
+        ContentProps={{
+          'aria-describedby': 'message-id',
+        }}
+        message={<span id="message-id">{STRINGS.INDEX_SNACK_WELCOME}</span>}
+      />
       <Box style={{ backgroundImage: "url('/index_page.jpeg')" }} className="index-page__image"></Box>
       <Box className={clsx(classes.indexPageContent, 'index-page__content')}>
         <Box className="index-page__logo">
@@ -130,4 +144,6 @@ export default function IndexPageContainer() {
       </Box>
     </Grid>
   );
-}
+};
+
+export default IndexPageContainer;

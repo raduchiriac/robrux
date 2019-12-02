@@ -3,6 +3,8 @@ const validate = require('mongoose-validator');
 const mongodbErrorHandler = require('mongoose-mongodb-errors');
 const passportLocalMongoose = require('passport-local-mongoose');
 
+const STRINGS = require('../../_helpers/i18n');
+
 const dummyRandomGenerator = (loops = 1, prefix = '') => {
   return [...Array(loops)].reduce(
     (t, acc) =>
@@ -88,8 +90,8 @@ schema.plugin(passportLocalMongoose, {
   usernameField: 'email',
   errorMessages: {
     UserExistsError: 'Email already exists',
-    IncorrectPasswordError: 'Email or username are incorrect',
-    IncorrectUsernameError: 'Email or username are incorrect',
+    IncorrectPasswordError: STRINGS['ro'].FORM_WRONG_EMAIL_USERNAME,
+    IncorrectUsernameError: STRINGS['ro'].FORM_WRONG_EMAIL_USERNAME,
     MissingUsernameError: 'No email was given',
   },
   // findByUsername: function(model, queryParameters) {

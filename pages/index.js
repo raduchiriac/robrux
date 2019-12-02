@@ -1,9 +1,12 @@
 import React from 'react';
 import withApollo from '~/lib/hocs/withApollo';
+import { useRouter } from 'next/router';
+
 import IndexPageContainer from '~/components/IndexPageContainer';
 
 const Index = () => {
-  return <IndexPageContainer />;
+  const router = useRouter();
+  return <IndexPageContainer login={router.query.login || ''} />;
 };
 
 Index.getInitialProps = props => {

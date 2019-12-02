@@ -29,6 +29,7 @@
     "@material-ui/icons": "4.5.1",
     "@material-ui/lab": "4.0.0-alpha.28",
     "@material-ui/styles": "4.6.0",
+    "@welldone-software/why-did-you-render": "3.3.9",
     "@zeit/next-css": "1.0.1",
     "@zeit/next-sass": "1.0.1",
     "apollo-cache-inmemory": "1.6.3",
@@ -84,7 +85,6 @@
     "eslint-plugin-react-hooks": "2.3.0",
     "faker": "4.1.0",
     "nodemon": "2.0.1",
-    "prettier": "1.19.1",
-    "why-did-you-update": "1.0.6"
+    "prettier": "1.19.1"
   }
 }

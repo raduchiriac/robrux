@@ -16,6 +16,8 @@ import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
 import useForm from '~/lib/hooks/useForm';
 import Link from '~/lib/hocs/withLink';
 
+import './LoginPageContainer.scss';
+
 const useStyles = makeStyles(theme => ({
   root: {
     height: '100vh',
@@ -43,6 +45,7 @@ const useStyles = makeStyles(theme => ({
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
+  formErrors: {},
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
@@ -53,7 +56,7 @@ const Form = props => {
 
   return (
     <Fragment>
-      <form className={classes.form} noValidate onSubmit={handleSubmit}>
+      <form className={classes.form} noValidate onSubmit={evt => handleSubmit(evt)}>
         <TextField
           variant="outlined"
           margin="normal"
@@ -67,8 +70,8 @@ const Form = props => {
           value={values.email || ''}
           error={(errors.email && true) || false}
           autoFocus
+          helperText={errors.email}
         />
-        {errors.email && <Typography variant="subtitle2">{errors.email}</Typography>}
 
         <TextField
           variant="outlined"
@@ -83,11 +86,12 @@ const Form = props => {
           error={(errors.password && true) || false}
           value={values.password || ''}
           id="password"
+          helperText={errors.password}
         />
-        {errors.password && <Typography variant="subtitle2">{errors.password}</Typography>}
+
         {/* TODO: Implement Remember Me (extend cookie life?) */}
         <FormControlLabel control={<Checkbox value="remember" color="primary" />} label={STRINGS.LOGIN_REMEMBER} />
-        <Box>
+        <Box color="error.main" className={classes.formErrors}>
           <Typography>{formErrors}</Typography>
         </Box>
         <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
@@ -121,25 +125,24 @@ const LoginPageContainer = () => {
   const _validate = values => {
     let errors = {};
     if (!values.email) {
-      errors.email = 'Email address is required';
+      errors.email = STRINGS.FORM_EMAIL_REQUIRED;
     }
     if (!values.password) {
-      errors.password = 'Password is required';
+      errors.password = STRINGS.FORM_PASSWORD_REQUIRED;
     }
     return errors;
   };
 
-  const client = useApolloClient();
-  const [formErrors, setFormErrors] = useState('');
+  const apolloClient = useApolloClient();
   const { values, errors, handleChange, handleSubmit } = useForm(_login, _validate);
+  const [formErrors, setFormErrors] = useState('');
   const [loginUser, { data }] = useMutation(LOGIN_USER, {
     onCompleted({ login }) {
       if (login.token) {
         // Force a reload of all the current queries now that the user is logged
-        client.cache.reset().then(() => {
+        apolloClient.cache.reset().then(() => {
           localStorage.setItem('token', login.token);
-          // TODO: Better if you could redirect to a referral link
-          Router.push('/browse');
+          Router.push({ pathname: '/', query: { login: true } });
         });
       }
     },

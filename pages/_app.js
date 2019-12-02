@@ -21,10 +21,6 @@ class NextApp extends App {
 
   render() {
     const { Component, pageProps, apolloClient } = this.props;
-
-    // console.log('[🚨_app] props', this.props);
-    // console.log('[🚨_app] Component', Component);
-    // console.log('[🚨_app] PageProps', pageProps);
     const Layout = Component.Layout || EmptyLayout;
 
     return (

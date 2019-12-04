@@ -8,6 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
+import Slide from '@material-ui/core/Slide';
 import { makeStyles } from '@material-ui/core/styles';
 import { useMutation, useApolloClient } from '@apollo/react-hooks';
 import Router from 'next/router';
@@ -23,7 +24,7 @@ const useStyles = makeStyles(theme => ({
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(/robrux-full.jpeg)',
+    backgroundImage: 'url(/backgrounds/robrux-full.jpeg)',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
@@ -138,22 +139,25 @@ const LoginPageContainer = () => {
   const [formErrors, setFormErrors] = useState('');
   const [loginUser, { data }] = useMutation(LOGIN_USER, {
     onCompleted({ login }) {
-      if (login.token) {
-        // Force a reload of all the current queries now that the user is logged
-        apolloClient.cache.reset().then(() => {
-          localStorage.setItem('token', login.token);
-          Router.push({ pathname: '/', query: { login: true } });
-        });
-      }
+      console.log(loginUser, 'all-good', login);
+      // if (login.token) {
+      //   // Force a reload of all the current queries now that the user is logged
+      //   apolloClient.cache.reset().then(() => {
+      //     localStorage.setItem('token', login.token);
+      //     Router.push({ pathname: '/', query: { login: true } });
+      //   });
+      // }
+      Router.push({ pathname: '/' });
     },
     onError(error) {
-      setFormErrors(error.graphQLErrors.map(e => e.message).join(','));
+      setFormErrors((error.graphQLErrors.length && error.graphQLErrors.map(e => e.message).join(',')) || error.message);
     },
   });
 
   return (
     <Grid container component="main" className={classes.root}>
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
+      {/* <Slide direction="left" in={true}> */}
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
           <Link href="/" underline="none" color="inherit" align="center">
@@ -175,6 +179,7 @@ const LoginPageContainer = () => {
           />
         </div>
       </Grid>
+      {/* </Slide> */}
     </Grid>
   );
 };

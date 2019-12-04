@@ -5,6 +5,7 @@ import { ServerStyleSheets } from '@material-ui/styles';
 class MyDocument extends Document {
   render() {
     return (
+      // TODO: Make this dynamic somehow
       <html lang="ro">
         <Head>
           <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no" />

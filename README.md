@@ -43,6 +43,7 @@ Now run `npm run start:dev` and create something nice. PR are welcome.
 - [ ] Mailing System (Mailchimp API)
 - [ ] Audit everything with Lighthouse
 - [ ] Generate a sitemap.xml
+- [ ] Use the new `<Suspense />` from react-experimental
 - [ ] Pre-commit eslint (husky)
 - [ ] Write a better `.eslintrc`
 - [ ] minZoom for React Google Maps ([issue](https://github.com/google-map-react/google-map-react/issues/505))

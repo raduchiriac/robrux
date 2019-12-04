@@ -1,15 +1,20 @@
 const UserType = require('./user.model').UserType;
+const { AuthenticationError } = require('apollo-server-express');
 
 const userQueries = {
-  profile: {
+  loggedInUser: {
     type: UserType,
     resolve: (root, args, context, info) => {
-      return new Promise((resolve, reject) => {
-        // if (root.user) {
-        //   return resolve(req.user);
-        // }
-        // return reject('Not Authenticated!');
-      });
+      // if (isEmpty(req.user)) throw new AuthenticationError("Must authenticate");
+      // const user = await users.get({ userId: req.user.id });
+      // return user;
+      console.log('root', root);
+      console.log('----------');
+      console.log('args', args);
+      console.log('----------');
+      console.log('context', context);
+      console.log('----------');
+      console.log('info', info);
     },
   },
 };

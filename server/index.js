@@ -1,4 +1,5 @@
-if (process.env.NODE_ENV !== 'production') require('dotenv').config();
+const dev = process.env.NODE_ENV !== 'production';
+if (dev) require('dotenv').config();
 const express = require('express');
 const next = require('next');
 const cors = require('cors');
@@ -10,7 +11,6 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 
 require('./_helpers/passport');
-const dev = process.env.NODE_ENV !== 'production';
 
 const app = next({
   dev,
@@ -20,11 +20,13 @@ const app = next({
 app.prepare().then(() => {
   const server = express();
 
-  // Start MongoDB and Express
+  // Start MongoDB, then Express
   const initDBConnection = require('./_helpers/db').initDBConnection;
   initDBConnection(process.env.MONGO_URI, () => {
     const errorHandler = require('./_helpers/error-handler');
+    const validateTokensMiddleware = require('./_helpers/auth/validateTokensMiddleware');
     server.use(errorHandler);
+    server.use(validateTokensMiddleware);
     server.use(bodyParser.urlencoded({ extended: false }));
     server.use(bodyParser.json());
     server.use(cookieParser());
@@ -46,13 +48,13 @@ app.prepare().then(() => {
       next();
     });
 
-    server.use(cors());
+    server.use(cors({ origin: `${process.env.HOSTNAME}:${process.env.PORT}`, credentials: true }));
 
     const apollo = require('./_helpers/apollo');
     apollo.applyMiddleware({
       app: server,
+      cors: false,
       path: process.env.GRAPHQL_ROUTE,
-      cors: { origin: `${process.env.HOSTNAME}:${process.env.PORT}`, credentials: true },
     });
 
     // Sessions allow us to store data on visitors from request to request
@@ -76,13 +78,13 @@ app.prepare().then(() => {
       })
     );
 
-    const handle = app.getRequestHandler();
+    const handleNextRequests = app.getRequestHandler();
     server.use(passport.initialize());
     server.use(passport.session());
     require('./_helpers/routes')(server, passport);
     server.get('*', (req, res) => {
       const { parse } = require('url');
-      return handle(req, res, parse(req.url, true));
+      return handleNextRequests(req, res, parse(req.url, true));
     });
 
     server.listen(process.env.PORT, () => {

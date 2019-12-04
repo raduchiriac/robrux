@@ -13,9 +13,8 @@ import NativeSelect from '@material-ui/core/NativeSelect';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Fade from '@material-ui/core/Fade';
-import Snackbar from '@material-ui/core/Snackbar';
-import Slide from '@material-ui/core/Slide';
 import Link from '~/lib/hocs/withLink';
+import AccountMenu from '~/components/Header/AccountMenu';
 
 import CITIES from '~/lib/constants/CITIES';
 
@@ -34,7 +33,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   indexPageForm: {
-    padding: '2px 4px',
+    padding: `${theme.spacing(1) / 2}px ${theme.spacing(1)}px`,
     display: 'flex',
     alignItems: 'center',
     width: '100%',
@@ -43,7 +42,8 @@ const useStyles = makeStyles(theme => ({
     },
   },
   indexPageFormSearch: {
-    padding: 10,
+    fill: theme.palette.grey[700],
+    margin: `0 ${theme.spacing(1)}px`,
     [theme.breakpoints.down('xs')]: {
       display: 'none',
     },
@@ -61,6 +61,9 @@ const useStyles = makeStyles(theme => ({
       display: 'none',
     },
   },
+  indexPageLogo: {
+    boxShadow: theme.shadows[6],
+  },
   indexPageFormControl: {
     margin: theme.spacing(1),
     minWidth: 150,
@@ -68,6 +71,11 @@ const useStyles = makeStyles(theme => ({
       minWidth: 'auto',
       flexBasis: '100%',
     },
+  },
+  accountMenu: {
+    position: 'absolute',
+    top: theme.spacing(2),
+    right: theme.spacing(2),
   },
 }));
 
@@ -79,27 +87,14 @@ const IndexPageContainer = props => {
 
   return (
     <Grid container className="index-page__container" alignItems="center">
-      <Snackbar
-        variant="success"
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        TransitionComponent={props => <Slide {...props} direction="left" />}
-        autoHideDuration={3000}
-        open={!!props.login.length}
-        onClose={() => ({})}
-        ContentProps={{
-          'aria-describedby': 'message-id',
-        }}
-        message={<span id="message-id">{STRINGS.INDEX_SNACK_WELCOME}</span>}
-      />
-      <Box style={{ backgroundImage: "url('/index_page.jpeg')" }} className="index-page__image"></Box>
+      <Box style={{ backgroundImage: "url('/backgrounds/index_page.jpeg')" }} className="index-page__image"></Box>
+      <AccountMenu className={classes.accountMenu} />
       <Box className={clsx(classes.indexPageContent, 'index-page__content')}>
-        <Box className="index-page__logo">
+        <Box className={clsx(classes.indexPageLogo, 'index-page__logo')}>
           <img src="/robrux.png" />
         </Box>
         <Paper component="form" action="/browse" className={classes.indexPageForm}>
-          <IconButton type="submit" className={classes.indexPageFormSearch} aria-label="search">
-            <SearchIcon />
-          </IconButton>
+          <SearchIcon className={classes.indexPageFormSearch} aria-label="search" />
           <InputBase
             className={classes.indexPageFormField}
             placeholder={STRINGS.LOOKING_FOR}
@@ -136,7 +131,7 @@ const IndexPageContainer = props => {
         </Paper>
         <Box mt={2} mb={0}>
           <Typography>
-            <Link naked={true} href="/browse" style={{ color: 'white' }}>
+            <Link href="/browse" style={{ color: 'white' }}>
               {STRINGS.INDEX_BROWSE_FREE}
             </Link>
           </Typography>

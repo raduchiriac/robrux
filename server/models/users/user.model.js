@@ -111,7 +111,8 @@ const fieldsInputLogin = {
   password: { type: GraphQLString },
 };
 const fieldsAuth = {
-  token: { type: GraphQLString },
+  _id: { type: GraphQLID },
+  email: { type: GraphQLString },
 };
 const fieldsInputRegister = Object.assign(
   {},

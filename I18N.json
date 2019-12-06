@@ -26,6 +26,6 @@
     "FORM_PASSWORD_REQUIRED": "Parola este obligatorie",
     "FORM_WRONG_EMAIL_USERNAME": "Email-ul sau parola au fost introduse greșit"
   },
-  "fr": { "SYMBOLS": "À à Â â Á á Ä ä È É Ê Ë Î Ï Ô Œ Ù Û Ü Ÿ ÿ Ç ç" },
+  "fr": { "SYMBOLS": "À à Â â Á á Ä ä È è É é Ê ê Ë ë Î Ï    Ô Œ Ù Û Ü    Ÿ ÿ Ç ç" },
   "nl": { "SYMBOLS": "" }
 }

@@ -26,19 +26,17 @@ const schema = new GraphQLSchema({
 
 const context = ({ req, res, connection }) => {
   if (connection) {
-    // check connection for metadata
+    // Check connection for metadata
     console.log(
-      '🚨[Apollo context] There is a connection:',
+      '🆖[Apollo context] There is a connection:',
       Object.keys(connection),
       'connection.context:',
       Object.keys(connection.context)
     );
     return connection.context;
   } else {
-    const token = req.headers.token || null;
-    // console.log('🚨[Apollo context] no connection, token:', token);
-
-    return { req, res, token };
+    console.log('🆖[Apollo context] no connection', req.headers);
+    return { req, res };
   }
 };
 
@@ -57,6 +55,7 @@ const GRAPHQL_PLAYGROUND_CONFIG = {
     'editor.fontSize': 12,
     'editor.reuseHeaders': true,
     'editor.theme': 'light',
+    'request.credentials': 'include',
     'schema.polling.interval': 10 * 1000,
   },
 };
@@ -65,8 +64,12 @@ const apollo = new ApolloServer({
   schema,
   context,
   formatError,
-  onConnect: async (params, socket, context) => {},
-  onDisconnect: (socket, context) => {},
+  onConnect: async (params, socket, context) => {
+    // console.log('[>] onConnect', params, socket, context);
+  },
+  onDisconnect: (socket, context) => {
+    // console.log('[x] onDisconnect', socket, context);
+  },
   playground: process.env.NODE_ENV === 'production' ? false : GRAPHQL_PLAYGROUND_CONFIG,
 });
 

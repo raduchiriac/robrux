@@ -44,6 +44,9 @@ const useStyles = makeStyles(theme => ({
     background: 'white',
     padding: theme.spacing(1),
     borderRadius: theme.shape.borderRadius * 3,
+    '&:empty': {
+      display: 'none',
+    },
   },
   avatar: {
     width: 64,
@@ -106,7 +109,7 @@ const AccountMenu = props => {
       <Popper open={open} placement="bottom-end" anchorEl={anchorRef.current} role={undefined} transition disablePortal>
         {({ TransitionProps }) => (
           <Grow {...TransitionProps} style={{ transformOrigin: 'center top' }}>
-            <Paper>
+            <Paper elevation={6}>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList autoFocusItem={open} id="account-menu-list-grow" onKeyDown={handleListKeyDown}>
                   <Link href="/news" className={classes.link}>

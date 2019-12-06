@@ -1,8 +1,7 @@
 const User = require('./user.model').User;
-const jwt = require('jsonwebtoken');
+const { createCookieTokens } = require('../../_helpers/auth/setTokens');
 
 const createUser = async userParams => {
-  // check if passwords match
   if (userParams.password !== userParams.confirmPassword) {
     throw new Error('Your passwords do not match');
   }
@@ -25,14 +24,10 @@ const loginUser = async (userParams, res) => {
       if (err) {
         reject(err);
       } else if (user) {
-        const token = jwt.sign({ email: user.email, id: user._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
-        console.log('🚨[loginUser] I am setting a cookie with token:', token);
-        res.cookie('token', token, {
-          httpOnly: true,
-          maxAge: 1000 * 60 * 60 * 24 * 1, // 1 day cookie
-        });
-
-        resolve({ token });
+        const cookies = createCookieTokens(user);
+        res.cookie(...cookies.access);
+        res.cookie(...cookies.refresh);
+        resolve(user);
       }
     });
   });

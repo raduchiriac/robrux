@@ -12,6 +12,7 @@ import Slide from '@material-ui/core/Slide';
 import { makeStyles } from '@material-ui/core/styles';
 import { useMutation, useApolloClient } from '@apollo/react-hooks';
 import Router from 'next/router';
+import { localStorageSaveUser } from '~/lib/hocs/withAuth';
 import { LOGIN_USER } from '~/lib/graphql/user.strings';
 import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
 import useForm from '~/lib/hooks/useForm';
@@ -29,6 +30,9 @@ const useStyles = makeStyles(theme => ({
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     filter: 'grayscale(1)',
+  },
+  paperContainer: {
+    zIndex: 1,
   },
   paper: {
     margin: theme.spacing(8, 4),
@@ -139,15 +143,14 @@ const LoginPageContainer = () => {
   const [formErrors, setFormErrors] = useState('');
   const [loginUser, { data }] = useMutation(LOGIN_USER, {
     onCompleted({ login }) {
-      console.log(loginUser, 'all-good', login);
-      // if (login.token) {
-      //   // Force a reload of all the current queries now that the user is logged
-      //   apolloClient.cache.reset().then(() => {
-      //     localStorage.setItem('token', login.token);
-      //     Router.push({ pathname: '/', query: { login: true } });
-      //   });
-      // }
-      Router.push({ pathname: '/' });
+      if (login._id) {
+        // Force a reload of all the current queries now that the user is logged
+        apolloClient.cache.reset().then(() => {
+          delete login['__typename'];
+          localStorageSaveUser(login);
+          Router.push({ pathname: '/' });
+        });
+      }
     },
     onError(error) {
       setFormErrors((error.graphQLErrors.length && error.graphQLErrors.map(e => e.message).join(',')) || error.message);
@@ -158,7 +161,7 @@ const LoginPageContainer = () => {
     <Grid container component="main" className={classes.root}>
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       {/* <Slide direction="left" in={true}> */}
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      <Grid className={classes.paperContainer} item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
           <Link href="/" underline="none" color="inherit" align="center">
             <Avatar className={classes.avatar}>

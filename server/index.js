@@ -26,29 +26,29 @@ app.prepare().then(() => {
     const errorHandler = require('./_helpers/error-handler');
     const validateTokensMiddleware = require('./_helpers/auth/validateTokensMiddleware');
     server.use(errorHandler);
-    server.use(validateTokensMiddleware);
-    server.use(bodyParser.urlencoded({ extended: false }));
+    server.use(bodyParser.urlencoded({ extended: true }));
     server.use(bodyParser.json());
-    server.use(cookieParser());
-
-    // Use cookie parser to populate current user
-    server.use((req, res, next) => {
-      const { token } = req.cookies;
-
-      if (token) {
-        try {
-          // put the userId onto the req for future requests to access
-          const { id } = jwt.verify(token, process.env.JWT_SECRET);
-          req.userId = id;
-          // console.log('🚨[server.use] Setting userId from "token" in the req.userId:', id);
-        } catch (err) {
-          // Error verifing the token (err.message)
-        }
-      }
-      next();
-    });
-
     server.use(cors({ origin: `${process.env.HOSTNAME}:${process.env.PORT}`, credentials: true }));
+    server.use(cookieParser());
+    server.use(validateTokensMiddleware);
+
+    // TODO: Do we still need this?
+    // server.use((req, res, next) => {
+    //   // Use cookie parser to populate current user
+    //   const { token } = req.cookies;
+
+    //   if (token) {
+    //     try {
+    //       // put the userId onto the req for future requests to access
+    //       const { id } = jwt.verify(token, process.env.JWT_SECRET);
+    //       req.userId = id;
+    //       console.log('🚨[server.use] Setting userId from "token" in the req.userId:', id);
+    //     } catch (err) {
+    //       // Error verifing the token (err.message)
+    //     }
+    //   }
+    //   next();
+    // });
 
     const apollo = require('./_helpers/apollo');
     apollo.applyMiddleware({
@@ -66,17 +66,17 @@ app.prepare().then(() => {
       console.log(`🚨MongoDBStore error: ${JSON.stringify(error)}`);
     });
 
-    server.use(
-      session({
-        secret: process.env.SESS_SECRET,
-        cookie: {
-          maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
-        },
-        store,
-        resave: true,
-        saveUninitialized: true,
-      })
-    );
+    // server.use(
+    //   session({
+    //     secret: process.env.SESS_SECRET,
+    //     cookie: {
+    //       maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+    //     },
+    //     store,
+    //     resave: true,
+    //     saveUninitialized: true,
+    //   })
+    // );
 
     const handleNextRequests = app.getRequestHandler();
     server.use(passport.initialize());

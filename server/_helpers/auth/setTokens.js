@@ -1,29 +1,29 @@
 const { sign } = require('jsonwebtoken');
 
-function setTokenCookies(user) {
-  const toEncode = Object.assign({}, { _id: user._id, email: user.email });
-  const tokens = setTokens(toEncode);
+function whatToEncode(user) {
+  return Object.assign({}, { _id: user._id, email: user.email });
 }
 
-function setToken({ accessToken, refreshToken }) {
+function createCookieTokens(user) {
+  const { accessToken, refreshToken } = createTokens(whatToEncode(user));
   const cookieOptions = {
     httpOnly: true,
     domain: process.env.HOSTNAME,
     secure: process.env.NODE_ENV === 'production',
     SameSite: 'Lax',
   };
-  return {
+  const cookiesWithTokens = {
     access: ['access', accessToken, cookieOptions],
     refresh: ['refresh', refreshToken, cookieOptions],
   };
+
+  return cookiesWithTokens;
 }
 
-function setTokens(user) {
+function createTokens(user) {
+  const accessTokenExpire = 60 * 15 * 1000; // 15 min
   const refreshTokenExpire = 1000 * 60 * 60 * 24 * 7; // 7 days
-  const accessTokenExpire = 60 * 15 * 1000; // 15 min;
-  const accessUser = {
-    id: user._id,
-  };
+  const accessUser = whatToEncode(user);
   const accessToken = sign({ user: accessUser }, process.env.JWT_SECRET, {
     expiresIn: accessTokenExpire,
   });
@@ -38,4 +38,4 @@ function setTokens(user) {
   return { accessToken, refreshToken };
 }
 
-module.exports = { setTokens, setTokenCookies };
+module.exports = { createTokens, createCookieTokens };

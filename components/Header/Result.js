@@ -1,18 +1,39 @@
 import React, { Fragment } from 'react';
-import { useTheme } from '@material-ui/core/styles';
+import { useTheme, withStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
 import Highlighter from 'react-highlight-words';
 import Link from '~/lib/hocs/withLink';
 import ConditionalWrap from '~/lib/hocs/ConditionalWrap';
 
+const classes = theme => ({
+  divider: {
+    height: 32,
+    alignSelf: 'center',
+    margin: theme.spacing(1),
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+  },
+  rating: {
+    color: '#db8555',
+    fontWeight: 'bold',
+    flexShrink: 0,
+    alignSelf: 'center',
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+  },
+});
+
 const Result = props => {
   const handleResultClick = () => {};
-  const { searching, result, isLast, isClickable } = props;
+  const { searching, result, isLast, isClickable, classes } = props;
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
 
@@ -36,7 +57,7 @@ const Result = props => {
       <ConditionalWrap
         condition={result._id}
         wrap={children => (
-          <Link href={`/service/${result.slug || result._id}`} underline="none">
+          <Link href={`/service/view/${result.slug || result._id}`} underline="none">
             {children}
           </Link>
         )}
@@ -70,6 +91,12 @@ const Result = props => {
               />
             }
           />
+          {!!result._id && <Divider className={classes.divider} orientation="vertical" />}
+          {!!result._id && (
+            <Typography className={classes.rating} variant="subtitle2">
+              ★ {result._rating.toFixed(2)}
+            </Typography>
+          )}
         </ListItem>
       </ConditionalWrap>
       {!isLast && <Divider variant="inset" component="li" />}
@@ -77,4 +104,4 @@ const Result = props => {
   );
 };
 
-export default Result;
+export default withStyles(classes)(Result);

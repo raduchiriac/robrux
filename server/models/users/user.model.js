@@ -26,7 +26,7 @@ const dummyForgotGenerator = () => {
   return { forgotCode, forgotCodeLimit };
 };
 
-const { GraphQLID, GraphQLString, GraphQLObjectType } = require('graphql');
+const { GraphQLID, GraphQLString, GraphQLObjectType, GraphQLNonNull } = require('graphql');
 
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
@@ -68,7 +68,7 @@ const schema = new Schema(
     },
     role: { type: String, enum: ['admin', 'user', 'pro', 'blocked'], default: 'user' },
     validated: { type: Boolean, default: false },
-    gigs: { type: [ObjectId] },
+    _gigs: { type: [ObjectId] },
     validationCode: {
       index: true,
       type: String,
@@ -107,22 +107,22 @@ const User = mongoose.model('User', schema);
 // GraphQL declarations
 // -----------------------------------------------------------
 const fieldsInputLogin = {
-  email: { type: GraphQLString },
-  password: { type: GraphQLString },
+  email: { type: GraphQLNonNull(GraphQLString) },
+  password: { type: GraphQLNonNull(GraphQLString) },
 };
 const fieldsAuth = {
   _id: { type: GraphQLID },
-  email: { type: GraphQLString },
+  email: { type: GraphQLNonNull(GraphQLString) },
 };
 const fieldsInputRegister = Object.assign(
   {},
   fieldsInputLogin,
   {
-    confirmPassword: { type: GraphQLString },
+    confirmPassword: { type: GraphQLNonNull(GraphQLString) },
   },
   {
-    firstName: { type: GraphQLString },
-    lastName: { type: GraphQLString },
+    firstName: { type: GraphQLNonNull(GraphQLString) },
+    lastName: { type: GraphQLNonNull(GraphQLString) },
   }
 );
 const fields = Object.assign({}, fieldsInputRegister, {

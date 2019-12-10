@@ -66,7 +66,7 @@ const BrowsePageContainer = props => {
 
   const onGigClick = gig => {
     Router.push({
-      pathname: `/service/${gig.slug || gig._id}`,
+      pathname: `/service/view/${gig.slug || gig._id}`,
     });
   };
 

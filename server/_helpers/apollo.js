@@ -7,12 +7,16 @@ const userMutations = require('../models/users/user.graphql.mutations');
 const gigQueries = require('../models/gigs/gig.graphql.queries');
 const gigMutations = require('../models/gigs/gig.graphql.mutations');
 
+const ratingQueries = require('../models/ratings/rating.graphql.queries');
+const ratingMutations = require('../models/ratings/rating.graphql.mutations');
+
 const schema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'Query',
     fields: () => ({
       ...userQueries,
       ...gigQueries,
+      ...ratingQueries,
     }),
   }),
   mutation: new GraphQLObjectType({
@@ -20,6 +24,7 @@ const schema = new GraphQLSchema({
     fields: () => ({
       ...userMutations,
       ...gigMutations,
+      ...ratingMutations,
     }),
   }),
 });
@@ -27,15 +32,15 @@ const schema = new GraphQLSchema({
 const context = ({ req, res, connection }) => {
   if (connection) {
     // Check connection for metadata
-    console.log(
-      '🆖[Apollo context] There is a connection:',
-      Object.keys(connection),
-      'connection.context:',
-      Object.keys(connection.context)
-    );
+    // console.log(
+    //   '🆖[Apollo context] There is a connection:',
+    //   Object.keys(connection),
+    //   'connection.context:',
+    //   Object.keys(connection.context)
+    // );
     return connection.context;
   } else {
-    console.log('🆖[Apollo context] no connection', req.headers);
+    // console.log('🆖[Apollo context] no connection', req.headers);
     return { req, res };
   }
 };

@@ -35,7 +35,7 @@ const fields = {
   _id: { type: GraphQLID },
   _userId: { type: GraphQLNonNull(GraphQLID) },
   _gigId: { type: GraphQLNonNull(GraphQLID) },
-  score: { type: GraphQLInt },
+  score: { type: GraphQLNonNull(GraphQLInt) },
   comment: { type: GraphQLString },
 };
 
@@ -45,4 +45,4 @@ const RatingType = new GraphQLObjectType({
   fields,
 });
 
-module.exports = { Rating, RatingType };
+module.exports = { fields, Rating, RatingType };

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { WithHeaderLayout } from '~/lib/layouts/WithHeaderLayout';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -8,13 +7,12 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { useLazyQuery } from '@apollo/react-hooks';
-import withApollo from '~/lib/hocs/withApollo';
 import { GET_ONE_GIG } from '~/lib/graphql/gigs.strings';
 import StaticMap from '~/components/Map/StaticMap';
 import StarRating from '~/components/Rating/StarRating';
-import Carousel from '~/components/Carousel/Carousel';
+import MaterialCarousel from '~/components/Carousel/MaterialCarousel';
 
-import './id.scss';
+import './GigViewContainer.scss';
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -25,24 +23,24 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Service = ({ params }) => {
+const GigViewContainer = props => {
   let gig = false;
   const classes = useStyles();
   const [searchGig, { data, error, loading }] = useLazyQuery(GET_ONE_GIG, {
-    variables: { idOrSlug: params.idOrSlug },
+    variables: { idOrSlug: props.idOrSlug },
   });
 
   useEffect(() => {
-    if (params.idOrSlug) {
+    if (props.idOrSlug) {
       searchGig();
     }
-  }, [params, searchGig]);
+  }, [props.idOrSlug, searchGig]);
 
   if (data && data.oneGig) {
     gig = data.oneGig;
   }
 
-  if (!params.idOrSlug || !gig) {
+  if (!props.idOrSlug || !gig) {
     return <Fragment></Fragment>;
   }
 
@@ -69,7 +67,7 @@ const Service = ({ params }) => {
           <div className={clsx('service-price', classes['servicePrice'])}>{gig.price}€/h</div>
         </Paper>
         <Box mt={2}>
-          <Carousel images={gig.images} width={600} height={200}></Carousel>
+          <MaterialCarousel images={gig.images} height={200}></MaterialCarousel>
         </Box>
         <Box m={2}>
           {Array.apply(null, Array(4)).map((el, idx) => (
@@ -94,12 +92,4 @@ const Service = ({ params }) => {
   );
 };
 
-const Layout = WithHeaderLayout;
-
-Service.getInitialProps = async ({ query: { id } }, res) => {
-  return { params: { idOrSlug: id } };
-};
-
-Service.Layout = Layout;
-
-export default withApollo(Service);
+export default GigViewContainer;

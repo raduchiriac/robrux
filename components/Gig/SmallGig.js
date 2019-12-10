@@ -38,7 +38,7 @@ const SmallGig = props => {
     <ConditionalWrap
       condition={!loading}
       wrap={children => (
-        <Link className={'small-gig__link'} href={`/service/${gig.slug || gig._id}`} underline="none">
+        <Link className={'small-gig__link'} href={`/service/view/${gig.slug || gig._id}`} underline="none">
           {children}
         </Link>
       )}
@@ -72,9 +72,7 @@ const SmallGig = props => {
           <p className={'small-gig__provider'}>{(!loading && gig && gig._providerName) || ''}</p>
           {!loading && gig && (
             <Fragment>
-              <p className={clsx('small-gig__rating', classes['small-gig__rating'])}>
-                ★ {Math.round(gig._rating * 100) / 100}
-              </p>
+              <p className={clsx('small-gig__rating', classes['small-gig__rating'])}>★ {gig._rating.toFixed(2)}</p>
               <div className={clsx('small-gig__price', classes['small-gig__price'])}>{gig.price}€/h</div>
             </Fragment>
           )}

@@ -89,7 +89,7 @@ const fields = {
   _providerAvatar: { type: GraphQLString },
   _rating: { type: GraphQLFloat },
   _subscription: { type: GraphQLString },
-  title: { type: GraphQLString },
+  title: { type: GraphQLNonNull(GraphQLString) },
   slug: { type: GraphQLString },
   description: { type: GraphQLString },
   images: { type: GraphQLList(GraphQLString) },

@@ -21,6 +21,7 @@ const styles = theme => ({
 const Map = props => {
   const {
     classes,
+    styles,
     gigs,
     hovered = 0,
     height = 300,
@@ -89,7 +90,7 @@ const Map = props => {
   });
 
   return (
-    <div className={classes.mapContainer} style={{ height }}>
+    <div className={classes.mapContainer} style={{ ...styles, height }}>
       {mapServiceProvider == 'google' && (
         <GoogleMap
           yesIWantToUseGoogleMapApiInternals

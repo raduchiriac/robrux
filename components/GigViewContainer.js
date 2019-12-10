@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, useContext, Fragment } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { useLazyQuery } from '@apollo/react-hooks';
+import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
 import { GET_ONE_GIG } from '~/lib/graphql/gigs.strings';
 import StaticMap from '~/components/Map/StaticMap';
 import StarRating from '~/components/Rating/StarRating';
@@ -19,6 +20,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.custom_palette && theme.custom_palette.alternateColor,
   },
   servicePrice: {
+    textAlign: 'center',
     background: theme.custom_palette && theme.custom_palette.alternateColor,
   },
 }));
@@ -29,6 +31,7 @@ const GigViewContainer = props => {
   const [searchGig, { data, error, loading }] = useLazyQuery(GET_ONE_GIG, {
     variables: { idOrSlug: props.idOrSlug },
   });
+  const { STRINGS } = useContext(LanguagesContext).state;
 
   useEffect(() => {
     if (props.idOrSlug) {
@@ -64,7 +67,9 @@ const GigViewContainer = props => {
             </div>
           </div>
           {gig.description}
-          <div className={clsx('service-price', classes['servicePrice'])}>{gig.price}€/h</div>
+          <div className={clsx('service-price', classes['servicePrice'])}>
+            {`${gig.price}${STRINGS.CURRENCY_TIME_PRICE_ENDING}`}
+          </div>
         </Paper>
         <Box mt={2}>
           <MaterialCarousel images={gig.images} height={200}></MaterialCarousel>

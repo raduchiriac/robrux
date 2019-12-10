@@ -1,11 +1,12 @@
-import React, { Fragment, useRef } from 'react';
+import React, { Fragment, useRef, useContext } from 'react';
 import clsx from 'clsx';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
+import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
 import Link from '~/lib/hocs/withLink';
 import ConditionalWrap from '~/lib/hocs/ConditionalWrap';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 import './SmallGig.scss';
 
@@ -32,7 +33,9 @@ const styles = theme => ({
 
 const SmallGig = props => {
   const { scrollPosition, gig, hovered, classes, loading, _onMouseEnter = () => {}, _onMouseLeave = () => {} } = props;
-  const smallGigElementRef = useRef(null);
+  // const smallGigElementRef = useRef(null);
+
+  const { STRINGS } = useContext(LanguagesContext).state;
 
   return (
     <ConditionalWrap
@@ -50,7 +53,6 @@ const SmallGig = props => {
           hovered && 'small-gig__container--hover',
           loading && 'small-gig__container--loading'
         )}
-        ref={smallGigElementRef}
         onMouseEnter={() => (loading ? null : _onMouseEnter(gig._id, gig))}
         onMouseLeave={() => _onMouseLeave()}
       >
@@ -73,7 +75,9 @@ const SmallGig = props => {
           {!loading && gig && (
             <Fragment>
               <p className={clsx('small-gig__rating', classes['small-gig__rating'])}>★ {gig._rating.toFixed(2)}</p>
-              <div className={clsx('small-gig__price', classes['small-gig__price'])}>{gig.price}€/h</div>
+              <div className={clsx('small-gig__price', classes['small-gig__price'])}>
+                {`${gig.price}${STRINGS.CURRENCY_TIME_PRICE_ENDING}`}
+              </div>
             </Fragment>
           )}
         </div>

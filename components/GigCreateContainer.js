@@ -10,9 +10,12 @@ import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Grid from '@material-ui/core/Grid';
-import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
-import Typography from '@material-ui/core/Typography';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Container from '@material-ui/core/Container';
 import ChipInput from 'material-ui-chip-input';
+import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
+import Map from '~/components/Map/Map';
+import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles(theme => ({
@@ -23,8 +26,10 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'flex-end',
   },
-  instructions: {
-    marginTop: theme.spacing(2),
+  stepContentContainer: {
+    paddingRight: 0,
+  },
+  stepContent: {
     marginBottom: theme.spacing(2),
   },
 }));
@@ -32,20 +37,20 @@ const useStyles = makeStyles(theme => ({
 const GigCreateContainer = props => {
   const theme = useTheme();
   const classes = useStyles();
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(2);
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
   const { STRINGS } = useContext(LanguagesContext).state;
   const steps = [
     STRINGS.SERVICE_NEW_NEW,
-    STRINGS.SERVICE_NEW_ADDRESS,
+    STRINGS.SERVICE_NEW_ADDRESS_WHERE,
     STRINGS.SERVICE_NEW_OPTIONS,
     STRINGS.SERVICE_NEW_PAYMENT,
   ];
 
   const Basics = props => {
     return (
-      <div>
+      <Fragment>
         <TextField variant="outlined" margin="dense" fullWidth required label={STRINGS.SERVICE_NEW_TITLE} />
         <TextField
           rows="4"
@@ -56,12 +61,17 @@ const GigCreateContainer = props => {
           label={STRINGS.SERVICE_NEW_DESCRIPTION}
           multiline
         />
-      </div>
+      </Fragment>
     );
   };
 
   const Address = props => {
-    return <div></div>;
+    return (
+      <Fragment>
+        <TextField variant="outlined" margin="dense" fullWidth required label={STRINGS.SERVICE_NEW_ADDRESS} />
+        <Map gigs={[]} styles={{ margin: `${theme.spacing(1)}px 0 0 0` }} />
+      </Fragment>
+    );
   };
 
   const Options = props => {
@@ -70,15 +80,27 @@ const GigCreateContainer = props => {
     const handleDeleteChip = (chip, index) => {};
 
     return (
-      <ChipInput
-        label={STRINGS.SERVICE_NEW_TAGS}
-        value={tags}
-        variant="outlined"
-        fullWidth
-        disableUnderline
-        onAdd={chip => handleAddChip(chip)}
-        onDelete={(chip, index) => handleDeleteChip(chip, index)}
-      />
+      <Fragment>
+        <TextField
+          variant="outlined"
+          margin="dense"
+          fullWidth
+          label={STRINGS.SERVICE_NEW_PRICE}
+          InputProps={{
+            endAdornment: <InputAdornment position="end">{STRINGS.CURRENCY_TIME_PRICE_ENDING}</InputAdornment>,
+          }}
+        />
+        <ChipInput
+          label={STRINGS.SERVICE_NEW_TAGS}
+          value={tags}
+          variant="outlined"
+          fullWidth
+          fullWidthInput
+          disableUnderline
+          onAdd={chip => handleAddChip(chip)}
+          onDelete={(chip, index) => handleDeleteChip(chip, index)}
+        />
+      </Fragment>
     );
   };
 
@@ -110,7 +132,7 @@ const GigCreateContainer = props => {
   };
 
   const isStepFailed = step => {
-    return step === 0;
+    return step < 2;
   };
 
   const handleStep = step => () => {
@@ -125,7 +147,7 @@ const GigCreateContainer = props => {
 
   const content = (
     <Fragment>
-      <div className={classes.instructions}>{getStepContent(activeStep)}</div>
+      <div className={classes.stepContent}>{getStepContent(activeStep)}</div>
       <ButtonGroup className={classes.buttonGroup}>
         <Button disabled={activeStep === 0} onClick={handleBack}>
           {STRINGS.SERVICE_NEW_BACK}
@@ -139,7 +161,7 @@ const GigCreateContainer = props => {
   );
 
   return (
-    <Grid container>
+    <Container maxWidth="sm">
       <Stepper
         nonLinear
         className={classes.root}
@@ -161,25 +183,23 @@ const GigCreateContainer = props => {
           }
 
           return (
-            <Step key={label} {...stepProps}>
+            <Step className={classes.step} key={label} {...stepProps}>
               <StepButton onClick={handleStep(index)}>
                 <StepLabel {...labelProps}>{label}</StepLabel>
               </StepButton>
-              {isMobile && <StepContent>{content}</StepContent>}
+              {isMobile && <StepContent className={classes.stepContentContainer}>{content}</StepContent>}
             </Step>
           );
         })}
       </Stepper>
       {activeStep === steps.length ? (
-        <div>
-          <Typography className={classes.instructions}></Typography>
-        </div>
+        <div></div>
       ) : (
         <Grid item lg={12} md={12} sm={12}>
           {!isMobile && content}
         </Grid>
       )}
-    </Grid>
+    </Container>
   );
 };
 

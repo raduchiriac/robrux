@@ -48,6 +48,9 @@ const useStyles = makeStyles(theme => ({
       display: 'none',
     },
   },
+  indexPageSearchButton: {
+    marginLeft: `${theme.spacing(1) / 2}px`,
+  },
   indexPageFormField: {
     flex: 1,
     [theme.breakpoints.down('xs')]: {
@@ -103,7 +106,7 @@ const IndexPageContainer = props => {
             inputProps={{ 'aria-label': STRINGS.SEARCH_SIMPLE }}
           />
           <Fade in={!!stringToBeSearched.length}>
-            <Button color="primary" type="submit">
+            <Button className={classes.indexPageSearchButton} color="primary" type="submit">
               {STRINGS.SEARCH_SIMPLE}
             </Button>
           </Fade>

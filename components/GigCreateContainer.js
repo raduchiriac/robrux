@@ -7,20 +7,28 @@ import Step from '@material-ui/core/Step';
 import StepButton from '@material-ui/core/StepButton';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
+import Checkbox from '@material-ui/core/Checkbox';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import ChipInput from 'material-ui-chip-input';
 import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
 import Map from '~/components/Map/Map';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
+import useGeo from '~/lib/hooks/useGeo';
 
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
+  },
+  autocomplete: {
+    marginTop: theme.spacing(1),
   },
   buttonGroup: {
     display: 'flex',
@@ -49,6 +57,9 @@ const GigCreateContainer = props => {
   ];
 
   const Basics = props => {
+    const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+    const checkedIcon = <CheckBoxIcon fontSize="small" />;
+
     return (
       <Fragment>
         <TextField variant="outlined" margin="dense" fullWidth required label={STRINGS.SERVICE_NEW_TITLE} />
@@ -61,15 +72,34 @@ const GigCreateContainer = props => {
           label={STRINGS.SERVICE_NEW_DESCRIPTION}
           multiline
         />
+        <Autocomplete
+          multiple
+          margin="dense"
+          className={classes.autocomplete}
+          options={STRINGS.SERVICE_NEW_CATEGORIES}
+          disableCloseOnSelect
+          getOptionLabel={option => option}
+          renderOption={(option, { selected }) => (
+            <React.Fragment>
+              <Checkbox icon={icon} checkedIcon={checkedIcon} checked={selected} />
+              {option}
+            </React.Fragment>
+          )}
+          renderInput={params => (
+            <TextField {...params} variant="outlined" label={STRINGS.SERVICE_NEW_CATEGORY} placeholder="" fullWidth />
+          )}
+        />
       </Fragment>
     );
   };
 
   const Address = props => {
+    const { latitude, longitude, timestamp, accuracy, error } = useGeo(false);
+    // TODO: https://material-ui.com/components/autocomplete/#google-maps-place
     return (
       <Fragment>
         <TextField variant="outlined" margin="dense" fullWidth required label={STRINGS.SERVICE_NEW_ADDRESS} />
-        <Map gigs={[]} styles={{ margin: `${theme.spacing(1)}px 0 0 0` }} />
+        <Map center={[latitude, longitude]} gigs={[]} styles={{ margin: `${theme.spacing(1)}px 0 0 0` }} />
       </Fragment>
     );
   };

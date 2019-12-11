@@ -44,6 +44,7 @@ const GigViewContainer = props => {
   }
 
   if (!props.idOrSlug || !gig) {
+    //TODO: No gig found? Means the URL is bad, return 404
     return <Fragment></Fragment>;
   }
 

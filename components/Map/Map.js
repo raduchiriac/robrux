@@ -25,6 +25,7 @@ const Map = props => {
     gigs,
     hovered = 0,
     height = 300,
+    center = [],
     city = 'bruxelles',
     mapServiceProvider = 'google',
     _onMapBoundsChange = () => {},
@@ -89,12 +90,15 @@ const Map = props => {
     );
   });
 
+  const defaultCenter =
+    center.filter(Boolean).length === 2 ? center : CITIES[city] ? CITIES[city].center : CITIES['bruxelles'].center;
+
   return (
     <div className={classes.mapContainer} style={{ ...styles, height }}>
       {mapServiceProvider == 'google' && (
         <GoogleMap
           yesIWantToUseGoogleMapApiInternals
-          defaultCenter={CITIES[city] ? CITIES[city].center : CITIES['bruxelles'].center}
+          center={defaultCenter}
           defaultZoom={options.defaultZoom}
           resetBoundsOnResize={true}
           onChildMouseEnter={_onMapChildMouseEnter}
@@ -109,7 +113,7 @@ const Map = props => {
       {(mapServiceProvider == 'osm' || mapServiceProvider == 'mapbox') && (
         <OSMMap
           mapServiceProvider={mapServiceProvider}
-          defaultCenter={CITIES[city] ? CITIES[city].center : CITIES['bruxelles'].center}
+          defaultCenter={defaultCenter}
           defaultZoom={options.defaultZoom}
           maxZoom={options.maxZoom}
           minZoom={options.minZoom}

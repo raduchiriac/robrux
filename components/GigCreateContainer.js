@@ -1,6 +1,5 @@
 import React, { useState, useContext, Fragment } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { useTheme } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -26,6 +25,9 @@ import useGeo from '~/lib/hooks/useGeo';
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
+  },
+  tags: {
+    marginTop: theme.spacing(1),
   },
   autocomplete: {
     marginTop: theme.spacing(1),
@@ -124,6 +126,7 @@ const GigCreateContainer = props => {
           label={STRINGS.SERVICE_NEW_TAGS}
           value={tags}
           variant="outlined"
+          className={classes.tags}
           fullWidth
           fullWidthInput
           disableUnderline
@@ -191,7 +194,7 @@ const GigCreateContainer = props => {
   );
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="md">
       <Stepper
         nonLinear
         className={classes.root}

@@ -21,6 +21,7 @@ import ChipInput from 'material-ui-chip-input';
 import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
 import Map from '~/components/Map/Map';
 import useGeo from '~/lib/hooks/useGeo';
+import GoogleMapsAutocomplete from '~/components/Map/GoogleMapsAutocomplete';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -47,7 +48,7 @@ const useStyles = makeStyles(theme => ({
 const GigCreateContainer = props => {
   const theme = useTheme();
   const classes = useStyles();
-  const [activeStep, setActiveStep] = useState(2);
+  const [activeStep, setActiveStep] = useState(1);
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
   const { STRINGS } = useContext(LanguagesContext).state;
@@ -97,11 +98,37 @@ const GigCreateContainer = props => {
 
   const Address = props => {
     const { latitude, longitude, timestamp, accuracy, error } = useGeo(false);
-    // TODO: https://material-ui.com/components/autocomplete/#google-maps-place
+    const [foundLat, setFoundLat] = useState(0);
+    const [foundLng, setFoundLng] = useState(0);
+
+    const onAddressFound = (lat, lng) => {
+      setFoundLat(lat);
+      setFoundLng(lng);
+    };
+
+    const gigs = {
+      data: [
+        {
+          _id: 'placeId',
+          location: {
+            type: 'Point',
+            coordinates: [foundLat || latitude, foundLng || longitude],
+            address: 'Point',
+          },
+          title: 'Title',
+        },
+      ],
+    };
     return (
       <Fragment>
-        <TextField variant="outlined" margin="dense" fullWidth required label={STRINGS.SERVICE_NEW_ADDRESS} />
-        <Map center={[latitude, longitude]} gigs={[]} styles={{ margin: `${theme.spacing(1)}px 0 0 0` }} />
+        <GoogleMapsAutocomplete onAddressFound={onAddressFound} label={STRINGS.SERVICE_NEW_ADDRESS} />
+        <Map
+          defaultZoom={15}
+          mapServiceProvider="osm"
+          center={gigs.data[0].location.coordinates}
+          gigs={gigs}
+          styles={{ margin: `${theme.spacing(1)}px 0 0 0` }}
+        />
       </Fragment>
     );
   };
@@ -117,6 +144,7 @@ const GigCreateContainer = props => {
           variant="outlined"
           margin="dense"
           fullWidth
+          type="number"
           label={STRINGS.SERVICE_NEW_PRICE}
           InputProps={{
             endAdornment: <InputAdornment position="end">{STRINGS.CURRENCY_TIME_PRICE_ENDING}</InputAdornment>,

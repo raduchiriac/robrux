@@ -27,6 +27,9 @@ const Map = props => {
     height = 300,
     center = [],
     city = 'bruxelles',
+    defaultZoom = 13,
+    maxZoom = 15,
+    minZoom = 9,
     mapServiceProvider = 'google',
     _onMapBoundsChange = () => {},
     _onMarkerClick = () => {},
@@ -35,9 +38,9 @@ const Map = props => {
   } = props;
 
   const options = {
-    defaultZoom: 13,
-    maxZoom: 15,
-    minZoom: 9,
+    defaultZoom: defaultZoom,
+    maxZoom: maxZoom,
+    minZoom: minZoom,
     minZoomOverride: true,
     panControl: false,
     fullscreenControl: false,

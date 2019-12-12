@@ -94,6 +94,9 @@ const HeaderAccountContainer = () => {
           onClose={toggleDrawer(false)}
           onOpen={toggleDrawer(true)}
           className={classes.swipeable}
+          classes={{
+            paper: classes.swipeable,
+          }}
         >
           <div role="presentation" onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
             {userMenu}

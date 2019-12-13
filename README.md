@@ -44,6 +44,7 @@ Now run `npm run start:dev` and create something nice. PR are welcome.
 - [ ] Audit everything with Lighthouse
 - [ ] Generate a sitemap.xml
 - [ ] Use the new `<Suspense />` from react-experimental
+- [ ] Try to [lazy load modules](https://flaviocopes.com/nextjs-lazy-load-modules/)
 - [ ] Pre-commit eslint (husky)
 - [ ] Write a better `.eslintrc`
-- [ ] minZoom for React Google Maps ([issue](https://github.com/google-map-react/google-map-react/issues/505))
+- [ ] Fix minZoom for React Google Maps ([issue](https://github.com/google-map-react/google-map-react/issues/505))

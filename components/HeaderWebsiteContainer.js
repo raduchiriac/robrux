@@ -135,15 +135,6 @@ const HeaderWebsiteContainer = () => {
     <div className={classes.grow}>
       <AppBar position="fixed">
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
             <Link href="/" underline="none" color="inherit">
               {STRINGS.SITE_NAME}

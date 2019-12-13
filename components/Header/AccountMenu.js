@@ -116,6 +116,9 @@ const AccountMenu = props => {
                     <Badge variant="dot" className={classes.internalBadge} color="secondary" badgeContent={1}></Badge>
                     <MenuItem>{STRINGS.NEWS_NOW}</MenuItem>
                   </Link>
+                  <Link href="/service/create" className={classes.link}>
+                    <MenuItem>MY PROFILE</MenuItem>
+                  </Link>
                   <Divider />
                   <Link href="/login" className={classes.link}>
                     <MenuItem>{STRINGS.LOGIN_NOW}</MenuItem>

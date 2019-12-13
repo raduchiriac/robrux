@@ -2,7 +2,7 @@ import React from 'react';
 import GigViewContainer from '~/components/GigViewContainer';
 import { useRouter } from 'next/router';
 
-import { WithHeaderLayout } from '~/lib/layouts/WithHeaderLayout';
+import { WebsiteHeaderLayout } from '~/lib/layouts/WebsiteHeaderLayout';
 import withApollo from '~/lib/hocs/withApollo';
 
 const ServiceView = ({ params }) => {
@@ -11,6 +11,6 @@ const ServiceView = ({ params }) => {
   return <GigViewContainer idOrSlug={router.query.id || ''} />;
 };
 
-ServiceView.Layout = WithHeaderLayout;
+ServiceView.Layout = WebsiteHeaderLayout;
 
 export default withApollo(ServiceView);

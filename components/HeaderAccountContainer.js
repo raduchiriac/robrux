@@ -11,8 +11,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Drawer from '@material-ui/core/Drawer';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import LinkIcon from '@material-ui/icons/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
@@ -62,23 +61,31 @@ const HeaderAccountContainer = () => {
     setOpenDrawer(open);
   };
 
+  const ListItemLink = props => {
+    return <ListItem button component="a" {...props} />;
+  };
+
   const userMenu = (
     <Fragment>
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
+        {[
+          { text: 'Profile', href: '/profile' },
+          { text: 'Create', href: '/service/create' },
+        ].map((link, index) => (
+          <ListItemLink href={link.href}>
+            <ListItemIcon>
+              <LinkIcon />
+            </ListItemIcon>
+            <ListItemText primary={link.text} />
+          </ListItemLink>
         ))}
       </List>
       <Divider />
       <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
+        {[{ text: 'Logout', href: '/logout' }].map((link, index) => (
+          <ListItemLink href={link.href}>
+            <ListItemText primary={link.text} />
+          </ListItemLink>
         ))}
       </List>
     </Fragment>

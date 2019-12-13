@@ -117,7 +117,7 @@ const AccountMenu = props => {
                     <MenuItem>{STRINGS.NEWS_NOW}</MenuItem>
                   </Link>
                   <Link href="/service/create" className={classes.link}>
-                    <MenuItem>MY PROFILE</MenuItem>
+                    <MenuItem>{STRINGS.MY_PROFILE}</MenuItem>
                   </Link>
                   <Divider />
                   <Link href="/login" className={classes.link}>
@@ -125,6 +125,9 @@ const AccountMenu = props => {
                   </Link>
                   <Link href="/register" className={classes.link}>
                     <MenuItem>{STRINGS.REGISTER_NOW}</MenuItem>
+                  </Link>
+                  <Link href="/logout" className={classes.link}>
+                    <MenuItem>{STRINGS.LOGOUT}</MenuItem>
                   </Link>
                 </MenuList>
               </ClickAwayListener>

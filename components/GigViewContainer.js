@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
+import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { useLazyQuery } from '@apollo/react-hooks';
@@ -22,6 +23,28 @@ const useStyles = makeStyles(theme => ({
   servicePrice: {
     textAlign: 'center',
     background: theme.custom_palette && theme.custom_palette.alternateColor,
+  },
+  tags: {
+    marginTop: theme.spacing(1),
+    '& > *': {
+      margin: `0 ${theme.spacing(0.5)}px`,
+    },
+  },
+  tag: {
+    '&:first-child': {
+      marginLeft: 0,
+    },
+  },
+  categories: {
+    marginBottom: theme.spacing(1),
+    '& > *': {
+      margin: `0 ${theme.spacing(0.5)}px`,
+    },
+  },
+  category: {
+    '&:first-child': {
+      marginLeft: 0,
+    },
   },
 }));
 
@@ -44,7 +67,7 @@ const GigViewContainer = props => {
   }
 
   if (!props.idOrSlug || !gig) {
-    //TODO: No gig found? Means the URL is bad, return 404
+    //TODO: No gig found? It means the URL is bad, return 404
     return <Fragment></Fragment>;
   }
 
@@ -57,6 +80,20 @@ const GigViewContainer = props => {
       </Grid>
       <Grid item xs={12} sm={8} md={8} lg={9}>
         <Paper className="service__container">
+          <div className={classes.categories}>
+            {gig.categories.map((category, idx) => (
+              <Chip
+                className={classes.category}
+                key={`${idx}category`}
+                clickable
+                variant="outlined"
+                onClick={evt => {
+                  // (`Router.push: ${category}`);
+                }}
+                label={STRINGS.SERVICE_NEW_CATEGORIES[category]}
+              />
+            ))}
+          </div>
           <Typography variant="h5">{gig.title}</Typography>
           <div className="service-avatar">
             <img className="service-avatar__image" src={gig._providerAvatar} alt="" />
@@ -68,6 +105,11 @@ const GigViewContainer = props => {
             </div>
           </div>
           {gig.description}
+          <div className={classes.tags}>
+            {gig.tags.map((tag, idx) => (
+              <Chip className={classes.tag} key={`${idx}tag`} size="small" label={tag} />
+            ))}
+          </div>
           <div className={clsx('service-price', classes['servicePrice'])}>
             {`${gig.price}${STRINGS.CURRENCY_TIME_PRICE_ENDING}`}
           </div>

@@ -37,7 +37,7 @@ const schema = new Schema(
     featured: { type: Boolean, index: true },
     statusInformation: { type: String },
     tags: { type: [String] },
-    categories: { type: [String] },
+    categories: { type: [Number] },
     location: {
       address: { type: String },
       type: { type: String, default: 'Point' },
@@ -93,6 +93,7 @@ const fields = {
   slug: { type: GraphQLString },
   description: { type: GraphQLString },
   images: { type: GraphQLList(GraphQLString) },
+  categories: { type: GraphQLList(GraphQLInt) },
   tags: { type: GraphQLList(GraphQLString) },
   status: { type: GraphQLString },
   price: { type: GraphQLInt },

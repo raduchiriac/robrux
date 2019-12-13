@@ -25,9 +25,11 @@ Now run `npm run start:dev` and create something nice. PR are welcome.
 - [x] (_Route_) Preview Gig (use React Spring to transition, _protected route_)
 - [x] Lazy-load HOC for images (blur effect)
 - [x] Option to use either Google Maps, Open Street Map or Mapbox
+- [ ] Add a News section to showcase services monthly (push a newsletter)
 - [ ] Create a Rating Collection (make seed file)
 - [ ] (_Route_) New Gig (use Formik and yup, _protected route_, Stripe API)
-- [ ] (_Route_) My Profile (_protected route_)
+- [ ] (_Route_) My Profile (with edit option) (_protected route_)
+- [ ] (_Route_) View user profile
 - [ ] Fuzzy-Search on MongoDB (include tags)
 - [ ] Dynamic <title> using Helmet
 - [ ] Payment System (Stripe API)

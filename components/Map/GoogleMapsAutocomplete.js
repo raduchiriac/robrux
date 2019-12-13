@@ -61,6 +61,7 @@ const GoogleMapsAutocomplete = props => {
   };
 
   const fetch = React.useMemo(
+    //TODO: Replace with the useDebounced() hook
     () =>
       throttle((input, callback) => {
         autocompleteService.current.getPlacePredictions(

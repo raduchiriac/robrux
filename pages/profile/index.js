@@ -1,11 +1,12 @@
 import React from 'react';
-import { WithHeaderLayout } from '~/lib/layouts/WithHeaderLayout';
+import { AccountLayout } from '~/lib/layouts/AccountLayout';
 import withApollo from '~/lib/hocs/withApollo';
+import ProfileContainer from '~/components/ProfileContainer';
 
 const Profile = props => {
-  return <div>{Object.keys(props).join(',')}</div>;
+  return <ProfileContainer />;
 };
 
-Profile.Layout = WithHeaderLayout;
+Profile.Layout = AccountLayout;
 
 export default withApollo(Profile);

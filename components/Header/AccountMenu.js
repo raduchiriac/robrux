@@ -90,6 +90,9 @@ const AccountMenu = props => {
     prevOpen.current = open;
   }, [open]);
 
+  // https://www.iconfinder.com/avatars-smiley-icons?page=3&price=free
+  // https://www.iconfinder.com/iconsets/user-pictures
+
   return (
     <div className={clsx(classes.root, className)}>
       <Badge color="secondary" badgeContent={1} anchorOrigin={{ horizontal: 'right', vertical: 'top' }}>
@@ -100,8 +103,6 @@ const AccountMenu = props => {
           onClick={handleToggle}
           className={classes.button}
         >
-          {/* https://www.iconfinder.com/avatars-smiley-icons?page=3&price=free */}
-          {/* https://www.iconfinder.com/iconsets/user-pictures */}
           <Avatar className={classes.avatar} alt="" src="/avatars/user.svg" />
         </Button>
       </Badge>
@@ -116,12 +117,18 @@ const AccountMenu = props => {
                     <Badge variant="dot" className={classes.internalBadge} color="secondary" badgeContent={1}></Badge>
                     <MenuItem>{STRINGS.NEWS_NOW}</MenuItem>
                   </Link>
+                  <Link href="/profile" className={classes.link}>
+                    <MenuItem>{STRINGS.MY_PROFILE}</MenuItem>
+                  </Link>
                   <Divider />
                   <Link href="/login" className={classes.link}>
                     <MenuItem>{STRINGS.LOGIN_NOW}</MenuItem>
                   </Link>
                   <Link href="/register" className={classes.link}>
                     <MenuItem>{STRINGS.REGISTER_NOW}</MenuItem>
+                  </Link>
+                  <Link href="/logout" className={classes.link}>
+                    <MenuItem>{STRINGS.LOGOUT}</MenuItem>
                   </Link>
                 </MenuList>
               </ClickAwayListener>

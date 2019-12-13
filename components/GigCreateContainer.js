@@ -1,6 +1,5 @@
 import React, { useState, useContext, Fragment } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { useTheme } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -22,10 +21,14 @@ import ChipInput from 'material-ui-chip-input';
 import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
 import Map from '~/components/Map/Map';
 import useGeo from '~/lib/hooks/useGeo';
+import GoogleMapsAutocomplete from '~/components/Map/GoogleMapsAutocomplete';
 
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
+  },
+  tags: {
+    marginTop: theme.spacing(1),
   },
   autocomplete: {
     marginTop: theme.spacing(1),
@@ -96,11 +99,39 @@ const GigCreateContainer = props => {
 
   const Address = props => {
     const { latitude, longitude, timestamp, accuracy, error } = useGeo(false);
-    // TODO: https://material-ui.com/components/autocomplete/#google-maps-place
+    const [foundLat, setFoundLat] = useState(0);
+    const [foundLng, setFoundLng] = useState(0);
+
+    const onAddressFound = (lat, lng) => {
+      setFoundLat(lat);
+      setFoundLng(lng);
+    };
+
+    const gigs = {
+      data: [
+        {
+          _id: 'placeId',
+          location: {
+            type: 'Point',
+            coordinates: [foundLat || latitude, foundLng || longitude],
+            address: 'Point',
+          },
+          title: 'Title',
+        },
+      ],
+    };
     return (
       <Fragment>
-        <TextField variant="outlined" margin="dense" fullWidth required label={STRINGS.SERVICE_NEW_ADDRESS} />
-        <Map center={[latitude, longitude]} gigs={[]} styles={{ margin: `${theme.spacing(1)}px 0 0 0` }} />
+        <GoogleMapsAutocomplete onAddressFound={onAddressFound} label={STRINGS.SERVICE_NEW_ADDRESS} />
+        {gigs.data[0].location.coordinates[0] && (
+          <Map
+            defaultZoom={15}
+            mapServiceProvider="osm"
+            center={gigs.data[0].location.coordinates}
+            gigs={gigs}
+            styles={{ margin: `${theme.spacing(1)}px 0 0 0` }}
+          />
+        )}
       </Fragment>
     );
   };
@@ -116,6 +147,7 @@ const GigCreateContainer = props => {
           variant="outlined"
           margin="dense"
           fullWidth
+          type="number"
           label={STRINGS.SERVICE_NEW_PRICE}
           InputProps={{
             endAdornment: <InputAdornment position="end">{STRINGS.CURRENCY_TIME_PRICE_ENDING}</InputAdornment>,
@@ -125,6 +157,7 @@ const GigCreateContainer = props => {
           label={STRINGS.SERVICE_NEW_TAGS}
           value={tags}
           variant="outlined"
+          className={classes.tags}
           fullWidth
           fullWidthInput
           disableUnderline
@@ -192,7 +225,7 @@ const GigCreateContainer = props => {
   );
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="md">
       <Stepper
         nonLinear
         className={classes.root}

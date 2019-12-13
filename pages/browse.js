@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 
-import { WithHeaderLayout } from '~/lib/layouts/WithHeaderLayout';
+import { WebsiteHeaderLayout } from '~/lib/layouts/WebsiteHeaderLayout';
 import BrowsePageContainer from '~/components/BrowsePageContainer';
 import withApollo from '~/lib/hocs/withApollo';
 
@@ -11,6 +11,6 @@ const Browse = props => {
   return <BrowsePageContainer searchingFor={router.query.search || ''} inLocation={router.query.location || ''} />;
 };
 
-Browse.Layout = WithHeaderLayout;
+Browse.Layout = WebsiteHeaderLayout;
 
 export default withApollo(Browse);

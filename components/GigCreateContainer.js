@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
 const GigCreateContainer = props => {
   const theme = useTheme();
   const classes = useStyles();
-  const [activeStep, setActiveStep] = useState(2);
+  const [activeStep, setActiveStep] = useState(0);
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
   const { STRINGS } = useContext(LanguagesContext).state;
@@ -59,6 +59,7 @@ const GigCreateContainer = props => {
   const Basics = props => {
     const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
     const checkedIcon = <CheckBoxIcon fontSize="small" />;
+    const reverseArray = a => [...a].map(a.pop, a);
 
     return (
       <Fragment>
@@ -76,7 +77,7 @@ const GigCreateContainer = props => {
           multiple
           margin="dense"
           className={classes.autocomplete}
-          options={STRINGS.SERVICE_NEW_CATEGORIES}
+          options={reverseArray(STRINGS.SERVICE_NEW_CATEGORIES)}
           disableCloseOnSelect
           getOptionLabel={option => option}
           renderOption={(option, { selected }) => (

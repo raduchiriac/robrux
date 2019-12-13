@@ -122,13 +122,15 @@ const GigCreateContainer = props => {
     return (
       <Fragment>
         <GoogleMapsAutocomplete onAddressFound={onAddressFound} label={STRINGS.SERVICE_NEW_ADDRESS} />
-        <Map
-          defaultZoom={15}
-          mapServiceProvider="osm"
-          center={gigs.data[0].location.coordinates}
-          gigs={gigs}
-          styles={{ margin: `${theme.spacing(1)}px 0 0 0` }}
-        />
+        {gigs.data[0].location.coordinates[0] && (
+          <Map
+            defaultZoom={15}
+            mapServiceProvider="osm"
+            center={gigs.data[0].location.coordinates}
+            gigs={gigs}
+            styles={{ margin: `${theme.spacing(1)}px 0 0 0` }}
+          />
+        )}
       </Fragment>
     );
   };

@@ -11,7 +11,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Drawer from '@material-ui/core/Drawer';
 import ListItemText from '@material-ui/core/ListItemText';
-import LinkIcon from '@material-ui/icons/Link';
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
@@ -69,24 +70,21 @@ const HeaderAccountContainer = () => {
     <Fragment>
       <List>
         {[
-          { text: 'Profile', href: '/profile' },
-          { text: 'Create', href: '/service/create' },
-        ].map((link, index) => (
-          <ListItemLink href={link.href}>
-            <ListItemIcon>
-              <LinkIcon />
-            </ListItemIcon>
-            <ListItemText primary={link.text} />
-          </ListItemLink>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {[{ text: 'Logout', href: '/logout' }].map((link, index) => (
-          <ListItemLink href={link.href}>
-            <ListItemText primary={link.text} />
-          </ListItemLink>
-        ))}
+          { text: STRINGS.MY_PROFILE, href: '/profile', icon: <AccountCircleOutlinedIcon /> },
+          { text: '_CREATE', href: '/service/create', icon: <div></div> },
+          { text: '_MESSAGES', href: '/', icon: <div></div> },
+          { text: undefined },
+          { text: STRINGS.LOGOUT, href: '/logout', icon: <ExitToAppIcon /> },
+        ].map((link, index) =>
+          link.text ? (
+            <ListItemLink href={link.href} key={`listItem${index}`}>
+              <ListItemIcon>{link.icon}</ListItemIcon>
+              <ListItemText primary={link.text} secondary="" />
+            </ListItemLink>
+          ) : (
+            <Divider key={`listItem${index}`} variant="middle" />
+          )
+        )}
       </List>
     </Fragment>
   );

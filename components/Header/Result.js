@@ -37,7 +37,7 @@ const Result = props => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const trimWords = (str, search, wordsCount = matches ? 11 : 5) => {
+  const trimWords = (str, search, wordsCount = matches ? 13 : 5) => {
     const words = str.split(' ');
     const regex = new RegExp(`${search}`, 'ig');
     const index = words.findIndex(word => word.match(regex));

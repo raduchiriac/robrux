@@ -59,7 +59,6 @@ const HeaderWebsiteContainer = () => {
     setAnchorEl(event.currentTarget);
   }
   function handleMenuClose() {
-    // TODO: Get href prop from MenuItem
     Router.push('/login');
     setAnchorEl(null);
     handleMobileMenuClose();
@@ -81,11 +80,11 @@ const HeaderWebsiteContainer = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem href="/user/profile" onClick={handleMenuClose}>
-        Login / Profile
+      <MenuItem href="/profile/view/id" onClick={handleMenuClose}>
+        _PROFILE
       </MenuItem>
       <MenuItem href="/logout" onClick={handleMenuClose}>
-        Deconectare
+        _LOGOUT
       </MenuItem>
     </Menu>
   );
@@ -106,7 +105,7 @@ const HeaderWebsiteContainer = () => {
             <MailIcon />
           </Badge>
         </IconButton>
-        <p>Mesaje</p>
+        <p>_MESSAGES</p>
       </MenuItem>
       <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit">
@@ -125,7 +124,7 @@ const HeaderWebsiteContainer = () => {
         >
           <AccountCircle />
         </IconButton>
-        <p>Contul meu</p>
+        <p>_MY_ACCOUNT</p>
       </MenuItem>
     </Menu>
   );
@@ -141,7 +140,7 @@ const HeaderWebsiteContainer = () => {
             </Link>
           </Typography>
           <SearchBox />
-          <div className={classes.grow} />
+          {/* <div className={classes.grow} /> */}
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="" color="inherit">
               <Badge badgeContent={2} color="secondary">

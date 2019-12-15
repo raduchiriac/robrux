@@ -3,6 +3,7 @@
     "editor.formatOnSave": false
   },
   "eslint.autoFixOnSave": true,
-  "prettier.disableLanguages": ["js"],
-  "eslint.enable": true
+  "eslint.enable": true,
+  "editor.formatOnSave": true,
+  "prettier.disableLanguages": ["js"]
 }

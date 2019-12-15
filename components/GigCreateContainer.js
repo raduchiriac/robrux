@@ -48,7 +48,7 @@ const useStyles = makeStyles(theme => ({
 const GigCreateContainer = props => {
   const theme = useTheme();
   const classes = useStyles();
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(1);
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
   const { STRINGS } = useContext(LanguagesContext).state;

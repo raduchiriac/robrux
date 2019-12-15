@@ -7,12 +7,14 @@ import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
 import { useLazyQuery } from '@apollo/react-hooks';
 import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
 import { GET_ONE_GIG } from '~/lib/graphql/gigs.strings';
 import StaticMap from '~/components/Map/StaticMap';
 import StarRating from '~/components/Rating/StarRating';
 import MaterialCarousel from '~/components/Carousel/MaterialCarousel';
+import Error from 'next/error';
 
 import './GigViewContainer.scss';
 
@@ -29,6 +31,9 @@ const useStyles = makeStyles(theme => ({
     '& > *': {
       margin: `0 ${theme.spacing(0.5)}px`,
     },
+  },
+  divider: {
+    marginTop: theme.spacing(2),
   },
   tag: {
     '&:first-child': {
@@ -67,7 +72,6 @@ const GigViewContainer = props => {
   }
 
   if (!props.idOrSlug || !gig) {
-    //TODO: No gig found? It means the URL is bad, return 404
     return <Fragment></Fragment>;
   }
 
@@ -105,7 +109,9 @@ const GigViewContainer = props => {
             </div>
           </div>
           {gig.description}
+          <Divider className={classes.divider} />
           <div className={classes.tags}>
+            {`${STRINGS.SERVICE_NEW_TAGS}: `}
             {gig.tags.map((tag, idx) => (
               <Chip className={classes.tag} key={`${idx}tag`} size="small" label={tag} />
             ))}

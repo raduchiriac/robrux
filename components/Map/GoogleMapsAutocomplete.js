@@ -1,12 +1,12 @@
 import React from 'react';
+import parse from 'autosuggest-highlight/parse';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import parse from 'autosuggest-highlight/parse';
-import throttle from 'lodash/throttle';
+import useDebounce from '~/lib/hooks/useDebounce';
 
 function loadScript(src, position, id) {
   if (!position) {
@@ -33,11 +33,13 @@ const useStyles = makeStyles(theme => ({
 const GoogleMapsAutocomplete = props => {
   const classes = useStyles();
   const { onAddressFound = () => {}, label = '' } = props;
-  const [inputValue, setInputValue] = React.useState('');
+
+  const [searchedAddress, setSearchedAddress] = React.useState('');
   const [googlePlaces, setGooglePlaces] = React.useState([]);
   const loaded = React.useRef(false);
 
   if (typeof window !== 'undefined' && !loaded.current) {
+    // TODO: This does not work when another Google Maps is already on the page
     if (!document.querySelector('#google-maps')) {
       loadScript(
         `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_MAPS_API}&libraries=places`,
@@ -50,7 +52,7 @@ const GoogleMapsAutocomplete = props => {
   }
 
   const handleChange = event => {
-    setInputValue(event.target.value);
+    setSearchedAddress(event.target.value);
   };
 
   const getGeocode = placeId => {
@@ -59,18 +61,7 @@ const GoogleMapsAutocomplete = props => {
       onAddressFound(lat(), lng());
     });
   };
-
-  const fetch = React.useMemo(
-    //TODO: Replace with the useDebounced() hook
-    () =>
-      throttle((input, callback) => {
-        autocompleteService.current.getPlacePredictions(
-          { ...input, componentRestrictions: { country: 'be' } },
-          callback
-        );
-      }, 200),
-    []
-  );
+  const debouncedSearchTerm = useDebounce(searchedAddress, 550);
 
   React.useEffect(() => {
     let active = true;
@@ -83,21 +74,24 @@ const GoogleMapsAutocomplete = props => {
       return undefined;
     }
 
-    if (inputValue === '') {
+    if (debouncedSearchTerm === '') {
       setGooglePlaces([]);
       return undefined;
     }
 
-    fetch({ input: inputValue }, results => {
-      if (active) {
-        setGooglePlaces(results || []);
+    autocompleteService.current.getPlacePredictions(
+      { input: debouncedSearchTerm, componentRestrictions: { country: 'be' } },
+      results => {
+        if (active) {
+          setGooglePlaces(results || []);
+        }
       }
-    });
+    );
 
     return () => {
       active = false;
     };
-  }, [inputValue, fetch]);
+  }, [debouncedSearchTerm]);
 
   return (
     <Autocomplete

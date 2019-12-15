@@ -68,6 +68,7 @@ schema.index(
   }
 );
 
+// TODO: Read about other hooks https://mongoosejs.com/docs/middleware.html
 schema.pre('save', function(next) {
   this.slug = encodeURI(
     latinize(this.title)

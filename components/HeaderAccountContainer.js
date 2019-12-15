@@ -70,7 +70,7 @@ const HeaderAccountContainer = () => {
     <Fragment>
       <List>
         {[
-          { text: STRINGS.MY_PROFILE, href: '/profile', icon: <AccountCircleOutlinedIcon /> },
+          { text: STRINGS.MY_PROFILE, href: '/profile/view/id', icon: <AccountCircleOutlinedIcon /> },
           { text: '_CREATE', href: '/service/create', icon: <div></div> },
           { text: '_MESSAGES', href: '/', icon: <div></div> },
           { text: undefined },

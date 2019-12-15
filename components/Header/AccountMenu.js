@@ -117,7 +117,7 @@ const AccountMenu = props => {
                     <Badge variant="dot" className={classes.internalBadge} color="secondary" badgeContent={1}></Badge>
                     <MenuItem>{STRINGS.NEWS_NOW}</MenuItem>
                   </Link>
-                  <Link href="/profile" className={classes.link}>
+                  <Link href="/profile/view/id" className={classes.link}>
                     <MenuItem>{STRINGS.MY_PROFILE}</MenuItem>
                   </Link>
                   <Divider />

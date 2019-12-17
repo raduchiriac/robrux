@@ -1,29 +1,28 @@
 // File used for GraphQL mutations (DB Updates)
 const { GraphQLNonNull, GraphQLInputObjectType } = require('graphql');
-const GigType = require('../gigs/gig.model').GigType;
-const GigService = require('../gigs/gig.service');
+const NewsType = require('./news.model').NewsType;
+const fields = require('./news.model').fields;
+const NewsService = require('./news.service');
 
-const GigInputType = new GraphQLInputObjectType({
-  name: 'GigInputType',
-  description: 'Gig payload definition',
-  fields: require('../gigs/gig.model').fieldsInput,
+const NewsInputType = new GraphQLInputObjectType({
+  name: 'NewsInputType',
+  description: 'News payload definition',
+  fields,
 });
 
-const gigMutations = {
-  updateRating: { type: GigType },
-  updateProvider: { type: GigType },
-  createGig: {
-    type: GigType,
-    description: 'Create a new Gig',
+const newsMutations = {
+  createNews: {
+    type: NewsType,
+    description: 'Add a news',
     args: {
       input: {
-        type: new GraphQLNonNull(GigInputType),
+        type: new GraphQLNonNull(NewsInputType),
       },
     },
     resolve: async (rootValue, { input }, context) => {
-      return await GigService.createGig(input);
+      return await NewsService.createNews(input);
     },
   },
 };
 
-module.exports = gigMutations;
+module.exports = newsMutations;

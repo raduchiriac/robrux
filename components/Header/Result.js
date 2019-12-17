@@ -52,6 +52,8 @@ const Result = props => {
     );
   };
 
+  const strippedString = str => str.replace(/(<([^>]+)>)/gi, '');
+
   return (
     <Fragment>
       <ConditionalWrap
@@ -87,7 +89,7 @@ const Result = props => {
                 highlightClassName="result-list__result-highlighted"
                 highlightTag="strong"
                 searchWords={[searching]}
-                textToHighlight={trimWords(result.description, searching)}
+                textToHighlight={trimWords(strippedString(result.richDescription), searching)}
               />
             }
           />

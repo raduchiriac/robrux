@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 const latinize = require('latinize');
 const Schema = mongoose.Schema;
-const ObjectId = mongoose.Schema.Types.ObjectId;
+const { GraphQLID, GraphQLNonNull, GraphQLString, GraphQLList, GraphQLObjectType } = require('graphql');
+
+const strippedString = str => str.replace(/(<([^>]+)>)/gi, '');
 
 const schema = new Schema(
   {
@@ -14,7 +16,7 @@ const schema = new Schema(
     status: {
       type: String,
       required: true,
-      default: 'live',
+      default: 'draft',
       enum: ['draft', 'live', 'archived', 'trashed'],
       index: true,
     },
@@ -29,9 +31,29 @@ schema.pre('save', function(next) {
       .replace(/ /g, '-')
       .toLowerCase()
   );
+  this.excerpt = strippedString(this.richContent).substring(0, 100) + '…';
+  // TODO: Convert the Markdown to richContent
+  // TODO: Send a newsletter with this news
   next();
 });
 
 const News = mongoose.model('News', schema);
 
-module.exports = { News };
+const fields = {
+  _id: { type: GraphQLID },
+  title: { type: GraphQLNonNull(GraphQLString) },
+  slug: { type: GraphQLString },
+  excerpt: { type: GraphQLString },
+  content: { type: GraphQLString },
+  richContent: { type: GraphQLString },
+  images: { type: GraphQLList(GraphQLString) },
+  status: { type: GraphQLString },
+};
+
+const NewsType = new GraphQLObjectType({
+  name: 'News',
+  description: 'News type definition',
+  fields: fields,
+});
+
+module.exports = { News, NewsType, fields };

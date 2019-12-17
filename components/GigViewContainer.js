@@ -14,6 +14,7 @@ import { GET_ONE_GIG } from '~/lib/graphql/gigs.strings';
 import StaticMap from '~/components/Map/StaticMap';
 import StarRating from '~/components/Rating/StarRating';
 import MaterialCarousel from '~/components/Carousel/MaterialCarousel';
+import parse from 'html-react-parser';
 import Error from 'next/error';
 
 import './GigViewContainer.scss';
@@ -108,7 +109,7 @@ const GigViewContainer = props => {
               <StarRating score={gig._rating} readOnly="true" size="small" />
             </div>
           </div>
-          {gig.description}
+          <div className="service-description">{gig.richDescription && parse(gig.richDescription)}</div>
           <Divider className={classes.divider} />
           <div className={classes.tags}>
             {`${STRINGS.SERVICE_NEW_TAGS}: `}

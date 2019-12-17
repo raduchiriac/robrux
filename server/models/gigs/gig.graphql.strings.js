@@ -7,12 +7,13 @@ const GIG_CREATE_FAKE = () => {
   const userID = new ObjectID();
   const subscriptionID = new ObjectID();
   const title = faker.company.catchPhrase();
+  const description = faker.lorem.paragraph() + ' ' + faker.lorem.paragraph() + ' ' + faker.lorem.paragraph();
   return `
     mutation {
       createGig(input: {
         _userId: "${userID}",
         _providerName: "${faker.name.firstName()} ${faker.name.lastName()}",
-        _providerAvatar: "https://i.pravatar.cc/128?u=${userID}",
+        _providerAvatar: "${faker.image.avatar}",
         _rating: ${Math.random() * 4 + 1},
         _subscription: "${Math.random() >= 0.5 ? subscriptionID : ''}",
         title: "${title}",
@@ -23,7 +24,8 @@ const GIG_CREATE_FAKE = () => {
           "https://picsum.photos/id/${Math.round(Math.random() * 1000)}/640/400",
           "https://picsum.photos/id/${Math.round(Math.random() * 1000)}/640/400",
         ],
-        description: "${faker.lorem.paragraph()}",
+        description: "${description}",
+        richDescription: "<div>${description}</div>",
         location: {
           type: "Point",
           address: "${faker.address.streetAddress()}, ${faker.address.country()}",

@@ -2,17 +2,17 @@
 
 ### Are you here for the first time?
 
-Use your favorite package manager to install the dependencies.
+Use your favorite package manager ([npm/yarn](https://www.stackshare.io/stackups/npm-vs-yarn)) to install the dependencies.
 
-Run `npm run storyboard` to see some of the components in action (some environment variables might be needed).
+Run `npm run storyboard` to see some of the components in action (some environment variables might be needed – read below).
 
-### Development appetite?
+### Appetite for development?
 
-Create and edit a valid `.env` file by doing `cp .env.sample .env`. Start your local MongoDB server or setup a remote one in the said `.env` file. Run `npm run seed` once, wait for the data to be imported, then terminate this process. You're all set.
+Create and edit a valid `.env` file by doing `cp .env.sample .env`. Start your local MongoDB server or setup a remote one in the said `.env` file. Run `npm run seed` and wait for the data to be imported. Congratulations, you're all set.
 
-Now run `npm run start:dev` and create something nice. PR are welcome.
+Now run `npm run start:dev` and create something nice. PRs are welcome.
 
-#### Features
+#### Dockyard
 
 - [x] Fetch data with a Mongo `$geoWithin` type of query
 - [x] Attach Next.js v9 to Express
@@ -25,6 +25,7 @@ Now run `npm run start:dev` and create something nice. PR are welcome.
 - [x] (_Route_) Preview Gig (use React Spring to transition, _protected route_)
 - [x] Lazy-load HOC for images (blur effect)
 - [x] Option to use either Google Maps, Open Street Map or Mapbox
+- [x] Fuzzy-Search on MongoDB (include tags)
 - [ ] Create a Category Page (linked from gig-page)
 - [ ] Add a News section (make seed file) (push a newsletter with `save` hook)
 - [ ] Send 404 if not found: Gig, News, Profile IDs (do a fetch inside `getInitialProps()`)
@@ -32,7 +33,6 @@ Now run `npm run start:dev` and create something nice. PR are welcome.
 - [ ] (_Route_) New Gig (use Formik and yup, _protected route_, Stripe API)
 - [ ] (_Route_) My Profile (with edit option) (_protected route_)
 - [ ] (_Route_) View any user's profile (linked from gig-page)
-- [ ] Fuzzy-Search on MongoDB (include tags)
 - [ ] Dynamic `<title>` using Helmet
 - [ ] Payment System (Stripe API or Adyen)
 - [ ] Rewrite the GraphQL schemas (more readable)

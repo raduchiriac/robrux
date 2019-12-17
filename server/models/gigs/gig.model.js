@@ -69,13 +69,14 @@ schema.index(
   }
 );
 
-// TODO: Read about other hooks https://mongoosejs.com/docs/middleware.html
+// INFO: Read about other hooks https://mongoosejs.com/docs/middleware.html
 schema.pre('save', function(next) {
   this.slug = encodeURI(
     latinize(this.title)
       .replace(/ /g, '-')
       .toLowerCase()
   );
+  // TODO: Convert the Markdown to richDescription
   next();
 });
 
@@ -94,6 +95,7 @@ const fields = {
   title: { type: GraphQLNonNull(GraphQLString) },
   slug: { type: GraphQLString },
   description: { type: GraphQLString },
+  richDescription: { type: GraphQLString },
   images: { type: GraphQLList(GraphQLString) },
   categories: { type: GraphQLList(GraphQLInt) },
   tags: { type: GraphQLList(GraphQLString) },

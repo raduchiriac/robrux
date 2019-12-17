@@ -40,7 +40,7 @@ Now run `npm run start:dev` and create something nice. PR are welcome.
 - [ ] Fully fledged User Auth system (`HttpOnly` cookies) and roles (make seed file)
 - [ ] Try out `next-i18next` (mainly the SSR)
 - [ ] Prettier Mongoose errors (w/ i18n)
-- [ ] Convert all forms to `Formik` with `useForm` and validate errors (using `yup`)
+- [ ] Convert all forms to `Formik` or `react-hook-form` and validate errors (using `yup`)
 - [ ] Login with social-media (at least Facebook Strategy)
 - [ ] Store the Static Map PNGs rather than asking Google API everytime (see gig-page)
 - [ ] Mailing System (Sparkpost or Mailgun API)

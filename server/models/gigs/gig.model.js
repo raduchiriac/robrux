@@ -25,6 +25,7 @@ const schema = new Schema(
     title: { type: String, required: true, trim: true },
     slug: { type: String, index: true },
     description: { type: String, trim: true },
+    richDescription: { type: String },
     images: { type: [String] },
     price: { type: Number },
     status: {

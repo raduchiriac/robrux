@@ -8,6 +8,7 @@ const schema = new Schema(
     title: { type: String, required: true, trim: true },
     slug: { type: String, index: true },
     excerpt: { type: String, trim: true },
+    content: { type: String, trim: true },
     richContent: { type: String },
     images: { type: [String] },
     status: {

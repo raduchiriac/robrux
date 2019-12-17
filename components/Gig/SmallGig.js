@@ -15,7 +15,7 @@ const styles = theme => ({
     padding: theme.spacing(2),
     color: theme.custom_palette && theme.custom_palette.alternateColor,
     boxShadow: theme.shadows[1],
-    backgroundColor: theme.palette.grey['200'],
+    backgroundColor: theme.palette.grey[200],
   },
   'small-gig__avatar-container': {
     marginRight: theme.spacing(1),

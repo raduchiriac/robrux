@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 const latinize = require('latinize');
 const Schema = mongoose.Schema;
+const strippedString = require('../../_helpers/utils').strippedString;
+const markdownConverter = require('../../_helpers/utils').markdownConverter;
+const TimestampType = require('../../_helpers/utils').TimestampType;
 const { GraphQLID, GraphQLNonNull, GraphQLString, GraphQLList, GraphQLObjectType } = require('graphql');
-
-const strippedString = str => str.replace(/(<([^>]+)>)/gi, '');
 
 const schema = new Schema(
   {
@@ -31,8 +32,8 @@ schema.pre('save', function(next) {
       .replace(/ /g, '-')
       .toLowerCase()
   );
+  this.richContent = markdownConverter.makeHtml(this.content);
   this.excerpt = strippedString(this.richContent).substring(0, 100) + '…';
-  // TODO: Convert the Markdown to richContent
   // TODO: Send a newsletter with this news
   next();
 });
@@ -48,6 +49,7 @@ const fields = {
   richContent: { type: GraphQLString },
   images: { type: GraphQLList(GraphQLString) },
   status: { type: GraphQLString },
+  createdAt: { type: TimestampType },
 };
 
 const NewsType = new GraphQLObjectType({

@@ -19,13 +19,15 @@ Now run `npm run start:dev` and create something nice. PRs are welcome.
 - [x] Add Material-UI grid, themes, raw components
 - [x] Create an import seed script
 - [x] Convert Classes to Functions (Context API, useHooks)
-- [x] i18n (using Context API)
+- [x] Add i18n (using Context API)
 - [x] Add Storybook and start sketching components
-- [x] Sessions, JWT, graphql-cookie-headers (withApollo HOC)
-- [x] (_Route_) Preview Gig (use React Spring to transition, _protected route_)
+- [ ] Finish sessions, JWT, graphql-cookie-headers (withApollo HOC)
+- [ ] Fully fledged User Auth system (`HttpOnly` cookies) and roles (make seed file)
+- [ ] Protect GraphQL mutations
 - [x] Lazy-load HOC for images (blur effect)
 - [x] Option to use either Google Maps, Open Street Map or Mapbox
 - [x] Fuzzy-Search on MongoDB (include tags)
+- [ ] Make use of React Spring (or similar) to animate page elements
 - [ ] Create a Category Page (linked from gig-page)
 - [ ] Add a News section (make seed file) (push a newsletter with `save` hook)
 - [ ] Send 404 if not found: Gig, News, Profile IDs (do a fetch inside `getInitialProps()`)
@@ -37,7 +39,6 @@ Now run `npm run start:dev` and create something nice. PRs are welcome.
 - [ ] Payment System (Stripe API or Adyen)
 - [ ] Rewrite the GraphQL schemas (more readable)
 - [ ] Image Upload to cloud storage (Cloudinary API)
-- [ ] Fully fledged User Auth system (`HttpOnly` cookies) and roles (make seed file)
 - [ ] Try out `next-i18next` (mainly the SSR)
 - [ ] Prettier Mongoose errors (w/ i18n)
 - [ ] Convert all forms to `Formik` or `react-hook-form` and validate errors (using `yup`)

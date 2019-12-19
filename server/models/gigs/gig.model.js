@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const latinize = require('latinize');
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
+const markdownConverter = require('../../_helpers/utils').markdownConverter;
 const {
   GraphQLID,
   GraphQLNonNull,
@@ -76,7 +77,7 @@ schema.pre('save', function(next) {
       .replace(/ /g, '-')
       .toLowerCase()
   );
-  // TODO: Convert the Markdown to richDescription
+  this.richDescription = markdownConverter.makeHtml(this.description);
   next();
 });
 

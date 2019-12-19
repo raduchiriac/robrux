@@ -6,18 +6,23 @@ const createNews = async params => {
   return newsResult;
 };
 
-const getOneNews = async () => {
-  // return await News.findOne(query);
+const oneNews = async idOrSlug => {
+  let selector = { status: 'live', $or: [{ slug: idOrSlug }] };
+  if (idOrSlug.match(/^[0-9a-fA-F]{24}$/)) {
+    selector.$or.push({ _id: idOrSlug });
+  }
+  return await News.findOne(selector);
 };
 
-const getAllNews = async () => {
-  // return await News.find(selector)
-  //   .sort(sort)
-  //   .limit(limit);
+const getAllNews = async (limit, sort) => {
+  const selector = { status: 'live' };
+  return await News.find(selector)
+    .sort(sort)
+    .limit(limit);
 };
 
 module.exports = {
   createNews,
-  getOneNews,
+  oneNews,
   getAllNews,
 };

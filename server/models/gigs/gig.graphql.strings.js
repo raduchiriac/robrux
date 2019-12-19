@@ -13,7 +13,7 @@ const GIG_CREATE_FAKE = () => {
       createGig(input: {
         _userId: "${userID}",
         _providerName: "${faker.name.firstName()} ${faker.name.lastName()}",
-        _providerAvatar: "${faker.image.avatar}",
+        _providerAvatar: "${faker.image.avatar()}",
         _rating: ${Math.random() * 4 + 1},
         _subscription: "${Math.random() >= 0.5 ? subscriptionID : ''}",
         title: "${title}",
@@ -25,7 +25,6 @@ const GIG_CREATE_FAKE = () => {
           "https://picsum.photos/id/${Math.round(Math.random() * 1000)}/640/400",
         ],
         description: "${description}",
-        richDescription: "<div>${description}</div>",
         location: {
           type: "Point",
           address: "${faker.address.streetAddress()}, ${faker.address.country()}",

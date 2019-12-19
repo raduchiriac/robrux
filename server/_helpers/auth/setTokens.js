@@ -10,7 +10,7 @@ function createCookieTokens(user) {
     httpOnly: true,
     domain: process.env.HOSTNAME,
     secure: process.env.NODE_ENV === 'production',
-    SameSite: 'Lax',
+    SameSite: 'None',
   };
   const cookiesWithTokens = {
     access: ['access', accessToken, cookieOptions],

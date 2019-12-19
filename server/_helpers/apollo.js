@@ -7,7 +7,7 @@ const userMutations = require('../models/users/user.graphql.mutations');
 const gigQueries = require('../models/gigs/gig.graphql.queries');
 const gigMutations = require('../models/gigs/gig.graphql.mutations');
 
-// const newsQueries = require('../models/news/news.graphql.queries');
+const newsQueries = require('../models/news/news.graphql.queries');
 const newsMutations = require('../models/news/news.graphql.mutations');
 
 const ratingQueries = require('../models/ratings/rating.graphql.queries');
@@ -20,6 +20,7 @@ const schema = new GraphQLSchema({
       ...userQueries,
       ...gigQueries,
       ...ratingQueries,
+      ...newsQueries,
     }),
   }),
   mutation: new GraphQLObjectType({

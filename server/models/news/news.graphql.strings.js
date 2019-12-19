@@ -14,7 +14,6 @@ const NEWS_CREATE_FAKE = () => {
           "https://picsum.photos/id/${Math.round(Math.random() * 1000)}/640/400",
         ],
         content: "${content}",
-        richContent: "<div>${content}</div>",
         status: "live",
       }) {
         _id

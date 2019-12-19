@@ -27,4 +27,5 @@ Gig.deleteMany({}, async () => {
 });
 
 console.log('[⇣] Seeding succeeded. Exiting…');
+// TODO: Use Promises for the above inserts so you can gracefully exit below
 // process.exit();

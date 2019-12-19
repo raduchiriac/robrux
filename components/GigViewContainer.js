@@ -15,7 +15,6 @@ import StaticMap from '~/components/Map/StaticMap';
 import StarRating from '~/components/Rating/StarRating';
 import MaterialCarousel from '~/components/Carousel/MaterialCarousel';
 import parse from 'html-react-parser';
-import Error from 'next/error';
 
 import './GigViewContainer.scss';
 

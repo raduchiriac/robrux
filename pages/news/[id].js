@@ -12,6 +12,7 @@ import Link from '~/lib/hocs/withLink';
 import { WebsiteHeaderLayout } from '~/lib/layouts/WebsiteHeaderLayout';
 import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
 import { GET_ONE_NEWS } from '~/lib/graphql/news.strings';
+import Error from '~/pages/_error';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,8 +27,10 @@ const useStyles = makeStyles(theme => ({
 
 const NewsId = props => {
   const classes = useStyles();
-  const { news } = props;
+  const { news, statusCode } = props;
   const { STRINGS } = useContext(LanguagesContext).state;
+
+  if (!news) return <Error statusCode={statusCode} />;
 
   return (
     <Container maxWidth="md" className={classes.root}>
@@ -62,10 +65,12 @@ const NewsId = props => {
   );
 };
 
-NewsId.getInitialProps = async ({ query: { id }, apolloClient }) => {
-  const result = await apolloClient.query({ query: GET_ONE_NEWS, variables: { idOrSlug: id } });
-  // TODO Send 404 - if(!result.data) res.statusCode = 404
-  return { news: result.data.oneNews };
+NewsId.getInitialProps = async ctx => {
+  const { query, apolloClient, res } = ctx;
+  const result = await apolloClient.query({ query: GET_ONE_NEWS, variables: { idOrSlug: query.id } });
+  if (!result.data.oneNews) res.statusCode = 404;
+
+  return { news: result.data.oneNews, statusCode: res.statusCode };
 };
 
 NewsId.Layout = WebsiteHeaderLayout;

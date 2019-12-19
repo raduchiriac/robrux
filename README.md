@@ -24,13 +24,13 @@ Now run `npm run start:dev` and create something nice. PRs are welcome.
 - [ ] Finish sessions, JWT, graphql-cookie-headers (withApollo HOC)
 - [ ] Fully fledged User Auth system (`HttpOnly` cookies) and roles (make seed file)
 - [ ] Protect GraphQL mutations
-- [x] Lazy-load HOC for images (blur effect)
+- [x] Lazy-load HOC for images (blur effect or fade effect)
 - [x] Option to use either Google Maps, Open Street Map or Mapbox
 - [x] Fuzzy-Search on MongoDB (include tags)
+- [x] Add a News section (make seed file) (push a newsletter with `save` hook)
+- [x] Send 404 if not found: Gig, News, Profile (do a fetch inside `getInitialProps()`)
 - [ ] Make use of React Spring (or similar) to animate page elements
 - [ ] Create a Category Page (linked from gig-page)
-- [ ] Add a News section (make seed file) (push a newsletter with `save` hook)
-- [ ] Send 404 if not found: Gig, News, Profile IDs (do a fetch inside `getInitialProps()`)
 - [ ] Create a Rating Collection (make seed file)
 - [ ] (_Route_) New Gig (use Formik and yup, _protected route_, Stripe API)
 - [ ] (_Route_) My Profile (with edit option) (_protected route_)

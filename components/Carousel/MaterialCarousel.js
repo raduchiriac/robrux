@@ -58,7 +58,7 @@ const MaterialCarousel = props => {
         enableMouseEvents
       >
         {images.map((step, index) => (
-          <div key={step.label}>
+          <div key={`step${index}`}>
             {Math.abs(activeStep - index) <= 2 ? (
               <img key={`materialCarousel${index}`} className={classes.img} src={step} alt="" />
             ) : null}

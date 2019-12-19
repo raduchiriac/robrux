@@ -162,7 +162,7 @@ const Basics = props => {
       <ReactMde
         generateMarkdownPreview={markdown => Promise.resolve(converter.makeHtml(markdown))}
         onChange={value => handleChange(value, 'description')}
-        value={values.description}
+        value={values.description || ''}
         selectedTab={selectedTab}
         onTabChange={setSelectedTab}
         minEditorHeight={!isMobile ? 300 : 150}
@@ -237,6 +237,10 @@ const Options = props => {
         margin="dense"
         fullWidth
         type="number"
+        id="price"
+        name="price"
+        value={values.price || ''}
+        onChange={evt => handleChange(evt)}
         label={STRINGS.SERVICE_NEW_PRICE}
         InputProps={{
           endAdornment: <InputAdornment position="end">{STRINGS.CURRENCY_TIME_PRICE_ENDING}</InputAdornment>,

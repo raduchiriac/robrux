@@ -6,7 +6,7 @@ import { WebsiteHeaderLayout } from '~/lib/layouts/WebsiteHeaderLayout';
 function Error({ statusCode }) {
   if (statusCode === 404) return <Error404 />;
   else if (statusCode === 500) return <Error500 />;
-  return <p>{statusCode ? `An error ${statusCode} occurred on server` : 'An error occurred on client'}</p>;
+  return <p>{statusCode ? `An error ${statusCode} occurred on server` : ''}</p>;
 }
 
 Error.getInitialProps = ({ res, err }) => {

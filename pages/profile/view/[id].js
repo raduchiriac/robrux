@@ -1,10 +1,13 @@
 import React from 'react';
 import { AccountLayout } from '~/lib/layouts/AccountLayout';
 import withApollo from '~/lib/hocs/withApollo';
-import ProfileContainer from '~/components/ProfileContainer';
 
 const Profile = props => {
-  return <ProfileContainer />;
+  return (
+    <Container>
+      <Avatar alt="" src="/avatars/user.svg" />
+    </Container>
+  );
 };
 
 Profile.Layout = AccountLayout;

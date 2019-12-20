@@ -19,7 +19,9 @@ import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import Card from '@material-ui/core/Card';
 import ChipInput from 'material-ui-chip-input';
+import { useDropzone } from 'react-dropzone';
 import ReactMde from 'react-mde';
 import * as Showdown from 'showdown';
 import xssFilter from 'showdown-xss-filter';
@@ -31,6 +33,7 @@ import useForm from '~/lib/hooks/useForm';
 import clsx from 'clsx';
 
 import 'react-mde/lib/styles/css/react-mde-all.css';
+import { FormHelperText } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -41,7 +44,7 @@ const useStyles = makeStyles(theme => ({
   },
   description: {
     marginTop: theme.spacing(3),
-    color: '#444',
+    color: theme.palette.grey[700],
   },
   descriptionError: {
     margin: theme.spacing(0, 2, 0),
@@ -85,6 +88,13 @@ const useStyles = makeStyles(theme => ({
     '&:hover': {
       backgroundColor: theme.palette.grey[200],
     },
+  },
+  dropZone: {
+    padding: theme.spacing(4),
+    display: 'flex',
+    justifyContent: 'center',
+    textAlign: 'center',
+    color: theme.palette.grey[500],
   },
   tags: {
     marginTop: theme.spacing(1),
@@ -230,6 +240,36 @@ const Options = props => {
   const handleAddChip = chip => setTags([...props.tags, chip]);
   const handleDeleteChip = (chip, index) => {};
 
+  const [files, setFiles] = useState([]);
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: 'image/*',
+    onDrop: acceptedFiles => {
+      setFiles(
+        acceptedFiles.map(file =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          })
+        )
+      );
+    },
+  });
+
+  const thumbs = files.map(file => (
+    <div key={file.name}>
+      <div>
+        <img src={file.preview} />
+      </div>
+    </div>
+  ));
+
+  useEffect(
+    () => () => {
+      // Make sure to revoke the data uris to avoid memory leaks
+      files.forEach(file => URL.revokeObjectURL(file.preview));
+    },
+    [files]
+  );
+
   return (
     <Fragment>
       <TextField
@@ -257,6 +297,16 @@ const Options = props => {
         onAdd={chip => handleAddChip(chip)}
         onDelete={(chip, index) => handleDeleteChip(chip, index)}
       />
+      <Typography variant="body1" className={classes.description}>
+        {STRINGS.SERVICE_NEW_IMAGES}
+      </Typography>
+      <Card>
+        <div {...getRootProps()} className={classes.dropZone}>
+          <input {...getInputProps()} />
+          <Typography>{STRINGS.SERVICE_NEW_ADD_IMAGES}</Typography>
+        </div>
+        <aside>{thumbs}</aside>
+      </Card>
     </Fragment>
   );
 };
@@ -269,7 +319,7 @@ const ServiceCreate = ({ params }) => {
   const theme = useTheme();
   const classes = useStyles();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(2);
   const { STRINGS } = useContext(LanguagesContext).state;
 
   const _login = () => {

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef, useEffect, Fragment } from 'react';
+import React, { useState, useContext, useMemo, useEffect, Fragment } from 'react';
 import { AccountLayout } from '~/lib/layouts/AccountLayout';
 import withApollo from '~/lib/hocs/withApollo';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -19,7 +19,10 @@ import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import CancelIcon from '@material-ui/icons/Cancel';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import Card from '@material-ui/core/Card';
+import RootRef from '@material-ui/core/RootRef';
 import ChipInput from 'material-ui-chip-input';
 import { useDropzone } from 'react-dropzone';
 import ReactMde from 'react-mde';
@@ -33,7 +36,6 @@ import useForm from '~/lib/hooks/useForm';
 import clsx from 'clsx';
 
 import 'react-mde/lib/styles/css/react-mde-all.css';
-import { FormHelperText } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -91,10 +93,52 @@ const useStyles = makeStyles(theme => ({
   },
   dropZone: {
     padding: theme.spacing(4),
+    margin: theme.spacing(1),
+    borderRadius: theme.shape.borderRadius,
     display: 'flex',
     justifyContent: 'center',
     textAlign: 'center',
     color: theme.palette.grey[500],
+    border: `2px dashed ${theme.palette.grey[200]}`,
+  },
+  dropZoneActive: { color: theme.palette.primary.main, borderColor: theme.palette.primary.light },
+  dropZoneAccept: { color: theme.palette.primary.main, borderColor: theme.palette.primary.light },
+  dropZoneReject: { color: theme.palette.error.main, borderColor: theme.palette.error.light },
+  thumbs: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  thumb: {
+    position: 'relative',
+    flex: '1 0 20%',
+    justifyContent: 'center',
+    justifyItems: 'center',
+    alignItems: 'center',
+    padding: theme.spacing(0.5),
+    margin: theme.spacing(1),
+    display: 'flex',
+    maxWidth: 100,
+    maxHeight: 100,
+    overflow: 'hidden',
+    '& img': {
+      padding: theme.spacing(0.5),
+      margin: theme.spacing(0.5),
+      boxShadow: theme.shadows[1],
+    },
+    '&:hover': {
+      '& .thumb-cancel-close': {
+        display: 'block',
+      },
+    },
+  },
+  thumbClose: {
+    backgroundColor: 'white',
+    borderRadius: '50%',
+    position: 'absolute',
+    fill: theme.palette.error.main,
+    cursor: 'pointer',
+    display: 'none',
   },
   tags: {
     marginTop: theme.spacing(1),
@@ -121,7 +165,6 @@ const Basics = props => {
   const reverseArray = a => a.map((item, idx) => a[a.length - 1 - idx]);
 
   const [selectedTab, setSelectedTab] = useState('write');
-  const [markDownValue, setMarkDownValue] = React.useState('');
   const converter = new Showdown.Converter({
     tables: true,
     simplifiedAutoLink: true,
@@ -239,35 +282,57 @@ const Options = props => {
   const [tags, setTags] = useState(props.tags);
   const handleAddChip = chip => setTags([...props.tags, chip]);
   const handleDeleteChip = (chip, index) => {};
+  const handleDeleteImage = idx => setImages(images.filter((image, index) => index !== idx));
+  const maxImages = 5;
 
-  const [files, setFiles] = useState([]);
-  const { getRootProps, getInputProps } = useDropzone({
-    accept: 'image/*',
+  const [images, setImages] = useState([]);
+  const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject } = useDropzone({
+    accept: ['image/jpeg', 'image/jpg', 'image/png'],
+    maxSize: 1048576 * 3, // 3Mb
     onDrop: acceptedFiles => {
-      setFiles(
-        acceptedFiles.map(file =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        )
+      setImages(
+        [
+          ...images,
+          ...acceptedFiles.map(file =>
+            Object.assign(file, {
+              preview: URL.createObjectURL(file),
+            })
+          ),
+        ].splice(0, maxImages)
       );
     },
   });
+  const { ref, ...rootProps } = getRootProps();
+  const classNamesDropZone = useMemo(
+    () =>
+      classes.dropZone +
+      (isDragActive ? ' ' + classes.dropZoneActive : '') +
+      (isDragAccept ? ' ' + classes.dropZoneAccept : '') +
+      (isDragReject ? ' ' + classes.dropZoneReject : ''),
+    [
+      classes.dropZone,
+      classes.dropZoneAccept,
+      classes.dropZoneActive,
+      classes.dropZoneReject,
+      isDragAccept,
+      isDragActive,
+      isDragReject,
+    ]
+  );
 
-  const thumbs = files.map(file => (
-    <div key={file.name}>
-      <div>
-        <img src={file.preview} />
-      </div>
+  const thumbs = images.map((image, idx) => (
+    <div onClick={evt => handleDeleteImage(idx)} key={`image${idx}`} className={classes.thumb}>
+      <img src={image.preview} />
+      <CancelIcon className={clsx(classes.thumbClose, 'thumb-cancel-close')} />
     </div>
   ));
 
   useEffect(
     () => () => {
       // Make sure to revoke the data uris to avoid memory leaks
-      files.forEach(file => URL.revokeObjectURL(file.preview));
+      images.forEach(image => URL.revokeObjectURL(image.preview));
     },
-    [files]
+    [images]
   );
 
   return (
@@ -300,13 +365,16 @@ const Options = props => {
       <Typography variant="body1" className={classes.description}>
         {STRINGS.SERVICE_NEW_IMAGES}
       </Typography>
-      <Card>
-        <div {...getRootProps()} className={classes.dropZone}>
-          <input {...getInputProps()} />
-          <Typography>{STRINGS.SERVICE_NEW_ADD_IMAGES}</Typography>
-        </div>
-        <aside>{thumbs}</aside>
-      </Card>
+
+      <RootRef rootRef={ref}>
+        <Card {...rootProps}>
+          <div className={classNamesDropZone}>
+            <input {...getInputProps()} />
+            <Typography>{STRINGS.SERVICE_NEW_ADD_IMAGES.replace('%s%', maxImages)}</Typography>
+          </div>
+        </Card>
+      </RootRef>
+      <aside className={classes.thumbs}>{thumbs}</aside>
     </Fragment>
   );
 };
@@ -323,7 +391,7 @@ const ServiceCreate = ({ params }) => {
   const { STRINGS } = useContext(LanguagesContext).state;
 
   const _login = () => {
-    // console.log('can submit?');
+    // console.log('can I submit?');
   };
   const _validate = values => {
     let errors = {};

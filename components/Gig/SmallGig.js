@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
+import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 import Link from '~/lib/hocs/withLink';
 import ConditionalWrap from '~/lib/hocs/ConditionalWrap';
 import 'react-lazy-load-image-component/src/effects/blur.css';
@@ -35,7 +35,7 @@ const SmallGig = props => {
   const { scrollPosition, gig, hovered, classes, loading, _onMouseEnter = () => {}, _onMouseLeave = () => {} } = props;
   // const smallGigElementRef = useRef(null);
 
-  const { STRINGS } = useContext(LanguagesContext).state;
+  const { STRINGS } = useContext(TranslationsContext).state;
 
   return (
     <ConditionalWrap

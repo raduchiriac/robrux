@@ -19,7 +19,7 @@ import AccountMenu from '~/components/Header/AccountMenu';
 import CITIES from '~/lib/constants/CITIES';
 
 import './IndexPageContainer.scss';
-import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
+import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 
 const useStyles = makeStyles(theme => ({
   indexPageContent: {
@@ -85,7 +85,7 @@ const useStyles = makeStyles(theme => ({
 const IndexPageContainer = props => {
   const classes = useStyles();
   let [stringToBeSearched, setStringToBeSearched] = useState('');
-  const { STRINGS } = useContext(LanguagesContext).state;
+  const { STRINGS } = useContext(TranslationsContext).state;
   let [citiesDropDownValue, setCititesDropDownValue] = useState('bruxelles');
 
   return (

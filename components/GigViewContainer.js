@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import { useLazyQuery } from '@apollo/react-hooks';
-import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
+import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 import { GET_ONE_GIG } from '~/lib/graphql/gigs.strings';
 import StaticMap from '~/components/Map/StaticMap';
 import StarRating from '~/components/Rating/StarRating';
@@ -59,7 +59,7 @@ const GigViewContainer = props => {
   const [searchGig, { data, error, loading }] = useLazyQuery(GET_ONE_GIG, {
     variables: { idOrSlug: props.idOrSlug },
   });
-  const { STRINGS } = useContext(LanguagesContext).state;
+  const { STRINGS } = useContext(TranslationsContext).state;
 
   useEffect(() => {
     if (props.idOrSlug) {

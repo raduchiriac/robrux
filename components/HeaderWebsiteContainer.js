@@ -13,7 +13,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Router from 'next/router';
 import SearchBox from './Header/SearchBox';
-import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
+import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 import Link from '~/lib/hocs/withLink';
 import withApollo from '~/lib/hocs/withApollo';
 
@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
 const HeaderWebsiteContainer = () => {
   const classes = useStyles();
 
-  const { STRINGS } = useContext(LanguagesContext).state;
+  const { STRINGS } = useContext(TranslationsContext).state;
 
   // TODO: Refactor all of this below (what's the use?)
   const [anchorEl, setAnchorEl] = useState(null);

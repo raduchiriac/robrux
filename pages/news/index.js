@@ -14,7 +14,7 @@ import { useRouter } from 'next/router';
 import { GET_NEWS } from '~/lib/graphql/news.strings';
 import { withApollo } from '~/lib/hocs/withApollo';
 import { WebsiteHeaderLayout } from '~/lib/layouts/WebsiteHeaderLayout';
-import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
+import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -26,7 +26,7 @@ const News = props => {
   const classes = useStyles();
   const { news } = props;
   const Router = useRouter();
-  const { STRINGS } = useContext(LanguagesContext).state;
+  const { STRINGS } = useContext(TranslationsContext).state;
 
   // TODO: Make this dynamic somehow (and set it globally, once in a HOC)
   moment.locale('ro');

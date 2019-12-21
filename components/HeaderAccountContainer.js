@@ -15,7 +15,7 @@ import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
+import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 import Link from '~/lib/hocs/withLink';
 import withApollo from '~/lib/hocs/withApollo';
 import { GlobalContext } from '~/lib/contexts/GlobalContext';
@@ -49,7 +49,7 @@ const HeaderAccountContainer = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
   const { isiOS, drawerWidth } = useContext(GlobalContext).state;
-  const { STRINGS } = useContext(LanguagesContext).state;
+  const { STRINGS } = useContext(TranslationsContext).state;
   const classes = useStyles({ drawerWidth, isMobile });
 
   const [openDrawer, setOpenDrawer] = useState(false);

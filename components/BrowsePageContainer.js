@@ -5,7 +5,7 @@ import Router from 'next/router';
 
 import Map from './Map/Map';
 import { GlobalContext } from '~/lib/contexts/GlobalContext';
-import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
+import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 import { SEARCH_BBOX_GIG } from '~/lib/graphql/gigs.strings';
 import CITIES from '~/lib/constants/CITIES';
 
@@ -23,7 +23,7 @@ const BrowsePageContainer = props => {
   });
 
   const { showMap } = useContext(GlobalContext).state;
-  const { STRINGS } = useContext(LanguagesContext).state;
+  const { STRINGS } = useContext(TranslationsContext).state;
 
   useEffect(() => {
     if (bbox.length) {

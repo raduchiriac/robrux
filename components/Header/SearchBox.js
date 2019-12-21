@@ -10,7 +10,7 @@ import { useLazyQuery } from '@apollo/react-hooks';
 import ResultList from './ResultsList';
 import useDebounce from '~/lib/hooks/useDebounce';
 import { SEARCH_GIG } from '~/lib/graphql/gigs.strings';
-import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
+import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 
 export default function SearchBox() {
   // INFO: A way to pass props down to make a custom makeStyle
@@ -79,7 +79,7 @@ export default function SearchBox() {
     setResultsCanBeOpen(true);
   };
 
-  const { STRINGS } = useContext(LanguagesContext).state;
+  const { STRINGS } = useContext(TranslationsContext).state;
 
   useEffect(() => {
     if (debouncedSearchTerm.length) {

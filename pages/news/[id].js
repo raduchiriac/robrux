@@ -10,7 +10,7 @@ import parse from 'html-react-parser';
 import withApollo from '~/lib/hocs/withApollo';
 import Link from '~/lib/hocs/withLink';
 import { WebsiteHeaderLayout } from '~/lib/layouts/WebsiteHeaderLayout';
-import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
+import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 import { GET_ONE_NEWS } from '~/lib/graphql/news.strings';
 import Error from '~/pages/_error';
 
@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 const NewsId = props => {
   const classes = useStyles();
   const { news, statusCode } = props;
-  const { STRINGS } = useContext(LanguagesContext).state;
+  const { STRINGS } = useContext(TranslationsContext).state;
 
   if (!news) return <Error statusCode={statusCode} />;
 

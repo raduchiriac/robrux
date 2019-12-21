@@ -15,12 +15,12 @@ import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import CancelIcon from '@material-ui/icons/Cancel';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import Card from '@material-ui/core/Card';
 import RootRef from '@material-ui/core/RootRef';
 import ChipInput from 'material-ui-chip-input';
@@ -29,7 +29,7 @@ import ReactMde from 'react-mde';
 import * as Showdown from 'showdown';
 import xssFilter from 'showdown-xss-filter';
 import GoogleMapsAutocomplete from '~/components/Map/GoogleMapsAutocomplete';
-import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
+import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 import Map from '~/components/Map/Map';
 import useGeo from '~/lib/hooks/useGeo';
 import useForm from '~/lib/hooks/useForm';
@@ -120,6 +120,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     maxWidth: 100,
     maxHeight: 100,
+    cursor: 'pointer',
     overflow: 'hidden',
     '& img': {
       padding: theme.spacing(0.5),
@@ -137,7 +138,6 @@ const useStyles = makeStyles(theme => ({
     borderRadius: '50%',
     position: 'absolute',
     fill: theme.palette.error.main,
-    cursor: 'pointer',
     display: 'none',
   },
   tags: {
@@ -279,26 +279,31 @@ const Address = props => {
 
 const Options = props => {
   const { STRINGS, values, errors, handleChange, classes } = props;
-  const [tags, setTags] = useState(props.tags);
-  const handleAddChip = chip => setTags([...props.tags, chip]);
-  const handleDeleteChip = (chip, index) => {};
-  const handleDeleteImage = idx => setImages(images.filter((image, index) => index !== idx));
+  const [tags, setTags] = useState(values.tags || []);
+  const handleDeleteImage = idx => {
+    URL.revokeObjectURL(values.images[idx].preview);
+    handleChange(
+      values.images.filter((image, index) => index !== idx),
+      'images'
+    );
+  };
   const maxImages = 5;
+  const maxSize = 1048576 * 3; // 3Mb
 
-  const [images, setImages] = useState([]);
   const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject } = useDropzone({
     accept: ['image/jpeg', 'image/jpg', 'image/png'],
-    maxSize: 1048576 * 3, // 3Mb
+    maxSize,
     onDrop: acceptedFiles => {
-      setImages(
+      handleChange(
         [
-          ...images,
+          ...(values.images || []),
           ...acceptedFiles.map(file =>
             Object.assign(file, {
               preview: URL.createObjectURL(file),
             })
           ),
-        ].splice(0, maxImages)
+        ].splice(0, maxImages),
+        'images'
       );
     },
   });
@@ -320,20 +325,12 @@ const Options = props => {
     ]
   );
 
-  const thumbs = images.map((image, idx) => (
+  const thumbnails = (values.images || []).map((image, idx) => (
     <div onClick={evt => handleDeleteImage(idx)} key={`image${idx}`} className={classes.thumb}>
       <img src={image.preview} />
       <CancelIcon className={clsx(classes.thumbClose, 'thumb-cancel-close')} />
     </div>
   ));
-
-  useEffect(
-    () => () => {
-      // Make sure to revoke the data uris to avoid memory leaks
-      images.forEach(image => URL.revokeObjectURL(image.preview));
-    },
-    [images]
-  );
 
   return (
     <Fragment>
@@ -359,8 +356,17 @@ const Options = props => {
         fullWidth
         fullWidthInput
         disableUnderline
-        onAdd={chip => handleAddChip(chip)}
-        onDelete={(chip, index) => handleDeleteChip(chip, index)}
+        onBeforeAdd={tag => tag.length >= 3}
+        onAdd={tag => {
+          const newTags = [...tags, tag];
+          setTags(newTags);
+          handleChange(newTags, 'tags');
+        }}
+        onDelete={(tag, index) => {
+          const newTags = tags.filter((tag, idx) => index !== idx);
+          setTags(newTags);
+          handleChange(newTags, 'tags');
+        }}
       />
       <Typography variant="body1" className={classes.description}>
         {STRINGS.SERVICE_NEW_IMAGES}
@@ -374,24 +380,46 @@ const Options = props => {
           </div>
         </Card>
       </RootRef>
-      <aside className={classes.thumbs}>{thumbs}</aside>
+      <aside className={classes.thumbs}>{thumbnails}</aside>
     </Fragment>
   );
 };
 
 const Payment = props => {
-  return <div>_TERMS_CONDITIONS</div>;
+  const { STRINGS, values, errors, handleChange, classes } = props;
+
+  return (
+    <Fragment>
+      <FormControlLabel
+        checked={values.terms == 'true'}
+        control={
+          <Checkbox id="terms" name="terms" value={true} onChange={evt => handleChange(evt)} color="primary" required />
+        }
+        label={STRINGS.REGISTER_ACC_TERMS}
+      />
+    </Fragment>
+  );
 };
 
 const ServiceCreate = ({ params }) => {
   const theme = useTheme();
   const classes = useStyles();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
-  const [activeStep, setActiveStep] = useState(2);
-  const { STRINGS } = useContext(LanguagesContext).state;
+  const [activeStep, setActiveStep] = useState(0);
+  const { STRINGS } = useContext(TranslationsContext).state;
+  const steps = [
+    STRINGS.SERVICE_NEW_NEW,
+    STRINGS.SERVICE_NEW_ADDRESS_WHERE,
+    STRINGS.SERVICE_NEW_OPTIONS,
+    STRINGS.SERVICE_NEW_PAYMENT,
+  ];
 
-  const _login = () => {
-    // console.log('can I submit?');
+  const _create = () => {
+    // TODO: Make sure to revoke the data uris to avoid memory leaks
+    // (values.images || []).forEach(image => URL.revokeObjectURL(image.preview));
+    if (activeStep === steps.length) {
+      console.log('can I create, is everything valid?');
+    }
   };
   const _validate = values => {
     let errors = {};
@@ -401,10 +429,13 @@ const ServiceCreate = ({ params }) => {
     if (!values.description) {
       errors.description = STRINGS.FIELD_IS_MANDATORY;
     }
+    if (!values.terms) {
+      errors.terms = STRINGS.FIELD_IS_MANDATORY;
+    }
     return errors;
   };
 
-  const { values, errors, handleChange, handleSubmit } = useForm(_login, _validate);
+  const { values, errors, handleChange, handleSubmit } = useForm(_create, _validate);
 
   const isStepCompleted = step => {
     return activeStep > step;
@@ -415,7 +446,8 @@ const ServiceCreate = ({ params }) => {
   };
 
   const isStepFailed = step => {
-    if (step === 0 && (errors.title || errors.description)) return true;
+    if (activeStep > step && step === 0 && (errors.title || errors.description)) return true;
+    if (activeStep > step && step === 3 && errors.terms) return true;
     else return false;
   };
 
@@ -478,7 +510,7 @@ const ServiceCreate = ({ params }) => {
           />
         );
       default:
-        return '';
+        return '_RESUME';
     }
   }
 
@@ -499,13 +531,6 @@ const ServiceCreate = ({ params }) => {
       </form>
     );
   };
-
-  const steps = [
-    STRINGS.SERVICE_NEW_NEW,
-    STRINGS.SERVICE_NEW_ADDRESS_WHERE,
-    STRINGS.SERVICE_NEW_OPTIONS,
-    STRINGS.SERVICE_NEW_PAYMENT,
-  ];
 
   return (
     <Container maxWidth="md">

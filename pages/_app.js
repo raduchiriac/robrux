@@ -4,7 +4,7 @@ import Head from 'next/head';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Router from 'next/router';
 import { ThemeProvider } from '@material-ui/styles';
-import { LanguagesContextProvider } from '~/lib/contexts/LanguagesContext';
+import { TranslationsContextProvider } from '~/lib/contexts/TranslationsContext';
 import { GlobalContextProvider } from '~/lib/contexts/GlobalContext';
 import { DefaultTheme } from '~/lib/themes/default-theme';
 import { EmptyLayout } from '~/lib/layouts/EmptyLayout';
@@ -40,7 +40,7 @@ class NextApp extends App {
 
     return (
       <GlobalContextProvider>
-        <LanguagesContextProvider>
+        <TranslationsContextProvider>
           <Head>
             <title>ro:bux</title>
           </Head>
@@ -50,7 +50,7 @@ class NextApp extends App {
               <Component {...pageProps} />
             </Layout>
           </ThemeProvider>
-        </LanguagesContextProvider>
+        </TranslationsContextProvider>
       </GlobalContextProvider>
     );
   }

@@ -14,7 +14,7 @@ import { useMutation, useApolloClient } from '@apollo/react-hooks';
 import Router from 'next/router';
 import { localStorageSaveUser } from '~/lib/hocs/withAuth';
 import { LOGIN_USER } from '~/lib/graphql/user.strings';
-import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
+import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 import useForm from '~/lib/hooks/useForm';
 import Link from '~/lib/hocs/withLink';
 
@@ -121,7 +121,7 @@ const Form = props => {
 
 const LoginPageContainer = () => {
   const classes = useStyles();
-  const { STRINGS } = useContext(LanguagesContext).state;
+  const { STRINGS } = useContext(TranslationsContext).state;
 
   const _login = () => {
     loginUser({ variables: { input: values } });

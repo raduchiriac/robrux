@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useMutation } from '@apollo/react-hooks';
 import useForm from '~/lib/hooks/useForm';
-import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
+import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 import { CREATE_USER } from '~/lib/graphql/user.strings';
 import Link from '~/lib/hocs/withLink';
 
@@ -167,7 +167,7 @@ const EmailSent = props => {
 
 export default function RegisterPageContainer() {
   const classes = useStyles();
-  const { STRINGS } = useContext(LanguagesContext).state;
+  const { STRINGS } = useContext(TranslationsContext).state;
 
   const _register = () => {
     createUser({ variables: { input: values } });

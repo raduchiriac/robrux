@@ -12,7 +12,7 @@ import Badge from '@material-ui/core/Badge';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
-import { LanguagesContext } from '~/lib/contexts/LanguagesContext';
+import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 import Link from '~/lib/hocs/withLink';
 
 const useStyles = makeStyles(theme => ({
@@ -59,7 +59,7 @@ const useStyles = makeStyles(theme => ({
 const AccountMenu = props => {
   const { className } = props;
   const classes = useStyles();
-  const { STRINGS } = useContext(LanguagesContext).state;
+  const { STRINGS } = useContext(TranslationsContext).state;
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
 

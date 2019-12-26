@@ -33,7 +33,7 @@ const NewsId = props => {
   if (!news) return <Error statusCode={statusCode} />;
 
   return (
-    <Container maxWidth="md" className={classes.root}>
+    <Container maxWidth="sm" className={classes.root}>
       <Typography gutterBottom component="p" variant="overline">
         {/* TODO: Make this dynamic somehow */}
         {new Date(news.createdAt).toLocaleDateString('ro-RO', {

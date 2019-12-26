@@ -1,6 +1,5 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import Carousel from '~/components/Carousel/Carousel';
 import MaterialCarousel from '~/components/Carousel/MaterialCarousel';
 
 const images = [
@@ -15,6 +14,6 @@ const images = [
   'https://loremflickr.com/640/480?lock=9',
 ];
 
-storiesOf('Carousel', module)
-  .add('Pure React Carousel', () => <Carousel width={500} height={200} images={images}></Carousel>)
-  .add('Material-UI Stepper', () => <MaterialCarousel width={500} height={200} images={images}></MaterialCarousel>);
+storiesOf('Carousel', module).add('Material-UI Stepper', () => (
+  <MaterialCarousel width={500} height={200} images={images}></MaterialCarousel>
+));

@@ -23,7 +23,8 @@ Now run `npm run start:dev` and create something nice. PRs are welcome.
 - [x] Add Storybook and start sketching components
 - [ ] Finish sessions, JWT, graphql-cookie-headers (withApollo HOC)
 - [ ] Fully fledged User Auth system (`HttpOnly` cookies) and roles (make seed file)
-- [ ] Protect GraphQL mutations
+- [ ] Tryout Firebase User Auth
+- [ ] Protect GraphQL mutations (auth and [rate-limit](https://www.npmjs.com/package/graphql-rate-limit-directive))
 - [x] Lazy-load HOC for images (blur effect or fade effect)
 - [x] Option to use either Google Maps, Open Street Map or Mapbox
 - [x] Fuzzy-Search on MongoDB (include tags)
@@ -45,7 +46,9 @@ Now run `npm run start:dev` and create something nice. PRs are welcome.
 - [ ] Login with social-media (at least Facebook Strategy)
 - [ ] Store the Static Map PNGs rather than asking Google API everytime (see gig-page)
 - [ ] Mailing System (Sparkpost or Mailgun API)
+- [ ] Create a dark-skin theme (stored in localStorage, remember to invert the map color with CSS and use `@media (prefers-color-scheme`)
 - [ ] Audit everything with Lighthouse
+- [ ] Add prop-types everywhere
 - [ ] Generate a [sitemap.xml](https://gist.github.com/a-barbieri/9eb6d65ef96c2ead322bd97ae4862934)
 - [ ] Write some Jest/Enzyme tests
 - [ ] Use propTypes everywhere

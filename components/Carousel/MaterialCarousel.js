@@ -17,13 +17,15 @@ const useStyles = props =>
       overflow: 'hidden',
       borderRadius: theme.shape.borderRadius,
     },
-    img: {
+    imgContainer: {
       maxWidth: props.width,
       maxHeight: props.height,
-      display: 'block',
       overflow: 'hidden',
-      width: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
     },
+    img: {},
   }))(props);
 
 const MaterialCarousel = props => {
@@ -58,7 +60,7 @@ const MaterialCarousel = props => {
         enableMouseEvents
       >
         {images.map((step, index) => (
-          <div key={`step${index}`}>
+          <div key={`step${index}`} className={classes.imgContainer}>
             {Math.abs(activeStep - index) <= 2 ? (
               <img key={`materialCarousel${index}`} className={classes.img} src={step} alt="" />
             ) : null}

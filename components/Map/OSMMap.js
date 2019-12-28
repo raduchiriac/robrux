@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import Map from 'pigeon-maps';
+import { makeStyles } from '@material-ui/core/styles';
 
-import './OSMMap.scss';
+const useStyles = makeStyles(theme => ({
+  mapContainer: {
+    filter: 'saturate(3) contrast(0.9) brightness(1.1) hue-rotate(-20deg) invert(0)',
+  },
+}));
 
 const OSMMap = ({ children, ...props }) => {
   const { defaultZoom, defaultCenter, mapServiceProvider, maxZoom, minZoom, onChange } = props;
@@ -9,9 +14,11 @@ const OSMMap = ({ children, ...props }) => {
   // TODO: How to read window.devicePixelRatio with SSR?
   const dpr = 2;
 
+  const classes = useStyles();
+
   const providers = {
     osm: (x, y, z) => {
-      return `https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/${z}/${y}/${x}`;
+      return `https://stamen-tiles-c.a.ssl.fastly.net/terrain/${z}/${x}/${y}@2x.png`;
     },
     mapbox: (x, y, z) => {
       return `https://api.mapbox.com/v4/mapbox.outdoors/${z}/${x}/${y}${dpr >= 2 ? '@2x' : ''}.png?access_token=${
@@ -37,7 +44,7 @@ const OSMMap = ({ children, ...props }) => {
       touchEvents={true}
       attribution={false}
       attributionPrefix={false}
-      boxClassname={`map-container__${mapServiceProvider}`}
+      boxClassname={classes.mapContainer}
     >
       {children}
     </Map>

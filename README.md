@@ -12,7 +12,7 @@ Create and edit a valid `.env` file by doing `cp .env.sample .env`. Start your l
 
 Now run `npm run start:dev` and create something nice. PRs are welcome.
 
-#### Dockyard
+#### 🚧 Dockyard
 
 - [x] Fetch data with a Mongo `$geoWithin` type of query
 - [x] Attach Next.js v9 to Express
@@ -29,7 +29,7 @@ Now run `npm run start:dev` and create something nice. PRs are welcome.
 - [x] Fuzzy-Search on MongoDB (include tags)
 - [x] Add a News section (make seed file) (push a newsletter with `save` hook)
 - [x] Send 404 if not found: Gig, News, Profile (do a fetch inside `getInitialProps()`)
-- [ ] Make use of React Spring (or similar) to animate page elements
+- [ ] Make use of React Spring [or similar](https://material-ui.com/components/transitions/) to animate page elements
 - [ ] Create a Category Page (linked from gig-page)
 - [ ] Create a Rating Collection (make seed file)
 - [ ] (_Route_) New Gig (use Formik and yup, _protected route_, Stripe API)
@@ -47,8 +47,10 @@ Now run `npm run start:dev` and create something nice. PRs are welcome.
 - [ ] Mailing System (Sparkpost or Mailgun API)
 - [ ] Audit everything with Lighthouse
 - [ ] Generate a [sitemap.xml](https://gist.github.com/a-barbieri/9eb6d65ef96c2ead322bd97ae4862934)
-- [ ] Checkout the new `<Suspense />` from react-experimental
+- [ ] Write some Jest/Enzyme tests
+- [ ] Use propTypes everywhere
 - [ ] Try to [lazy load your modules](https://flaviocopes.com/nextjs-lazy-load-modules/)
 - [ ] Pre-commit eslint (husky)
 - [ ] Write a better `.eslintrc` ([example](https://github.com/mui-org/material-ui/blob/master/.eslintrc.js))
 - [ ] Fix minZoom for React Google Maps ([issue](https://github.com/google-map-react/google-map-react/issues/505))
+- [ ] Checkout the new `<Suspense />` from react-experimental

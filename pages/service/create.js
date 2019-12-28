@@ -15,7 +15,6 @@ import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Typography from '@material-ui/core/Typography';
@@ -28,7 +27,7 @@ import { useDropzone } from 'react-dropzone';
 import ReactMde from 'react-mde';
 import * as Showdown from 'showdown';
 import xssFilter from 'showdown-xss-filter';
-import GoogleMapsAutocomplete from '~/components/Map/GoogleMapsAutocomplete';
+import GoogleMapsAutocomplete from '~/components/FormElements/GoogleMapsAutocomplete';
 import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 import Map from '~/components/Map/Map';
 import useGeo from '~/lib/hooks/useGeo';
@@ -36,6 +35,7 @@ import useForm from '~/lib/hooks/useForm';
 import clsx from 'clsx';
 
 import 'react-mde/lib/styles/css/react-mde-all.css';
+import CheckboxWithLink from '~/components/FormElements/CheckboxWithLink';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -386,16 +386,25 @@ const Options = props => {
 };
 
 const Payment = props => {
-  const { STRINGS, values, errors, handleChange, classes } = props;
+  const { STRINGS, values, errors, handleChange, classes, theme } = props;
+  const [value, setValue] = useState(values.terms);
+  const handleLinkClick = evt => {
+    evt.preventDefault();
+    console.log('render modal');
+  };
 
   return (
     <Fragment>
-      <FormControlLabel
-        checked={values.terms == 'true'}
-        control={
-          <Checkbox id="terms" name="terms" value={true} onChange={evt => handleChange(evt)} color="primary" required />
-        }
-        label={STRINGS.REGISTER_ACC_TERMS}
+      <CheckboxWithLink
+        id="terms"
+        checkboxText={STRINGS.REGISTER_READ_ACC}
+        checkboxLink={STRINGS.REGISTER_ACC_TERMS}
+        // TODO: Make this dynamic somehow
+        checkboxHref="/terms/ro"
+        error={errors.terms || false}
+        value={values.terms || false}
+        handleLinkClick={evt => handleLinkClick(evt)}
+        handleChange={value => handleChange(value, 'terms')}
       />
     </Fragment>
   );
@@ -405,7 +414,7 @@ const ServiceCreate = ({ params }) => {
   const theme = useTheme();
   const classes = useStyles();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(3);
   const { STRINGS } = useContext(TranslationsContext).state;
   const steps = [
     STRINGS.SERVICE_NEW_NEW,
@@ -439,10 +448,6 @@ const ServiceCreate = ({ params }) => {
 
   const isStepCompleted = step => {
     return activeStep > step;
-  };
-
-  const isStepOptional = step => {
-    return false;
   };
 
   const isStepFailed = step => {
@@ -507,6 +512,7 @@ const ServiceCreate = ({ params }) => {
             handleChange={handleChange}
             theme={theme}
             classes={classes}
+            theme={theme}
           />
         );
       default:
@@ -547,9 +553,6 @@ const ServiceCreate = ({ params }) => {
           }
 
           const labelProps = {};
-          if (isStepOptional(index)) {
-            labelProps.optional = <Typography variant="caption">{STRINGS.SERVICE_NEW_OPTIONAL}</Typography>;
-          }
           if (isStepFailed(index)) {
             labelProps.error = true;
           }

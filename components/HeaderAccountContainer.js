@@ -12,6 +12,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Drawer from '@material-ui/core/Drawer';
 import ListItemText from '@material-ui/core/ListItemText';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import ChatIcon from '@material-ui/icons/Chat';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
@@ -71,8 +73,8 @@ const HeaderAccountContainer = () => {
       <List>
         {[
           { text: STRINGS.MY_PROFILE, href: '/profile/view/id', icon: <AccountCircleOutlinedIcon /> },
-          { text: '_CREATE', href: '/service/create', icon: <div></div> },
-          { text: '_MESSAGES', href: '/', icon: <div></div> },
+          { text: STRINGS.NEW_SERVICE, href: '/service/create', icon: <AddCircleOutlineIcon /> },
+          { text: STRINGS.MESSAGES, href: '/', icon: <ChatIcon /> },
           { text: undefined },
           { text: STRINGS.LOGOUT, href: '/logout', icon: <ExitToAppIcon /> },
         ].map((link, index) =>

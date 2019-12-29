@@ -1,4 +1,4 @@
-import React, { useState, useContext, useMemo, useEffect, Fragment } from 'react';
+import React, { useState, useContext, useMemo, useEffect, useRef, Fragment } from 'react';
 import { AccountLayout } from '~/lib/layouts/AccountLayout';
 import withApollo from '~/lib/hocs/withApollo';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -22,6 +22,12 @@ import Container from '@material-ui/core/Container';
 import CancelIcon from '@material-ui/icons/Cancel';
 import Card from '@material-ui/core/Card';
 import RootRef from '@material-ui/core/RootRef';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import loadable from '@loadable/component';
 import ChipInput from 'material-ui-chip-input';
 import { useDropzone } from 'react-dropzone';
 import ReactMde from 'react-mde';
@@ -64,6 +70,9 @@ const useStyles = makeStyles(theme => ({
         outline: 'none',
       },
     },
+  },
+  form: {
+    marginBottom: theme.spacing(3),
   },
   markdown_textarea: {
     background: 'transparent',
@@ -387,15 +396,32 @@ const Options = props => {
 
 const Payment = props => {
   const { STRINGS, values, errors, handleChange, classes, theme } = props;
-  const [value, setValue] = useState(values.terms);
+  const [openModal, setOpenModal] = useState(false);
+  const Terms = loadable(() => import('../terms/ro'));
+
+  const handleClose = () => {
+    setOpenModal(false);
+  };
+
+  const descriptionElementRef = useRef(null);
+  useEffect(() => {
+    if (openModal) {
+      const { current: descriptionElement } = descriptionElementRef;
+      if (descriptionElement !== null) {
+        descriptionElement.focus();
+      }
+    }
+  }, [openModal]);
+
   const handleLinkClick = evt => {
     evt.preventDefault();
-    console.log('render modal');
+    setOpenModal(true);
   };
 
   return (
     <Fragment>
       <CheckboxWithLink
+        required
         id="terms"
         checkboxText={STRINGS.REGISTER_READ_ACC}
         checkboxLink={STRINGS.REGISTER_ACC_TERMS}
@@ -406,6 +432,24 @@ const Payment = props => {
         handleLinkClick={evt => handleLinkClick(evt)}
         handleChange={value => handleChange(value, 'terms')}
       />
+      <Dialog
+        open={openModal}
+        onClose={handleClose}
+        aria-labelledby="scroll-dialog-title"
+        aria-describedby="scroll-dialog-description"
+      >
+        <DialogTitle id="scroll-dialog-title">_TERMS</DialogTitle>
+        <DialogContent dividers>
+          <DialogContentText id="scroll-dialog-description" ref={descriptionElementRef} tabIndex={-1}>
+            <Terms />
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            _AGREE
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Fragment>
   );
 };
@@ -432,13 +476,13 @@ const ServiceCreate = ({ params }) => {
   };
   const _validate = values => {
     let errors = {};
-    if (!values.title) {
+    if (activeStep >= 0 && !values.title) {
       errors.title = STRINGS.FIELD_IS_MANDATORY;
     }
-    if (!values.description) {
+    if (activeStep >= 0 && !values.description) {
       errors.description = STRINGS.FIELD_IS_MANDATORY;
     }
-    if (!values.terms) {
+    if (activeStep >= 3 && !values.terms) {
       errors.terms = STRINGS.FIELD_IS_MANDATORY;
     }
     return errors;
@@ -451,9 +495,10 @@ const ServiceCreate = ({ params }) => {
   };
 
   const isStepFailed = step => {
-    if (activeStep > step && step === 0 && (errors.title || errors.description)) return true;
-    if (activeStep > step && step === 3 && errors.terms) return true;
-    else return false;
+    if (activeStep > step) {
+      if (step === 0 && (errors.title || errors.description)) return true;
+      else if (step === 3 && errors.terms) return true;
+    } else return false;
   };
 
   const handleStep = step => () => {
@@ -516,14 +561,14 @@ const ServiceCreate = ({ params }) => {
           />
         );
       default:
-        return '_RESUME';
+        return '';
     }
   }
 
   const createContent = props => {
     const { stepsLength } = props;
     return (
-      <form>
+      <form className={isMobile ? '' : classes.form}>
         <div className={classes.stepContent}>{getStepContent(activeStep)}</div>
         <ButtonGroup className={classes.buttonGroup}>
           <Button disabled={activeStep === 0} onClick={handleBack}>
@@ -570,7 +615,7 @@ const ServiceCreate = ({ params }) => {
         })}
       </Stepper>
       {activeStep === steps.length ? (
-        <div>_END_CREATE</div>
+        <Typography>_RESUMIG</Typography>
       ) : (
         <Grid item lg={12} md={12} sm={12}>
           {!isMobile && createContent(steps.length)}

@@ -10,6 +10,7 @@ const useStyles = props =>
     label: { color: props.error ? theme.palette.error.main : 'inherit' },
     link: {
       marginLeft: theme.spacing(0.5),
+      marginRight: theme.spacing(0.5),
       color: props.error ? 'inherit' : theme.palette.primary.main,
       textDecoration: 'underline',
     },
@@ -18,6 +19,7 @@ const useStyles = props =>
 const CheckboxWithLink = props => {
   const {
     id,
+    required,
     checkboxText = '',
     checkboxLink = '',
     checkboxHref = '/',
@@ -34,6 +36,7 @@ const CheckboxWithLink = props => {
       <Link className={classes.link} href={checkboxHref} onClick={handleLinkClick || false} target="_blank">
         {checkboxLink}
       </Link>
+      {required && <span>*</span>}
     </div>
   );
 

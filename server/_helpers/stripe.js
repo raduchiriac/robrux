@@ -29,7 +29,7 @@ const catchErrors = err => {
   return message;
 };
 
-const createCustomer = metadata =>
+const createCustomer = async metadata =>
   stripe.customers.create(metadata).then(
     function(result) {
       console.log('customer-create', result);
@@ -39,4 +39,4 @@ const createCustomer = metadata =>
     }
   );
 
-module.exports = { createCustomer };
+module.exports = { stripe, createCustomer };

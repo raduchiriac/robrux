@@ -48,7 +48,7 @@ Now run `npm run start:dev` and create something nice. PRs are welcome.
 - [ ] Mailing System (Sparkpost or Mailgun API)
 - [ ] Create a dark-skin theme (stored in localStorage, remember to invert the map color with CSS and use `@media (prefers-color-scheme`)
 - [ ] Audit everything with Lighthouse
-- [ ] Add prop-types everywhere
+- [ ] Create a dark-skin theme (stored in localStorage, invert the map tiles with CSS and use `prefers-color-scheme`)
 - [ ] Generate a [sitemap.xml](https://gist.github.com/a-barbieri/9eb6d65ef96c2ead322bd97ae4862934)
 - [ ] Write some Jest/Enzyme tests
 - [ ] Use propTypes everywhere

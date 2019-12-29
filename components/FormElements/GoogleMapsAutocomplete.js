@@ -40,6 +40,7 @@ const GoogleMapsAutocomplete = props => {
 
   if (typeof window !== 'undefined' && !loaded.current) {
     // TODO: This does not work when another Google Maps is already on the page
+    // TODO: Use useScript(_)
     if (!document.querySelector('#google-maps')) {
       loadScript(
         `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_MAPS_API}&libraries=places`,

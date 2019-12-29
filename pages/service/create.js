@@ -22,15 +22,11 @@ import Container from '@material-ui/core/Container';
 import CancelIcon from '@material-ui/icons/Cancel';
 import Card from '@material-ui/core/Card';
 import RootRef from '@material-ui/core/RootRef';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import loadable from '@loadable/component';
 import ChipInput from 'material-ui-chip-input';
 import { useDropzone } from 'react-dropzone';
 import ReactMde from 'react-mde';
+import DialogHeight from '~/components/FormElements/DialogHeight';
 import * as Showdown from 'showdown';
 import xssFilter from 'showdown-xss-filter';
 import GoogleMapsAutocomplete from '~/components/FormElements/GoogleMapsAutocomplete';
@@ -397,21 +393,12 @@ const Options = props => {
 const Payment = props => {
   const { STRINGS, values, errors, handleChange, classes, theme } = props;
   const [openModal, setOpenModal] = useState(false);
+  // TODO: Make this dynamic somehow
   const Terms = loadable(() => import('../terms/ro'));
 
   const handleClose = () => {
     setOpenModal(false);
   };
-
-  const descriptionElementRef = useRef(null);
-  useEffect(() => {
-    if (openModal) {
-      const { current: descriptionElement } = descriptionElementRef;
-      if (descriptionElement !== null) {
-        descriptionElement.focus();
-      }
-    }
-  }, [openModal]);
 
   const handleLinkClick = evt => {
     evt.preventDefault();
@@ -432,24 +419,16 @@ const Payment = props => {
         handleLinkClick={evt => handleLinkClick(evt)}
         handleChange={value => handleChange(value, 'terms')}
       />
-      <Dialog
+      <DialogHeight
+        id="terms"
+        content={Terms}
         open={openModal}
-        onClose={handleClose}
-        aria-labelledby="scroll-dialog-title"
-        aria-describedby="scroll-dialog-description"
+        handleClose={evt => handleClose(evt)}
+        title="_TERMS"
+        buttonText="_AGREE"
       >
-        <DialogTitle id="scroll-dialog-title">_TERMS</DialogTitle>
-        <DialogContent dividers>
-          <DialogContentText id="scroll-dialog-description" ref={descriptionElementRef} tabIndex={-1}>
-            <Terms />
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            _AGREE
-          </Button>
-        </DialogActions>
-      </Dialog>
+        <Terms />
+      </DialogHeight>
     </Fragment>
   );
 };

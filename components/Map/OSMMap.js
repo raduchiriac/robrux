@@ -3,18 +3,20 @@ import Map from 'pigeon-maps';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
-  mapContainer: {
+  mapTiles_osm: {
     filter: 'saturate(3) contrast(0.9) brightness(1.1) hue-rotate(-20deg) invert(0)',
+  },
+  mapTiles_mapbox: {
+    filter: `invert(0)`,
   },
 }));
 
 const OSMMap = ({ children, ...props }) => {
+  const classes = useStyles();
   const { defaultZoom, defaultCenter, mapServiceProvider, maxZoom, minZoom, onChange } = props;
 
   // TODO: How to read window.devicePixelRatio with SSR?
   const dpr = 2;
-
-  const classes = useStyles();
 
   const providers = {
     osm: (x, y, z) => {
@@ -44,7 +46,7 @@ const OSMMap = ({ children, ...props }) => {
       touchEvents={true}
       attribution={false}
       attributionPrefix={false}
-      boxClassname={classes.mapContainer}
+      boxClassname={classes[`mapTiles_${mapServiceProvider}`]}
     >
       {children}
     </Map>

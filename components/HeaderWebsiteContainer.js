@@ -135,7 +135,7 @@ const HeaderWebsiteContainer = () => {
       <AppBar position="fixed">
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>
-            <Link href="/" underline="none" color="inherit">
+            <Link href="/browse" underline="none" color="inherit">
               {STRINGS.SITE_NAME}
             </Link>
           </Typography>

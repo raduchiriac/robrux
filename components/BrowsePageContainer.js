@@ -11,7 +11,6 @@ import CITIES from '~/lib/constants/CITIES';
 
 import Breadcrumb from '~/components/Breadcrumb/Breadcrumb';
 import SmallGigsList from './Gig/SmallGigsList';
-import './BrowsePageContainer.scss';
 
 const BrowsePageContainer = props => {
   const [bbox, setBbox] = useState([]);
@@ -101,7 +100,7 @@ const BrowsePageContainer = props => {
             gigs={gigs}
             city={searchingInLocation}
             hovered={hovered}
-            mapServiceProvider="osm"
+            mapServiceProvider="google"
             _onMapBoundsChange={onMapBoundsChange}
             _onMarkerClick={onGigClick}
             _onMapChildMouseEnter={onHoverEnters}

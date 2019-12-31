@@ -1,21 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
 import GoogleMapReact from 'google-map-react';
 
-import './GoogleMap.scss';
+const useStyles = makeStyles(theme => ({
+  root: {
+    height: '100%',
+    width: '100%',
+  },
+}));
 
-const GoogleMap = ({ children, ...props }) => (
-  <div className="map-container__google">
-    <GoogleMapReact
-      bootstrapURLKeys={{
-        key: process.env.GOOGLE_MAPS_API,
-      }}
-      {...props}
-    >
-      {children}
-    </GoogleMapReact>
-  </div>
-);
+const GoogleMap = ({ children, ...props }) => {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.root}>
+      <GoogleMapReact
+        bootstrapURLKeys={{
+          key: process.env.GOOGLE_MAPS_API,
+        }}
+        {...props}
+      >
+        {children}
+      </GoogleMapReact>
+    </div>
+  );
+};
 
 GoogleMap.propTypes = {
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]),

@@ -4,10 +4,6 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 
-import './StarRating.scss';
-
-// https://material-ui.com/components/rating/#rating
-
 const StarRating = props => {
   const {
     title,
@@ -53,7 +49,9 @@ const StarRating = props => {
             onChange(newValue);
           }}
         />
-        <p className="star-rating__comment">{comment}</p>
+        <Typography variant="caption" component="p">
+          {comment}
+        </Typography>
       </Box>
     </Fragment>
   );

@@ -8,7 +8,6 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import Slide from '@material-ui/core/Slide';
 import { makeStyles } from '@material-ui/core/styles';
 import { useMutation, useApolloClient } from '@apollo/react-hooks';
 import Router from 'next/router';
@@ -17,8 +16,6 @@ import { LOGIN_USER } from '~/lib/graphql/user.strings';
 import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 import useForm from '~/lib/hooks/useForm';
 import Link from '~/lib/hocs/withLink';
-
-import './LoginPageContainer.scss';
 
 const useStyles = makeStyles(theme => ({
   root: {

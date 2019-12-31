@@ -3,7 +3,6 @@ import { CardElement, injectStripe, StripeProvider, Elements } from 'react-strip
 import useScript from '~/lib/hooks/useScript';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import CreditCardDetail from '~/components/Stripe/CreditCardDetail';
 
 const CardForm = props => {
   const { stripe } = props;
@@ -52,14 +51,6 @@ const CardFormInjected = injectStripe(CardForm);
 
 const Card = props => {
   const [scriptLoaded, scriptError] = useScript('https://js.stripe.com/v3/');
-  const InjectedCreditCard = injectStripe(CreditCardDetail, { withRef: true });
-
-  const onFieldBlur = fieldSelector => () => {
-    const selected = document.querySelector(`#card-${fieldSelector} div`);
-    if (selected.classList.contains('StripeElement--complete') && this.formComplete()) {
-      this.submit();
-    }
-  };
 
   return (
     scriptLoaded &&
@@ -69,18 +60,6 @@ const Card = props => {
           <StripeProvider apiKey={process.env.STRIPE_PUBLIC_KEY}>
             <Elements>
               <CardFormInjected handleResult={props.handleResult} />
-              {/* <InjectedCreditCard
-                initialValues={{
-                  creditCardNumber: '42424242424242424242',
-                  onCardNumberBlur: onFieldBlur('number'),
-                }}
-                setFormComplete={() => {}}
-                setBillingName={name => {
-                  this.props.onRequiredChange('name', name.target.value);
-                }}
-                // stripe={this.state.stripe}
-                // ref={this.props.innerRef}
-              /> */}
             </Elements>
           </StripeProvider>
         </Box>

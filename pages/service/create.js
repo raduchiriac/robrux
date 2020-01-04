@@ -393,6 +393,7 @@ const Options = props => {
 const Payment = props => {
   const { STRINGS, values, errors, handleChange, classes, theme } = props;
   const [openModal, setOpenModal] = useState(false);
+
   // TODO: Make this dynamic somehow
   const Terms = loadable(() => import('../terms/ro'));
 

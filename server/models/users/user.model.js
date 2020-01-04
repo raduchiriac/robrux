@@ -39,6 +39,7 @@ const schema = new Schema(
       lowercase: true,
       trim: true,
       index: true,
+      set: v => v.toLowerCase(),
       validate: [validate({ validator: 'isEmail', message: 'Please enter a valid email address' })],
       required: 'Please supply an email address',
     },
@@ -85,6 +86,9 @@ const schema = new Schema(
   },
   { timestamps: true }
 );
+schema.virtual('fullName').get(function() {
+  return `${this.firstName} ${this.lastName}`;
+});
 
 schema.plugin(passportLocalMongoose, {
   usernameField: 'email',

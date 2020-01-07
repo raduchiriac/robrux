@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     left: '50%',
     transformOrigin: 'center',
     transform: 'translateX(-50%) translateY(-50%) scale(0.4)',
-    transition: 'transform 0.2s ease',
+    transition: theme.transitions.create('transform'),
     cursor: 'pointer',
   },
   mapStaticAddress: {

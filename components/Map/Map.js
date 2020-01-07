@@ -9,7 +9,7 @@ import GOOGLE_MAP_SKIN from '~/lib/constants/GOOGLE_MAP_SKIN';
 const styles = theme => ({
   mapContainer: {
     borderRadius: `${theme.shape.borderRadius * 3}px`,
-    transition: 'all 0.3s ease',
+    transition: theme.transitions.create(),
     margin: theme.spacing(1),
     boxShadow: theme.shadows[1],
     overflow: 'hidden',

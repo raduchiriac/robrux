@@ -18,7 +18,7 @@ export default function SearchBox() {
     makeStyles(theme => ({
       searchContainer: {
         position: 'relative',
-        transition: 'all 0.3s ease',
+        transition: theme.transitions.create(),
         borderRadius:
           !props.searchTermLength || !resultsCanBeOpen
             ? theme.shape.borderRadius

@@ -16,7 +16,7 @@ const styles = theme => ({
     display: 'flex',
     height: 140,
     padding: theme.spacing(2),
-    transition: 'all 0.3s ease',
+    transition: theme.transitions.create(),
     color: theme.custom_palette && theme.custom_palette.alternateColor,
     boxShadow: theme.shadows[1],
     backgroundColor: theme.palette.grey[200],

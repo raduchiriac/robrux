@@ -75,7 +75,7 @@ const useStyles = makeStyles(theme => ({
     borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0 0`,
     border: `1px solid ${theme.palette.grey[400]} !important`,
     padding: `${theme.spacing(1.5)}px !important`,
-    transition: 'border 0.3s',
+    transition: theme.transitions.create('border'),
     '&.error, &.error:focus': {
       borderColor: `${theme.palette.error.main} !important`,
     },

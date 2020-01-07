@@ -8,7 +8,7 @@ import Link from '~/lib/hocs/withLink';
 import ConditionalWrap from '~/lib/hocs/ConditionalWrap';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
-import './SmallGig.scss';
+import './SmallGig.css';
 
 const styles = theme => ({
   'small-gig__container': {
@@ -21,6 +21,9 @@ const styles = theme => ({
     boxShadow: theme.shadows[1],
     backgroundColor: theme.palette.grey[200],
   },
+  'small-gig__container--hover': {
+    backgroundColor: theme.palette.grey[300],
+  },
   'small-gig__avatar-container': {
     marginRight: theme.spacing(1),
     width: 64,
@@ -30,15 +33,36 @@ const styles = theme => ({
   },
   'small-gig__avatar': {
     borderRadius: '50%',
+    width: 64,
+    height: 64,
   },
   'small-gig__link': {
     display: 'flex',
   },
+  'small-gig__details-container': { flex: 1 },
   'small-gig__title': {
     fontWeight: 'bold',
   },
+  'small-gig__title--loading': {
+    height: 24,
+    borderRadius: 16,
+  },
+  'x--loading': {
+    background: 'repeating-linear-gradient(to right, #ccc 0%, #eee 50%, #ccc 100%)',
+    width: '100%',
+    backgroundSize: '200% auto',
+    backgroundPosition: '0 100%',
+    animation: 'gradient 1s infinite',
+    animationFillMode: 'forwards',
+    animationTimingFunction: 'linear',
+  },
   'small-gig__provider': {
-    color: theme.palette.grey[500],
+    color: theme.palette.grey[600],
+  },
+  'small-gig__provider--loading': {
+    marginTop: theme.spacing(2),
+    height: 16,
+    borderRadius: 8,
   },
   'small-gig__rating': {
     color: '#db8555',
@@ -77,12 +101,7 @@ const SmallGig = props => {
       )}
     >
       <Paper
-        className={clsx(
-          'small-gig__container',
-          classes['small-gig__container'],
-          hovered && 'small-gig__container--hover',
-          loading && 'small-gig__container--loading'
-        )}
+        className={clsx(classes['small-gig__container'], hovered && classes['small-gig__container--hover'])}
         onMouseEnter={() => (loading ? null : _onMouseEnter(gig._id, gig))}
         onMouseLeave={() => _onMouseLeave()}
       >
@@ -91,17 +110,31 @@ const SmallGig = props => {
             <LazyLoadImage
               effect="blur"
               scrollPosition={scrollPosition}
-              className={classes['small-gig__avatar']}
+              className={clsx(classes['small-gig__avatar'])}
               src={gig._providerAvatar}
               alt={gig._providerName}
             />
           ) : (
-            <div className={classes['small-gig__avatar']}></div>
+            <div className={clsx(classes['small-gig__avatar'], loading && classes['x--loading'])}></div>
           )}
         </div>
         <div className={classes['small-gig__details-container']}>
-          <p className={classes['small-gig__title']}>{(!loading && gig && gig.title) || ''}</p>
-          <p className={classes['small-gig__provider']}>{(!loading && gig && gig._providerName) || ''}</p>
+          <p
+            className={clsx(
+              classes['small-gig__title'],
+              loading && [classes['x--loading'], classes['small-gig__title--loading']]
+            )}
+          >
+            {(!loading && gig && gig.title) || ''}
+          </p>
+          <p
+            className={clsx(
+              classes['small-gig__provider'],
+              loading && [classes['x--loading'], classes['small-gig__provider--loading']]
+            )}
+          >
+            {(!loading && gig && gig._providerName) || ''}
+          </p>
           {!loading && gig && (
             <Fragment>
               <p className={classes['small-gig__rating']}>★ {gig._rating.toFixed(2)}</p>

@@ -30,7 +30,7 @@ app.prepare().then(() => {
     server.use(bodyParser.json());
     server.use(
       cors({
-        origin: `${process.env.HOSTNAME}:${Number(process.env.PORT) ? process.env.PORT : ''}`,
+        origin: `${process.env.HOSTNAME}:${dev ? process.env.PORT : ''}`,
         credentials: true,
         maxAge: 3600,
       })

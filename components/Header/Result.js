@@ -89,7 +89,9 @@ const Result = props => {
                 highlightClassName="result-list__result-highlighted"
                 highlightTag="strong"
                 searchWords={[searching]}
-                textToHighlight={trimWords(strippedString(result.richDescription), searching)}
+                textToHighlight={
+                  result._id ? trimWords(strippedString(result.richDescription), searching) : result.richDescription
+                }
               />
             }
           />

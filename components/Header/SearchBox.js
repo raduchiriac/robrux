@@ -92,7 +92,7 @@ export default function SearchBox() {
     if (data.search.length) {
       results = data.search;
     } else if (debouncedSearchTerm.length && !loading) {
-      results = [{ title: STRINGS.HEADER_NOTHING, description: STRINGS.HEADER_TRY_AGAIN }];
+      results = [{ title: STRINGS.HEADER_NOTHING, richDescription: STRINGS.HEADER_TRY_AGAIN }];
     }
   }
 

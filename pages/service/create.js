@@ -35,9 +35,9 @@ import Map from '~/components/Map/Map';
 import useGeo from '~/lib/hooks/useGeo';
 import useForm from '~/lib/hooks/useForm';
 import clsx from 'clsx';
+import CheckboxWithLink from '~/components/FormElements/CheckboxWithLink';
 
 import 'react-mde/lib/styles/css/react-mde-all.css';
-import CheckboxWithLink from '~/components/FormElements/CheckboxWithLink';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -271,7 +271,7 @@ const Address = props => {
       <GoogleMapsAutocomplete onAddressFound={onAddressFound} label={STRINGS.SERVICE_NEW_ADDRESS} />
       {gigs.data[0].location.coordinates[0] && (
         <Map
-          defaultZoom={15}
+          defaultZoom={16}
           mapServiceProvider="osm"
           center={gigs.data[0].location.coordinates}
           gigs={gigs}
@@ -421,8 +421,7 @@ const Payment = props => {
         handleChange={value => handleChange(value, 'terms')}
       />
       <DialogHeight
-        id="terms"
-        content={Terms}
+        id="dialogterms"
         open={openModal}
         handleClose={evt => handleClose(evt)}
         title="_TERMS"
@@ -438,7 +437,7 @@ const ServiceCreate = ({ params }) => {
   const theme = useTheme();
   const classes = useStyles();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
-  const [activeStep, setActiveStep] = useState(3);
+  const [activeStep, setActiveStep] = useState(1);
   const { STRINGS } = useContext(TranslationsContext).state;
   const steps = [
     STRINGS.SERVICE_NEW_NEW,

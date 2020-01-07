@@ -15,7 +15,7 @@ const styles = theme => ({
     transformOrigin: 'center',
     position: 'absolute',
     transition: 'all 0.3s ease, top 0s, left 0s',
-    backgroundColor: (theme.custom_palette && theme.custom_palette.alternateColor) || 'red',
+    backgroundColor: theme.palette.error.main,
     cursor: props => (props.onClick ? 'pointer' : 'default'),
     '&:hover': hover,
   },

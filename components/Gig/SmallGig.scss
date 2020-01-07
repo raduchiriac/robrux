@@ -1,50 +1,9 @@
 .small-gig__container {
-  background-color: #eee;
-  position: relative;
-  display: flex;
-  min-height: 140px;
-  max-height: 140px;
-  transition: all 0.3s ease !important;
   &:not(.small-gig__container--loading):hover,
   &.small-gig__container--hover {
     cursor: pointer;
     // transform: scale(1.06);
     background-color: #ddd;
-  }
-  .small-gig__link {
-    display: flex;
-  }
-  .small-gig__avatar-container {
-    width: 64px;
-    height: 64px;
-    .small-gig__avatar {
-      border-radius: 50%;
-    }
-  }
-  .small-gig__details-container {
-    flex-grow: 1;
-    .small-gig__title {
-      font-weight: bold;
-    }
-    .small-gig__provider {
-      color: gray;
-    }
-    .small-gig__rating {
-      color: #db8555;
-      font-weight: bold;
-      bottom: 0;
-      background-color: #ffe;
-      position: absolute;
-      left: 0;
-      right: 0;
-      text-indent: 10px;
-    }
-    .small-gig__price {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      color: white;
-    }
   }
 }
 .small-gig__container--loading {

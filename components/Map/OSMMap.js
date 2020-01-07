@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   mapTiles_osm: {
-    filter: 'saturate(3) contrast(0.9) brightness(1.1) hue-rotate(-20deg) invert(0)',
+    filter: 'contrast(0.88) brightness(0.88) invert(0) sepia(1) hue-rotate(180deg) saturate(0.8)',
   },
   mapTiles_mapbox: {
     filter: `invert(0)`,
@@ -20,7 +20,7 @@ const OSMMap = ({ children, ...props }) => {
 
   const providers = {
     osm: (x, y, z) => {
-      return `https://stamen-tiles-c.a.ssl.fastly.net/terrain/${z}/${x}/${y}@2x.png`;
+      return `http://b.tile.stamen.com/toner/${z}/${x}/${y}@2x.png`;
     },
     mapbox: (x, y, z) => {
       return `https://api.mapbox.com/v4/mapbox.outdoors/${z}/${x}/${y}${dpr >= 2 ? '@2x' : ''}.png?access_token=${

@@ -1,12 +1,10 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-
-import CITIES from '~/lib/constants/CITIES';
-import GOOGLE_MAP_SKIN from '~/lib/constants/GOOGLE_MAP_SKIN';
-
 import GoogleMap from './GoogleMap';
 import OSMMap from './OSMMap';
 import Marker from './Marker';
+import CITIES from '~/lib/constants/CITIES';
+import GOOGLE_MAP_SKIN from '~/lib/constants/GOOGLE_MAP_SKIN';
 
 const styles = theme => ({
   mapContainer: {
@@ -30,7 +28,7 @@ const Map = props => {
     defaultZoom = 13,
     maxZoom = 15,
     minZoom = 9,
-    mapServiceProvider = 'google',
+    mapServiceProvider = 'osm',
     _onMapBoundsChange = () => {},
     _onMarkerClick = () => {},
     _onMapChildMouseEnter = () => {},

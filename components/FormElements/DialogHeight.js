@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 
 const DialogHeight = props => {
-  const { id, open = false, handleClose, content = <div></div>, title, buttonText } = props;
+  const { id, open = false, handleClose, title, buttonText } = props;
 
   const descriptionElementRef = useRef(null);
   useEffect(() => {

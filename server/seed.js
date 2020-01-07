@@ -15,7 +15,7 @@ const getCleanupPromise = collection => collection.deleteMany({}).exec();
 const createInsertQueries = (query, callback, amount) => {
   let promises = [];
   for (let i = 0; i < amount; i++) {
-    promises.push(client.request(query).then(callback));
+    promises.push(client.request(query()).then(callback));
   }
   return promises;
 };
@@ -41,14 +41,14 @@ const seed = async () => {
   let gigs = [];
   const promises = [
     ...createInsertQueries(
-      require('./models/news/news.graphql.strings').NEWS_CREATE_FAKE(),
+      require('./models/news/news.graphql.strings').NEWS_CREATE_FAKE,
       data => {
         news.push(data.createNews._id);
       },
       2
     ),
     ...createInsertQueries(
-      require('./models/gigs/gig.graphql.strings').GIG_CREATE_FAKE(),
+      require('./models/gigs/gig.graphql.strings').GIG_CREATE_FAKE,
       data => {
         users.push(data.createGig._id);
       },

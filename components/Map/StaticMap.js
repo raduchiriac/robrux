@@ -1,15 +1,46 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Typography from '@material-ui/core/Typography';
 import LocationIcon from '@material-ui/icons/LocationOn';
 import GOOGLE_MAP_SKIN from '~/lib/constants/GOOGLE_MAP_SKIN';
 import ConditionalWrap from '~/lib/hocs/ConditionalWrap';
+import { makeStyles } from '@material-ui/core/styles';
 
-import './StaticMap.scss';
-
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexDirection: 'column',
+    display: 'inline-flex',
+    alignItems: 'flex-start',
+    maxWidth: '100%',
+  },
+  mapStatic: {
+    position: 'relative',
+    '&:hover img[data-value="marker"]': {
+      transform: 'translateX(-50%) translateY(-50%) scale(0.66)',
+    },
+  },
+  mapStaticGoogle: {
+    objectFit: 'cover',
+  },
+  mapStaticMarker: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transformOrigin: 'center',
+    transform: 'translateX(-50%) translateY(-50%) scale(0.4)',
+    transition: 'transform 0.2s ease',
+    cursor: 'pointer',
+  },
+  mapStaticAddress: {
+    margin: theme.spacing(1, 0),
+    verticalAlign: 'middle',
+    display: 'flex',
+  },
+}));
 const StaticMap = props => {
   const { gig = {}, size = [300, 300], zoom = 13, withLink, withAddress } = props;
+  const classes = useStyles();
   if (!gig.location) {
-    return <></>;
+    return <Fragment></Fragment>;
   }
   const location = gig.location.coordinates.join(',');
 
@@ -33,7 +64,7 @@ const StaticMap = props => {
     return convertedStyle;
   }).join('&');
   return (
-    <div className="map-static__container">
+    <div className={classes.root} data-value="root">
       <ConditionalWrap
         condition={withLink}
         wrap={children => (
@@ -42,8 +73,10 @@ const StaticMap = props => {
           </a>
         )}
       >
-        <div className="map-static__hover">
+        <div className={classes.mapStatic}>
           <img
+            data-value="map"
+            className={classes.mapStaticGoogle}
             width={size[0]}
             height={size[1]}
             src={`https://maps.googleapis.com/maps/api/staticmap?center=${location}&zoom=${zoom}&scale=2&size=${size.join(
@@ -51,11 +84,11 @@ const StaticMap = props => {
             )}&maptype=roadmap&key=${process.env.GOOGLE_MAPS_API}&format=png&visual_refresh=true&${styling}`}
             alt={gig.location.address}
           />
-          <img src="/marker.png" alt={gig.location.address} className="map-static__marker" />
+          <img data-value="marker" src="/marker.png" alt={gig.location.address} className={classes.mapStaticMarker} />
         </div>
       </ConditionalWrap>
       {withAddress && (
-        <Typography className="map-static__address">
+        <Typography className={classes.mapStaticAddress} data-value="address">
           <LocationIcon /> {gig.location.address}
         </Typography>
       )}

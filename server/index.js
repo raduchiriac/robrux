@@ -28,7 +28,13 @@ app.prepare().then(() => {
     server.use(errorHandler);
     server.use(bodyParser.urlencoded({ extended: true }));
     server.use(bodyParser.json());
-    server.use(cors({ origin: `${process.env.HOSTNAME}:${process.env.PORT}`, credentials: true }));
+    server.use(
+      cors({
+        origin: `${process.env.HOSTNAME}:${Number(process.env.PORT) ? process.env.PORT : ''}`,
+        credentials: true,
+        maxAge: 3600,
+      })
+    );
     server.use(cookieParser());
     server.use(validateTokensMiddleware);
 

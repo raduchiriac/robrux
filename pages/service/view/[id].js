@@ -53,8 +53,8 @@ const useStyles = makeStyles((theme, mobileMapHeight = 150) => ({
   },
   servicePrice: {
     textAlign: 'center',
-    color: 'white',
-    background: theme.custom_palette && theme.custom_palette.alternateColor,
+    color: theme.palette.primary.contrastText,
+    background: theme.palette.primary.main,
     padding: theme.spacing(1),
     margin: theme.spacing(0, -2),
     [theme.breakpoints.down('xs')]: {

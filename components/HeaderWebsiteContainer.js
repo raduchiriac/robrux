@@ -132,7 +132,7 @@ const HeaderWebsiteContainer = () => {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="fixed">
+      <AppBar className={classes.appbar}>
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>
             <Link href="/browse" underline="none" color="inherit">

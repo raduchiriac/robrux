@@ -3,12 +3,12 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 
-const hover = { transform: 'scale(2.5)', backgroundColor: '#000', borderWidth: '2px', zIndex: 1 };
+const hover = { transform: 'scale(2.5)', backgroundColor: '#000', borderWidth: 3, zIndex: 1 };
 const styles = theme => ({
   marker: {
-    width: 18,
-    height: 18,
-    border: '3px solid #fff',
+    width: 20,
+    height: 20,
+    border: `2px solid ${theme.palette.error.contrastText}`,
     boxShadow: theme.shadows[2],
     borderRadius: '50%',
     userSelect: 'none',

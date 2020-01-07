@@ -20,7 +20,7 @@ const OSMMap = ({ children, ...props }) => {
 
   const providers = {
     osm: (x, y, z) => {
-      return `https://stamen-tiles.a.ssl.fastly.net/toner/${z}/${x}/${y}@2x.png`;
+      return `https://stamen-tiles.a.ssl.fastly.net/toner/${z}/${x}/${y}${dpr >= 2 ? '@2x' : ''}.png`;
     },
     mapbox: (x, y, z) => {
       return `https://api.mapbox.com/v4/mapbox.outdoors/${z}/${x}/${y}${dpr >= 2 ? '@2x' : ''}.png?access_token=${

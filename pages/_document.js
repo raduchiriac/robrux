@@ -6,12 +6,16 @@ class MyDocument extends Document {
   render() {
     return (
       // TODO: Make this dynamic somehow
+      // TODO: Read the color from the theme.palette.primary.main
       <html lang="ro">
         <Head>
+          <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
+          <meta charSet="UTF-8" />
           <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no" />
           <meta name="description" content="Romanian Professionals in Bruxelles, Belgium" />
-          <meta charSet="UTF-8" />
-          <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
+          <meta name="theme-color" content="#174AAD" />
+          <meta name="msapplication-navbutton-color" content="#174AAD" />
+          <meta name="apple-mobile-web-app-status-bar-style" content="#174AAD" />
           <link rel="icon" type="image/png" href="/favicon.png" />
           <link rel="stylesheet" href="/reset.css" />
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />

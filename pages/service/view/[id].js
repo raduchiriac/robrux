@@ -1,5 +1,7 @@
 import React, { useContext, Fragment } from 'react';
+import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -14,6 +16,7 @@ import StaticMap from '~/components/Map/StaticMap';
 import StarRating from '~/components/Rating/StarRating';
 import MaterialCarousel from '~/components/Carousel/MaterialCarousel';
 import parse from 'html-react-parser';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 import { WebsiteHeaderLayout } from '~/lib/layouts/WebsiteHeaderLayout';
 import withApollo from '~/lib/hocs/withApollo';
 
@@ -41,6 +44,9 @@ const useStyles = makeStyles((theme, mobileMapHeight = 150) => ({
       },
     },
   },
+  title: {
+    marginTop: theme.spacing(1),
+  },
   avatar: {
     display: 'flex',
     margin: theme.spacing(1, 0),
@@ -51,16 +57,24 @@ const useStyles = makeStyles((theme, mobileMapHeight = 150) => ({
     marginRight: theme.spacing(1),
     borderRadius: '50%',
   },
-  servicePrice: {
-    textAlign: 'center',
-    color: theme.palette.primary.contrastText,
-    background: theme.palette.primary.main,
-    padding: theme.spacing(1),
+  servicePriceGrid: {
+    display: 'flex',
+    alignItems: 'stretch',
     margin: theme.spacing(0, -2),
+  },
+  servicePrice: {
+    flex: 1,
+    textAlign: 'center',
+    display: 'inline-block',
+    color: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.primary.main,
+    padding: theme.spacing(1),
+    cursor: 'pointer',
     [theme.breakpoints.down('xs')]: {
       fontSize: '1.15em',
     },
   },
+  servicePriceRange: { backgroundColor: fade(theme.palette.primary.dark, 0.7) },
   serviceActions: {
     display: 'flex',
     '& button': {
@@ -69,12 +83,16 @@ const useStyles = makeStyles((theme, mobileMapHeight = 150) => ({
     },
   },
   tags: {
-    margin: theme.spacing(1, 0, 1.5),
+    margin: theme.spacing(1, 0),
     '& > *': {
       margin: `0 ${theme.spacing(0.5)}px`,
     },
   },
+  'service-description': {
+    marginBottom: theme.spacing(2),
+  },
   tag: {
+    marginBottom: theme.spacing(1),
     '&:first-child': {
       marginLeft: 0,
     },
@@ -83,13 +101,12 @@ const useStyles = makeStyles((theme, mobileMapHeight = 150) => ({
     marginTop: theme.spacing(2),
   },
   categories: {
-    paddingTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
     '& > *': {
       margin: `0 ${theme.spacing(0.5)}px`,
     },
   },
   category: {
+    marginTop: theme.spacing(1),
     '&:first-child': {
       marginLeft: 0,
     },
@@ -127,7 +144,9 @@ const ServiceView = props => {
               ))}
             </div>
           )}
-          <Typography variant="h5">{gig.title}</Typography>
+          <Typography variant="h5" className={classes.title}>
+            {gig.title}
+          </Typography>
           <div className={classes.avatar}>
             <img className={classes.avatarImage} src={gig._providerAvatar} alt="" />
             <div className={classes.avatarDetails}>
@@ -137,21 +156,33 @@ const ServiceView = props => {
               <StarRating score={gig._rating} readOnly="true" size="small" />
             </div>
           </div>
-          <div className="service-description">{gig.richDescription && parse(gig.richDescription)}</div>
+          <div className={classes['service-description']}>{gig.richDescription && parse(gig.richDescription)}</div>
           {!!gig.tags.length && (
             <Fragment>
               <Divider className={classes.divider} />
               <div className={classes.tags}>
-                {`${STRINGS.SERVICE_NEW_TAGS}: `}
+                {/* <Box component="span">{`${STRINGS.SERVICE_NEW_TAGS}: `}</Box> */}
                 {gig.tags.map((tag, idx) => (
                   <Chip className={classes.tag} key={`${idx}tag`} size="small" label={tag} />
                 ))}
               </div>
             </Fragment>
           )}
-          {!!gig.price && (
-            <div className={classes.servicePrice}>{`${gig.price}${STRINGS.CURRENCY_TIME_PRICE_ENDING}`}</div>
-          )}
+
+          <div className={classes.servicePriceGrid}>
+            {!!gig.price && (
+              <Tooltip title="_PRICE_PER_HOUR_EXPLAIN" placement="top">
+                <div item className={classes.servicePrice}>{`${gig.price}${STRINGS.CURRENCY_TIME_PRICE_ENDING}`}</div>
+              </Tooltip>
+            )}
+            {!!gig.priceRange.length && (
+              <Tooltip title="_PRICE_RANGE_EXPLAIN" placement="top">
+                <div className={clsx(classes.servicePrice, classes.servicePriceRange)}>{`${gig.priceRange.join(
+                  '€ – '
+                )}€`}</div>
+              </Tooltip>
+            )}
+          </div>
         </Paper>
         <Box mt={2}>
           <MaterialCarousel images={gig.images} height={200}></MaterialCarousel>
@@ -174,7 +205,7 @@ const ServiceView = props => {
         )}
         <Box mt={2} className={classes.serviceActions}>
           <Button variant="contained" color="primary">
-            Contact
+            {STRINGS.SERVICE_CONTACT}
           </Button>
         </Box>
       </Grid>

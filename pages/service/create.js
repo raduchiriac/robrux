@@ -1,7 +1,7 @@
-import React, { useState, useContext, useMemo, useEffect, useRef, Fragment } from 'react';
+import React, { useState, useContext, useMemo, useEffect, useRef, Fragment, Children } from 'react';
 import { AccountLayout } from '~/lib/layouts/AccountLayout';
 import withApollo from '~/lib/hocs/withApollo';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles, useTheme, withStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -22,6 +22,14 @@ import Container from '@material-ui/core/Container';
 import CancelIcon from '@material-ui/icons/Cancel';
 import Card from '@material-ui/core/Card';
 import RootRef from '@material-ui/core/RootRef';
+import Slider from '@material-ui/core/Slider';
+import Box from '@material-ui/core/Box';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Switch from '@material-ui/core/Switch';
 import loadable from '@loadable/component';
 import ChipInput from 'material-ui-chip-input';
 import { useDropzone } from 'react-dropzone';
@@ -285,6 +293,11 @@ const Address = props => {
 const Options = props => {
   const { STRINGS, values, errors, handleChange, classes } = props;
   const [tags, setTags] = useState(values.tags || []);
+  const [withHourPrice, setWithHourPrice] = useState(values.withHourPrice || false);
+  const [withRangePrice, setWithRangePrice] = useState(values.withRangePrice || false);
+  const [priceRange, setPriceRange] = useState(values.priceRange || [50, 500]);
+
+  const constructPriceRangeValue = value => `${value}€`;
   const handleDeleteImage = idx => {
     URL.revokeObjectURL(values.images[idx].preview);
     handleChange(
@@ -339,20 +352,73 @@ const Options = props => {
 
   return (
     <Fragment>
-      <TextField
-        variant="outlined"
-        margin="dense"
-        fullWidth
-        type="number"
-        id="price"
-        name="price"
-        value={values.price || ''}
-        onChange={evt => handleChange(evt)}
-        label={STRINGS.SERVICE_NEW_PRICE}
-        InputProps={{
-          endAdornment: <InputAdornment position="end">{STRINGS.CURRENCY_TIME_PRICE_ENDING}</InputAdornment>,
-        }}
-      />
+      <div>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={withHourPrice}
+              color="primary"
+              onChange={(evt, val) => {
+                setWithHourPrice(val);
+                handleChange(val, 'withHourPrice');
+              }}
+            />
+          }
+          label={STRINGS.SERVICE_NEW_PRICE_OPT1}
+        />
+      </div>
+      {withHourPrice && (
+        <TextField
+          variant="outlined"
+          margin="dense"
+          fullWidth
+          type="number"
+          id="price"
+          name="price"
+          value={values.price || ''}
+          onChange={evt => handleChange(evt)}
+          label={STRINGS.SERVICE_NEW_PRICE}
+          InputProps={{
+            endAdornment: <InputAdornment position="end">{STRINGS.CURRENCY_TIME_PRICE_ENDING}</InputAdornment>,
+          }}
+        />
+      )}
+      <div>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={withRangePrice}
+              color="primary"
+              onChange={(evt, val) => {
+                setWithRangePrice(val);
+                handleChange(val, 'withRangePrice');
+              }}
+            />
+          }
+          label={STRINGS.SERVICE_NEW_PRICE_OPT2}
+        />
+      </div>
+      {withRangePrice && (
+        <div>
+          <Box mt={1} mb={5}>
+            <Typography variant="subtitle2">{STRINGS.SERVICE_NEW_PRICE_RANGE}</Typography>
+          </Box>
+          <Slider
+            step={10}
+            min={10}
+            max={900}
+            value={priceRange}
+            onChange={(evt, val) => {
+              setPriceRange(val);
+              handleChange(val, 'priceRange');
+            }}
+            valueLabelDisplay="on"
+            aria-labelledby="price-range-slider"
+            getAriaValueText={constructPriceRangeValue}
+            valueLabelFormat={constructPriceRangeValue}
+          />
+        </div>
+      )}
       <ChipInput
         label={STRINGS.SERVICE_NEW_TAGS}
         value={tags}
@@ -437,7 +503,7 @@ const ServiceCreate = ({ params }) => {
   const theme = useTheme();
   const classes = useStyles();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(2);
   const { STRINGS } = useContext(TranslationsContext).state;
   const steps = [
     STRINGS.SERVICE_NEW_NEW,

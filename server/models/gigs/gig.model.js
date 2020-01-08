@@ -29,6 +29,7 @@ const schema = new Schema(
     richDescription: { type: String },
     images: { type: [String] },
     price: { type: Number },
+    priceRange: { type: [Number] },
     status: {
       type: String,
       required: true,
@@ -102,6 +103,7 @@ const fields = {
   tags: { type: GraphQLList(GraphQLString) },
   status: { type: GraphQLString },
   price: { type: GraphQLInt },
+  priceRange: { type: GraphQLList(GraphQLInt) },
   featured: { type: GraphQLBoolean },
 };
 

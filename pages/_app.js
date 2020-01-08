@@ -5,7 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/styles';
 import { TranslationsContextProvider } from '~/lib/contexts/TranslationsContext';
 import { GlobalContextProvider } from '~/lib/contexts/GlobalContext';
-import { DefaultTheme } from '~/lib/themes/default-theme';
+import { LightTheme } from '~/lib/themes/light-theme';
 import { EmptyLayout } from '~/lib/layouts/EmptyLayout';
 
 class NextApp extends App {
@@ -29,7 +29,7 @@ class NextApp extends App {
           <Head>
             <title>ro:bux</title>
           </Head>
-          <ThemeProvider theme={DefaultTheme}>
+          <ThemeProvider theme={LightTheme}>
             <CssBaseline />
             <Layout>
               <Component {...pageProps} />

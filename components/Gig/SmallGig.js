@@ -4,9 +4,10 @@ import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 import Link from '~/lib/hocs/withLink';
 import ConditionalWrap from '~/lib/hocs/ConditionalWrap';
-import 'react-lazy-load-image-component/src/effects/blur.css';
+import 'react-lazy-load-image-component/src/effects/opacity.css';
 
 import './SmallGig.css';
 
@@ -70,6 +71,7 @@ const styles = theme => ({
     bottom: 0,
     backgroundColor: '#ffe',
     position: 'absolute',
+    minHeight: 36,
     left: 0,
     right: 0,
     textIndent: 10,
@@ -81,9 +83,16 @@ const styles = theme => ({
     bottom: 0,
     right: 0,
     color: theme.palette.primary.contrastText,
-    background: theme.palette.primary.light,
+    backgroundColor: theme.palette.primary.light,
     padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
     borderRadius: `0 0 ${theme.shape.borderRadius}px 0`,
+  },
+  'small-gig__pricerange': {
+    fontSize: '0.8em',
+    lineHeight: 2,
+    color: theme.palette.primary.contrastText,
+    backgroundColor: fade(theme.palette.primary.dark, 0.7),
+    height: 36,
   },
 });
 
@@ -108,7 +117,7 @@ const SmallGig = props => {
         <div className={classes['small-gig__avatar-container']}>
           {!loading && gig ? (
             <LazyLoadImage
-              effect="blur"
+              effect="opacity"
               scrollPosition={scrollPosition}
               className={clsx(classes['small-gig__avatar'])}
               src={gig._providerAvatar}
@@ -137,8 +146,14 @@ const SmallGig = props => {
           </p>
           {!loading && gig && (
             <Fragment>
-              <p className={classes['small-gig__rating']}>★ {gig._rating.toFixed(2)}</p>
-              <div className={classes['small-gig__price']}>{`${gig.price}${STRINGS.CURRENCY_TIME_PRICE_ENDING}`}</div>
+              {<p className={classes['small-gig__rating']}>{(!!gig._rating && `★ ${gig._rating.toFixed(2)}`) || ''}</p>}
+              {(!!gig.price && (
+                <div className={classes['small-gig__price']}>{`${gig.price}${STRINGS.CURRENCY_TIME_PRICE_ENDING}`}</div>
+              )) || (
+                <div
+                  className={clsx(classes['small-gig__price'], classes['small-gig__pricerange'])}
+                >{`${gig.priceRange.join('€ – ')}€`}</div>
+              )}
             </Fragment>
           )}
         </div>

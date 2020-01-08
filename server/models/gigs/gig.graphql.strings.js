@@ -1,7 +1,8 @@
 const faker = require('faker');
 var ObjectID = require('mongodb').ObjectID;
 
-const randomIntFromInterval = (min, max) => Math.random() * (max - min) + min;
+const randomFromInterval = (min, max, int = false) =>
+  !int ? Math.random() * (max - min) + min : Math.ceil(Math.random() * (max - min) + min);
 
 const GIG_CREATE_FAKE = () => {
   const userID = new ObjectID();
@@ -28,7 +29,7 @@ const GIG_CREATE_FAKE = () => {
         location: {
           type: "Point",
           address: "${faker.address.streetAddress()}, ${faker.address.country()}",
-          coordinates: [${randomIntFromInterval(50.75, 50.91)}, ${randomIntFromInterval(4.28, 4.45)}]
+          coordinates: [${randomFromInterval(50.75, 50.91)}, ${randomFromInterval(4.28, 4.45)}]
         },
         categories: [${[
           ...new Set([...Array(Math.round(Math.random() * 4))].map(() => Math.floor(Math.random() * 9))),
@@ -39,7 +40,8 @@ const GIG_CREATE_FAKE = () => {
           .split(' ')
           .map(w => `"${w}"`)
           .join(', ')}],
-        price: ${Math.ceil(Math.random() * 5 + 1) * 10}
+        price: ${Math.round(Math.random() * 6) * 10},
+        priceRange: [${randomFromInterval(5, 40, true) * 10}, ${randomFromInterval(45, 90, true) * 10}]
       }) {
         _id
       }

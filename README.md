@@ -21,34 +21,33 @@ Now run `npm run start:dev` and create something nice. PRs are welcome.
 - [x] Convert Classes to Functions (Context API, useHooks)
 - [x] Add i18n (using Context API)
 - [x] Add Storybook and start sketching components
-- [ ] Finish sessions, JWT, graphql-cookie-headers (withApollo HOC)
-- [ ] Fully fledged User Auth system (`HttpOnly` cookies) and roles (make seed file)
-- [ ] Tryout Firebase User Auth
-- [ ] Protect GraphQL mutations (auth and [rate-limit](https://www.npmjs.com/package/graphql-rate-limit-directive))
-- [x] Lazy-load HOC for images (blur effect or fade effect)
+- [ ] Sessions, JWT, graphql-cookie-headers (withApollo HOC)
+- [ ] Fully fledged User Auth system (`HttpOnly` cookies) and user roles (add seed file)
+- [ ] Firebase User Auth (example)
+- [ ] Protect GraphQL mutations (Authorization and [rate-limit](https://www.npmjs.com/package/graphql-rate-limit-directive))
+- [x] Lazy-load HOC for images (blur or opacity effect)
 - [x] Option to use either Google Maps, Open Street Map or Mapbox
 - [x] Fuzzy-Search on MongoDB (include tags)
-- [x] Add a News section (make seed file) (push a newsletter with `save` hook)
+- [x] Add a News section (add to seed file) (push a newsletter using the `save` hook)
 - [x] Send 404 if not found: Gig, News, Profile (do a fetch inside `getInitialProps()`)
-- [ ] Make use of React Spring [or similar](https://material-ui.com/components/transitions/) to animate page elements
+- [ ] Animations using React Spring [or similar](https://material-ui.com/components/transitions/) of page elements
 - [ ] Create a Category Page (linked from gig-page)
-- [ ] Create a Rating Collection (make seed file)
+- [ ] Create a Rating Collection (add to seed file)
 - [ ] (_Route_) New Gig (use Formik and yup, _protected route_, Stripe API)
 - [ ] (_Route_) My Profile (with edit option) (_protected route_)
 - [ ] (_Route_) View any user's profile (linked from gig-page)
 - [ ] Dynamic `<title>` using Helmet
 - [ ] Payment System (Stripe API or Adyen)
-- [ ] Rewrite the GraphQL schemas (more readable)
+- [ ] Rewrite the GraphQL schemas (make them more readable)
 - [ ] Image Upload to cloud storage (Cloudinary API)
-- [ ] Try out `next-i18next` (mainly the SSR)
-- [ ] Prettier Mongoose errors (w/ i18n)
+- [ ] Test [next-i18next](https://github.com/isaachinman/next-i18next) (mainly for the SSR)
+- [ ] Prettier Mongoose errors (w/ l10n)
 - [ ] Convert all forms to `Formik` or `react-hook-form` and validate errors (using `yup`)
 - [ ] Login with social-media (at least Facebook Strategy)
-- [ ] Store the Static Map PNGs rather than asking Google API everytime (see gig-page)
+- [ ] Store the Static Map PNGs rather than asking Google API everytime
 - [ ] Mailing System (Sparkpost or Mailgun API)
 - [ ] Create a dark-skin theme (stored in localStorage, remember to invert the map color with CSS and use `@media (prefers-color-scheme`)
 - [ ] Audit everything with Lighthouse
-- [ ] Create a dark-skin theme (stored in localStorage, invert the map tiles with CSS and use `prefers-color-scheme`)
 - [ ] Generate a [sitemap.xml](https://gist.github.com/a-barbieri/9eb6d65ef96c2ead322bd97ae4862934)
 - [ ] Write some Jest/Enzyme tests
 - [ ] Use propTypes everywhere
@@ -56,4 +55,5 @@ Now run `npm run start:dev` and create something nice. PRs are welcome.
 - [ ] Pre-commit eslint (husky)
 - [ ] Write a better `.eslintrc` ([example](https://github.com/mui-org/material-ui/blob/master/.eslintrc.js))
 - [ ] Fix minZoom for React Google Maps ([issue](https://github.com/google-map-react/google-map-react/issues/505))
+- [ ] Use `reactStrictMode: true` documented [here](https://reactjs.org/docs/strict-mode.html)
 - [ ] Checkout the new `<Suspense />` from react-experimental

@@ -80,6 +80,7 @@ const apollo = new ApolloServer({
   onDisconnect: (socket, context) => {
     // console.log('[x] onDisconnect', socket, context);
   },
+  tracing: false,
   playground: process.env.NODE_ENV === 'production' ? false : GRAPHQL_PLAYGROUND_CONFIG,
 });
 

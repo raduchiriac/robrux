@@ -8,6 +8,11 @@ import { GlobalContextProvider } from '~/lib/contexts/GlobalContext';
 import { LightTheme } from '~/lib/themes/light-theme';
 import { EmptyLayout } from '~/lib/layouts/EmptyLayout';
 
+if (process.env.NODE_ENV !== 'production') {
+  const whyDidYouRender = require('@welldone-software/why-did-you-render');
+  whyDidYouRender(React);
+}
+
 class NextApp extends App {
   static displayName = 'NextApp';
 

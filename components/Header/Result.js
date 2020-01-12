@@ -9,7 +9,7 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Highlighter from 'react-highlight-words';
 import Link from '~/lib/hocs/withLink';
-import ConditionalWrap from '~/lib/hocs/ConditionalWrap';
+import ConditionalWrap from '~/lib/hocs/withConditionalWrap';
 
 const classes = theme => ({
   divider: {

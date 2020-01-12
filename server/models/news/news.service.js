@@ -11,14 +11,15 @@ const oneNews = async idOrSlug => {
   if (idOrSlug.match(/^[0-9a-fA-F]{24}$/)) {
     selector.$or.push({ _id: idOrSlug });
   }
-  return await News.findOne(selector);
+  return await News.findOne(selector).lean();
 };
 
 const getAllNews = async (limit, sort) => {
   const selector = { status: 'live' };
   return await News.find(selector)
     .sort(sort)
-    .limit(limit);
+    .limit(limit)
+    .lean();
 };
 
 module.exports = {

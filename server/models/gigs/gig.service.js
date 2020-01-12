@@ -23,7 +23,8 @@ const getBboxGigs = async (limit = 0, sort = '', bbox = [], searchingFor = '') =
   }
   return await Gig.find(selector)
     .sort(sort)
-    .limit(limit);
+    .limit(limit)
+    .lean();
 };
 
 const oneGig = async idOrSlug => {
@@ -31,7 +32,9 @@ const oneGig = async idOrSlug => {
   if (idOrSlug.match(/^[0-9a-fA-F]{24}$/)) {
     query.$or.push({ _id: idOrSlug });
   }
-  return await Gig.findOne(query);
+  return await Gig.findOne(query)
+    .populate('ratings')
+    .lean();
 };
 
 const fuzzySearch = async (string, limit) => {
@@ -43,12 +46,18 @@ const fuzzySearch = async (string, limit) => {
     { score: { $meta: 'textScore' } }
   )
     .sort({ score: { $meta: 'textScore' } })
-    .limit(limit);
+    .limit(limit)
+    .lean();
+};
+
+const updateGig = async (filter, update) => {
+  // https://mongoosejs.com/docs/tutorials/findoneandupdate.html
 };
 
 module.exports = {
   createGig,
   oneGig,
+  updateGig,
   getBboxGigs,
   fuzzySearch,
 };

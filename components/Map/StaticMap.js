@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import Typography from '@material-ui/core/Typography';
 import LocationIcon from '@material-ui/icons/LocationOn';
 import GOOGLE_MAP_SKIN from '~/lib/constants/GOOGLE_MAP_SKIN';
-import ConditionalWrap from '~/lib/hocs/ConditionalWrap';
+import ConditionalWrap from '~/lib/hocs/withConditionalWrap';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({

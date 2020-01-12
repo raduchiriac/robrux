@@ -105,7 +105,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Index = props => {
+const Index = () => {
   const classes = useStyles();
   let [stringToBeSearched, setStringToBeSearched] = useState('');
   const { STRINGS } = useContext(TranslationsContext).state;
@@ -170,4 +170,4 @@ const Index = props => {
   );
 };
 
-export default withApollo(Index);
+export default Index;

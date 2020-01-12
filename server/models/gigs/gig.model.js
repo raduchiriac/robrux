@@ -2,18 +2,9 @@ const mongoose = require('mongoose');
 const latinize = require('latinize');
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
-const markdownConverter = require('../../_helpers/utils').markdownConverter;
-const {
-  GraphQLID,
-  GraphQLNonNull,
-  GraphQLBoolean,
-  GraphQLInt,
-  GraphQLString,
-  GraphQLList,
-  GraphQLFloat,
-  GraphQLObjectType,
-  GraphQLInputObjectType,
-} = require('graphql');
+const { randomStringGenerator, markdownConverter } = require('../../_helpers/utils');
+
+const uniqueValidator = require('mongoose-unique-validator');
 
 // Read more about types here https://mongoosejs.com/docs/schematypes.html
 const schema = new Schema(
@@ -37,6 +28,7 @@ const schema = new Schema(
       enum: ['processing', 'valid', 'rejected', 'expired'],
       index: true,
     },
+    ratings: [{ type: ObjectId, ref: 'Rating' }],
     featured: { type: Boolean, index: true },
     statusInformation: { type: String },
     tags: { type: [String] },
@@ -73,24 +65,41 @@ schema.index(
 
 // INFO: Read about other hooks https://mongoosejs.com/docs/middleware.html
 schema.pre('save', function(next) {
-  this.slug = encodeURI(
-    latinize(this.title)
-      .replace(/ /g, '-')
-      .toLowerCase()
-  );
+  const generateSlug = () =>
+    encodeURI(
+      latinize(this.title)
+        .replace(/ /g, '-')
+        .toLowerCase()
+    );
+  this.slug = `${generateSlug()}${randomStringGenerator(1, '-')}`;
   this.richDescription = markdownConverter.makeHtml(this.description);
   next();
 });
+schema.plugin(uniqueValidator, { message: '_{PATH}_TO_BE_UNIQUE' });
 
 const Gig = mongoose.model('Gig', schema);
 
 // -----------------------------------------------------------
 // GraphQL declarations
 // -----------------------------------------------------------
+const {
+  GraphQLID,
+  GraphQLNonNull,
+  GraphQLBoolean,
+  GraphQLInt,
+  GraphQLString,
+  GraphQLList,
+  GraphQLFloat,
+  GraphQLObjectType,
+  GraphQLInputObjectType,
+} = require('graphql');
+const fields_ratings = require('../ratings/rating.model').fields;
+const { RatingType } = require('../ratings/rating.model');
+
 const fields = {
-  _id: { type: GraphQLID },
+  _id: { type: GraphQLNonNull(GraphQLID) },
   _userId: { type: GraphQLNonNull(GraphQLID) },
-  _providerName: { type: GraphQLString },
+  _providerName: { type: GraphQLNonNull(GraphQLString) },
   _providerAvatar: { type: GraphQLString },
   _rating: { type: GraphQLFloat },
   _subscription: { type: GraphQLString },
@@ -100,6 +109,7 @@ const fields = {
   richDescription: { type: GraphQLString },
   images: { type: GraphQLList(GraphQLString) },
   categories: { type: GraphQLList(GraphQLInt) },
+  ratings: { type: GraphQLList(GraphQLID) },
   tags: { type: GraphQLList(GraphQLString) },
   status: { type: GraphQLString },
   price: { type: GraphQLInt },
@@ -118,6 +128,10 @@ const GigLocationTypeOutput = new GraphQLObjectType({
   name: 'GigLocationOutput',
   fields: fields_location,
 });
+const GigRatingsTypeOutput = new GraphQLObjectType({
+  name: 'GigRatingsOutput',
+  fields: fields_ratings,
+});
 
 // Nested fields needed for Mutations
 const GigLocationTypeInput = new GraphQLInputObjectType({
@@ -129,6 +143,9 @@ const GigLocationTypeInput = new GraphQLInputObjectType({
 const fieldsOutput = Object.assign({}, fields, {
   location: {
     type: GigLocationTypeOutput,
+  },
+  ratings: {
+    type: GraphQLList(GigRatingsTypeOutput),
   },
 });
 

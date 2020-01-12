@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import HelpTwoToneIcon from '@material-ui/icons/HelpTwoTone';
 import Divider from '@material-ui/core/Divider';
 import Error from '~/pages/_error';
 import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
@@ -65,7 +66,9 @@ const useStyles = makeStyles((theme, mobileMapHeight = 150) => ({
   servicePrice: {
     flex: 1,
     textAlign: 'center',
-    display: 'inline-block',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     color: theme.palette.primary.contrastText,
     backgroundColor: theme.palette.primary.main,
     padding: theme.spacing(1),
@@ -161,7 +164,6 @@ const ServiceView = props => {
             <Fragment>
               <Divider className={classes.divider} />
               <div className={classes.tags}>
-                {/* <Box component="span">{`${STRINGS.SERVICE_NEW_TAGS}: `}</Box> */}
                 {gig.tags.map((tag, idx) => (
                   <Chip className={classes.tag} key={`${idx}tag`} size="small" label={tag} />
                 ))}
@@ -172,14 +174,18 @@ const ServiceView = props => {
           <div className={classes.servicePriceGrid}>
             {!!gig.price && (
               <Tooltip title="_PRICE_PER_HOUR_EXPLAIN" placement="top">
-                <div item className={classes.servicePrice}>{`${gig.price}${STRINGS.CURRENCY_TIME_PRICE_ENDING}`}</div>
+                <div className={classes.servicePrice}>
+                  <Box mr={1} component="span">{`${gig.price}${STRINGS.CURRENCY_TIME_PRICE_ENDING}`}</Box>
+                  <HelpTwoToneIcon fontSize="small" />
+                </div>
               </Tooltip>
             )}
             {!!gig.priceRange.length && (
               <Tooltip title="_PRICE_RANGE_EXPLAIN" placement="top">
-                <div className={clsx(classes.servicePrice, classes.servicePriceRange)}>{`${gig.priceRange.join(
-                  '€ – '
-                )}€`}</div>
+                <div className={clsx(classes.servicePrice, classes.servicePriceRange)}>
+                  <Box mr={1} component="span">{`${gig.priceRange.join('€ – ')}€`}</Box>
+                  <HelpTwoToneIcon fontSize="small" />
+                </div>
               </Tooltip>
             )}
           </div>

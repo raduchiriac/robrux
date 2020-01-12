@@ -6,8 +6,8 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import Link from '~/lib/hocs/withLink';
-import ConditionalWrap from '~/lib/hocs/ConditionalWrap';
-import 'react-lazy-load-image-component/src/effects/opacity.css';
+import ConditionalWrap from '~/lib/hocs/withConditionalWrap';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 import './SmallGig.css';
 
@@ -117,7 +117,7 @@ const SmallGig = props => {
         <div className={classes['small-gig__avatar-container']}>
           {!loading && gig ? (
             <LazyLoadImage
-              effect="opacity"
+              effect="blur"
               scrollPosition={scrollPosition}
               className={clsx(classes['small-gig__avatar'])}
               src={gig._providerAvatar}

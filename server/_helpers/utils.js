@@ -11,6 +11,17 @@ const markdownConverter = new showdown.Converter({
   extensions: [xssFilter],
 });
 
+const randomStringGenerator = (loops = 1, prefix = '') => {
+  return [...Array(loops)].reduce(
+    (t, acc) =>
+      t +
+      Math.random()
+        .toString(36)
+        .replace('0.', ''),
+    prefix
+  );
+};
+
 const TimestampType = new GraphQLScalarType({
   name: 'Timestamp',
   serialize(date) {
@@ -36,6 +47,7 @@ const TimestampType = new GraphQLScalarType({
 
 module.exports = {
   markdownConverter,
+  randomStringGenerator,
   TimestampType,
   strippedString: str => str.replace(/(<([^>]+)>)/gi, ''),
 };

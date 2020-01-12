@@ -7,8 +7,11 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const News = require('./models/news/news.model').News;
+let news = [];
 const Gig = require('./models/gigs/gig.model').Gig;
+let gigs = [];
 const User = require('./models/users/user.model').User;
+let users = [];
 
 const getCleanupPromise = collection => collection.deleteMany({}).exec();
 
@@ -35,10 +38,8 @@ const cleanup = async () => {
   console.log('Cleanup completed…');
 };
 
-const seed = async () => {
-  let news = [];
-  let users = [];
-  let gigs = [];
+const mock = async () => {
+  console.log('Inserting mock data…');
   const promises = [
     ...createInsertQueries(
       require('./models/news/news.graphql.strings').NEWS_CREATE_FAKE,
@@ -50,17 +51,21 @@ const seed = async () => {
     ...createInsertQueries(
       require('./models/gigs/gig.graphql.strings').GIG_CREATE_FAKE,
       data => {
-        users.push(data.createGig._id);
+        gigs.push(data.createGig._id);
       },
-      100
+      222
     ),
   ];
   await Promise.all(promises);
-  console.log('Seed completed…');
+};
+
+const relationships = () => {
+  console.log('Creating relationships…');
 };
 
 cleanup()
-  .then(seed)
+  .then(mock)
+  .then(relationships)
   .then(() => {
     console.log('[⇣] Seeding succeeded. Exiting…');
     process.exit();

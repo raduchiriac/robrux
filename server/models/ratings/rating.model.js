@@ -1,7 +1,4 @@
 const mongoose = require('mongoose');
-
-const { GraphQLID, GraphQLString, GraphQLObjectType, GraphQLInt, GraphQLNonNull } = require('graphql');
-
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
@@ -10,16 +7,16 @@ const schema = new Schema(
     _userId: {
       type: ObjectId,
       index: true,
-      required: 'Please supply a valid user',
+      required: '_VALID_USER',
     },
     _gigId: {
       type: ObjectId,
       index: true,
-      required: 'Please select a service',
+      required: '_VALID_GIG',
     },
     score: {
       type: Number,
-      required: 'Please add at least one star',
+      required: '_AT_LEAST_ONE_STAR',
     },
     comment: {
       type: String,
@@ -31,8 +28,13 @@ const schema = new Schema(
 
 const Rating = mongoose.model('Rating', schema);
 
+// -----------------------------------------------------------
+// GraphQL declarations
+// -----------------------------------------------------------
+const { GraphQLID, GraphQLString, GraphQLObjectType, GraphQLInt, GraphQLNonNull } = require('graphql');
+
 const fields = {
-  _id: { type: GraphQLID },
+  _id: { type: GraphQLNonNull(GraphQLID) },
   _userId: { type: GraphQLNonNull(GraphQLID) },
   _gigId: { type: GraphQLNonNull(GraphQLID) },
   score: { type: GraphQLNonNull(GraphQLInt) },

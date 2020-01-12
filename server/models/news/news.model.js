@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 const strippedString = require('../../_helpers/utils').strippedString;
 const markdownConverter = require('../../_helpers/utils').markdownConverter;
 const TimestampType = require('../../_helpers/utils').TimestampType;
-const { GraphQLID, GraphQLNonNull, GraphQLString, GraphQLList, GraphQLObjectType } = require('graphql');
 
 const schema = new Schema(
   {
@@ -40,8 +39,13 @@ schema.pre('save', function(next) {
 
 const News = mongoose.model('News', schema);
 
+// -----------------------------------------------------------
+// GraphQL declarations
+// -----------------------------------------------------------
+const { GraphQLID, GraphQLNonNull, GraphQLString, GraphQLList, GraphQLObjectType } = require('graphql');
+
 const fields = {
-  _id: { type: GraphQLID },
+  _id: { type: GraphQLNonNull(GraphQLID) },
   title: { type: GraphQLNonNull(GraphQLString) },
   slug: { type: GraphQLString },
   excerpt: { type: GraphQLString },

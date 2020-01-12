@@ -7,6 +7,8 @@ const withCSS = require('@zeit/next-css');
 
 module.exports = withCSS(
   withSass({
+    reactStrictMode: false,
+    poweredByHeader: false,
     webpack: config => {
       config.plugins = config.plugins || [];
 

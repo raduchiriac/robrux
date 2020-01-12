@@ -2,22 +2,15 @@ const mongoose = require('mongoose');
 const validate = require('mongoose-validator');
 const mongodbErrorHandler = require('mongoose-mongodb-errors');
 const passportLocalMongoose = require('passport-local-mongoose');
+const Schema = mongoose.Schema;
+const ObjectId = mongoose.Schema.Types.ObjectId;
+const uniqueValidator = require('mongoose-unique-validator');
 
 const STRINGS = require('../../_helpers/i18n');
-
-const dummyRandomGenerator = (loops = 1, prefix = '') => {
-  return [...Array(loops)].reduce(
-    (t, acc) =>
-      t +
-      Math.random()
-        .toString(36)
-        .replace('0.', ''),
-    prefix
-  );
-};
+const { randomStringGenerator } = require('../../_helpers/utils');
 
 const dummyForgotGenerator = () => {
-  const forgotCode = dummyRandomGenerator(3);
+  const forgotCode = randomStringGenerator(3);
 
   // You have 10 minutes to change your password
   const now = new Date();
@@ -25,11 +18,6 @@ const dummyForgotGenerator = () => {
 
   return { forgotCode, forgotCodeLimit };
 };
-
-const { GraphQLID, GraphQLString, GraphQLObjectType, GraphQLNonNull } = require('graphql');
-
-const Schema = mongoose.Schema;
-const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const schema = new Schema(
   {
@@ -40,8 +28,8 @@ const schema = new Schema(
       trim: true,
       index: true,
       set: v => v.toLowerCase(),
-      validate: [validate({ validator: 'isEmail', message: 'Please enter a valid email address' })],
-      required: 'Please supply an email address',
+      validate: [validate({ validator: 'isEmail', message: '_VALID_EMAIL' })],
+      required: '_SUPPLY_AN_EMAIL',
     },
     firstName: {
       type: String,
@@ -51,7 +39,7 @@ const schema = new Schema(
         validate({
           validator: 'isLength',
           arguments: [3, 50],
-          message: 'Should be between {ARGS[0]} and {ARGS[1]} characters',
+          message: '_F_BETWEEN_{ARGS[0]}_{ARGS[1]}_CHARS',
         }),
       ],
     },
@@ -63,7 +51,7 @@ const schema = new Schema(
         validate({
           validator: 'isLength',
           arguments: [3, 50],
-          message: 'Should be between {ARGS[0]} and {ARGS[1]} characters',
+          message: '_L_BETWEEN_{ARGS[0]}_{ARGS[1]}_CHARS',
         }),
       ],
     },
@@ -73,7 +61,7 @@ const schema = new Schema(
     validationCode: {
       index: true,
       type: String,
-      default: () => dummyRandomGenerator(2),
+      default: () => randomStringGenerator(2),
       unique: true,
     },
     bio: {
@@ -104,12 +92,15 @@ schema.plugin(passportLocalMongoose, {
   // },
 });
 schema.plugin(mongodbErrorHandler);
+schema.plugin(uniqueValidator, { message: '_{PATH}_TO_BE_UNIQUE' });
 
 const User = mongoose.model('User', schema);
 
 // -----------------------------------------------------------
 // GraphQL declarations
 // -----------------------------------------------------------
+const { GraphQLID, GraphQLString, GraphQLObjectType, GraphQLNonNull, GraphQLList } = require('graphql');
+
 const fieldsInputLogin = {
   email: { type: GraphQLNonNull(GraphQLString) },
   password: { type: GraphQLNonNull(GraphQLString) },
@@ -130,7 +121,8 @@ const fieldsInputRegister = Object.assign(
   }
 );
 const fields = Object.assign({}, fieldsInputRegister, {
-  _id: { type: GraphQLID },
+  _id: { type: GraphQLNonNull(GraphQLID) },
+  _gigs: { type: GraphQLList(GraphQLID) },
 });
 
 const UserType = new GraphQLObjectType({

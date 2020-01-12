@@ -1,5 +1,6 @@
 const { GraphQLNonNull, GraphQLString, GraphQLInputObjectType } = require('graphql');
 const RatingType = require('./rating.model').RatingType;
+const RatingService = require('./rating.service');
 
 const RatingInputType = new GraphQLInputObjectType({
   name: 'GigInRatingInputTypeputType',
@@ -15,9 +16,8 @@ const ratingMutations = {
         type: new GraphQLNonNull(RatingInputType),
       },
     },
-    resolve(parent, args) {
-      // const rating = new Rating(args);
-      // return rating.save();
+    resolve: async (rootValue, { input }, context) => {
+      return await RatingService.addRating(input);
     },
   },
   updateRating: {
@@ -28,14 +28,14 @@ const ratingMutations = {
       },
     },
     resolve(parent, args) {
-      // return Rating.findByIdAndUpdate(args.id, args);
+      return false;
     },
   },
   deleteRating: {
     type: RatingType,
     args: { id: { type: GraphQLNonNull(GraphQLString) } },
     resolve(parent, args) {
-      // return Rating.findByIdAndRemove(args.id);
+      return false;
     },
   },
 };

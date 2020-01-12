@@ -12,6 +12,8 @@ const Gig = require('./models/gigs/gig.model').Gig;
 let gigs = [];
 const User = require('./models/users/user.model').User;
 let users = [];
+const Rating = require('./models/ratings/rating.model').Rating;
+let ratings = [];
 
 const getCleanupPromise = collection => collection.deleteMany({}).exec();
 
@@ -30,7 +32,7 @@ async function runThroughCollections(iterable, asyncBlock) {
 }
 
 const cleanup = async () => {
-  const collections = [News, Gig];
+  const collections = [News, Gig, Rating];
   await runThroughCollections(collections, async collection => {
     const cleanupResult = await getCleanupPromise(collection);
     console.log(`> ${collection.collection.collectionName} collection deleted: ${cleanupResult.deletedCount}`);
@@ -53,19 +55,42 @@ const mock = async () => {
       data => {
         gigs.push(data.createGig._id);
       },
-      222
+      100
     ),
   ];
   await Promise.all(promises);
 };
 
-const relationships = () => {
+const mockWithDependecies = async () => {
+  console.log('Inserting ratings…');
+  const { addManyRatings } = require('./models/ratings/rating.service');
+  const myFakeRatings = [];
+  gigs.forEach(gig => {
+    const LEN = Math.round(Math.random() * 10) + 1;
+    for (let i = 0; i < LEN; i++) {
+      myFakeRatings.push(require('./models/ratings/rating.graphql.strings').FAKE_RATING_DATA(gig));
+    }
+  });
+  ratings = await addManyRatings(myFakeRatings);
+};
+
+const buildRelationships = async () => {
   console.log('Creating relationships…');
+  const promises = [];
+  gigs.forEach(gig => {
+    const filteredRatings = ratings.filter(rating => gig === rating._gigId + '');
+    const dataToMutateGig = {
+      ratings: filteredRatings.map(rating => rating._id),
+      _rating: filteredRatings.reduce((total, current) => total + current.score, 0) / filteredRatings.length,
+    };
+    // TODO: Mutate gigs.ratings based on ratings[].gigId and gigs._rating on average
+  });
 };
 
 cleanup()
   .then(mock)
-  .then(relationships)
+  .then(mockWithDependecies)
+  .then(buildRelationships)
   .then(() => {
     console.log('[⇣] Seeding succeeded. Exiting…');
     process.exit();

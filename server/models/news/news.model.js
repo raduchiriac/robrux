@@ -45,7 +45,7 @@ const News = mongoose.model('News', schema);
 const { GraphQLID, GraphQLNonNull, GraphQLString, GraphQLList, GraphQLObjectType } = require('graphql');
 
 const fields = {
-  _id: { type: GraphQLNonNull(GraphQLID) },
+  _id: { type: GraphQLID },
   title: { type: GraphQLNonNull(GraphQLString) },
   slug: { type: GraphQLString },
   excerpt: { type: GraphQLString },

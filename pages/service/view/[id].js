@@ -173,7 +173,7 @@ const ServiceView = props => {
 
           <div className={classes.servicePriceGrid}>
             {!!gig.price && (
-              <Tooltip title="_PRICE_PER_HOUR_EXPLAIN" placement="top">
+              <Tooltip enterTouchDelay={300} arrow title="_PRICE_PER_HOUR_EXPLAIN" placement="top">
                 <div className={classes.servicePrice}>
                   <Box mr={1} component="span">{`${gig.price}${STRINGS.CURRENCY_TIME_PRICE_ENDING}`}</Box>
                   <HelpTwoToneIcon fontSize="small" />
@@ -181,7 +181,7 @@ const ServiceView = props => {
               </Tooltip>
             )}
             {!!gig.priceRange.length && (
-              <Tooltip title="_PRICE_RANGE_EXPLAIN" placement="top">
+              <Tooltip enterTouchDelay={300} arrow title="_PRICE_RANGE_EXPLAIN" placement="top">
                 <div className={clsx(classes.servicePrice, classes.servicePriceRange)}>
                   <Box mr={1} component="span">{`${gig.priceRange.join('€ – ')}€`}</Box>
                   <HelpTwoToneIcon fontSize="small" />

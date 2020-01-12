@@ -94,10 +94,9 @@ const {
   GraphQLInputObjectType,
 } = require('graphql');
 const fields_ratings = require('../ratings/rating.model').fields;
-const { RatingType } = require('../ratings/rating.model');
 
 const fields = {
-  _id: { type: GraphQLNonNull(GraphQLID) },
+  _id: { type: GraphQLID },
   _userId: { type: GraphQLNonNull(GraphQLID) },
   _providerName: { type: GraphQLNonNull(GraphQLString) },
   _providerAvatar: { type: GraphQLString },

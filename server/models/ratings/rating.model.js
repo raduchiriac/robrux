@@ -34,7 +34,7 @@ const Rating = mongoose.model('Rating', schema);
 const { GraphQLID, GraphQLString, GraphQLObjectType, GraphQLInt, GraphQLNonNull } = require('graphql');
 
 const fields = {
-  _id: { type: GraphQLNonNull(GraphQLID) },
+  _id: { type: GraphQLID },
   _userId: { type: GraphQLNonNull(GraphQLID) },
   _gigId: { type: GraphQLNonNull(GraphQLID) },
   score: { type: GraphQLNonNull(GraphQLInt) },

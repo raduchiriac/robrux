@@ -9,13 +9,6 @@ module.exports = async ({ config, mode }) => {
 
   config.resolve.alias['~'] = path.resolve(path.join(__dirname, '../'));
 
-  // Make whatever fine-grained changes you need
-  config.module.rules.push({
-    test: /\.scss$/,
-    use: ['style-loader', 'css-loader', 'sass-loader'],
-    include: path.resolve(__dirname, '../'),
-  });
-
   // Return the altered config
   return config;
 };

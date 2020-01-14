@@ -10,8 +10,20 @@ const GigInputType = new GraphQLInputObjectType({
 });
 
 const gigMutations = {
-  updateRating: { type: GigType },
-  updateProvider: { type: GigType },
+  updateGigWithRating: {
+    type: GigType,
+    description: 'Update the details regarding rating',
+    args: {
+      input: {
+        type: new GraphQLNonNull(GigInputType),
+      },
+    },
+    resolve: async (rootValue, { input }, context) => {
+      console.log(input);
+      // return await GigService.updateGig(input);
+    },
+  },
+  updateGigWithProvider: { type: GigType },
   createGig: {
     type: GigType,
     description: 'Create a new Gig',

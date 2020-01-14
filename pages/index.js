@@ -103,6 +103,10 @@ const useStyles = makeStyles(theme => ({
     top: theme.spacing(2),
     right: theme.spacing(2),
   },
+  buttonAway: {
+    color: 'white',
+    textTransform: 'none',
+  },
 }));
 
 const Index = () => {
@@ -159,11 +163,9 @@ const Index = () => {
           </FormControl>
         </Paper>
         <Box mt={2} mb={0}>
-          <Typography>
-            <Link href="/browse" style={{ color: 'white' }}>
-              {STRINGS.INDEX_BROWSE_FREE}
-            </Link>
-          </Typography>
+          <Button className={classes.buttonAway} href="/browse">
+            {STRINGS.INDEX_BROWSE_FREE}
+          </Button>
         </Box>
       </Box>
     </Grid>

@@ -32,7 +32,7 @@ const GIG_CREATE_FAKE = () => {
           coordinates: [${randomFromInterval(50.75, 50.91)}, ${randomFromInterval(4.28, 4.45)}]
         },
         categories: [${[
-          ...new Set([...Array(Math.round(Math.random() * 4))].map(() => Math.floor(Math.random() * 9))),
+          ...new Set([...Array(Math.round(Math.random() * 4))].map(() => Math.floor(Math.random() * 30))),
         ]}],
         status: "valid",
         tags: [${faker.lorem

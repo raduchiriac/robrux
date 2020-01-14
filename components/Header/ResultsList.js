@@ -1,14 +1,18 @@
 import React from 'react';
-import clsx from 'clsx';
 import List from '@material-ui/core/List';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/styles';
 
-import './ResultList.scss';
 import Result from './Result';
 
 const useStyles = makeStyles(theme => ({
   'result-list__container': {
+    backgroundColor: 'white',
+    position: 'absolute',
+    padding: 0,
+    width: '100%',
+    maxHeight: 'calc(100vh - 160px)',
+    overflow: 'scroll',
     boxShadow: theme.shadows[2],
     borderRadius: `0 0 ${theme.shape.borderRadius}px ${theme.shape.borderRadius}px`,
   },
@@ -19,7 +23,7 @@ export default function ResultsList(props) {
   const { results, searching } = props;
   return (
     <Grid item>
-      <List dense={true} className={clsx('result-list__container', classes['result-list__container'])}>
+      <List dense={true} className={classes['result-list__container']}>
         {results.map((result, idx) => (
           <Result
             key={idx}

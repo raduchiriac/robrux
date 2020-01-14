@@ -16,6 +16,7 @@ const styles = theme => ({
     position: 'relative',
     display: 'flex',
     height: 140,
+    flex: 1,
     padding: theme.spacing(2),
     transition: theme.transitions.create(),
     color: theme.palette.primary.dark,

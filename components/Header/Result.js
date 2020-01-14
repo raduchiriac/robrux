@@ -20,6 +20,14 @@ const classes = theme => ({
       display: 'none',
     },
   },
+  title: {
+    color: theme.palette.primary.main,
+  },
+  'result-list__result-highlighted': {
+    backgroundColor: theme.palette.grey[300],
+    padding: theme.spacing(0.25, 0.5),
+    margin: theme.spacing(0, -0.25),
+  },
   rating: {
     color: '#db8555',
     fontWeight: 'bold',
@@ -57,28 +65,24 @@ const Result = props => {
   return (
     <Fragment>
       <ConditionalWrap
-        condition={result._id}
+        condition={isClickable}
         wrap={children => (
           <Link href={`/service/view/${result.slug || result._id}`} underline="none">
             {children}
           </Link>
         )}
       >
-        <ListItem
-          alignItems="flex-start"
-          button={isClickable}
-          onClick={handleResultClick}
-          className={`result-list__result ${!isClickable ? 'result-list__result--no-link' : ''}`}
-        >
+        <ListItem alignItems="flex-start" button={isClickable} onClick={handleResultClick}>
           {result._providerAvatar && (
             <ListItemAvatar>
               <Avatar src={result._providerAvatar} />
             </ListItemAvatar>
           )}
           <ListItemText
+            className={classes.title}
             primary={
               <Highlighter
-                highlightClassName="result-list__result-highlighted"
+                highlightClassName={classes['result-list__result-highlighted']}
                 highlightTag="strong"
                 searchWords={[searching]}
                 textToHighlight={result.title}
@@ -86,7 +90,7 @@ const Result = props => {
             }
             secondary={
               <Highlighter
-                highlightClassName="result-list__result-highlighted"
+                highlightClassName={classes['result-list__result-highlighted']}
                 highlightTag="strong"
                 searchWords={[searching]}
                 textToHighlight={
@@ -95,8 +99,8 @@ const Result = props => {
               />
             }
           />
-          {!!result._id && <Divider className={classes.divider} orientation="vertical" />}
-          {!!result._id && (
+          {!!isClickable && <Divider className={classes.divider} orientation="vertical" />}
+          {!!isClickable && (
             <Typography className={classes.rating} variant="subtitle2">
               ★ {result._rating.toFixed(2)}
             </Typography>

@@ -19,11 +19,10 @@ Now run `npm run start:dev` and create something nice. PRs are welcome.
 - [x] Add Material-UI grid, themes, raw components
 - [x] Create an import seed script
 - [x] Convert Classes to Functions (Context API, useHooks)
-- [x] Add i18n (using Context API)
+- [x] Add i18n/l10n (using Context API)
 - [x] Add Storybook and start sketching components
 - [ ] Sessions, JWT, graphql-cookie-headers (withApollo HOC)
 - [ ] Fully fledged User Auth system (`HttpOnly` cookies) and user roles (add seed file)
-- [ ] Firebase User Auth (example)
 - [ ] Protect GraphQL mutations (Authorization and [rate-limit](https://www.npmjs.com/package/graphql-rate-limit-directive))
 - [x] Lazy-load HOC for images (blur or opacity effect)
 - [x] Option to use either Google Maps, Open Street Map or Mapbox
@@ -33,16 +32,15 @@ Now run `npm run start:dev` and create something nice. PRs are welcome.
 - [ ] Animations using React Spring [or similar](https://material-ui.com/components/transitions/) of page elements
 - [ ] Create a Category Page (linked from gig-page)
 - [ ] Create a Rating Collection (add to seed file)
+- [ ] Option to flag Gigs (create Collection)
 - [ ] (_Route_) New Gig (use Formik and yup, _protected route_, Stripe API)
 - [ ] (_Route_) My Profile (with edit option) (_protected route_)
 - [ ] (_Route_) View any user's profile (linked from gig-page)
 - [ ] Dynamic `<title>` using Helmet
 - [ ] Payment System (Stripe API or Adyen)
-- [ ] Rewrite the GraphQL schemas (make them more readable)
+- [ ] Rewrite the GraphQLInputObjectType schemas (make them more readable)
 - [ ] Image Upload to cloud storage (Cloudinary API)
-- [ ] Test [next-i18next](https://github.com/isaachinman/next-i18next) (mainly for the SSR)
 - [ ] Prettier Mongoose errors (w/ l10n)
-- [ ] Convert all forms to `Formik` or `react-hook-form` and validate errors (using `yup`)
 - [ ] Login with social-media (at least Facebook Strategy)
 - [ ] Store the Static Map PNGs rather than asking Google API everytime
 - [ ] Mailing System (Sparkpost or Mailgun API)
@@ -51,9 +49,33 @@ Now run `npm run start:dev` and create something nice. PRs are welcome.
 - [ ] Generate a [sitemap.xml](https://gist.github.com/a-barbieri/9eb6d65ef96c2ead322bd97ae4862934)
 - [ ] Write some Jest/Enzyme tests
 - [ ] Use propTypes everywhere
+- [ ] Make components more accessible (storybook-a11y)
 - [ ] Try to [lazy load your modules](https://flaviocopes.com/nextjs-lazy-load-modules/)
 - [ ] Pre-commit eslint (husky)
 - [ ] Write a better `.eslintrc` ([example](https://github.com/mui-org/material-ui/blob/master/.eslintrc.js))
 - [ ] Fix minZoom for React Google Maps ([issue](https://github.com/google-map-react/google-map-react/issues/505))
 - [ ] Use `reactStrictMode: true` documented [here](https://reactjs.org/docs/strict-mode.html)
 - [ ] Checkout the new `<Suspense />` from react-experimental
+
+#### 📦 Try me out area
+
+- [x] `npm i @welldone-software/why-did-you-render -SE`
+- [ ] `npm i next-seo -SE`
+- [ ] `npm i next-nookies-persist -SE`
+- [ ] `npm i next-session -SE`
+- [ ] `npm i next-offline -SE`
+- [ ] `npm i next-nprogress -SE`
+- [ ] `npm i next-ga -SE`
+- [ ] `npm i next-page-transitions -SE`
+- [ ] `npm i next-optimized-images -SE`
+- [ ] `npm i next-i18next -SE` (at least the SSR)
+- [ ] `npm i i18nh -SE`
+- [ ] `npm i data-prefetch-link -SE` (at least the SSR)
+- [ ] `npm i graphql-rate-limit -SE`
+- [ ] `npm i reto -SE` (create a global store)
+- [ ] `npm i react-hook-form -SE`
+- [ ] `npm i formik -SE`
+- [ ] `npm i yup -SE`
+- [ ] `npm i nodemailer nextmail -SE`
+- [ ] `npm i notistack -SE`
+- [ ] `npm i firebase -SE` (at least for user authentication)

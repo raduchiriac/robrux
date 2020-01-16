@@ -7,6 +7,8 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
+import FlagOutlinedIcon from '@material-ui/icons/FlagOutlined';
+import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import HelpTwoToneIcon from '@material-ui/icons/HelpTwoTone';
 import Divider from '@material-ui/core/Divider';
@@ -25,6 +27,7 @@ const useStyles = makeStyles((theme, mobileMapHeight = 150) => ({
   container: {
     padding: theme.spacing(1, 2, 0),
     overflow: 'hidden',
+    position: 'relative',
   },
   staticMap: {
     overflow: 'hidden',
@@ -57,6 +60,11 @@ const useStyles = makeStyles((theme, mobileMapHeight = 150) => ({
     height: 64,
     marginRight: theme.spacing(1),
     borderRadius: '50%',
+  },
+  flag: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: theme.spacing(2),
   },
   servicePriceGrid: {
     display: 'flex',
@@ -104,6 +112,7 @@ const useStyles = makeStyles((theme, mobileMapHeight = 150) => ({
     marginTop: theme.spacing(2),
   },
   categories: {
+    marginRight: theme.spacing(3),
     '& > *': {
       margin: `0 ${theme.spacing(0.5)}px`,
     },
@@ -131,6 +140,10 @@ const ServiceView = props => {
       </Grid>
       <Grid item xs={12} sm={8} md={8} lg={9}>
         <Paper className={classes.container}>
+          <IconButton size="small" className={classes.flag} color="primary" aria-label="">
+            {/* TODO: Dialog to confirm */}
+            <FlagOutlinedIcon fontSize="inherit" />
+          </IconButton>
           {!!gig.categories.length && (
             <div className={classes.categories}>
               {gig.categories.map((category, idx) => (

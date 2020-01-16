@@ -169,7 +169,7 @@ const ServiceView = props => {
               <Typography variant="subtitle1" className="service-avatar__name">
                 {gig._providerName}
               </Typography>
-              <StarRating score={gig._rating} readOnly="true" size="small" />
+              <StarRating score={gig._rating} readOnly={true} size="small" />
             </div>
           </div>
           <div className={classes['service-description']}>{gig.richDescription && parse(gig.richDescription)}</div>
@@ -213,7 +213,7 @@ const ServiceView = props => {
               <Box mb={2} key={idx}>
                 <StarRating
                   score={Math.random() * 5}
-                  readOnly="true"
+                  readOnly={true}
                   color="#f7a918"
                   title="Anonymous User"
                   comment="Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio ea laudantium at! Officia aliquam sunt nulla? Eum totam velit ipsa molestias. Nihil aliquid temporibus voluptates eligendi ratione, nam corporis illum!"

@@ -31,6 +31,7 @@ const Browse = props => {
   }, [bbox, searchingFor, searchBboxGigs]);
 
   // Update state when the props change
+  // TODO: usePrevious()
   useEffect(() => {
     setSearchingFor(props.searchingFor);
   }, [props.searchingFor]);
@@ -43,6 +44,7 @@ const Browse = props => {
   const onMapBoundsChange = (center, zoom, bounds, marginBounds) => {
     let bbox = [];
     if (typeof marginBounds == 'boolean') {
+      if (isNaN(bounds.sw[0])) return;
       bbox = [
         [bounds.sw[0], bounds.ne[1]],
         bounds.ne,
@@ -60,6 +62,7 @@ const Browse = props => {
         [marginBounds.nw.lat, marginBounds.nw.lng],
       ];
     }
+
     setBbox(bbox, searchingFor);
   };
 

@@ -1,6 +1,7 @@
 import React, { Fragment, useContext } from 'react';
 import clsx from 'clsx';
 import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
@@ -38,6 +39,9 @@ const styles = theme => ({
     width: 64,
     height: 64,
   },
+  'small-gig__avatar--loading': {
+    backgroundColor: theme.palette.grey[500],
+  },
   'small-gig__link': {
     display: 'flex',
   },
@@ -50,7 +54,7 @@ const styles = theme => ({
     borderRadius: 16,
   },
   'x--loading': {
-    background: 'repeating-linear-gradient(to right, #ccc 0%, #eee 50%, #ccc 100%)',
+    background: `repeating-linear-gradient(to right, ${theme.palette.grey[400]} 0%, ${theme.palette.grey[100]} 50%, ${theme.palette.grey[400]} 100%)`,
     width: '100%',
     backgroundSize: '200% auto',
     backgroundPosition: '0 100%',
@@ -83,17 +87,20 @@ const styles = theme => ({
     position: 'absolute',
     bottom: 0,
     right: 0,
+    lineHeight: 1,
+    fontSize: 'inherit',
     color: theme.palette.primary.contrastText,
     backgroundColor: theme.palette.primary.light,
     padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
     borderRadius: `0 0 ${theme.shape.borderRadius}px 0`,
+    height: 36,
+    lineHeight: 1.5,
   },
   'small-gig__pricerange': {
     fontSize: '0.8em',
     lineHeight: 2,
     color: theme.palette.primary.contrastText,
     backgroundColor: fade(theme.palette.primary.dark, 0.7),
-    height: 36,
   },
 });
 
@@ -125,35 +132,49 @@ const SmallGig = props => {
               alt={gig._providerName}
             />
           ) : (
-            <div className={clsx(classes['small-gig__avatar'], loading && classes['x--loading'])}></div>
+            <div className={clsx(classes['small-gig__avatar'], loading && classes['small-gig__avatar--loading'])}></div>
           )}
         </div>
         <div className={classes['small-gig__details-container']}>
-          <p
+          <Typography
+            component="p"
+            variant="body2"
             className={clsx(
               classes['small-gig__title'],
               loading && [classes['x--loading'], classes['small-gig__title--loading']]
             )}
           >
             {(!loading && gig && gig.title) || ''}
-          </p>
-          <p
+          </Typography>
+          <Typography
+            variant="subtitle2"
+            component="p"
             className={clsx(
               classes['small-gig__provider'],
               loading && [classes['x--loading'], classes['small-gig__provider--loading']]
             )}
           >
             {(!loading && gig && gig._providerName) || ''}
-          </p>
+          </Typography>
           {!loading && gig && (
             <Fragment>
-              {<p className={classes['small-gig__rating']}>{(!!gig._rating && `★ ${gig._rating.toFixed(2)}`) || ''}</p>}
+              {
+                <Typography component="p" variant="caption" className={classes['small-gig__rating']}>
+                  {(!!gig._rating && `★ ${gig._rating.toFixed(2)}`) || ''}
+                </Typography>
+              }
               {(!!gig.price && (
-                <div className={classes['small-gig__price']}>{`${gig.price}${STRINGS.CURRENCY_TIME_PRICE_ENDING}`}</div>
+                <Typography
+                  component="div"
+                  variant="caption"
+                  className={classes['small-gig__price']}
+                >{`${gig.price}${STRINGS.CURRENCY_TIME_PRICE_ENDING}`}</Typography>
               )) || (
-                <div
+                <Typography
+                  component="div"
+                  variant="caption"
                   className={clsx(classes['small-gig__price'], classes['small-gig__pricerange'])}
-                >{`${gig.priceRange.join('€ – ')}€`}</div>
+                >{`${gig.priceRange.join('€ – ')}€`}</Typography>
               )}
             </Fragment>
           )}

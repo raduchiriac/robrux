@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import CheckboxWithLink from '~/components/FormElements/CheckboxWithLink';
 
 storiesOf('Form Elements', module).add('CheckBox with Link', () => {
-  let value = false;
-  const handleChange = val => {
-    value = val;
+  const [value, setValue] = useState(false);
+
+  const handleLinkClick = evt => {
+    evt.preventDefault();
+    console.log('This should open a dialog box');
   };
-  const handleLinkClick = () => {};
 
   return (
     <CheckboxWithLink
@@ -17,7 +18,7 @@ storiesOf('Form Elements', module).add('CheckBox with Link', () => {
       checkboxHref="/"
       error={false}
       value={value || false}
-      handleChange={value => handleChange(value)}
+      handleChange={value => setValue(value)}
       handleLinkClick={evt => handleLinkClick(evt)}
     />
   );

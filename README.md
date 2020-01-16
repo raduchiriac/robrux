@@ -78,4 +78,5 @@ Now run `npm run start:dev` and create something nice. PRs are welcome.
 - [ ] `npm i yup -SE`
 - [ ] `npm i nodemailer nextmail -SE`
 - [ ] `npm i notistack -SE`
+- [ ] `npm i react-styleguidist -DE`
 - [ ] `npm i firebase -SE` (at least for user authentication)

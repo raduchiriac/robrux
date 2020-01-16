@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import parse from 'autosuggest-highlight/parse';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -41,7 +41,7 @@ const GoogleMapsAutocomplete = props => {
   };
   const debouncedSearchTerm = useDebounce(searchedAddress, 550);
 
-  React.useEffect(() => {
+  useEffect(() => {
     let active = true;
 
     if ((!autocompleteService.current || !geocodeService.current) && window.google) {

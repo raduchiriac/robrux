@@ -19,7 +19,7 @@ const gigs = {
 };
 
 storiesOf('Maps: Google Maps', module)
-  .add('With one marker', () => <Map gigs={gigs} />)
+  .add('With one marker', () => <Map gigs={gigs} mapServiceProvider="google" />)
   .add('Static map (with address)', () => (
     <StaticMap gig={gigs.data[0]} size={[300, 450]} zoom={16} withAddress={true} />
   ))

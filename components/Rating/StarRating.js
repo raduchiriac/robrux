@@ -1,7 +1,8 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useRef } from 'react';
 import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
+import usePrevious from '~/lib/hooks/usePrevious';
 import Box from '@material-ui/core/Box';
 
 const StarRating = props => {
@@ -12,7 +13,6 @@ const StarRating = props => {
     size,
     disabled,
     readOnly,
-    precision,
     comment,
     color,
     hoverColor,
@@ -21,6 +21,15 @@ const StarRating = props => {
   } = props;
 
   const [value, setValue] = useState(Math.round(score));
+  const prevValue = usePrevious(value);
+
+  useEffect(() => {
+    if (prevValue !== value) {
+      setValue(value);
+    } else if (value !== score) {
+      setValue(score);
+    }
+  }, [prevValue, score, value]);
 
   const StyledStarRating = withStyles({
     iconFilled: {
@@ -39,9 +48,8 @@ const StarRating = props => {
           name="star-rating"
           value={value}
           size={size}
-          disabled={disabled == 'true'}
-          readOnly={readOnly == 'true'}
-          precision={precision}
+          disabled={disabled}
+          readOnly={readOnly}
           max={maxStars}
           icon={icon}
           onChange={(event, newValue) => {

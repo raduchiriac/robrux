@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from 'react';
+import React, { useRef, useState, useContext, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import clsx from 'clsx';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
@@ -82,8 +82,9 @@ const AccountMenu = props => {
   }
 
   // return focus to the button when we transitioned from !open -> open
+  // TODO: usePrevious()
   const prevOpen = React.useRef(open);
-  React.useEffect(() => {
+  useEffect(() => {
     if (prevOpen.current === true && open === false) {
       anchorRef.current.focus();
     }

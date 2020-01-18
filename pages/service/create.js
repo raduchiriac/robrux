@@ -45,8 +45,6 @@ import useForm from '~/lib/hooks/useForm';
 import clsx from 'clsx';
 import CheckboxWithLink from '~/components/FormElements/CheckboxWithLink';
 
-import 'react-mde/lib/styles/css/react-mde-all.css';
-
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',

@@ -17,7 +17,6 @@ class MyDocument extends Document {
           <meta name="msapplication-navbutton-color" content="#174AAD" />
           <meta name="apple-mobile-web-app-status-bar-style" content="#174AAD" />
           <link rel="icon" type="image/png" href="/favicon.png" />
-          <link rel="stylesheet" href="/reset.css" />
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
         </Head>
         <body>

@@ -29,7 +29,7 @@ const classes = theme => ({
     margin: theme.spacing(0, -0.25),
   },
   rating: {
-    color: '#db8555',
+    color: theme.custom_palette.warning,
     fontWeight: 'bold',
     flexShrink: 0,
     alignSelf: 'center',

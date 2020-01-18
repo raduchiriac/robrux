@@ -2,9 +2,8 @@ if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
 const path = require('path');
 const webpack = require('webpack');
-const withCSS = require('@zeit/next-css');
 
-module.exports = withCSS({
+module.exports = {
   reactStrictMode: false,
   poweredByHeader: false,
   webpack: config => {
@@ -26,4 +25,4 @@ module.exports = withCSS({
 
     return config;
   },
-});
+};

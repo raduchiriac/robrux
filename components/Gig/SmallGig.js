@@ -8,9 +8,8 @@ import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import Link from '~/lib/hocs/withLink';
 import ConditionalWrap from '~/lib/hocs/withConditionalWrap';
-import 'react-lazy-load-image-component/src/effects/blur.css';
 
-import './SmallGig.css';
+import CSS from './SmallGig.module.css';
 
 const styles = theme => ({
   'small-gig__container': {
@@ -71,12 +70,12 @@ const styles = theme => ({
     borderRadius: 8,
   },
   'small-gig__rating': {
-    color: '#db8555',
+    color: theme.custom_palette.warning,
     fontWeight: 'bold',
     bottom: 0,
-    backgroundColor: '#ffe',
+    backgroundColor: theme.custom_palette.pale,
     position: 'absolute',
-    minHeight: 36,
+    height: 37,
     left: 0,
     right: 0,
     textIndent: 10,
@@ -93,7 +92,7 @@ const styles = theme => ({
     backgroundColor: theme.palette.primary.light,
     padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
     borderRadius: `0 0 ${theme.shape.borderRadius}px 0`,
-    height: 36,
+    height: 37,
     lineHeight: 1.5,
   },
   'small-gig__pricerange': {
@@ -159,7 +158,7 @@ const SmallGig = props => {
           {!loading && gig && (
             <Fragment>
               {
-                <Typography component="p" variant="caption" className={classes['small-gig__rating']}>
+                <Typography component="p" variant="subtitle2" className={classes['small-gig__rating']}>
                   {(!!gig._rating && `★ ${gig._rating.toFixed(2)}`) || ''}
                 </Typography>
               }

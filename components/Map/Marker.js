@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 
-const hover = { transform: 'scale(2.5)', backgroundColor: '#000', borderWidth: 3, zIndex: 1 };
+const hover = { transform: 'scale(2.5)', backgroundColor: 'black', borderWidth: 3, zIndex: 1 };
 const styles = theme => ({
   marker: {
     width: 20,

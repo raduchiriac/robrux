@@ -36,6 +36,7 @@ const useStyles = makeStyles(theme => ({
   },
   indexPageBackgroundImage: {
     backgroundSize: 'cover',
+    backgroundImage: 'url("/backgrounds/index_page.jpeg")',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     position: 'absolute',
@@ -105,7 +106,7 @@ const useStyles = makeStyles(theme => ({
   },
   buttonAway: {
     color: 'white',
-    textTransform: 'none',
+    textDecoration: 'underline',
   },
 }));
 
@@ -117,10 +118,7 @@ const Index = () => {
 
   return (
     <Grid container className={classes.root} alignItems="center">
-      <Box
-        style={{ backgroundImage: "url('/backgrounds/index_page.jpeg')" }}
-        className={classes.indexPageBackgroundImage}
-      ></Box>
+      <Box className={classes.indexPageBackgroundImage}></Box>
       <AccountMenu className={classes.accountMenu} />
       <Box className={classes.indexPageContent}>
         <Box className={classes.indexPageLogo}>
@@ -163,9 +161,9 @@ const Index = () => {
           </FormControl>
         </Paper>
         <Box mt={2} mb={0}>
-          <Button className={classes.buttonAway} href="/browse">
+          <Link className={classes.buttonAway} href="/browse">
             {STRINGS.INDEX_BROWSE_FREE}
-          </Button>
+          </Link>
         </Box>
       </Box>
     </Grid>

@@ -24,7 +24,7 @@ const SmallGigsList = (props, { scrollPosition }) => {
       </Typography>
     );
   }
-  const data = gigs.loading ? [false] : gigs.data || [];
+  const data = gigs.loading ? [false, false] : gigs.data || [];
 
   return (
     <Grid container spacing={2} className={classes['small-gigs-list__container']}>

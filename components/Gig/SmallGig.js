@@ -57,7 +57,7 @@ const styles = theme => ({
     width: '100%',
     backgroundSize: '200% auto',
     backgroundPosition: '0 100%',
-    animation: 'gradient 1s infinite',
+    animation: 'gradient 0.6s infinite',
     animationFillMode: 'forwards',
     animationTimingFunction: 'linear',
   },

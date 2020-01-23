@@ -8,12 +8,12 @@ mongoose.Promise = global.Promise;
 
 const News = require('./models/news/news.model').News;
 let news = [];
+const Rating = require('./models/ratings/rating.model').Rating;
+let ratings = [];
 const Gig = require('./models/gigs/gig.model').Gig;
 let gigs = [];
 const User = require('./models/users/user.model').User;
 let users = [];
-const Rating = require('./models/ratings/rating.model').Rating;
-let ratings = [];
 
 const getCleanupPromise = collection => collection.deleteMany({}).exec();
 
@@ -76,15 +76,17 @@ const mockWithDependecies = async () => {
 
 const buildRelationships = async () => {
   console.log('Creating relationships…');
-  const promises = [];
+  const mutations = [];
   gigs.forEach(gig => {
     const filteredRatings = ratings.filter(rating => gig === rating._gigId + '');
     const dataToMutateGig = {
+      id: gig,
       ratings: filteredRatings.map(rating => rating._id),
       _rating: filteredRatings.reduce((total, current) => total + current.score, 0) / filteredRatings.length,
     };
-    // TODO: Mutate gigs.ratings based on ratings[].gigId and gigs._rating on average
+    mutations.push(dataToMutateGig);
   });
+  // TODO: Mutate gigs.ratings based on ratings[].gigId and gigs._rating on average
 };
 
 cleanup()

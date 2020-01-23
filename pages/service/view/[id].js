@@ -1,4 +1,4 @@
-import React, { useContext, Fragment } from 'react';
+import React, { useContext, useState, Fragment } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -7,7 +7,8 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
-import FlagOutlinedIcon from '@material-ui/icons/FlagOutlined';
+import Popover from '@material-ui/core/Popover';
+import FlagTwoToneIcon from '@material-ui/icons/FlagTwoTone';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import HelpTwoToneIcon from '@material-ui/icons/HelpTwoTone';
@@ -65,6 +66,9 @@ const useStyles = makeStyles((theme, mobileMapHeight = 150) => ({
     position: 'absolute',
     right: theme.spacing(1),
     top: theme.spacing(2),
+  },
+  report: {
+    textTransform: 'none',
   },
   servicePriceGrid: {
     display: 'flex',
@@ -129,6 +133,15 @@ const ServiceView = props => {
   const { gig, statusCode } = props;
   const classes = useStyles();
   const { STRINGS } = useContext(TranslationsContext).state;
+  const [anchorElFlag, setAnchorElFlag] = React.useState(null);
+  const openFlag = Boolean(anchorElFlag);
+
+  const handleClickFlag = event => {
+    setAnchorElFlag(event.currentTarget);
+  };
+  const handleCloseFlag = () => {
+    setAnchorElFlag(null);
+  };
   if (!gig) return <Error statusCode={statusCode} />;
 
   return (
@@ -140,10 +153,34 @@ const ServiceView = props => {
       </Grid>
       <Grid item xs={12} sm={8} md={8} lg={9}>
         <Paper className={classes.container}>
-          <IconButton size="small" className={classes.flag} color="primary" aria-label="">
-            {/* TODO: Dialog to confirm */}
-            <FlagOutlinedIcon fontSize="inherit" />
+          <IconButton
+            size="small"
+            className={classes.flag}
+            color="primary"
+            onClick={handleClickFlag}
+            aria-label={STRINGS.SERVICE_REPORT}
+          >
+            <FlagTwoToneIcon fontSize="inherit" />
           </IconButton>
+          <Popover
+            open={openFlag}
+            anchorEl={anchorElFlag}
+            onClose={handleCloseFlag}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+          >
+            <Box p={1}>
+              <Button className={classes.report} color="primary" size="small">
+                {STRINGS.SERVICE_REPORT}
+              </Button>
+            </Box>
+          </Popover>
           {!!gig.categories.length && (
             <div className={classes.categories}>
               {gig.categories.map((category, idx) => (

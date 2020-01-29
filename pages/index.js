@@ -8,12 +8,12 @@ import SearchIcon from '@material-ui/icons/Search';
 import Box from '@material-ui/core/Box';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
-import Typography from '@material-ui/core/Typography';
+import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 import Fade from '@material-ui/core/Fade';
-import withApollo from '~/lib/hocs/withApollo';
 import Link from '~/lib/hocs/withLink';
 import AccountMenu from '~/components/Header/AccountMenu';
+import { dynamicSort } from '~/lib/helpers/utils';
 import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 
 import CITIES from '~/lib/constants/CITIES';
@@ -99,6 +99,19 @@ const useStyles = makeStyles(theme => ({
       flexBasis: '100%',
     },
   },
+  categoryContainer: {
+    display: 'flex',
+    overflowX: 'scroll',
+    height: 100,
+    flexDirection: 'column',
+    flexWrap: 'wrap',
+  },
+  categoryInnerAnimator: {},
+  category: {
+    margin: theme.spacing(0.5),
+    backgroundColor: 'white',
+    boxShadow: theme.shadows[1],
+  },
   accountMenu: {
     position: 'absolute',
     top: theme.spacing(2),
@@ -109,6 +122,12 @@ const useStyles = makeStyles(theme => ({
     textDecoration: 'underline',
   },
 }));
+
+const Category = props => {
+  return (
+    <Chip className={props.classes} clickable component="a" href={`/browse?category=${props.id}`} label={props.title} />
+  );
+};
 
 const Index = () => {
   const classes = useStyles();
@@ -160,7 +179,14 @@ const Index = () => {
             </NativeSelect>
           </FormControl>
         </Paper>
-        <Box mt={2} mb={0}>
+        <Box className={classes.categoryContainer} mt={2} mb={0}>
+          {STRINGS.SERVICE_NEW_CATEGORIES.map((service, idx) => ({ title: service, id: idx }))
+            .sort(dynamicSort('title'))
+            .map(service => (
+              <Category key={service.id} id={service.id} title={service.title} classes={classes.category} />
+            ))}
+        </Box>
+        <Box>
           <Link className={classes.buttonAway} href="/browse">
             {STRINGS.INDEX_BROWSE_FREE}
           </Link>

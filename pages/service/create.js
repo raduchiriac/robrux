@@ -42,6 +42,7 @@ import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 import Map from '~/components/Map/Map';
 import useGeo from '~/lib/hooks/useGeo';
 import useForm from '~/lib/hooks/useForm';
+import { dynamicSort } from '~/lib/helpers/utils';
 import clsx from 'clsx';
 import CheckboxWithLink from '~/components/FormElements/CheckboxWithLink';
 
@@ -173,7 +174,6 @@ const Basics = props => {
   const { STRINGS, values, errors, handleChange, classes, isMobile } = props;
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
-  const reverseArray = a => a.map((item, idx) => a[a.length - 1 - idx]);
 
   const [selectedTab, setSelectedTab] = useState('write');
   const converter = new Showdown.Converter({
@@ -206,7 +206,9 @@ const Basics = props => {
         value={values.categories}
         getOptionSelected={el => values.categories.filter(v => v.title === el.title).length}
         className={classes.autocomplete}
-        options={reverseArray(STRINGS.SERVICE_NEW_CATEGORIES.map((service, idx) => ({ title: service, id: idx })))}
+        options={STRINGS.SERVICE_NEW_CATEGORIES.map((service, idx) => ({ title: service, id: idx })).sort(
+          dynamicSort('title')
+        )}
         disableCloseOnSelect
         onChange={(evt, values) => handleChange(values, 'categories')}
         getOptionLabel={option => option.title}

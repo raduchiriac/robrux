@@ -6,6 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
+import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Popover from '@material-ui/core/Popover';
 import FlagTwoToneIcon from '@material-ui/icons/FlagTwoTone';
@@ -240,9 +241,11 @@ const ServiceView = props => {
             )}
           </div>
         </Paper>
-        <Box mt={2}>
-          <MaterialCarousel images={gig.images} height={200}></MaterialCarousel>
-        </Box>
+        <Container maxWidth="sm">
+          <Box mt={2}>
+            <MaterialCarousel images={gig.images} height={200}></MaterialCarousel>
+          </Box>
+        </Container>
         {true && (
           // TODO: If there are reviews
           <Box>

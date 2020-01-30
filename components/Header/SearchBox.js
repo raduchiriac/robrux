@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { useLazyQuery } from '@apollo/react-hooks';
 import ResultList from './ResultsList';
 import useDebounce from '~/lib/hooks/useDebounce';
+import Router, { useRouter } from 'next/router';
 import { SEARCH_GIG } from '~/lib/graphql/gigs.strings';
 import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 
@@ -38,6 +39,7 @@ export default function SearchBox() {
         alignItems: 'center',
       },
       circularProgress: {
+        color: 'white',
         marginRight: theme.spacing(1),
       },
       searchIcon: {
@@ -67,6 +69,7 @@ export default function SearchBox() {
   const [searchTerm, setSearchTerm] = useState('');
   const [resultsCanBeOpen, setResultsCanBeOpen] = useState(false);
   const debouncedSearchTerm = useDebounce(searchTerm, 550);
+  const router = useRouter();
   const [searchGigs, { data, error, loading }] = useLazyQuery(SEARCH_GIG, {
     variables: { term: debouncedSearchTerm, limit: 8 },
   });
@@ -100,6 +103,19 @@ export default function SearchBox() {
     setSearchTerm('');
   };
 
+  const handleInputKeyPress = e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleClickAway();
+      let { query } = router;
+      query.search = searchTerm;
+      Router.push({
+        pathname: '/browse',
+        query,
+      });
+    }
+  };
+
   const classes = useStyles({ searchTermLength: searchTerm.length });
 
   return (
@@ -115,10 +131,13 @@ export default function SearchBox() {
               root: classes.inputRoot,
               input: classes.inputInput,
             }}
+            autoComplete="off"
+            name="search"
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
             onClick={e => handleInputClick(e)}
             inputProps={{ 'aria-label': 'search' }}
+            onKeyPress={e => handleInputKeyPress(e)}
           />
           {loading && <CircularProgress size={20} className={classes.circularProgress} />}
           {!!searchTerm.length && (

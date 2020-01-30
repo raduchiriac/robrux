@@ -41,7 +41,7 @@ const OSMMap = ({ children, ...props }) => {
       animate={true}
       metaWheelZoom={false}
       twoFingerDrag={true}
-      zoomSnap={false}
+      zoomSnap={true}
       mouseEvents={true}
       touchEvents={true}
       attribution={false}

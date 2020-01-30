@@ -80,7 +80,7 @@
     "react-swipeable-views-utils": "0.13.3",
     "showdown": "1.9.1",
     "showdown-xss-filter": "0.2.0",
-    "stripe": "8.7.0",
+    "stripe": "8.8.1",
     "webpack": "4.41.5"
   },
   "devDependencies": {

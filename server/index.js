@@ -21,10 +21,8 @@ app.prepare().then(() => {
   const server = express();
 
   // Start MongoDB, then Express
-  const initDBConnection = require('./_helpers/db').initDBConnection;
-  initDBConnection(process.env.MONGO_URI, () => {
+  require('./_helpers/db').initDBConnection(process.env.MONGO_URI, () => {
     const errorHandler = require('./_helpers/error-handler');
-    const validateTokensMiddleware = require('./_helpers/auth/validateTokensMiddleware');
     server.use(errorHandler);
     server.use(bodyParser.urlencoded({ extended: true }));
     server.use(bodyParser.json());
@@ -36,7 +34,6 @@ app.prepare().then(() => {
       })
     );
     server.use(cookieParser());
-    server.use(validateTokensMiddleware);
 
     // TODO: Do we still need this?
     // server.use((req, res, next) => {
@@ -71,18 +68,17 @@ app.prepare().then(() => {
     store.on('error', function(error) {
       console.log(`🚨MongoDBStore error: ${JSON.stringify(error)}`);
     });
-
-    // server.use(
-    //   session({
-    //     secret: process.env.SESS_SECRET,
-    //     cookie: {
-    //       maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
-    //     },
-    //     store,
-    //     resave: true,
-    //     saveUninitialized: true,
-    //   })
-    // );
+    server.use(
+      session({
+        secret: process.env.SESS_SECRET,
+        cookie: {
+          maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+        },
+        store,
+        resave: true,
+        saveUninitialized: true,
+      })
+    );
 
     const handleNextRequests = app.getRequestHandler();
     server.use(passport.initialize());

@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useLazyQuery } from '@apollo/react-hooks';
-import Router from 'next/router';
 import Grid from '@material-ui/core/Grid';
 import { WebsiteHeaderLayout } from '~/lib/layouts/WebsiteHeaderLayout';
 import withApollo from '~/lib/hocs/withApollo';
+import Chip from '@material-ui/core/Chip';
+import Box from '@material-ui/core/Box';
+import Router, { useRouter } from 'next/router';
 import { GlobalContext } from '~/lib/contexts/GlobalContext';
 import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 import { SEARCH_BBOX_GIG } from '~/lib/graphql/gigs.strings';
@@ -15,10 +17,12 @@ import SmallGigsList from '~/components/Gig/SmallGigsList';
 const Browse = props => {
   const [bbox, setBbox] = useState([]);
   const [searchingFor, setSearchingFor] = useState(props.searchingFor || '');
+  const [category, setCategory] = useState(+props.category || -1);
   const [searchingInLocation, setSearchingInLocation] = useState(props.inLocation || '');
   const [hovered, setHovered] = useState(null);
+  const router = useRouter();
   const [searchBboxGigs, { data, error, loading }] = useLazyQuery(SEARCH_BBOX_GIG, {
-    variables: { limit: 20, sort: '-_rating', bbox, searchingFor },
+    variables: { limit: 20, sort: '-_rating', bbox, searchingFor, category },
   });
 
   const { showMap } = useContext(GlobalContext).state;
@@ -35,6 +39,9 @@ const Browse = props => {
   useEffect(() => {
     setSearchingFor(props.searchingFor);
   }, [props.searchingFor]);
+  useEffect(() => {
+    setCategory(+props.category || -1);
+  }, [props.category]);
   useEffect(() => {
     setSearchingInLocation(props.inLocation);
   }, [props.inLocation]);
@@ -53,7 +60,7 @@ const Browse = props => {
         [bounds.sw[0], bounds.ne[1]],
       ];
     } else {
-      // INFO: This is how coordinates are stored NW [lat, long] + NE + SE + SW + NW (again)
+      // INFO: The coordinates are stored as follows NW [lat, long] + NE + SE + SW + NW (again)
       bbox = [
         [marginBounds.nw.lat, marginBounds.nw.lng],
         [marginBounds.ne.lat, marginBounds.ne.lng],
@@ -78,6 +85,15 @@ const Browse = props => {
 
   const onHoverLeaves = () => {
     setHovered(null);
+  };
+
+  const handleCategoryDeleteClick = () => {
+    const { query } = router;
+    delete query.category;
+    Router.push({
+      pathname: '/browse',
+      query,
+    });
   };
 
   return (
@@ -113,6 +129,17 @@ const Browse = props => {
         )}
       </Grid>
       <Grid item xs={12} sm={12} md={6} lg={6} xl={8}>
+        {category >= 0 && (
+          <Grid container spacing={0}>
+            <Box p={1}>
+              <Chip
+                color="primary"
+                onDelete={handleCategoryDeleteClick}
+                label={STRINGS.SERVICE_NEW_CATEGORIES[category]}
+              />
+            </Box>
+          </Grid>
+        )}
         <SmallGigsList
           gigs={gigs}
           hovered={hovered}
@@ -128,7 +155,7 @@ const Browse = props => {
 Browse.getInitialProps = async ctx => {
   const { query } = ctx;
 
-  return { searchingFor: query.search, inLocation: query.location };
+  return { searchingFor: query.search, inLocation: query.location, category: query.category };
 };
 
 Browse.Layout = WebsiteHeaderLayout;

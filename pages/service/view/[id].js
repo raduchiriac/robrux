@@ -189,10 +189,9 @@ const ServiceView = props => {
                   className={classes.category}
                   key={`${idx}category`}
                   clickable
+                  component="a"
                   variant="outlined"
-                  onClick={evt => {
-                    // (`Router.push: ${category}`);
-                  }}
+                  href={`/browse?category=${category}`}
                   label={STRINGS.SERVICE_NEW_CATEGORIES[category]}
                 />
               ))}

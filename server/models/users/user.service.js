@@ -1,5 +1,4 @@
 const User = require('./user.model').User;
-const { createCookieTokens } = require('../../_helpers/auth/setTokens');
 
 const createUser = async userParams => {
   if (userParams.password !== userParams.confirmPassword) {
@@ -24,9 +23,6 @@ const loginUser = async (userParams, res) => {
       if (err) {
         reject(err);
       } else if (user) {
-        const cookies = createCookieTokens(user);
-        res.cookie(...cookies.access);
-        res.cookie(...cookies.refresh);
         resolve(user);
       }
     });

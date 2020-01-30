@@ -11,7 +11,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useMutation, useApolloClient } from '@apollo/react-hooks';
 import Router from 'next/router';
-import { localStorageSaveUser } from '~/lib/hocs/withAuth';
 import { LOGIN_USER } from '~/lib/graphql/user.strings';
 import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 import useForm from '~/lib/hooks/useForm';
@@ -144,8 +143,6 @@ const Login = () => {
       if (login._id) {
         // Force a reload of all the current queries now that the user is logged
         apolloClient.cache.reset().then(() => {
-          delete login['__typename'];
-          localStorageSaveUser(login);
           Router.push({ pathname: '/' });
         });
       }

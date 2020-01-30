@@ -12,11 +12,12 @@ const gigQueries = {
       sort: { type: GraphQLString },
       searchingFor: { type: GraphQLString },
       bbox: { type: GraphQLList(GraphQLList(GraphQLFloat)) },
+      category: { type: GraphQLInt },
     },
     resolve: async (root, args, context, info) => {
       // Limit of returned results, sort by a field ('rating' or '-rating'), coordinates bounding box
-      const { limit = 0, sort = '', bbox = [], searchingFor = '' } = args;
-      return await GigService.getBboxGigs(limit, sort, bbox, searchingFor);
+      const { limit = 0, sort = '', bbox = [], searchingFor = '', category = '-1' } = args;
+      return await GigService.getBboxGigs(limit, sort, bbox, searchingFor, category);
     },
   },
   oneGig: {

@@ -15,6 +15,7 @@ const styles = theme => ({
   'small-gig__container': {
     position: 'relative',
     display: 'flex',
+    width: '100%',
     height: 140,
     flex: 1,
     padding: theme.spacing(2),
@@ -44,9 +45,10 @@ const styles = theme => ({
   'small-gig__link': {
     display: 'flex',
   },
-  'small-gig__details-container': { flex: 1 },
+  'small-gig__details-container': { flex: 1, overflow: 'hidden' },
   'small-gig__title': {
     fontWeight: 'bold',
+    lineHeight: 1.23,
   },
   'small-gig__title--loading': {
     height: 24,
@@ -86,7 +88,6 @@ const styles = theme => ({
     position: 'absolute',
     bottom: 0,
     right: 0,
-    lineHeight: 1,
     fontSize: 'inherit',
     color: theme.palette.primary.contrastText,
     backgroundColor: theme.palette.primary.light,

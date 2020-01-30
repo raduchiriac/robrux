@@ -9,7 +9,7 @@ import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 const styles = theme => ({
   'small-gigs-list__container': {
     flex: 1,
-    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
+    padding: theme.spacing(1),
   },
 });
 

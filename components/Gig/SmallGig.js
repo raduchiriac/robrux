@@ -104,8 +104,15 @@ const styles = theme => ({
   },
 });
 
-const SmallGig = props => {
-  const { scrollPosition, gig, hovered, classes, loading, _onMouseEnter = () => {}, _onMouseLeave = () => {} } = props;
+const SmallGig = ({
+  scrollPosition,
+  gig,
+  hovered,
+  classes,
+  loading,
+  _onMouseEnter = () => {},
+  _onMouseLeave = () => {},
+}) => {
   const { STRINGS } = useContext(TranslationsContext).state;
 
   return (

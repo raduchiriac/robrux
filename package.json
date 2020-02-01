@@ -57,7 +57,7 @@
     "material-ui-chip-input": "1.1.0",
     "moment": "2.24.0",
     "mongodb": "3.5.2",
-    "mongoose": "5.8.10",
+    "mongoose": "5.8.11",
     "mongoose-mongodb-errors": "0.0.2",
     "mongoose-unique-validator": "2.0.3",
     "mongoose-validator": "2.1.0",
@@ -80,7 +80,7 @@
     "react-swipeable-views-utils": "0.13.3",
     "showdown": "1.9.1",
     "showdown-xss-filter": "0.2.0",
-    "stripe": "8.8.1",
+    "stripe": "8.12.0",
     "webpack": "4.41.5"
   },
   "devDependencies": {
@@ -92,6 +92,7 @@
     "dotenv": "8.2.0",
     "eslint": "6.8.0",
     "eslint-config-prettier": "6.10.0",
+    "eslint-plugin-jsx-a11y": "6.2.3",
     "eslint-plugin-prettier": "3.1.2",
     "eslint-plugin-react": "7.18.0",
     "eslint-plugin-react-hooks": "2.3.0",

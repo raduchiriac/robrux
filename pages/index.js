@@ -121,7 +121,7 @@ const Index = () => {
       <AccountMenu className={classes.accountMenu} />
       <Box className={classes.indexPageContent}>
         <Box className={classes.indexPageLogo}>
-          <img src="/robrux.png" />
+          <img src="/robrux.png" alt="logo" />
         </Box>
         <Paper component="form" action="/browse" className={classes.indexPageForm}>
           <SearchIcon className={classes.indexPageFormSearch} aria-label="search" />

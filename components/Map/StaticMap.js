@@ -36,8 +36,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
   },
 }));
-const StaticMap = props => {
-  const { gig = {}, size = [300, 300], zoom = 13, withLink, withAddress } = props;
+const StaticMap = ({ gig = {}, size = [300, 300], zoom = 13, withLink, withAddress }) => {
   const classes = useStyles();
   if (!gig.location) {
     return <Fragment></Fragment>;

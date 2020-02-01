@@ -24,11 +24,7 @@ import Card from '@material-ui/core/Card';
 import RootRef from '@material-ui/core/RootRef';
 import Slider from '@material-ui/core/Slider';
 import Box from '@material-ui/core/Box';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Switch from '@material-ui/core/Switch';
 import loadable from '@loadable/component';
 import ChipInput from 'material-ui-chip-input';
@@ -170,8 +166,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Basics = props => {
-  const { STRINGS, values, errors, handleChange, classes, isMobile } = props;
+const Basics = ({ STRINGS, values, errors, handleChange, classes, isMobile }) => {
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
@@ -250,8 +245,7 @@ const Basics = props => {
   );
 };
 
-const Address = props => {
-  const { STRINGS, values, errors, handleChange, classes, theme } = props;
+const Address = ({ STRINGS, values, errors, handleChange, classes, theme }) => {
   const { latitude, longitude, timestamp, accuracy, error } = useGeo(false);
   const [foundLat, setFoundLat] = useState(0);
   const [foundLng, setFoundLng] = useState(0);
@@ -290,8 +284,7 @@ const Address = props => {
   );
 };
 
-const Options = props => {
-  const { STRINGS, values, errors, handleChange, classes } = props;
+const Options = ({ STRINGS, values, errors, handleChange, classes }) => {
   const [tags, setTags] = useState(values.tags || []);
   const [withHourPrice, setWithHourPrice] = useState(values.withHourPrice || false);
   const [withRangePrice, setWithRangePrice] = useState(values.withRangePrice || false);
@@ -344,8 +337,15 @@ const Options = props => {
   );
 
   const thumbnails = (values.images || []).map((image, idx) => (
-    <div onClick={evt => handleDeleteImage(idx)} key={`image${idx}`} className={classes.thumb}>
-      <img src={image.preview} />
+    <div
+      tabIndex={idx}
+      onClick={e => handleDeleteImage(idx)}
+      onKeyPress={() => {}}
+      key={`image${idx}`}
+      className={classes.thumb}
+      role="button"
+    >
+      <img src={image.preview} alt="" />
       <CancelIcon className={clsx(classes.thumbClose, 'thumb-cancel-close')} />
     </div>
   ));
@@ -456,8 +456,7 @@ const Options = props => {
   );
 };
 
-const Payment = props => {
-  const { STRINGS, values, errors, handleChange, classes, theme } = props;
+const Payment = ({ STRINGS, values, errors, handleChange, classes, theme }) => {
   const [openModal, setOpenModal] = useState(false);
 
   // TODO: Make this dynamic somehow
@@ -499,7 +498,7 @@ const Payment = props => {
   );
 };
 
-const ServiceCreate = ({ params }) => {
+const ServiceCreate = () => {
   const theme = useTheme();
   const classes = useStyles();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
@@ -610,8 +609,7 @@ const ServiceCreate = ({ params }) => {
     }
   }
 
-  const createContent = props => {
-    const { stepsLength } = props;
+  const createContent = ({ stepsLength }) => {
     return (
       <form className={isMobile ? '' : classes.form}>
         <div className={classes.stepContent}>{getStepContent(activeStep)}</div>

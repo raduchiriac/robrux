@@ -5,21 +5,19 @@ import { withStyles } from '@material-ui/core/styles';
 import usePrevious from '~/lib/hooks/usePrevious';
 import Box from '@material-ui/core/Box';
 
-const StarRating = props => {
-  const {
-    title,
-    score,
-    maxStars,
-    size,
-    disabled,
-    readOnly,
-    comment,
-    color,
-    hoverColor,
-    icon,
-    onChange = () => {},
-  } = props;
-
+const StarRating = ({
+  title,
+  score,
+  maxStars,
+  size,
+  disabled,
+  readOnly,
+  comment,
+  color,
+  hoverColor,
+  icon,
+  onChange = () => {},
+}) => {
   const [value, setValue] = useState(Math.round(score));
   const prevValue = usePrevious(value);
 

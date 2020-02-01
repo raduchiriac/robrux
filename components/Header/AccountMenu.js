@@ -56,8 +56,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const AccountMenu = props => {
-  const { className } = props;
+const AccountMenu = ({ className }) => {
   const classes = useStyles();
   const { STRINGS } = useContext(TranslationsContext).state;
   const [open, setOpen] = useState(false);

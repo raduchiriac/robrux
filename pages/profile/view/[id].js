@@ -4,10 +4,10 @@ import withApollo from '~/lib/hocs/withApollo';
 import Avatar from '@material-ui/core/Avatar';
 import Container from '@material-ui/core/Container';
 
-const Profile = props => {
+const Profile = () => {
   return (
     <Container>
-      <Avatar alt="" src="/avatars/user.svg" />
+      <Avatar alt="Name" src="/avatars/user.svg" />
     </Container>
   );
 };

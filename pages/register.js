@@ -44,8 +44,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Form = props => {
-  const { classes, errors, formErrors, values, handleChange, handleSubmit, STRINGS } = props;
+const Form = ({ classes, errors, formErrors, values, handleChange, handleSubmit, STRINGS }) => {
   const [openModal, setOpenModal] = useState(false);
   const [whichModal, setWhichModal] = useState('');
 
@@ -204,11 +203,10 @@ const Form = props => {
   );
 };
 
-const EmailSent = props => {
-  const { STRINGS } = props;
+const EmailSent = ({ message }) => {
   return (
     <Typography component="h1" align="center" variant="h5">
-      {STRINGS.REGISTER_EMAIL_SUCC}
+      {message}
     </Typography>
   );
 };
@@ -269,7 +267,7 @@ const Register = () => {
     <Container component="main" maxWidth="sm">
       <div className={classes.paper}>
         {formValidated ? (
-          <EmailSent STRINGS={STRINGS} />
+          <EmailSent message={STRINGS.REGISTER_EMAIL_SUCC} />
         ) : (
           <Form
             classes={classes}

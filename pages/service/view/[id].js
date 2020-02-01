@@ -130,8 +130,7 @@ const useStyles = makeStyles((theme, mobileMapHeight = 150) => ({
   },
 }));
 
-const ServiceView = props => {
-  const { gig, statusCode } = props;
+const ServiceView = ({ gig, statusCode }) => {
   const classes = useStyles();
   const { STRINGS } = useContext(TranslationsContext).state;
   const [anchorElFlag, setAnchorElFlag] = React.useState(null);
@@ -201,7 +200,7 @@ const ServiceView = props => {
             {gig.title}
           </Typography>
           <div className={classes.avatar}>
-            <img className={classes.avatarImage} src={gig._providerAvatar} alt="" />
+            <img className={classes.avatarImage} src={gig._providerAvatar} alt={gig._providerName} />
             <div className={classes.avatarDetails}>
               <Typography variant="subtitle1" className="service-avatar__name">
                 {gig._providerName}

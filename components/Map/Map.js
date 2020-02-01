@@ -16,25 +16,23 @@ const styles = theme => ({
   },
 });
 
-const Map = props => {
-  const {
-    classes,
-    styles,
-    gigs,
-    hovered = 0,
-    height = 300,
-    center = [],
-    city = 'bruxelles',
-    defaultZoom = 13,
-    maxZoom = 15,
-    minZoom = 9,
-    mapServiceProvider = 'osm',
-    _onMapBoundsChange = () => {},
-    _onMarkerClick = () => {},
-    _onMapChildMouseEnter = () => {},
-    _onMapChildMouseLeave = () => {},
-  } = props;
-
+const Map = ({
+  classes,
+  styles,
+  gigs,
+  hovered = 0,
+  height = 300,
+  center = [],
+  city = 'bruxelles',
+  defaultZoom = 13,
+  maxZoom = 15,
+  minZoom = 9,
+  mapServiceProvider = 'osm',
+  _onMapBoundsChange = () => {},
+  _onMarkerClick = () => {},
+  _onMapChildMouseEnter = () => {},
+  _onMapChildMouseLeave = () => {},
+}) => {
   const options = {
     defaultZoom: defaultZoom,
     maxZoom: maxZoom,

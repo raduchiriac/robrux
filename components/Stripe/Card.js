@@ -4,8 +4,7 @@ import useScript from '~/lib/hooks/useScript';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 
-const CardForm = props => {
-  const { stripe } = props;
+const CardForm = ({ stripe }) => {
   const [state, setState] = useState({
     errorMessage: '',
   });
@@ -35,9 +34,7 @@ const CardForm = props => {
   return (
     <div className="">
       <form onSubmit={handleSubmit}>
-        <label>
-          <CardElement onChange={handleChange} />
-        </label>
+        <CardElement onChange={handleChange} />
         <div className="error" role="alert">
           {state.errorMessage}
         </div>
@@ -49,7 +46,7 @@ const CardForm = props => {
 
 const CardFormInjected = injectStripe(CardForm);
 
-const Card = props => {
+const Card = ({ handleResult }) => {
   const [scriptLoaded, scriptError] = useScript('https://js.stripe.com/v3/');
 
   return (
@@ -59,7 +56,7 @@ const Card = props => {
         <Box>
           <StripeProvider apiKey={process.env.STRIPE_PUBLIC_KEY}>
             <Elements>
-              <CardFormInjected handleResult={props.handleResult} />
+              <CardFormInjected handleResult={handleResult} />
             </Elements>
           </StripeProvider>
         </Box>

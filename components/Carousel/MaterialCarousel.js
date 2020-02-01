@@ -28,8 +28,7 @@ const useStyles = props =>
     img: {},
   }))(props);
 
-const MaterialCarousel = props => {
-  const { images, width, height } = props;
+const MaterialCarousel = ({ images, width, height }) => {
   const classes = useStyles({ width, height });
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);

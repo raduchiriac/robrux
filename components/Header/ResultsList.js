@@ -18,9 +18,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function ResultsList(props) {
+export default function ResultsList({ results, searching }) {
   const classes = useStyles();
-  const { results, searching } = props;
   return (
     <Grid item>
       <List dense={true} className={classes['result-list__container']}>

@@ -15,9 +15,8 @@ const useStyles = makeStyles(theme => ({
 
 const handleClick = evt => {};
 
-export default function Breadcrumb(props) {
+export default function Breadcrumb({ links }) {
   const classes = useStyles();
-  const { links } = props;
 
   return (
     <div className={classes.breadcrumbContainer}>

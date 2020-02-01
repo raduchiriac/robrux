@@ -144,3 +144,19 @@ h6,
 p {
   white-space: pre-line;
 }
+@keyframes gradient {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+@keyframes slide {
+  0% {
+    margin-left: 0;
+  }
+  100% {
+    margin-left: -50px;
+  }
+}

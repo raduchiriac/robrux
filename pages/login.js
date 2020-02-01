@@ -53,9 +53,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Form = props => {
-  const { classes, errors, formErrors, values, handleChange, handleSubmit, STRINGS } = props;
-
+const Form = ({ classes, errors, formErrors, values, handleChange, handleSubmit, STRINGS }) => {
   return (
     <Fragment>
       <form className={classes.form} noValidate onSubmit={evt => handleSubmit(evt)}>

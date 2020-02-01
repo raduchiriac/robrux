@@ -25,9 +25,8 @@ const useStyles = makeStyles(theme => ({
   paragraph: { margin: theme.spacing(2.5, 0) },
 }));
 
-const NewsId = props => {
+const NewsId = ({ news, statusCode }) => {
   const classes = useStyles();
-  const { news, statusCode } = props;
   const { STRINGS } = useContext(TranslationsContext).state;
 
   if (!news) return <Error statusCode={statusCode} />;

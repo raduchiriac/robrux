@@ -19,9 +19,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const GoogleMapsAutocomplete = props => {
+const GoogleMapsAutocomplete = ({ onAddressFound = () => {}, label = '' }) => {
   const classes = useStyles();
-  const { onAddressFound = () => {}, label = '' } = props;
 
   const [searchedAddress, setSearchedAddress] = React.useState('');
   const [googlePlaces, setGooglePlaces] = React.useState([]);

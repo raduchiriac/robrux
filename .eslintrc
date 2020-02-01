@@ -4,11 +4,7 @@
     "es6": true,
     "node": true
   },
-  "extends": ["plugin:prettier/recommended"],
-  "globals": {
-    "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
-  },
+  "extends": ["plugin:jsx-a11y/recommended", "plugin:prettier/recommended"],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -17,6 +13,12 @@
     "sourceType": "module"
   },
   "parser": "babel-eslint",
-  "plugins": ["react", "react-hooks"],
-  "rules": { "react-hooks/rules-of-hooks": "error", "react-hooks/exhaustive-deps": "error", "no-console": "warn" }
+  "plugins": ["react", "react-hooks", "jsx-a11y"],
+  "rules": {
+    "jsx-a11y/no-autofocus": "off",
+    "jsx-a11y/anchor-has-content": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "error",
+    "no-console": "warn"
+  }
 }

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, Children } from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -7,9 +7,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 
-const DialogHeight = props => {
-  const { id, open = false, handleClose, title, buttonText } = props;
-
+const DialogHeight = ({ children, id, open = false, handleClose, title, buttonText }) => {
   const descriptionElementRef = useRef(null);
   useEffect(() => {
     if (open) {
@@ -30,7 +28,7 @@ const DialogHeight = props => {
       <DialogTitle id={`scroll-${id}-title`}>{title}</DialogTitle>
       <DialogContent dividers>
         <DialogContentText component="div" id={`scroll-${id}-description`} ref={descriptionElementRef} tabIndex={-1}>
-          {props.children}
+          {Children.only(children)}
         </DialogContentText>
       </DialogContent>
       <DialogActions>

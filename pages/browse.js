@@ -14,37 +14,37 @@ import Map from '~/components/Map/Map';
 import Breadcrumb from '~/components/Breadcrumb/Breadcrumb';
 import SmallGigsList from '~/components/Gig/SmallGigsList';
 
-const Browse = props => {
+const Browse = ({ search, category, inLocation }) => {
   const [bbox, setBbox] = useState([]);
-  const [searchingFor, setSearchingFor] = useState(props.searchingFor || '');
-  const [category, setCategory] = useState(+props.category || -1);
-  const [searchingInLocation, setSearchingInLocation] = useState(props.inLocation || '');
+  const [_searchingFor, setSearchingFor] = useState(search || '');
+  const [_category, setCategory] = useState(+category || -1);
+  const [_searchingInLocation, setSearchingInLocation] = useState(inLocation || '');
   const [hovered, setHovered] = useState(null);
   const router = useRouter();
   const [searchBboxGigs, { data, error, loading }] = useLazyQuery(SEARCH_BBOX_GIG, {
-    variables: { limit: 20, sort: '-_rating', bbox, searchingFor, category },
+    variables: { limit: 20, sort: '-_rating', bbox, search: _searchingFor, category: _category },
   });
 
   const { showMap } = useContext(GlobalContext).state;
   const { STRINGS } = useContext(TranslationsContext).state;
 
+  // Update state when the props change
+  // TODO: usePrevious()
+  useEffect(() => {
+    setSearchingFor(search);
+  }, [search]);
+  useEffect(() => {
+    setCategory(+category || -1);
+  }, [category]);
+  useEffect(() => {
+    setSearchingInLocation(inLocation);
+  }, [inLocation]);
+
   useEffect(() => {
     if (bbox.length) {
       searchBboxGigs();
     }
-  }, [bbox, searchingFor, searchBboxGigs]);
-
-  // Update state when the props change
-  // TODO: usePrevious()
-  useEffect(() => {
-    setSearchingFor(props.searchingFor);
-  }, [props.searchingFor]);
-  useEffect(() => {
-    setCategory(+props.category || -1);
-  }, [props.category]);
-  useEffect(() => {
-    setSearchingInLocation(props.inLocation);
-  }, [props.inLocation]);
+  }, [bbox, _searchingFor, _category, searchBboxGigs]);
 
   let gigs = { data: (data && data.gigs) || undefined, loading };
 
@@ -70,7 +70,7 @@ const Browse = props => {
       ];
     }
 
-    setBbox(bbox, searchingFor);
+    setBbox(bbox);
   };
 
   const onGigClick = gig => {
@@ -98,17 +98,17 @@ const Browse = props => {
 
   return (
     <Grid container className="home-page__container" spacing={1}>
-      {!!searchingFor && (
+      {!!_searchingFor && (
         <Grid container>
           <Breadcrumb
             links={[
               { href: '/', text: STRINGS.SITE_NAME },
-              searchingInLocation &&
-                CITIES[searchingInLocation] && {
-                  href: `/browse?location=${searchingInLocation}`,
-                  text: CITIES[searchingInLocation].name,
+              _searchingInLocation &&
+                CITIES[_searchingInLocation] && {
+                  href: `/browse?location=${_searchingInLocation}`,
+                  text: CITIES[_searchingInLocation].name,
                 },
-              { href: '', text: searchingFor },
+              { href: '', text: _searchingFor },
             ].filter(Boolean)}
           />
         </Grid>
@@ -117,7 +117,7 @@ const Browse = props => {
         {showMap && (
           <Map
             gigs={gigs}
-            city={searchingInLocation}
+            city={_searchingInLocation}
             hovered={hovered}
             mapServiceProvider="osm"
             maxZoom={16}
@@ -129,13 +129,13 @@ const Browse = props => {
         )}
       </Grid>
       <Grid item xs={12} sm={12} md={6} lg={6} xl={8}>
-        {category >= 0 && (
+        {_category >= 0 && (
           <Grid container spacing={0}>
             <Box p={1}>
               <Chip
                 color="primary"
                 onDelete={handleCategoryDeleteClick}
-                label={STRINGS.SERVICE_NEW_CATEGORIES[category]}
+                label={STRINGS.SERVICE_NEW_CATEGORIES[_category]}
               />
             </Box>
           </Grid>
@@ -155,7 +155,7 @@ const Browse = props => {
 Browse.getInitialProps = async ctx => {
   const { query } = ctx;
 
-  return { searchingFor: query.search, inLocation: query.location, category: query.category };
+  return { search: query.search, inLocation: query.location, category: query.category };
 };
 
 Browse.Layout = WebsiteHeaderLayout;

@@ -39,9 +39,8 @@ const classes = theme => ({
   },
 });
 
-const Result = props => {
+const Result = ({ searching, result, isLast, isClickable, classes }) => {
   const handleResultClick = () => {};
-  const { searching, result, isLast, isClickable, classes } = props;
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
 
@@ -75,7 +74,7 @@ const Result = props => {
         <ListItem alignItems="flex-start" button={isClickable} onClick={handleResultClick}>
           {result._providerAvatar && (
             <ListItemAvatar>
-              <Avatar src={result._providerAvatar} />
+              <Avatar src={result._providerAvatar} alt={result._providerName} />
             </ListItemAvatar>
           )}
           <ListItemText

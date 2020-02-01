@@ -16,18 +16,17 @@ const useStyles = props =>
     },
   }))(props);
 
-const CheckboxWithLink = props => {
-  const {
-    id,
-    required,
-    checkboxText = '',
-    checkboxLink = '',
-    checkboxHref = '/',
-    error,
-    value,
-    handleChange = () => {},
-    handleLinkClick,
-  } = props;
+const CheckboxWithLink = ({
+  id,
+  required,
+  checkboxText = '',
+  checkboxLink = '',
+  checkboxHref = '/',
+  error,
+  value,
+  handleChange = () => {},
+  handleLinkClick,
+}) => {
   const classes = useStyles({ error });
 
   const label = (

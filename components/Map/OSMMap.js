@@ -11,9 +11,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const OSMMap = ({ children, ...props }) => {
+const OSMMap = ({ children, defaultZoom, defaultCenter, mapServiceProvider, maxZoom, minZoom, onChange }) => {
   const classes = useStyles();
-  const { defaultZoom, defaultCenter, mapServiceProvider, maxZoom, minZoom, onChange } = props;
 
   // TODO: How to read window.devicePixelRatio with SSR?
   const dpr = 2;

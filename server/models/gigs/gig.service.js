@@ -6,7 +6,7 @@ const createGig = async gigParams => {
   return gigResult;
 };
 
-const getBboxGigs = async (limit = 0, sort = '', bbox = [], searchingFor = '', category) => {
+const getBboxGigs = async (limit = 0, sort = '', bbox = [], search = '', category) => {
   let selector = { status: 'valid' };
   if (bbox.length) {
     selector.location = {
@@ -18,8 +18,8 @@ const getBboxGigs = async (limit = 0, sort = '', bbox = [], searchingFor = '', c
       },
     };
   }
-  if (!!searchingFor.length) {
-    selector['$text'] = { $search: searchingFor };
+  if (!!search.length) {
+    selector['$text'] = { $search: search };
   }
   if (category >= 0) {
     selector.categories = { $in: [category] };

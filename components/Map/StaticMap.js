@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
       transform: 'translateX(-50%) translateY(-50%) scale(0.66)',
     },
   },
-  mapStaticGoogle: {
+  'mapStatic-google': {
     objectFit: 'cover',
   },
   mapStaticMarker: {
@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
   },
 }));
-const StaticMap = ({ gig = {}, size = [300, 300], zoom = 13, withLink, withAddress }) => {
+const StaticMap = ({ gig = {}, size = [300, 300], zoom = 13, withLink, withAddress, serviceProvider = 'google' }) => {
   const classes = useStyles();
   if (!gig.location) {
     return <Fragment></Fragment>;
@@ -62,6 +62,7 @@ const StaticMap = ({ gig = {}, size = [300, 300], zoom = 13, withLink, withAddre
     }
     return convertedStyle;
   }).join('&');
+
   return (
     <div className={classes.root} data-value="root">
       <ConditionalWrap
@@ -75,7 +76,7 @@ const StaticMap = ({ gig = {}, size = [300, 300], zoom = 13, withLink, withAddre
         <div className={classes.mapStatic}>
           <img
             data-value="map"
-            className={classes.mapStaticGoogle}
+            className={classes[`mapStatic-${serviceProvider}`]}
             width={size[0]}
             height={size[1]}
             src={`https://maps.googleapis.com/maps/api/staticmap?center=${location}&zoom=${zoom}&scale=2&size=${size.join(

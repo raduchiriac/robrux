@@ -245,7 +245,7 @@ const ServiceView = ({ gig, statusCode }) => {
           </Box>
         </Container>
         {true && (
-          // TODO: If there are reviews
+          // TODO: Check above if there are reviews
           <Box>
             {Array.apply(null, Array(4)).map((el, idx) => (
               <Box mb={2} key={idx}>

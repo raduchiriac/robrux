@@ -109,7 +109,7 @@ const Map = ({
           {markers}
         </GoogleMap>
       )}
-      {(mapServiceProvider == 'osm' || mapServiceProvider == 'mapbox') && (
+      {(mapServiceProvider == 'osm' || mapServiceProvider == 'mapbox' || mapServiceProvider == 'gmaps') && (
         <OSMMap
           mapServiceProvider={mapServiceProvider}
           defaultCenter={defaultCenter}

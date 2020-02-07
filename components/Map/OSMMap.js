@@ -3,6 +3,9 @@ import Map from 'pigeon-maps';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
+  mapTiles_gmap: {
+    filter: `invert(0)`,
+  },
   mapTiles_osm: {
     filter: 'contrast(0.88) brightness(0.88) invert(0) sepia(1) hue-rotate(180deg) saturate(0.8)',
   },
@@ -18,14 +21,12 @@ const OSMMap = ({ children, defaultZoom, defaultCenter, mapServiceProvider, maxZ
   const dpr = 2;
 
   const providers = {
-    osm: (x, y, z) => {
-      return `https://stamen-tiles.a.ssl.fastly.net/toner/${z}/${x}/${y}${dpr >= 2 ? '@2x' : ''}.png`;
-    },
-    mapbox: (x, y, z) => {
-      return `https://api.mapbox.com/v4/mapbox.outdoors/${z}/${x}/${y}${dpr >= 2 ? '@2x' : ''}.png?access_token=${
+    gmap: (x, y, z) => `https://mt0.google.com/vt/lyrs=m&x=${x}&y=${y}&z=${z}`,
+    osm: (x, y, z) => `https://stamen-tiles.a.ssl.fastly.net/toner/${z}/${x}/${y}${dpr >= 2 ? '@2x' : ''}.png`,
+    mapbox: (x, y, z) =>
+      `https://api.mapbox.com/v4/mapbox.outdoors/${z}/${x}/${y}${dpr >= 2 ? '@2x' : ''}.png?access_token=${
         process.env.MAPBOX_API
-      }`;
-    },
+      }`,
   };
 
   return (

@@ -70,11 +70,13 @@ app.prepare().then(() => {
     });
     server.use(
       session({
+        store,
         secret: process.env.SESS_SECRET,
         cookie: {
           maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+          secure: !dev,
+          sameSite: 'lax',
         },
-        store,
         resave: true,
         saveUninitialized: true,
       })

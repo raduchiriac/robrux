@@ -46,7 +46,7 @@ const Marker = ({
         {...(onClick ? { onClick: onClick } : {})}
       />
     );
-  } else if (mapServiceProvider == 'osm' || mapServiceProvider == 'mapbox') {
+  } else if (mapServiceProvider == 'osm' || mapServiceProvider == 'mapbox' || mapServiceProvider == 'gmaps') {
     const style = {
       left: `${left}px`,
       top: `${top}px`,

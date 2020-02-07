@@ -18,12 +18,16 @@ const gigs = {
   loading: false,
 };
 
-storiesOf('Maps: Google Maps', module)
+storiesOf('Maps: Google (API)', module)
   .add('With one marker', () => <Map gigs={gigs} mapServiceProvider="google" />)
   .add('Static map (with address)', () => (
     <StaticMap gig={gigs.data[0]} size={[300, 450]} zoom={16} withAddress={true} />
   ))
   .add('Static map (with link)', () => <StaticMap gig={gigs.data[0]} size={[300, 450]} zoom={16} withLink={true} />);
+
+storiesOf('Maps: Google (free layers)', module).add('With one marker', () => (
+  <Map gigs={gigs} mapServiceProvider="gmaps" />
+));
 
 storiesOf('Maps: OpenStreetMap', module).add('With one marker', () => <Map gigs={gigs} mapServiceProvider="osm" />);
 

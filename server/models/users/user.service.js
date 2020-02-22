@@ -17,7 +17,7 @@ const createUser = async userParams => {
   });
 };
 
-const loginUser = async (userParams, res) => {
+const loginUser = async userParams => {
   return new Promise((resolve, reject) => {
     User.authenticate()(userParams.email, userParams.password, (fn, user, err) => {
       if (err) {

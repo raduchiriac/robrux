@@ -3,6 +3,8 @@ const { GraphQLNonNull, GraphQLInputObjectType } = require('graphql');
 const UserType = require('./user.model').UserType;
 const UserAuthType = require('./user.model').UserAuthType;
 const UserService = require('./user.service');
+const cookie = require('cookie');
+const jwt = require('jsonwebtoken');
 
 const UserInputTypeRegister = new GraphQLInputObjectType({
   name: 'UserInputTypeRegister',
@@ -39,7 +41,23 @@ const userMutations = {
       },
     },
     resolve: async (rootValue, { input }, context) => {
-      return await UserService.loginUser(input, context.res);
+      const user = await UserService.loginUser(input);
+      const token = jwt.sign({ _id: user._id, time: new Date() }, process.env.JWT_SECRET, {
+        expiresIn: '6h',
+      });
+
+      context.res.setHeader(
+        'Set-Cookie',
+        cookie.serialize('token', token, {
+          httpOnly: true,
+          maxAge: 6 * 60 * 60,
+          path: '/',
+          sameSite: 'lax',
+          secure: process.env.NODE_ENV === 'production',
+        })
+      );
+
+      return user;
     },
   },
 };

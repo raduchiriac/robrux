@@ -23,11 +23,19 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Category = ({ classes, id, title }) => {
-  return <Chip className={classes} clickable component="a" href={`/browse?category=${id}`} label={title} />;
+const Category = ({ classes, id, title, location }) => {
+  return (
+    <Chip
+      className={classes}
+      clickable
+      component="a"
+      href={`/browse?category=${id}${location ? `&location=${location}` : ''}`}
+      label={title}
+    />
+  );
 };
 
-const CategoriesTwoRows = ({ categories }) => {
+const CategoriesTwoRows = ({ categories, location }) => {
   const classes = useStyles();
 
   return (
@@ -36,7 +44,13 @@ const CategoriesTwoRows = ({ categories }) => {
         .map((service, idx) => ({ title: service, id: idx }))
         .sort(dynamicSort('title'))
         .map(service => (
-          <Category key={service.id} id={service.id} title={service.title} classes={classes.category} />
+          <Category
+            location={location}
+            key={service.id}
+            id={service.id}
+            title={service.title}
+            classes={classes.category}
+          />
         ))}
     </Box>
   );

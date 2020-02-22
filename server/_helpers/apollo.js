@@ -36,16 +36,8 @@ const schema = new GraphQLSchema({
 
 const context = ({ req, res, connection }) => {
   if (connection) {
-    // Check connection for metadata
-    // console.log(
-    //   '🆖[Apollo context] There is a connection:',
-    //   Object.keys(connection),
-    //   'connection.context:',
-    //   Object.keys(connection.context)
-    // );
     return connection.context;
   } else {
-    // console.log('🆖[Apollo context] no connection', req.headers);
     return { req, res };
   }
 };
@@ -65,7 +57,7 @@ const GRAPHQL_PLAYGROUND_CONFIG = {
     'editor.fontSize': 12,
     'editor.reuseHeaders': true,
     'editor.theme': 'light',
-    'request.credentials': 'include',
+    'request.credentials': 'same-origin',
     'schema.polling.interval': 10 * 1000,
   },
 };

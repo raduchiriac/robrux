@@ -15,6 +15,7 @@ import { LOGIN_USER } from '~/lib/graphql/user.strings';
 import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 import useForm from '~/lib/hooks/useForm';
 import withApollo from '~/lib/hocs/withApollo';
+import { GlobalContext } from '~/lib/contexts/GlobalContext';
 import Link from '~/lib/hocs/withLink';
 
 const useStyles = makeStyles(theme => ({
@@ -116,6 +117,7 @@ const Form = ({ classes, errors, formErrors, values, handleChange, handleSubmit,
 
 const Login = () => {
   const classes = useStyles();
+  const { dispatchGlobalContext } = useContext(GlobalContext);
   const { STRINGS } = useContext(TranslationsContext).state;
 
   const _login = () => {
@@ -141,6 +143,7 @@ const Login = () => {
       if (login._id) {
         // Force a reload of all the current queries now that the user is logged
         apolloClient.cache.reset().then(() => {
+          // TODO: Redirect to refferal
           Router.push({ pathname: '/' });
         });
       }

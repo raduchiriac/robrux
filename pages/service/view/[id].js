@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme, mobileMapHeight = 150) => ({
   flag: {
     position: 'absolute',
     right: theme.spacing(1),
-    top: theme.spacing(2),
+    top: theme.spacing(1),
   },
   report: {
     textTransform: 'none',
@@ -154,7 +154,6 @@ const ServiceView = ({ gig, statusCode }) => {
       <Grid item xs={12} sm={8} md={8} lg={9}>
         <Paper className={classes.container}>
           <IconButton
-            size="small"
             className={classes.flag}
             color="primary"
             onClick={handleClickFlag}
@@ -243,23 +242,23 @@ const ServiceView = ({ gig, statusCode }) => {
           <Box mt={2}>
             <MaterialCarousel images={gig.images} height={200}></MaterialCarousel>
           </Box>
+          {true && (
+            // TODO: Check above if there are reviews
+            <Box>
+              {Array.apply(null, Array(4)).map((el, idx) => (
+                <Box mb={2} key={idx}>
+                  <StarRating
+                    score={Math.random() * 5}
+                    readOnly={true}
+                    color="#f7a918"
+                    title="Anonymous User"
+                    comment="Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio ea laudantium at! Officia aliquam sunt nulla? Eum totam velit ipsa molestias. Nihil aliquid temporibus voluptates eligendi ratione, nam corporis illum!"
+                  />
+                </Box>
+              ))}
+            </Box>
+          )}
         </Container>
-        {true && (
-          // TODO: Check above if there are reviews
-          <Box>
-            {Array.apply(null, Array(4)).map((el, idx) => (
-              <Box mb={2} key={idx}>
-                <StarRating
-                  score={Math.random() * 5}
-                  readOnly={true}
-                  color="#f7a918"
-                  title="Anonymous User"
-                  comment="Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio ea laudantium at! Officia aliquam sunt nulla? Eum totam velit ipsa molestias. Nihil aliquid temporibus voluptates eligendi ratione, nam corporis illum!"
-                />
-              </Box>
-            ))}
-          </Box>
-        )}
         <Box mt={2} className={classes.serviceActions}>
           <Button variant="contained" color="primary">
             {STRINGS.SERVICE_CONTACT}

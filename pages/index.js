@@ -11,6 +11,7 @@ import NativeSelect from '@material-ui/core/NativeSelect';
 import Button from '@material-ui/core/Button';
 import Fade from '@material-ui/core/Fade';
 import Link from '~/lib/hocs/withLink';
+import withApollo from '~/lib/hocs/withApollo';
 import AccountMenu from '~/components/Header/AccountMenu';
 import CategoriesTwoRows from '~/components/Categories/CategoriesTwoRows';
 import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
@@ -159,7 +160,7 @@ const Index = () => {
             </NativeSelect>
           </FormControl>
         </Paper>
-        <CategoriesTwoRows categories={STRINGS.SERVICE_NEW_CATEGORIES} />
+        <CategoriesTwoRows location={citiesDropDownValue} categories={STRINGS.SERVICE_NEW_CATEGORIES} />
         <Box>
           <Link className={classes.buttonAway} href="/browse">
             {STRINGS.INDEX_BROWSE_FREE}
@@ -170,4 +171,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default withApollo(Index);

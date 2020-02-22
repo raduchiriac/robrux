@@ -99,6 +99,7 @@ const AccountMenu = ({ className }) => {
         <Button
           ref={anchorRef}
           aria-controls={open ? 'account-menu-list-grow' : undefined}
+          aria-label="account"
           aria-haspopup="true"
           onClick={handleToggle}
           className={classes.button}

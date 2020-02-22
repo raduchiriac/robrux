@@ -1,9 +1,15 @@
+const mongoose = require('mongoose');
 const { GraphQLClient } = require('graphql-request');
 const client = new GraphQLClient(
   `${process.env.HOSTNAME}:${Number(process.env.PORT) ? process.env.PORT : ''}${process.env.GRAPHQL_ROUTE}`,
-  {}
+  {
+    credentials: 'same-origin',
+    mode: 'cors',
+    headers: {
+      // authorization: 'Bearer MY_TOKEN',
+    },
+  }
 );
-const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const News = require('./models/news/news.model').News;

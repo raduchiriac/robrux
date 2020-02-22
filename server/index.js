@@ -1,14 +1,14 @@
 const dev = process.env.NODE_ENV !== 'production';
 if (dev) require('dotenv').config();
-const express = require('express');
-const next = require('next');
-const cors = require('cors');
-const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
+const express = require('express');
+const jwt = require('jsonwebtoken');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
+const next = require('next');
 const passport = require('passport');
-const jwt = require('jsonwebtoken');
 
 require('./_helpers/passport');
 
@@ -30,12 +30,11 @@ app.prepare().then(() => {
       cors({
         origin: `${process.env.HOSTNAME}:${dev ? process.env.PORT : ''}`,
         credentials: true,
-        maxAge: 3600,
+        maxAge: 60 * 60,
       })
     );
     server.use(cookieParser());
 
-    // TODO: Do we still need this?
     // server.use((req, res, next) => {
     //   // Use cookie parser to populate current user
     //   const { token } = req.cookies;
@@ -43,9 +42,8 @@ app.prepare().then(() => {
     //   if (token) {
     //     try {
     //       // put the userId onto the req for future requests to access
-    //       const { id } = jwt.verify(token, process.env.JWT_SECRET);
+    //       const { email, id } = jwt.verify(token, process.env.JWT_SECRET);
     //       req.userId = id;
-    //       console.log('🚨[server.use] Setting userId from "token" in the req.userId:', id);
     //     } catch (err) {
     //       // Error verifing the token (err.message)
     //     }

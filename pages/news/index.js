@@ -12,7 +12,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { useRouter } from 'next/router';
 import { GET_NEWS } from '~/lib/graphql/news.strings';
-import { withApollo } from '~/lib/hocs/withApollo';
+import withApollo from '~/lib/hocs/withApollo';
 import { WebsiteHeaderLayout } from '~/lib/layouts/WebsiteHeaderLayout';
 import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 

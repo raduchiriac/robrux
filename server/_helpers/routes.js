@@ -4,8 +4,7 @@ const { stripe } = require('./stripe');
 // All for non-GQL routes
 module.exports = (server, passport) => {
   server.get('/logout', (req, res) => {
-    res.clearCookie('access');
-    res.clearCookie('refresh');
+    res.clearCookie('token');
     req.logout();
     res.redirect('/');
   });

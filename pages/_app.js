@@ -8,17 +8,21 @@ import { GlobalContextProvider } from '~/lib/contexts/GlobalContext';
 import { LightTheme } from '~/lib/themes/light-theme';
 import { EmptyLayout } from '~/lib/layouts/EmptyLayout';
 
+import cookies from 'next-cookies';
+
 import './_app.css';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import 'react-mde/lib/styles/css/react-mde-all.css';
 
-if (process.env.NODE_ENV !== 'production') {
-  const whyDidYouRender = require('@welldone-software/why-did-you-render');
-  whyDidYouRender(React);
-}
-
 class NextApp extends App {
   static displayName = 'NextApp';
+
+  static async getInitialProps({ Component, ctx }) {
+    const { token } = cookies(ctx);
+    const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
+
+    return { pageProps };
+  }
 
   componentDidMount() {
     // Remove the server-side injected CSS.
@@ -29,7 +33,7 @@ class NextApp extends App {
   }
 
   render() {
-    const { Component, pageProps, apolloClient } = this.props;
+    const { Component, pageProps } = this.props;
     const Layout = Component.Layout || EmptyLayout;
 
     return (

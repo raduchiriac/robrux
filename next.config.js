@@ -15,11 +15,11 @@ module.exports = {
       ...config.plugins,
 
       new webpack.EnvironmentPlugin({
-        HOSTNAME: JSON.stringify(process.env.HOSTNAME || ''),
-        PORT: JSON.stringify(process.env.PORT || ''),
-        GRAPHQL_ROUTE: JSON.stringify(process.env.GRAPHQL_ROUTE || ''),
-        GOOGLE_MAPS_API: JSON.stringify(process.env.GOOGLE_MAPS_API || ''),
-        MAPBOX_API: JSON.stringify(process.env.MAPBOX_API || ''),
+        HOSTNAME: JSON.stringify(process.env.HOSTNAME) || '',
+        PORT: JSON.stringify(process.env.PORT) || '',
+        GRAPHQL_ROUTE: JSON.stringify(process.env.GRAPHQL_ROUTE) || '',
+        GOOGLE_MAPS_API: JSON.stringify(process.env.GOOGLE_MAPS_API) || '',
+        MAPBOX_API: JSON.stringify(process.env.MAPBOX_API) || '',
       }),
     ];
 

@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const express = require('express');
-const jwt = require('jsonwebtoken');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const next = require('next');

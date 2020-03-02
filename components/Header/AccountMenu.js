@@ -1,5 +1,7 @@
-import React, { useRef, useState, useContext, useEffect } from 'react';
+import React, { useRef, useState, useContext, useEffect, Fragment } from 'react';
 import Button from '@material-ui/core/Button';
+import withApollo from '~/lib/hocs/withApollo';
+import { useQuery } from '@apollo/react-hooks';
 import clsx from 'clsx';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
@@ -13,54 +15,67 @@ import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
+import { UserContext } from '~/lib/contexts/UserContext';
+import { GET_USER_INFO } from '~/lib/graphql/user.strings';
 import Link from '~/lib/hocs/withLink';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-    zIndex: 20,
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  button: {
-    padding: 0,
-    '&:hover': {
-      backgroundColor: 'transparent',
+const useStyles = props =>
+  makeStyles(theme => ({
+    root: {
+      display: 'flex',
+      zIndex: 20,
+      flexDirection: 'column',
+      alignItems: 'center',
     },
-  },
-  internalBadge: {
-    position: 'absolute',
-    right: theme.spacing(2),
-    top: '50%',
-  },
-  link: {
-    position: 'relative',
-    display: 'block',
-    '&:hover': {
-      textDecoration: 'none',
+    badge: {
+      alignSelf: 'flex-end',
     },
-  },
-  name: {
-    background: 'white',
-    padding: theme.spacing(1),
-    borderRadius: theme.shape.borderRadius * 3,
-    '&:empty': {
-      display: 'none',
+    button: {
+      padding: 0,
+      '&:hover': {
+        backgroundColor: 'transparent',
+      },
     },
-  },
-  avatar: {
-    width: 64,
-    height: 64,
-    boxShadow: theme.shadows[5],
-    marginBottom: theme.spacing(1),
-  },
-}));
+    internalBadge: {
+      position: 'absolute',
+      right: theme.spacing(2),
+      top: '50%',
+    },
+    link: {
+      position: 'relative',
+      display: 'block',
+      '&:hover': {
+        textDecoration: 'none',
+      },
+    },
+    name: {
+      background: 'white',
+      transition: theme.transitions.create('opacity'),
+      opacity: props.hovered ? 1 : 0,
+      visibility: props.hovered ? 'visible' : 'hidden',
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(1),
+      borderRadius: theme.shape.borderRadius,
+      '&:empty': {
+        display: 'none',
+      },
+    },
+    avatar: {
+      width: 64,
+      height: 64,
+      boxShadow: theme.shadows[5],
+      marginBottom: theme.spacing(1),
+    },
+  }))(props);
 
 const AccountMenu = ({ className }) => {
-  const classes = useStyles();
   const { STRINGS } = useContext(TranslationsContext).state;
+  const { user } = useContext(UserContext);
   const [open, setOpen] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const classes = useStyles({ hovered });
   const anchorRef = useRef(null);
+  const { loading, error, data } = useQuery(GET_USER_INFO, { skip: !user._id, variables: { id: user._id } });
 
   const handleToggle = () => {
     setOpen(prevOpen => !prevOpen);
@@ -82,7 +97,7 @@ const AccountMenu = ({ className }) => {
 
   // return focus to the button when we transitioned from !open -> open
   // TODO: usePrevious()
-  const prevOpen = React.useRef(open);
+  const prevOpen = useRef(open);
   useEffect(() => {
     if (prevOpen.current === true && open === false) {
       anchorRef.current.focus();
@@ -92,10 +107,14 @@ const AccountMenu = ({ className }) => {
 
   // https://www.iconfinder.com/avatars-smiley-icons?page=3&price=free
   // https://www.iconfinder.com/iconsets/user-pictures
-
   return (
     <div className={clsx(classes.root, className)}>
-      <Badge color="secondary" badgeContent={1} anchorOrigin={{ horizontal: 'right', vertical: 'top' }}>
+      <Badge
+        className={classes.badge}
+        color="secondary"
+        badgeContent={1}
+        anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+      >
         <Button
           ref={anchorRef}
           aria-controls={open ? 'account-menu-list-grow' : undefined}
@@ -104,10 +123,20 @@ const AccountMenu = ({ className }) => {
           onClick={handleToggle}
           className={classes.button}
         >
-          <Avatar className={classes.avatar} alt="" src="/avatars/user.svg" />
+          <Avatar
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+            className={classes.avatar}
+            alt=""
+            src={(data && data.userInfo.avatar) || '/avatars/user.svg'}
+          />
         </Button>
       </Badge>
-      <Typography className={classes.name} variant="subtitle2"></Typography>
+      {data && (
+        <Typography className={classes.name} variant="subtitle2">
+          {`${data.userInfo.firstName} ${data.userInfo.lastName}`}
+        </Typography>
+      )}
       <Popper open={open} placement="bottom-end" anchorEl={anchorRef.current} role={undefined} transition disablePortal>
         {({ TransitionProps }) => (
           <Grow {...TransitionProps} style={{ transformOrigin: 'center top' }}>
@@ -118,19 +147,27 @@ const AccountMenu = ({ className }) => {
                     <Badge variant="dot" className={classes.internalBadge} color="secondary" badgeContent={1}></Badge>
                     <MenuItem>{STRINGS.NEWS_NOW}</MenuItem>
                   </Link>
-                  <Link href="/profile/view/id" className={classes.link}>
-                    <MenuItem>{STRINGS.MY_PROFILE}</MenuItem>
-                  </Link>
+                  {user._id && (
+                    <Link href={`/profile/view/${user._id}`} className={classes.link}>
+                      <MenuItem>{STRINGS.MY_PROFILE}</MenuItem>
+                    </Link>
+                  )}
                   <Divider />
-                  <Link href="/login" className={classes.link}>
-                    <MenuItem>{STRINGS.LOGIN_NOW}</MenuItem>
-                  </Link>
-                  <Link href="/register" className={classes.link}>
-                    <MenuItem>{STRINGS.REGISTER_NOW}</MenuItem>
-                  </Link>
-                  <Link href="/logout" className={classes.link}>
-                    <MenuItem>{STRINGS.LOGOUT}</MenuItem>
-                  </Link>
+                  {!user._id && (
+                    <div>
+                      <Link href="/login" className={classes.link}>
+                        <MenuItem>{STRINGS.LOGIN_NOW}</MenuItem>
+                      </Link>
+                      <Link href="/register" className={classes.link}>
+                        <MenuItem>{STRINGS.REGISTER_NOW}</MenuItem>
+                      </Link>
+                    </div>
+                  )}
+                  {user._id && (
+                    <Link href="/logout" className={classes.link}>
+                      <MenuItem>{STRINGS.LOGOUT}</MenuItem>
+                    </Link>
+                  )}
                 </MenuList>
               </ClickAwayListener>
             </Paper>
@@ -141,4 +178,4 @@ const AccountMenu = ({ className }) => {
   );
 };
 
-export default AccountMenu;
+export default withApollo(AccountMenu);

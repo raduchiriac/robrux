@@ -14,6 +14,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import Router from 'next/router';
 import SearchBox from './Header/SearchBox';
 import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
+import { UserContext } from '~/lib/contexts/UserContext';
 import Link from '~/lib/hocs/withLink';
 import withApollo from '~/lib/hocs/withApollo';
 
@@ -48,6 +49,7 @@ const HeaderWebsiteContainer = () => {
   const classes = useStyles();
 
   const { STRINGS } = useContext(TranslationsContext).state;
+  const { user } = useContext(UserContext);
 
   // TODO: Refactor all of this below (what's the use?)
   const [anchorEl, setAnchorEl] = useState(null);
@@ -80,9 +82,9 @@ const HeaderWebsiteContainer = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem href="/profile/view/id" onClick={handleMenuClose}>
+      {/* <MenuItem href={`/profile/view/${user._id}`} onClick={handleMenuClose}>
         _PROFILE
-      </MenuItem>
+      </MenuItem> */}
       <MenuItem href="/logout" onClick={handleMenuClose}>
         _LOGOUT
       </MenuItem>

@@ -1,5 +1,6 @@
 import React, { useContext, useState, Fragment } from 'react';
 import clsx from 'clsx';
+import { Helmet } from 'react-helmet';
 import { makeStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Paper from '@material-ui/core/Paper';
@@ -133,7 +134,7 @@ const useStyles = makeStyles((theme, mobileMapHeight = 150) => ({
 const ServiceView = ({ gig, statusCode }) => {
   const classes = useStyles();
   const { STRINGS } = useContext(TranslationsContext).state;
-  const [anchorElFlag, setAnchorElFlag] = React.useState(null);
+  const [anchorElFlag, setAnchorElFlag] = useState(null);
   const openFlag = Boolean(anchorElFlag);
 
   const handleClickFlag = event => {
@@ -146,6 +147,7 @@ const ServiceView = ({ gig, statusCode }) => {
 
   return (
     <Grid container alignItems="flex-start" spacing={2}>
+      <Helmet title={gig.title} />
       <Grid item xs={12} sm={4} md={4} lg={3}>
         <Box className={classes.staticMap}>
           <StaticMap gig={gig} size={[600, 400]} zoom={16} withLink={true} withAddress={true} />

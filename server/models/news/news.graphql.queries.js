@@ -1,4 +1,4 @@
-const { GraphQLList, GraphQLInt, GraphQLString, GraphQLFloat } = require('graphql');
+const { GraphQLList, GraphQLInt, GraphQLString } = require('graphql');
 const NewsService = require('./news.service');
 const NewsType = require('./news.model').NewsType;
 

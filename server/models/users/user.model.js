@@ -64,10 +64,8 @@ const schema = new Schema(
       default: () => randomStringGenerator(2),
       unique: true,
     },
-    bio: {
-      avatar: { type: String },
-      phone: { type: String },
-    },
+    avatar: { type: String },
+    phone: { type: String },
     forgotCode: { type: String },
     forgotCodeLimit: { type: Date },
     lastLogin: { type: Date },
@@ -109,20 +107,15 @@ const fieldsAuth = {
   _id: { type: GraphQLID },
   email: { type: GraphQLNonNull(GraphQLString) },
 };
-const fieldsInputRegister = Object.assign(
-  {},
-  fieldsInputLogin,
-  {
-    confirmPassword: { type: GraphQLNonNull(GraphQLString) },
-  },
-  {
-    firstName: { type: GraphQLNonNull(GraphQLString) },
-    lastName: { type: GraphQLNonNull(GraphQLString) },
-  }
-);
+const fieldsInputRegister = Object.assign({}, fieldsInputLogin, {
+  confirmPassword: { type: GraphQLNonNull(GraphQLString) },
+  firstName: { type: GraphQLNonNull(GraphQLString) },
+  lastName: { type: GraphQLNonNull(GraphQLString) },
+});
 const fields = Object.assign({}, fieldsInputRegister, {
   _id: { type: GraphQLID },
   _gigs: { type: GraphQLList(GraphQLID) },
+  avatar: { type: GraphQLString },
 });
 
 const UserType = new GraphQLObjectType({

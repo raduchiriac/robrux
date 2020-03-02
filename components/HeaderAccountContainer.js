@@ -72,7 +72,7 @@ const HeaderAccountContainer = () => {
     <Fragment>
       <List>
         {[
-          { text: STRINGS.MY_PROFILE, href: '/profile/view/id', icon: <AccountCircleOutlinedIcon /> },
+          { text: STRINGS.MY_PROFILE, href: '/profile/view', icon: <AccountCircleOutlinedIcon /> },
           { text: STRINGS.NEW_SERVICE, href: '/service/create', icon: <AddCircleOutlineIcon /> },
           { text: STRINGS.MESSAGES, href: '/', icon: <ChatIcon /> },
           { text: undefined },

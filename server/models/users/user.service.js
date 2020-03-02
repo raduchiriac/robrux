@@ -29,7 +29,13 @@ const loginUser = async userParams => {
   });
 };
 
+const userInfo = async id => {
+  let selector = { _id: id };
+  return await User.findOne(selector).lean();
+};
+
 module.exports = {
   createUser,
   loginUser,
+  userInfo,
 };

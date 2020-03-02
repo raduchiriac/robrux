@@ -9,6 +9,7 @@ import Router, { useRouter } from 'next/router';
 import { GlobalContext } from '~/lib/contexts/GlobalContext';
 import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 import { SEARCH_BBOX_GIG } from '~/lib/graphql/gigs.strings';
+import { Helmet } from 'react-helmet';
 import CITIES from '~/lib/constants/CITIES';
 import Map from '~/components/Map/Map';
 import Breadcrumb from '~/components/Breadcrumb/Breadcrumb';
@@ -98,6 +99,7 @@ const Browse = ({ search, category, inLocation }) => {
 
   return (
     <Grid container className="home-page__container" spacing={1}>
+      <Helmet title={STRINGS.SEARCH_SIMPLE} />
       {!!_searchingFor && (
         <Grid container>
           <Breadcrumb

@@ -208,10 +208,10 @@ const Basics = ({ STRINGS, values, errors, handleChange, classes, isMobile }) =>
         onChange={(evt, values) => handleChange(values, 'categories')}
         getOptionLabel={option => option.title}
         renderOption={(option, { selected }) => (
-          <React.Fragment>
+          <Fragment>
             <Checkbox icon={icon} checkedIcon={checkedIcon} checked={selected} />
             {option.title}
-          </React.Fragment>
+          </Fragment>
         )}
         renderInput={params => (
           <TextField {...params} variant="outlined" label={STRINGS.SERVICE_NEW_CATEGORY} placeholder="" fullWidth />

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import parse from 'autosuggest-highlight/parse';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -22,8 +22,8 @@ const useStyles = makeStyles(theme => ({
 const GoogleMapsAutocomplete = ({ onAddressFound = () => {}, label = '' }) => {
   const classes = useStyles();
 
-  const [searchedAddress, setSearchedAddress] = React.useState('');
-  const [googlePlaces, setGooglePlaces] = React.useState([]);
+  const [searchedAddress, setSearchedAddress] = useState('');
+  const [googlePlaces, setGooglePlaces] = useState([]);
   const [scriptLoaded, scriptError] = useScript(
     `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_MAPS_API}&libraries=places`
   );

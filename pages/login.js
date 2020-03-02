@@ -7,6 +7,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import { Helmet } from 'react-helmet';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useMutation, useApolloClient } from '@apollo/react-hooks';
@@ -15,7 +16,6 @@ import { LOGIN_USER } from '~/lib/graphql/user.strings';
 import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 import useForm from '~/lib/hooks/useForm';
 import withApollo from '~/lib/hocs/withApollo';
-import { GlobalContext } from '~/lib/contexts/GlobalContext';
 import Link from '~/lib/hocs/withLink';
 
 const useStyles = makeStyles(theme => ({
@@ -117,7 +117,6 @@ const Form = ({ classes, errors, formErrors, values, handleChange, handleSubmit,
 
 const Login = () => {
   const classes = useStyles();
-  const { dispatchGlobalContext } = useContext(GlobalContext);
   const { STRINGS } = useContext(TranslationsContext).state;
 
   const _login = () => {
@@ -144,7 +143,7 @@ const Login = () => {
         // Force a reload of all the current queries now that the user is logged
         apolloClient.cache.reset().then(() => {
           // TODO: Redirect to refferal
-          Router.push({ pathname: '/' });
+          location.replace('/');
         });
       }
     },
@@ -155,6 +154,7 @@ const Login = () => {
 
   return (
     <Grid container component="main" className={classes.root}>
+      <Helmet title={STRINGS.LOGIN_NOW} />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid className={classes.paperContainer} item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>

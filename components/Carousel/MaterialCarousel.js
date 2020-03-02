@@ -31,7 +31,7 @@ const useStyles = props =>
 const MaterialCarousel = ({ images, width, height }) => {
   const classes = useStyles({ width, height });
   const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
   const maxSteps = images.length;
 
   if (!images.length) {

@@ -1,8 +1,9 @@
 import React from 'react';
 import withApollo from '~/lib/hocs/withApollo';
+import Container from '@material-ui/core/Container';
 
 const Unsubscribe = () => {
-  return <div>Unsubscribe Emails</div>;
+  return <Container>Unsubscribe Emails</Container>;
 };
 
 export default withApollo(Unsubscribe);

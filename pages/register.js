@@ -216,7 +216,17 @@ const Register = () => {
   const { STRINGS } = useContext(TranslationsContext).state;
 
   const _register = () => {
-    createUser({ variables: { input: values } });
+    createUser({
+      variables: {
+        input: (({ firstName, lastName, email, password, confirmPassword }) => ({
+          firstName,
+          lastName,
+          email,
+          password,
+          confirmPassword,
+        }))(values),
+      },
+    });
   };
   const _validate = values => {
     let errors = {};

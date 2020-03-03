@@ -64,7 +64,7 @@ const schema = new Schema(
       default: () => randomStringGenerator(2),
       unique: true,
     },
-    avatar: { type: String },
+    avatar: { type: String, default: 'avatars/male2.svg' },
     phone: { type: String },
     forgotCode: { type: String },
     forgotCodeLimit: { type: Date },

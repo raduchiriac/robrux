@@ -276,7 +276,7 @@ ServiceView.getInitialProps = async ctx => {
   const result = await apolloClient.query({ query: GET_ONE_GIG, variables: { idOrSlug: query.id } });
   if (!result.data.oneGig) res.statusCode = 404;
 
-  return { gig: result.data.oneGig, statusCode: res.statusCode };
+  return { gig: result.data.oneGig, statusCode: (res && res.statusCode) || 0 };
 };
 
 ServiceView.Layout = WebsiteHeaderLayout;

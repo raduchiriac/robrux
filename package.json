@@ -51,7 +51,7 @@
     "https-proxy-agent": "5.0.0",
     "isomorphic-unfetch": "3.0.0",
     "jsonwebtoken": "8.5.1",
-    "latinize": "0.4.0",
+    "latinize": "0.4.1",
     "material-ui-chip-input": "1.1.0",
     "moment": "2.24.0",
     "mongodb": "3.5.4",
@@ -77,8 +77,8 @@
     "react-swipeable-views": "0.13.9",
     "showdown": "1.9.1",
     "showdown-xss-filter": "0.2.0",
-    "stripe": "8.24.0",
-    "webpack": "4.41.6"
+    "stripe": "8.24.1",
+    "webpack": "4.42.0"
   },
   "devDependencies": {
     "@storybook/addon-a11y": "5.3.14",

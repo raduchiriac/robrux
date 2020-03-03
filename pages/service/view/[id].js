@@ -22,6 +22,7 @@ import StaticMap from '~/components/Map/StaticMap';
 import StarRating from '~/components/Rating/StarRating';
 import MaterialCarousel from '~/components/Carousel/MaterialCarousel';
 import parse from 'html-react-parser';
+import Link from '~/lib/hocs/withLink';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { WebsiteHeaderLayout } from '~/lib/layouts/WebsiteHeaderLayout';
 import withApollo from '~/lib/hocs/withApollo';
@@ -90,6 +91,9 @@ const useStyles = makeStyles((theme, mobileMapHeight = 150) => ({
     [theme.breakpoints.down('xs')]: {
       fontSize: '1.15em',
     },
+  },
+  'service-avatar__name': {
+    color: theme.palette.grey[800],
   },
   servicePriceRange: { backgroundColor: fade(theme.palette.primary.dark, 0.7) },
   serviceActions: {
@@ -200,15 +204,15 @@ const ServiceView = ({ gig, statusCode }) => {
           <Typography variant="h5" className={classes.title}>
             {gig.title}
           </Typography>
-          <div className={classes.avatar}>
+          <Link className={classes.avatar} href={`/profile/view/`} underline="none">
             <img className={classes.avatarImage} src={gig._providerAvatar} alt={gig._providerName} />
             <div className={classes.avatarDetails}>
-              <Typography variant="subtitle1" className="service-avatar__name">
+              <Typography variant="subtitle1" className={classes['service-avatar__name']}>
                 {gig._providerName}
               </Typography>
               <StarRating score={gig._rating} readOnly={true} size="small" />
             </div>
-          </div>
+          </Link>
           <div className={classes['service-description']}>{gig.richDescription && parse(gig.richDescription)}</div>
           {!!gig.tags.length && (
             <Fragment>
@@ -259,6 +263,7 @@ const ServiceView = ({ gig, statusCode }) => {
                 </Box>
               ))}
             </Box>
+            // TODO: Load more reviews button
           )}
         </Container>
         <Box mt={2} className={classes.serviceActions}>
@@ -272,11 +277,12 @@ const ServiceView = ({ gig, statusCode }) => {
 };
 
 ServiceView.getInitialProps = async ctx => {
-  const { query, apolloClient, res } = ctx;
+  const { query, apolloClient, res = {} } = ctx;
   const result = await apolloClient.query({ query: GET_ONE_GIG, variables: { idOrSlug: query.id } });
-  if (!result.data.oneGig) res.statusCode = 404;
+  let statusCode = (res && res.statusCode) || 200;
+  if (!result.data.oneGig) statusCode = 404;
 
-  return { gig: result.data.oneGig, statusCode: (res && res.statusCode) || 0 };
+  return { gig: result.data.oneGig, statusCode };
 };
 
 ServiceView.Layout = WebsiteHeaderLayout;

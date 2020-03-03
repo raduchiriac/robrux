@@ -65,11 +65,12 @@ const NewsId = ({ news, statusCode }) => {
 };
 
 NewsId.getInitialProps = async ctx => {
-  const { query, apolloClient, res } = ctx;
+  const { query, apolloClient, res = {} } = ctx;
   const result = await apolloClient.query({ query: GET_ONE_NEWS, variables: { idOrSlug: query.id } });
-  if (!result.data.oneNews) res.statusCode = 404;
+  let statusCode = (res && res.statusCode) || 200;
+  if (!result.data.oneNews) statusCode = 404;
 
-  return { news: result.data.oneNews, statusCode: res.statusCode };
+  return { news: result.data.oneNews, statusCode };
 };
 
 NewsId.Layout = WebsiteHeaderLayout;

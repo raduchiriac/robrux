@@ -148,7 +148,7 @@ const AccountMenu = ({ className }) => {
                     <MenuItem>{STRINGS.NEWS_NOW}</MenuItem>
                   </Link>
                   {user._id && (
-                    <Link href={`/profile/view/${user._id}`} className={classes.link}>
+                    <Link href={`/profile/view`} className={classes.link}>
                       <MenuItem>{STRINGS.MY_PROFILE}</MenuItem>
                     </Link>
                   )}

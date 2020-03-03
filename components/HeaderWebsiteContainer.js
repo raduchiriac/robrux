@@ -61,7 +61,7 @@ const HeaderWebsiteContainer = () => {
     setAnchorEl(event.currentTarget);
   }
   function handleMenuClose() {
-    Router.push('/login');
+    // Router.push('/login');
     setAnchorEl(null);
     handleMobileMenuClose();
   }
@@ -82,9 +82,9 @@ const HeaderWebsiteContainer = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      {/* <MenuItem href={`/profile/view/${user._id}`} onClick={handleMenuClose}>
+      <MenuItem href={`/profile/view`} onClick={handleMenuClose}>
         _PROFILE
-      </MenuItem> */}
+      </MenuItem>
       <MenuItem href="/logout" onClick={handleMenuClose}>
         _LOGOUT
       </MenuItem>

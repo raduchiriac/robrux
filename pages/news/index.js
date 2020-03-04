@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import moment from 'moment';
 import 'moment/locale/ro';
+import { Helmet } from 'react-helmet';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import Container from '@material-ui/core/Container';
@@ -32,6 +33,7 @@ const News = ({ news }) => {
 
   return (
     <Container maxWidth="sm">
+      <Helmet title={STRINGS.NEWS_NOW} />
       {!news.length && <Typography variant="body1">{STRINGS.NEWS_NO_NEWS}</Typography>}
 
       {news.map((oneNews, idx) => (

@@ -490,7 +490,7 @@ const Payment = ({ STRINGS, values, errors, handleChange, classes, theme }) => {
         open={openModal}
         handleClose={evt => handleClose(evt)}
         title="_TERMS"
-        buttonText="_AGREE"
+        buttonText={STRINGS.AGREE}
       >
         <Terms />
       </DialogHeight>

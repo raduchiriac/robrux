@@ -4,8 +4,7 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import ShareIcon from '@material-ui/icons/Share';
+import { Helmet } from 'react-helmet';
 import parse from 'html-react-parser';
 import withApollo from '~/lib/hocs/withApollo';
 import Link from '~/lib/hocs/withLink';
@@ -33,6 +32,8 @@ const NewsId = ({ news, statusCode }) => {
 
   return (
     <Container maxWidth="sm" className={classes.root}>
+      <Helmet title={news.title} />
+
       <Typography gutterBottom component="p" variant="overline">
         {/* TODO: Make this dynamic somehow */}
         {new Date(news.createdAt).toLocaleDateString('ro-RO', {

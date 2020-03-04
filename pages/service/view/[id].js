@@ -1,4 +1,4 @@
-import React, { useContext, useState, Fragment } from 'react';
+import React, { useContext, useState, useRef, Fragment } from 'react';
 import clsx from 'clsx';
 import { Helmet } from 'react-helmet';
 import { makeStyles } from '@material-ui/core/styles';
@@ -23,9 +23,11 @@ import StarRating from '~/components/Rating/StarRating';
 import MaterialCarousel from '~/components/Carousel/MaterialCarousel';
 import parse from 'html-react-parser';
 import Link from '~/lib/hocs/withLink';
+import DialogHeight from '~/components/FormElements/DialogHeight';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { WebsiteHeaderLayout } from '~/lib/layouts/WebsiteHeaderLayout';
 import withApollo from '~/lib/hocs/withApollo';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme, mobileMapHeight = 150) => ({
   container: {
@@ -133,12 +135,47 @@ const useStyles = makeStyles((theme, mobileMapHeight = 150) => ({
       marginLeft: 0,
     },
   },
+  messageTextField: {
+    width: '80%',
+  },
 }));
+
+const ContactForm = ({ placeholder, buttonText }) => {
+  const inputRef = useRef(null);
+  const handleTextSubmit = () => {
+    const message = inputRef.current.value;
+    if (message.trim()) {
+      console.log('SEND');
+    }
+  };
+  return (
+    <Box>
+      <TextField
+        fullWidth
+        margin="normal"
+        autoFocus
+        size="small"
+        id="message"
+        inputRef={inputRef}
+        label={placeholder}
+        multiline
+        required
+        rows="5"
+        defaultValue=""
+        variant="outlined"
+      />
+      <Button fullWidth variant="contained" color="primary" onClick={evt => handleTextSubmit()}>
+        {buttonText}
+      </Button>
+    </Box>
+  );
+};
 
 const ServiceView = ({ gig, statusCode }) => {
   const classes = useStyles();
   const { STRINGS } = useContext(TranslationsContext).state;
   const [anchorElFlag, setAnchorElFlag] = useState(null);
+  const [openContactFormModal, setOpenContactFormModal] = useState(false);
   const openFlag = Boolean(anchorElFlag);
 
   const handleClickFlag = event => {
@@ -148,6 +185,14 @@ const ServiceView = ({ gig, statusCode }) => {
     setAnchorElFlag(null);
   };
   if (!gig) return <Error statusCode={statusCode} />;
+
+  const handleContactFormModal = evt => {
+    setOpenContactFormModal(true);
+  };
+
+  const handleCloseContactFormModal = evt => {
+    setOpenContactFormModal(false);
+  };
 
   return (
     <Grid container alignItems="flex-start" spacing={2}>
@@ -266,8 +311,17 @@ const ServiceView = ({ gig, statusCode }) => {
             // TODO: Load more reviews button
           )}
         </Container>
-        <Box mt={2} className={classes.serviceActions}>
-          <Button variant="contained" color="primary">
+        <DialogHeight
+          id="contactForm"
+          open={openContactFormModal}
+          handleClose={evt => handleCloseContactFormModal(evt)}
+          title={`${STRINGS.SERVICE_MESSAGE_FOR} ${gig._providerName}`}
+          buttonText={STRINGS.CLOSE}
+        >
+          <ContactForm placeholder={STRINGS.SERVICE_MESSAGE_TEXT} buttonText={STRINGS.SEND} />
+        </DialogHeight>
+        <Box mt={2} mb={2} className={classes.serviceActions}>
+          <Button variant="contained" color="primary" onClick={evt => handleContactFormModal()}>
             {STRINGS.SERVICE_CONTACT}
           </Button>
         </Box>

@@ -7,9 +7,11 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useMutation } from '@apollo/react-hooks';
+import Box from '@material-ui/core/Box';
 import CheckboxWithLink from '~/components/FormElements/CheckboxWithLink';
 import DialogHeight from '~/components/FormElements/DialogHeight';
 import loadable from '@loadable/component';
+import { Helmet } from 'react-helmet';
 import withApollo from '~/lib/hocs/withApollo';
 import useForm from '~/lib/hooks/useForm';
 import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
@@ -65,6 +67,8 @@ const Form = ({ classes, errors, formErrors, values, handleChange, handleSubmit,
 
   return (
     <Fragment>
+      <Helmet title={STRINGS.REGISTER_NOW} />
+
       <Avatar className={classes.avatar}>
         <img src="/robrux.png" alt="Register Page" />
       </Avatar>
@@ -181,7 +185,7 @@ const Form = ({ classes, errors, formErrors, values, handleChange, handleSubmit,
               open={openModal}
               handleClose={evt => handleClose(evt)}
               title={whichModal === 'terms' ? '_TERMS' : '_PRIVACY'}
-              buttonText="_AGREE"
+              buttonText={STRINGS.AGREE}
             >
               {whichModal === 'terms' ? <Terms /> : <Privacy />}
             </DialogHeight>
@@ -275,7 +279,7 @@ const Register = () => {
 
   return (
     <Container component="main" maxWidth="sm">
-      <div className={classes.paper}>
+      <Box className={classes.paper} mb={4}>
         {formValidated ? (
           <EmailSent message={STRINGS.REGISTER_EMAIL_SUCC} />
         ) : (
@@ -289,7 +293,7 @@ const Register = () => {
             handleSubmit={handleSubmit}
           ></Form>
         )}
-      </div>
+      </Box>
     </Container>
   );
 };

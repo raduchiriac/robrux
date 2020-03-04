@@ -26,21 +26,22 @@ Now run `npm run start:dev` and create something nice. PRs are welcome.
 - [x] Lazy-load HOC for images (blur or opacity effect)
 - [x] Option to use either Google Maps, Open Street Map or Mapbox
 - [x] Fuzzy-Search on MongoDB (include tags)
-- [x] Add a News section (add to seed file) (push a newsletter using the `save` hook)
+- [x] News section (add to the seed file)
+- [ ] Send a newsletter using mongoose's `save` hook
 - [x] Send 404 if not found: Gig, News, Profile (do a fetch inside `getInitialProps()`)
 - [x] Dynamic `<title>` using Helmet
-- [x] Create a Category Page (linked from gig-page)
+- [x] Create a Category Page (linked from a gig page)
 - [x] Make components more accessible (storybook-a11y)
+- [x] Cache GraphQL requests
 - [ ] Use `graphql-cookie-headers`
-- [ ] Cache GraphQL requests
 - [ ] Add user roles (edit the seed file)
 - [ ] Protect GraphQL mutations (Authorization and [rate-limit](https://www.npmjs.com/package/graphql-rate-limit-directive))
 - [ ] Animations using React Spring [or similar](https://material-ui.com/components/transitions/) of page elements
-- [ ] Create a Rating Collection (add to seed file)
-- [ ] Option to flag Gigs (mutate that Collection)
+- [ ] Create a Rating Collection (add to the seed file)
+- [ ] Option to flag Gigs (mutate to a Collection)
 - [ ] (_Route_) New Gig (use Formik and yup, _protected route_, Stripe API)
 - [ ] (_Route_) My Profile (with edit option) (_protected route_)
-- [ ] (_Route_) View any user's profile (linked from gig-page)
+- [ ] (_Route_) View any user's profile (linked from a gig page)
 - [ ] Payment System (Stripe API or Adyen)
 - [ ] Rewrite the GraphQLInputObjectType schemas (make them more readable)
 - [ ] Image Upload to cloud storage (Cloudinary API)
@@ -50,7 +51,8 @@ Now run `npm run start:dev` and create something nice. PRs are welcome.
 - [ ] Audit everything with Lighthouse
 - [ ] Create a dark-skin theme (stored in localStorage, remember to invert the map color with CSS and use `@media (prefers-color-scheme`)
 - [ ] Generate a [sitemap.xml](https://gist.github.com/a-barbieri/9eb6d65ef96c2ead322bd97ae4862934)
-- [ ] Use propTypes everywhere
+- [ ] Use propTypes everywhere with default props
+- [ ] Use [some of these](https://mui-treasury.com/components/card)
 - [ ] Write some Jest/Enzyme tests
 - [ ] Try to [lazy load your modules](https://flaviocopes.com/nextjs-lazy-load-modules/)
 - [ ] Pre-commit eslint (husky)

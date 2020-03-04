@@ -11,7 +11,6 @@ import { Helmet } from 'react-helmet';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useMutation, useApolloClient } from '@apollo/react-hooks';
-import Router from 'next/router';
 import { LOGIN_USER } from '~/lib/graphql/user.strings';
 import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 import useForm from '~/lib/hooks/useForm';

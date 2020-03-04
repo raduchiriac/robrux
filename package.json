@@ -77,7 +77,7 @@
     "react-swipeable-views": "0.13.9",
     "showdown": "1.9.1",
     "showdown-xss-filter": "0.2.0",
-    "stripe": "8.24.1",
+    "stripe": "8.27.0",
     "webpack": "4.42.0"
   },
   "devDependencies": {

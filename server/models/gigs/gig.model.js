@@ -6,12 +6,20 @@ const { randomStringGenerator, markdownConverter } = require('../../_helpers/uti
 
 const uniqueValidator = require('mongoose-unique-validator');
 
+const generateSlug = title =>
+  encodeURIComponent(
+    latinize(title)
+      .replace(/ /g, '-')
+      .toLowerCase()
+  );
+
 // Read more about types here https://mongoosejs.com/docs/schematypes.html
 const schema = new Schema(
   {
-    _userId: { type: ObjectId, required: true },
+    // TODO: Remove these 2 below and use the join/populate from '_userId' key
     _providerName: { type: String },
     _providerAvatar: { type: String },
+    _userId: { type: ObjectId, required: true, ref: 'User' },
     _rating: { type: Number, index: true },
     _subscription: { type: String },
     title: { type: String, required: true, trim: true },
@@ -28,7 +36,7 @@ const schema = new Schema(
       enum: ['processing', 'valid', 'rejected', 'expired'],
       index: true,
     },
-    ratings: [{ type: ObjectId, ref: 'Rating' }],
+    _ratings: [{ type: ObjectId, ref: 'Rating' }],
     featured: { type: Boolean, index: true },
     statusInformation: { type: String },
     tags: { type: [String] },
@@ -65,13 +73,7 @@ schema.index(
 
 // INFO: Read about other hooks https://mongoosejs.com/docs/middleware.html
 schema.pre('save', function(next) {
-  const generateSlug = () =>
-    encodeURI(
-      latinize(this.title)
-        .replace(/ /g, '-')
-        .toLowerCase()
-    );
-  this.slug = `${generateSlug()}${randomStringGenerator(1, '-')}`;
+  this.slug = `${generateSlug(this.title)}${randomStringGenerator(1, '-')}`;
   this.richDescription = markdownConverter.makeHtml(this.description);
   next();
 });
@@ -108,7 +110,7 @@ const fields = {
   richDescription: { type: GraphQLString },
   images: { type: GraphQLList(GraphQLString) },
   categories: { type: GraphQLList(GraphQLInt) },
-  ratings: { type: GraphQLList(GraphQLID) },
+  _ratings: { type: GraphQLList(GraphQLID) },
   tags: { type: GraphQLList(GraphQLString) },
   status: { type: GraphQLString },
   price: { type: GraphQLInt },
@@ -143,7 +145,7 @@ const fieldsOutput = Object.assign({}, fields, {
   location: {
     type: GigLocationTypeOutput,
   },
-  ratings: {
+  _ratings: {
     type: GraphQLList(GigRatingsTypeOutput),
   },
 });

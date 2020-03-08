@@ -83,7 +83,7 @@ const HeaderWebsiteContainer = () => {
       onClose={handleMenuClose}
     >
       <MenuItem href={`/profile/view`} onClick={handleMenuClose}>
-        _PROFILE
+        _MY_PROFILE
       </MenuItem>
       <MenuItem href="/logout" onClick={handleMenuClose}>
         _LOGOUT

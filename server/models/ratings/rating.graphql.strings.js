@@ -1,5 +1,5 @@
 const faker = require('faker');
-var ObjectID = require('mongodb').ObjectID;
+const ObjectID = require('mongodb').ObjectID;
 
 const RATING_CREATE_FAKE = data => {
   return `
@@ -16,9 +16,9 @@ const RATING_CREATE_FAKE = data => {
 `;
 };
 
-const FAKE_RATING_DATA = (gigId = new ObjectID(), userId = new ObjectID()) => ({
-  _gigId: gigId,
-  _userId: userId,
+const FAKE_RATING_DATA = data => ({
+  _gigId: data.gigId || new ObjectID(),
+  _userId: data.userId || new ObjectID(),
   score: Math.round(Math.random() * 4) + 1,
   comment: faker.lorem.paragraph(),
 });

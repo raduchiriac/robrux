@@ -1,18 +1,15 @@
 const faker = require('faker');
-var ObjectID = require('mongodb').ObjectID;
+const randomFromInterval = require('../../_helpers/utils').randomFromInterval;
+const ObjectID = require('mongodb').ObjectID;
 
-const randomFromInterval = (min, max, int = false) =>
-  !int ? Math.random() * (max - min) + min : Math.ceil(Math.random() * (max - min) + min);
-
-const GIG_CREATE_FAKE = () => {
-  const userID = new ObjectID();
+const GIG_CREATE_FAKE = data => {
   const subscriptionID = new ObjectID();
   const title = faker.company.catchPhrase();
   const description = faker.lorem.paragraph() + ' ' + faker.lorem.paragraph() + ' ' + faker.lorem.paragraph();
   return `
     mutation {
       createGig(input: {
-        _userId: "${userID}",
+        _userId: "${data.userId}",
         _providerName: "${faker.name.firstName()} ${faker.name.lastName()}",
         _providerAvatar: "${faker.image.avatar()}",
         _rating: ${Math.random() * 4 + 1},

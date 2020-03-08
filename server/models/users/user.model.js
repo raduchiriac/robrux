@@ -38,7 +38,7 @@ const schema = new Schema(
       validate: [
         validate({
           validator: 'isLength',
-          arguments: [3, 50],
+          arguments: [2, 50],
           message: '_F_BETWEEN_{ARGS[0]}_{ARGS[1]}_CHARS',
         }),
       ],
@@ -50,7 +50,7 @@ const schema = new Schema(
       validate: [
         validate({
           validator: 'isLength',
-          arguments: [3, 50],
+          arguments: [2, 50],
           message: '_L_BETWEEN_{ARGS[0]}_{ARGS[1]}_CHARS',
         }),
       ],
@@ -111,6 +111,7 @@ const fieldsInputRegister = Object.assign({}, fieldsInputLogin, {
   confirmPassword: { type: GraphQLNonNull(GraphQLString) },
   firstName: { type: GraphQLNonNull(GraphQLString) },
   lastName: { type: GraphQLNonNull(GraphQLString) },
+  avatar: { type: GraphQLString },
 });
 const fields = Object.assign({}, fieldsInputRegister, {
   _id: { type: GraphQLID },

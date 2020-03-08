@@ -128,13 +128,13 @@ const AccountMenu = ({ className }) => {
             onMouseLeave={() => setHovered(false)}
             className={classes.avatar}
             alt=""
-            src={(data && data.userInfo.avatar) || '/avatars/user.svg'}
+            src={(user._id && data?.userInfo?.avatar) || '/avatars/user.svg'}
           />
         </Button>
       </Badge>
-      {data && (
+      {user._id && (
         <Typography className={classes.name} variant="subtitle2">
-          {`${data.userInfo.firstName} ${data.userInfo.lastName}`}
+          {`${data?.userInfo?.firstName} ${data?.userInfo?.lastName}`}
         </Typography>
       )}
       <Popper open={open} placement="bottom-end" anchorEl={anchorRef.current} role={undefined} transition disablePortal>

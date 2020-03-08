@@ -50,4 +50,7 @@ module.exports = {
   randomStringGenerator,
   TimestampType,
   strippedString: str => str.replace(/(<([^>]+)>)/gi, ''),
+  randomFromArray: a => a[(a.length * Math.random()) | 0],
+  randomFromInterval: (min, max, int = false) =>
+    !int ? Math.random() * (max - min) + min : Math.ceil(Math.random() * (max - min) + min),
 };

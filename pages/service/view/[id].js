@@ -249,7 +249,7 @@ const ServiceView = ({ gig, statusCode }) => {
           <Typography variant="h5" className={classes.title}>
             {gig.title}
           </Typography>
-          <Link className={classes.avatar} href={`/profile/view/`} underline="none">
+          <Link className={classes.avatar} href={`/profile/view/${gig._userId}`} underline="none">
             <img className={classes.avatarImage} src={gig._providerAvatar} alt={gig._providerName} />
             <div className={classes.avatarDetails}>
               <Typography variant="subtitle1" className={classes['service-avatar__name']}>

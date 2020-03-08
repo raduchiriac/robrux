@@ -36,7 +36,7 @@ const oneGig = async idOrSlug => {
     query.$or.push({ _id: idOrSlug });
   }
   return await Gig.findOne(query)
-    .populate('ratings')
+    .populate('_ratings')
     .lean();
 };
 

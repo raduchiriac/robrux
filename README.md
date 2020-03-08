@@ -39,6 +39,7 @@ Now run `npm run start:dev` and create something nice. PRs are welcome.
 - [ ] Animations using React Spring [or similar](https://material-ui.com/components/transitions/) of page elements
 - [ ] Create a Rating Collection (add to the seed file)
 - [ ] Option to flag Gigs (mutate to a Collection)
+- [ ] Cluster markers
 - [ ] (_Route_) New Gig (use Formik and yup, _protected route_, Stripe API)
 - [ ] (_Route_) My Profile (with edit option) (_protected route_)
 - [ ] (_Route_) View any user's profile (linked from a gig page)

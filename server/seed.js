@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const { GraphQLClient } = require('graphql-request');
+const randomFromArray = require('./_helpers/utils').randomFromArray;
+
 const client = new GraphQLClient(
   `${process.env.HOSTNAME}:${Number(process.env.PORT) ? process.env.PORT : ''}${process.env.GRAPHQL_ROUTE}`,
   {
@@ -23,10 +25,14 @@ let users = [];
 
 const getCleanupPromise = collection => collection.deleteMany({}).exec();
 
-const createInsertQueries = (query, callback, amount) => {
+const createInsertQueries = (query, callback, amount, data = {}) => {
   let promises = [];
   for (let i = 0; i < amount; i++) {
-    promises.push(client.request(query()).then(callback));
+    let dataToSend = data;
+    if (typeof data === 'function') {
+      dataToSend = data();
+    }
+    promises.push(client.request(query(dataToSend)).then(callback));
   }
   return promises;
 };
@@ -38,43 +44,67 @@ async function runThroughCollections(iterable, asyncBlock) {
 }
 
 const cleanup = async () => {
-  const collections = [News, Gig, Rating];
+  const collections = [News, Gig, Rating, User];
   await runThroughCollections(collections, async collection => {
     const cleanupResult = await getCleanupPromise(collection);
-    console.log(`> ${collection.collection.collectionName} collection deleted: ${cleanupResult.deletedCount}`);
+    // https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
+    console.log(`> deleted: \x1b[35m${cleanupResult.deletedCount}\x1b[0m ${collection.collection.collectionName}`);
   });
-  console.log('Cleanup completed…');
 };
 
-const mock = async () => {
-  console.log('Inserting mock data…');
+const mockTheUsers = async () => {
+  console.log('Inserting users…');
+  const promises = [
+    ...createInsertQueries(
+      require('./models/users/user.graphql.strings').USER_CREATE_FAKE,
+      data => {
+        users.push(data.register._id);
+      },
+      1,
+      { email: 'de@de.de' }
+    ),
+    ...createInsertQueries(
+      require('./models/users/user.graphql.strings').USER_CREATE_FAKE,
+      data => {
+        users.push(data.register._id);
+      },
+      99
+    ),
+  ];
+  await Promise.all(promises);
+};
+
+const mockTheRest = async () => {
+  console.log('Inserting gigs, news…');
   const promises = [
     ...createInsertQueries(
       require('./models/news/news.graphql.strings').NEWS_CREATE_FAKE,
       data => {
         news.push(data.createNews._id);
       },
-      2
+      3
     ),
     ...createInsertQueries(
       require('./models/gigs/gig.graphql.strings').GIG_CREATE_FAKE,
       data => {
         gigs.push(data.createGig._id);
       },
-      100
+      100,
+      () => ({ userId: randomFromArray(users) })
     ),
   ];
   await Promise.all(promises);
 };
 
+const myFakeRatings = [];
 const mockWithDependecies = async () => {
   console.log('Inserting ratings…');
   const { addManyRatings } = require('./models/ratings/rating.service');
-  const myFakeRatings = [];
   gigs.forEach(gig => {
-    const LEN = Math.round(Math.random() * 10) + 1;
-    for (let i = 0; i < LEN; i++) {
-      myFakeRatings.push(require('./models/ratings/rating.graphql.strings').FAKE_RATING_DATA(gig));
+    const HOW_MANY_RATINGS = Math.round(Math.random() * 10) + 1;
+    for (let i = 0; i < HOW_MANY_RATINGS; i++) {
+      const userId = randomFromArray(users);
+      myFakeRatings.push(require('./models/ratings/rating.graphql.strings').FAKE_RATING_DATA({ gigId: gig, userId }));
     }
   });
   ratings = await addManyRatings(myFakeRatings);
@@ -85,22 +115,23 @@ const buildRelationships = async () => {
   const mutations = [];
   gigs.forEach(gig => {
     const filteredRatings = ratings.filter(rating => gig === rating._gigId + '');
-    const dataToMutateGig = {
-      id: gig,
-      ratings: filteredRatings.map(rating => rating._id),
+    const dataToMutateTheGig = {
+      _id: gig,
+      _ratings: filteredRatings.map(rating => rating._id),
       _rating: filteredRatings.reduce((total, current) => total + current.score, 0) / filteredRatings.length,
     };
-    mutations.push(dataToMutateGig);
+    mutations.push(dataToMutateTheGig);
   });
-  // TODO: Mutate gigs.ratings based on ratings[].gigId and gigs._rating on average
+  // TODO: Mutate gigs._ratings and gigs._rating based on dataToMutateGig[]._id
 };
 
 cleanup()
-  .then(mock)
+  .then(mockTheUsers)
+  .then(mockTheRest)
   .then(mockWithDependecies)
   .then(buildRelationships)
   .then(() => {
-    console.log('[⇣] Seeding succeeded. Exiting…');
+    console.log('\x1b[35m[⇣]\x1b[0m Seeding succeeded. Exiting…');
     process.exit();
   })
   .catch(err => {

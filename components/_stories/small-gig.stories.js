@@ -20,13 +20,18 @@ storiesOf('Small Gig', module)
       }}
       loading={boolean('Loading', false)}
       gig={{
-        id: 123,
+        _id: 123,
         title: text('Title', 'Abba'),
-        _providerName: text('Provider', 'This is a picture from the 70s with the group members'),
         _rating: number('Rating', 3.1111),
         price: number('Price', 540),
         priceRange: [number('Price from', 100), number('Price to', 200)],
-        _providerAvatar: 'https://upload.wikimedia.org/wikipedia/commons/c/cb/ABBA_-_TopPop_1974_5.png',
+        slug: 'this-is-abba-slug',
+        _userId: {
+          _id: '443abba',
+          firstName: text('First Name', 'This is a picture from the 70s'),
+          lastName: text('Last Name', 'with the group members'),
+          avatar: 'https://upload.wikimedia.org/wikipedia/commons/c/cb/ABBA_-_TopPop_1974_5.png',
+        },
       }}
     />
   ));

@@ -16,9 +16,6 @@ const generateSlug = title =>
 // Read more about types here https://mongoosejs.com/docs/schematypes.html
 const schema = new Schema(
   {
-    // TODO: Remove these 2 below and use the join/populate from '_userId' key
-    _providerName: { type: String },
-    _providerAvatar: { type: String },
     _userId: { type: ObjectId, required: true, ref: 'User' },
     _rating: { type: Number, index: true },
     _subscription: { type: String },
@@ -96,12 +93,11 @@ const {
   GraphQLInputObjectType,
 } = require('graphql');
 const fields_ratings = require('../ratings/rating.model').fields;
+const fields_user = require('../users/user.model').fields;
 
 const fields = {
   _id: { type: GraphQLID },
   _userId: { type: GraphQLNonNull(GraphQLID) },
-  _providerName: { type: GraphQLNonNull(GraphQLString) },
-  _providerAvatar: { type: GraphQLString },
   _rating: { type: GraphQLFloat },
   _subscription: { type: GraphQLString },
   title: { type: GraphQLNonNull(GraphQLString) },
@@ -133,6 +129,10 @@ const GigRatingsTypeOutput = new GraphQLObjectType({
   name: 'GigRatingsOutput',
   fields: fields_ratings,
 });
+const GigUserTypeOutput = new GraphQLObjectType({
+  name: 'GigUserOutput',
+  fields: fields_user,
+});
 
 // Nested fields needed for Mutations
 const GigLocationTypeInput = new GraphQLInputObjectType({
@@ -147,6 +147,9 @@ const fieldsOutput = Object.assign({}, fields, {
   },
   _ratings: {
     type: GraphQLList(GigRatingsTypeOutput),
+  },
+  _userId: {
+    type: GigUserTypeOutput,
   },
 });
 

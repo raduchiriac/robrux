@@ -249,11 +249,15 @@ const ServiceView = ({ gig, statusCode }) => {
           <Typography variant="h5" className={classes.title}>
             {gig.title}
           </Typography>
-          <Link className={classes.avatar} href={`/profile/view/${gig._userId}`} underline="none">
-            <img className={classes.avatarImage} src={gig._providerAvatar} alt={gig._providerName} />
+          <Link className={classes.avatar} href={`/profile/view/${gig._userId._id}`} underline="none">
+            <img
+              className={classes.avatarImage}
+              src={gig._userId.avatar}
+              alt={`${gig._userId.firstName} ${gig._userId.lastName}`}
+            />
             <div className={classes.avatarDetails}>
               <Typography variant="subtitle1" className={classes['service-avatar__name']}>
-                {gig._providerName}
+                {`${gig._userId.firstName} ${gig._userId.lastName}`}
               </Typography>
               <StarRating score={gig._rating} readOnly={true} size="small" />
             </div>
@@ -315,7 +319,7 @@ const ServiceView = ({ gig, statusCode }) => {
           id="contactForm"
           open={openContactFormModal}
           handleClose={evt => handleCloseContactFormModal(evt)}
-          title={`${STRINGS.SERVICE_MESSAGE_FOR} ${gig._providerName}`}
+          title={`${STRINGS.SERVICE_MESSAGE_FOR} ${gig._userId.firstName}`}
           buttonText={STRINGS.CLOSE}
         >
           <ContactForm placeholder={STRINGS.SERVICE_MESSAGE_TEXT} buttonText={STRINGS.SEND} />

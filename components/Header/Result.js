@@ -72,9 +72,9 @@ const Result = ({ searching, result, isLast, isClickable, classes }) => {
         )}
       >
         <ListItem alignItems="flex-start" button={isClickable} onClick={handleResultClick}>
-          {result._providerAvatar && (
+          {result._userId.avatar && (
             <ListItemAvatar>
-              <Avatar src={result._providerAvatar} alt={result._providerName} />
+              <Avatar src={result._userId.avatar} alt={`${result._userId.firstName} ${result._userId.lastName}`} />
             </ListItemAvatar>
           )}
           <ListItemText

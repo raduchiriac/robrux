@@ -135,8 +135,8 @@ const SmallGig = ({
               effect="blur"
               scrollPosition={scrollPosition}
               className={clsx(classes['small-gig__avatar'])}
-              src={gig._providerAvatar}
-              alt={gig._providerName}
+              src={gig._userId.avatar}
+              alt={`${gig._userId.firstName} ${gig._userId.lastName}`}
             />
           ) : (
             <div className={clsx(classes['small-gig__avatar'], loading && classes['small-gig__avatar--loading'])}></div>
@@ -161,7 +161,7 @@ const SmallGig = ({
               loading && [classes['x--loading'], classes['small-gig__provider--loading']]
             )}
           >
-            {(!loading && gig && gig._providerName) || ''}
+            {(!loading && gig && `${gig._userId.firstName} ${gig._userId.lastName}`) || ''}
           </Typography>
           {!loading && gig && (
             <Fragment>

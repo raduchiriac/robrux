@@ -131,4 +131,4 @@ const UserAuthType = new GraphQLObjectType({
   fields: fieldsAuth,
 });
 
-module.exports = { User, UserType, UserAuthType, fieldsInputLogin, fieldsInputRegister };
+module.exports = { User, UserType, UserAuthType, fieldsInputLogin, fieldsInputRegister, fields };

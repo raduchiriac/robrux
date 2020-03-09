@@ -103,6 +103,7 @@ const mockWithDependecies = async () => {
   gigs.forEach(gig => {
     const HOW_MANY_RATINGS = Math.round(Math.random() * 10) + 1;
     for (let i = 0; i < HOW_MANY_RATINGS; i++) {
+      // INFO: user._id should not rate his own gig, but too complicated to test here
       const userId = randomFromArray(users);
       myFakeRatings.push(require('./models/ratings/rating.graphql.strings').FAKE_RATING_DATA({ gigId: gig, userId }));
     }

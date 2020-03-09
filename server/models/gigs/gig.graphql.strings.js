@@ -10,8 +10,6 @@ const GIG_CREATE_FAKE = data => {
     mutation {
       createGig(input: {
         _userId: "${data.userId}",
-        _providerName: "${faker.name.firstName()} ${faker.name.lastName()}",
-        _providerAvatar: "${faker.image.avatar()}",
         _rating: ${Math.random() * 4 + 1},
         _subscription: "${Math.random() >= 0.5 ? subscriptionID : ''}",
         title: "${title}",

@@ -1,13 +1,13 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import SmallGig from '~/components/Gig/SmallGig';
-import { TranslationsContextProvider } from '~/lib/contexts/TranslationsContext';
+import { GlobalContextProvider } from '~/lib/contexts/GlobalContext';
 import { withKnobs, text, boolean, number } from '@storybook/addon-knobs';
 
-const TranslationDecorator = storyFn => <TranslationsContextProvider>{storyFn()}</TranslationsContextProvider>;
+const GlobalDecorator = storyFn => <GlobalContextProvider>{storyFn()}</GlobalContextProvider>;
 
 storiesOf('Small Gig', module)
-  .addDecorator(TranslationDecorator)
+  .addDecorator(GlobalDecorator)
   .addDecorator(withKnobs)
   .add('Skeleton', () => <SmallGig loading={true} />)
   .add('With some data', () => (

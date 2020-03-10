@@ -5,7 +5,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import jwt from 'jsonwebtoken';
 import { UserContext } from '~/lib/contexts/UserContext';
 import { GlobalContextProvider } from '~/lib/contexts/GlobalContext';
-import { TranslationsContextProvider } from '~/lib/contexts/TranslationsContext';
 import { ThemeProvider } from '@material-ui/styles';
 import { LightTheme } from '~/lib/themes/light-theme';
 import { DarkTheme } from '~/lib/themes/dark-theme';
@@ -61,28 +60,26 @@ class NextApp extends App {
     return (
       <GlobalContextProvider>
         <UserContext.Provider value={{ user: this.state.user }}>
-          <TranslationsContextProvider>
-            <Helmet
-              // TODO: Make this dynamic somehow
-              htmlAttributes={{ lang: 'ro' }}
-              // TODO: Make this dynamic somehow STRINGS.SITE_NAME
-              defaultTitle="ro:brux"
-              titleTemplate="%s | ro:brux"
-              meta={[
-                {
-                  name: 'viewport',
-                  content: 'minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no',
-                },
-                { name: 'description', content: 'Romanian Professionals living in Belgium' },
-              ]}
-            />
-            <ThemeProvider theme={this.state.theme == 'light' ? LightTheme : DarkTheme}>
-              <CssBaseline />
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
-            </ThemeProvider>
-          </TranslationsContextProvider>
+          <Helmet
+            // TODO: Make this dynamic somehow
+            htmlAttributes={{ lang: 'ro' }}
+            // TODO: Make this dynamic somehow STRINGS.SITE_NAME
+            defaultTitle="ro:brux"
+            titleTemplate="%s | ro:brux"
+            meta={[
+              {
+                name: 'viewport',
+                content: 'minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no',
+              },
+              { name: 'description', content: 'Romanian Professionals living in Belgium' },
+            ]}
+          />
+          <ThemeProvider theme={this.state.theme == 'light' ? LightTheme : DarkTheme}>
+            <CssBaseline />
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </ThemeProvider>
         </UserContext.Provider>
       </GlobalContextProvider>
     );

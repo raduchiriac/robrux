@@ -17,10 +17,9 @@ import ChatIcon from '@material-ui/icons/Chat';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
+import { GlobalContext } from '~/lib/contexts/GlobalContext';
 import Link from '~/lib/hocs/withLink';
 import withApollo from '~/lib/hocs/withApollo';
-import { GlobalContext } from '~/lib/contexts/GlobalContext';
 
 const useStyles = props =>
   makeStyles(theme => ({
@@ -51,7 +50,7 @@ const HeaderAccountContainer = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
   const { isiOS, drawerWidth } = useContext(GlobalContext).state;
-  const { STRINGS } = useContext(TranslationsContext).state;
+  const { STRINGS } = useContext(GlobalContext).state;
   const classes = useStyles({ drawerWidth, isMobile });
 
   const [openDrawer, setOpenDrawer] = useState(false);

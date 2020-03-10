@@ -7,11 +7,12 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import ClearIcon from '@material-ui/icons/Clear';
 import IconButton from '@material-ui/core/IconButton';
 import { useLazyQuery } from '@apollo/react-hooks';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 import ResultList from './ResultsList';
 import useDebounce from '~/lib/hooks/useDebounce';
 import Router, { useRouter } from 'next/router';
 import { SEARCH_GIG } from '~/lib/graphql/gigs.strings';
-import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
+import { GlobalContext } from '~/lib/contexts/GlobalContext';
 
 export default function SearchBox() {
   // INFO: A way to pass props down to make a custom makeStyle
@@ -24,7 +25,7 @@ export default function SearchBox() {
           !props.searchTermLength || !resultsCanBeOpen
             ? theme.shape.borderRadius
             : `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0 0`,
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        backgroundColor: fade('#FFF', 0.1),
         marginRight: theme.spacing(2),
         marginLeft: 0,
         width: '100%',
@@ -82,7 +83,7 @@ export default function SearchBox() {
     setResultsCanBeOpen(true);
   };
 
-  const { STRINGS } = useContext(TranslationsContext).state;
+  const { STRINGS } = useContext(GlobalContext).state;
 
   useEffect(() => {
     if (debouncedSearchTerm.length) {

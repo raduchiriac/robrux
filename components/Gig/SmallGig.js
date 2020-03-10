@@ -4,7 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
+import { GlobalContext } from '~/lib/contexts/GlobalContext';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import Link from '~/lib/hocs/withLink';
 import ConditionalWrap from '~/lib/hocs/withConditionalWrap';
@@ -113,7 +113,7 @@ const SmallGig = ({
   _onMouseEnter = () => {},
   _onMouseLeave = () => {},
 }) => {
-  const { STRINGS } = useContext(TranslationsContext).state;
+  const { STRINGS } = useContext(GlobalContext).state;
 
   return (
     <ConditionalWrap

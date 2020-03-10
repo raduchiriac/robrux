@@ -14,7 +14,7 @@ import loadable from '@loadable/component';
 import { Helmet } from 'react-helmet';
 import withApollo from '~/lib/hocs/withApollo';
 import useForm from '~/lib/hooks/useForm';
-import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
+import { GlobalContext } from '~/lib/contexts/GlobalContext';
 import { CREATE_USER } from '~/lib/graphql/user.strings';
 import Link from '~/lib/hocs/withLink';
 
@@ -217,7 +217,7 @@ const EmailSent = ({ message }) => {
 
 const Register = () => {
   const classes = useStyles();
-  const { STRINGS } = useContext(TranslationsContext).state;
+  const { STRINGS } = useContext(GlobalContext).state;
 
   const _register = () => {
     createUser({

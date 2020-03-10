@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
-import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
+import { GlobalContext } from '~/lib/contexts/GlobalContext';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
 
 const Error404 = () => {
   const classes = useStyles();
-  const { STRINGS } = useContext(TranslationsContext).state;
+  const { STRINGS } = useContext(GlobalContext).state;
 
   return (
     <Container>

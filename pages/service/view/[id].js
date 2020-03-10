@@ -16,7 +16,7 @@ import Button from '@material-ui/core/Button';
 import HelpTwoToneIcon from '@material-ui/icons/HelpTwoTone';
 import Divider from '@material-ui/core/Divider';
 import Error from '~/pages/_error';
-import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
+import { GlobalContext } from '~/lib/contexts/GlobalContext';
 import { GET_ONE_GIG } from '~/lib/graphql/gigs.strings';
 import StaticMap from '~/components/Map/StaticMap';
 import StarRating from '~/components/Rating/StarRating';
@@ -173,7 +173,7 @@ const ContactForm = ({ placeholder, buttonText }) => {
 
 const ServiceView = ({ gig, statusCode }) => {
   const classes = useStyles();
-  const { STRINGS } = useContext(TranslationsContext).state;
+  const { STRINGS } = useContext(GlobalContext).state;
   const [anchorElFlag, setAnchorElFlag] = useState(null);
   const [openContactFormModal, setOpenContactFormModal] = useState(false);
   const openFlag = Boolean(anchorElFlag);
@@ -293,28 +293,32 @@ const ServiceView = ({ gig, statusCode }) => {
             )}
           </div>
         </Paper>
-        <Container maxWidth="sm">
-          <Box mt={2}>
-            <MaterialCarousel images={gig.images} height={200}></MaterialCarousel>
-          </Box>
-          {true && (
-            // TODO: Check above if there are reviews
-            <Box>
-              {Array.apply(null, Array(4)).map((el, idx) => (
-                <Box mb={2} key={idx}>
-                  <StarRating
-                    score={Math.random() * 5}
-                    readOnly={true}
-                    color="#f7a918"
-                    title="Anonymous User"
-                    comment="Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio ea laudantium at! Officia aliquam sunt nulla? Eum totam velit ipsa molestias. Nihil aliquid temporibus voluptates eligendi ratione, nam corporis illum!"
-                  />
+        <Box mt={2}>
+          <Grid container alignItems="flex-start" spacing={2}>
+            <Grid item xs={12} sm={12} md={12} lg={6}>
+              <MaterialCarousel images={gig.images} height={200}></MaterialCarousel>
+            </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={6}>
+              {true && (
+                // TODO: Check above if there are reviews
+                <Box>
+                  {Array.apply(null, Array(4)).map((el, idx) => (
+                    <Box mb={2} key={idx}>
+                      <StarRating
+                        score={Math.random() * 5}
+                        readOnly={true}
+                        color="#f7a918"
+                        title="Anonymous User"
+                        comment="Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio ea laudantium at! Officia aliquam sunt nulla? Eum totam velit ipsa molestias. Nihil aliquid temporibus voluptates eligendi ratione, nam corporis illum!"
+                      />
+                    </Box>
+                  ))}
                 </Box>
-              ))}
-            </Box>
-            // TODO: Load more reviews button
-          )}
-        </Container>
+                // TODO: Load more reviews button
+              )}
+            </Grid>
+          </Grid>
+        </Box>
         <DialogHeight
           id="contactForm"
           open={openContactFormModal}

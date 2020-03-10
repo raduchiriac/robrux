@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import { trackWindowScroll } from 'react-lazy-load-image-component';
 import SmallGig from './SmallGig';
 import Typography from '@material-ui/core/Typography';
-import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
+import { GlobalContext } from '~/lib/contexts/GlobalContext';
 
 const styles = theme => ({
   'small-gigs-list__container': {
@@ -15,7 +15,7 @@ const styles = theme => ({
 
 const SmallGigsList = (props, { scrollPosition }) => {
   const { classes, gigs, hovered, _onMouseEnter, _onMouseLeave, _onClick } = props;
-  const { STRINGS } = useContext(TranslationsContext).state;
+  const { STRINGS } = useContext(GlobalContext).state;
 
   if (gigs.data !== undefined && gigs.data.length === 0 && gigs.loading === false) {
     return (

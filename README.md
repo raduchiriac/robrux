@@ -49,7 +49,7 @@ Now run `npm run start:dev` and create something nice. PRs are welcome.
 - [ ] Prettier Mongoose errors (w/ l10n)
 - [ ] Login with social-media (at least Facebook Strategy)
 - [ ] Mailing System (Sparkpost or Mailgun API)
-- [ ] Audit everything with Lighthouse
+- [ ] Audit everything with Lighthouse and wrap with `<NoSsr />` when needed
 - [ ] Create a dark-skin theme (stored in localStorage, remember to invert the map color with CSS and use `@media (prefers-color-scheme`)
 - [ ] Generate a [sitemap.xml](https://gist.github.com/a-barbieri/9eb6d65ef96c2ead322bd97ae4862934)
 - [ ] Use propTypes everywhere with default props

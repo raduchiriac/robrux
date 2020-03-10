@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useMutation, useApolloClient } from '@apollo/react-hooks';
 import { LOGIN_USER } from '~/lib/graphql/user.strings';
-import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
+import { GlobalContext } from '~/lib/contexts/GlobalContext';
 import useForm from '~/lib/hooks/useForm';
 import withApollo from '~/lib/hocs/withApollo';
 import Link from '~/lib/hocs/withLink';
@@ -116,7 +116,7 @@ const Form = ({ classes, errors, formErrors, values, handleChange, handleSubmit,
 
 const Login = () => {
   const classes = useStyles();
-  const { STRINGS } = useContext(TranslationsContext).state;
+  const { STRINGS } = useContext(GlobalContext).state;
 
   const _login = () => {
     loginUser({ variables: { input: values } });

@@ -14,7 +14,7 @@ import Badge from '@material-ui/core/Badge';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
-import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
+import { GlobalContext } from '~/lib/contexts/GlobalContext';
 import { UserContext } from '~/lib/contexts/UserContext';
 import { GET_USER_INFO } from '~/lib/graphql/user.strings';
 import Link from '~/lib/hocs/withLink';
@@ -49,6 +49,7 @@ const useStyles = props =>
       },
     },
     name: {
+      position: 'absolute',
       background: 'white',
       transition: theme.transitions.create('opacity'),
       opacity: props.hovered ? 1 : 0,
@@ -59,6 +60,10 @@ const useStyles = props =>
       '&:empty': {
         display: 'none',
       },
+      right: 0,
+      top: theme.spacing(9),
+      textAlign: 'right',
+      minWidth: theme.spacing(9),
     },
     avatar: {
       width: 64,
@@ -69,7 +74,7 @@ const useStyles = props =>
   }))(props);
 
 const AccountMenu = ({ className }) => {
-  const { STRINGS } = useContext(TranslationsContext).state;
+  const { STRINGS } = useContext(GlobalContext).state;
   const { user } = useContext(UserContext);
   const [open, setOpen] = useState(false);
   const [hovered, setHovered] = useState(false);

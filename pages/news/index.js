@@ -15,7 +15,7 @@ import { useRouter } from 'next/router';
 import { GET_NEWS } from '~/lib/graphql/news.strings';
 import withApollo from '~/lib/hocs/withApollo';
 import { WebsiteHeaderLayout } from '~/lib/layouts/WebsiteHeaderLayout';
-import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
+import { GlobalContext } from '~/lib/contexts/GlobalContext';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -29,7 +29,7 @@ moment.locale('ro');
 const News = ({ news }) => {
   const classes = useStyles();
   const Router = useRouter();
-  const { STRINGS } = useContext(TranslationsContext).state;
+  const { STRINGS } = useContext(GlobalContext).state;
 
   return (
     <Container maxWidth="sm">

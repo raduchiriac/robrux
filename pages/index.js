@@ -10,18 +10,27 @@ import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import Button from '@material-ui/core/Button';
 import Fade from '@material-ui/core/Fade';
-import Link from '~/lib/hocs/withLink';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 import withApollo from '~/lib/hocs/withApollo';
 import AccountMenu from '~/components/Header/AccountMenu';
 import CategoriesTwoRows from '~/components/Categories/CategoriesTwoRows';
-import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
+import { GlobalContext } from '~/lib/contexts/GlobalContext';
+import LanguageSwitcher from '~/components/Header/LanguageSwitcher';
 
 import CITIES from '~/lib/constants/CITIES';
+import Footer from '~/components/Footer/Footer';
 
 const useStyles = makeStyles(theme => ({
-  root: { position: 'relative', height: '100vh', minHeight: '100%', justifyContent: 'center' },
+  root: {
+    position: 'relative',
+    height: '100vh',
+    minHeight: '100%',
+    alignContent: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+  },
   indexPageContent: {
-    background: 'rgba(255, 255, 255, 0.19)',
+    background: fade('#FFF', 0.19),
     textAlign: 'center',
     width: ' 100%',
     position: 'relative',
@@ -99,27 +108,41 @@ const useStyles = makeStyles(theme => ({
       flexBasis: '100%',
     },
   },
-  accountMenu: {
+  topRightArea: {
     position: 'absolute',
     top: theme.spacing(2),
     right: theme.spacing(2),
+    display: 'flex',
+    alignItems: 'end',
+    '& > div': {
+      margin: theme.spacing(0, 0, 0, 1),
+    },
   },
-  buttonAway: {
-    color: 'white',
-    textDecoration: 'underline',
+  browse: {
+    backgroundColor: 'white',
+    '&:hover': {
+      backgroundColor: fade('#FFF', 0.7),
+    },
+  },
+  bottomCenterArea: {
+    bottom: 0,
+    position: 'absolute',
   },
 }));
 
 const Index = () => {
   const classes = useStyles();
   let [stringToBeSearched, setStringToBeSearched] = useState('');
-  const { STRINGS } = useContext(TranslationsContext).state;
+  const { STRINGS } = useContext(GlobalContext).state;
   let [citiesDropDownValue, setCititesDropDownValue] = useState('bruxelles');
 
   return (
     <Grid container className={classes.root} alignItems="center">
-      <Box className={classes.indexPageBackgroundImage}></Box>
-      <AccountMenu className={classes.accountMenu} />
+      <Box className={classes.indexPageBackgroundImage} component="div"></Box>
+      <Box component="div" className={classes.topRightArea}>
+        <LanguageSwitcher />
+        <AccountMenu />
+      </Box>
       <Box className={classes.indexPageContent}>
         <Box className={classes.indexPageLogo}>
           <img src="/robrux.png" alt="logo" />
@@ -161,11 +184,14 @@ const Index = () => {
           </FormControl>
         </Paper>
         <CategoriesTwoRows location={citiesDropDownValue} categories={STRINGS.SERVICE_NEW_CATEGORIES} />
-        <Box>
-          <Link className={classes.buttonAway} href="/browse">
-            {STRINGS.INDEX_BROWSE_FREE}
-          </Link>
-        </Box>
+      </Box>
+      <Box>
+        <Button size="small" variant="contained" className={classes.browse} href="/browse">
+          {STRINGS.INDEX_BROWSE_FREE}
+        </Button>
+      </Box>
+      <Box component="div" className={classes.bottomCenterArea}>
+        <Footer />
       </Box>
     </Grid>
   );

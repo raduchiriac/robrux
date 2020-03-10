@@ -7,7 +7,6 @@ import Chip from '@material-ui/core/Chip';
 import Box from '@material-ui/core/Box';
 import Router, { useRouter } from 'next/router';
 import { GlobalContext } from '~/lib/contexts/GlobalContext';
-import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
 import { SEARCH_BBOX_GIG } from '~/lib/graphql/gigs.strings';
 import { Helmet } from 'react-helmet';
 import CITIES from '~/lib/constants/CITIES';
@@ -26,8 +25,7 @@ const Browse = ({ search, category, inLocation }) => {
     variables: { limit: 20, sort: '-_rating', bbox, search: _searchingFor, category: _category },
   });
 
-  const { showMap } = useContext(GlobalContext).state;
-  const { STRINGS } = useContext(TranslationsContext).state;
+  const { showMap, STRINGS } = useContext(GlobalContext).state;
 
   // Update state when the props change
   // TODO: usePrevious()

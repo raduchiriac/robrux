@@ -34,7 +34,7 @@ import DialogHeight from '~/components/FormElements/DialogHeight';
 import * as Showdown from 'showdown';
 import xssFilter from 'showdown-xss-filter';
 import GoogleMapsAutocomplete from '~/components/FormElements/GoogleMapsAutocomplete';
-import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
+import { GlobalContext } from '~/lib/contexts/GlobalContext';
 import Map from '~/components/Map/Map';
 import useGeo from '~/lib/hooks/useGeo';
 import useForm from '~/lib/hooks/useForm';
@@ -503,7 +503,7 @@ const ServiceCreate = () => {
   const classes = useStyles();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const [activeStep, setActiveStep] = useState(2);
-  const { STRINGS } = useContext(TranslationsContext).state;
+  const { STRINGS } = useContext(GlobalContext).state;
   const steps = [
     STRINGS.SERVICE_NEW_NEW,
     STRINGS.SERVICE_NEW_ADDRESS_WHERE,

@@ -12,8 +12,10 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Router from 'next/router';
-import SearchBox from './Header/SearchBox';
-import { TranslationsContext } from '~/lib/contexts/TranslationsContext';
+import SearchBox from '~/components/Header/SearchBox';
+import LanguageSwitcher from '~/components/Header/LanguageSwitcher';
+import ThemeSwitcher from '~/components/Header/ThemeSwitcher';
+import { GlobalContext } from '~/lib/contexts/GlobalContext';
 import { UserContext } from '~/lib/contexts/UserContext';
 import Link from '~/lib/hocs/withLink';
 import withApollo from '~/lib/hocs/withApollo';
@@ -48,7 +50,7 @@ const useStyles = makeStyles(theme => ({
 const HeaderWebsiteContainer = () => {
   const classes = useStyles();
 
-  const { STRINGS } = useContext(TranslationsContext).state;
+  const { STRINGS } = useContext(GlobalContext).state;
   const { user } = useContext(UserContext);
 
   // TODO: Refactor all of this below (what's the use?)
@@ -144,6 +146,8 @@ const HeaderWebsiteContainer = () => {
           <SearchBox />
           {/* <div className={classes.grow} /> */}
           <div className={classes.sectionDesktop}>
+            <ThemeSwitcher />
+            <LanguageSwitcher />
             <IconButton aria-label="" color="inherit">
               <Badge badgeContent={2} color="secondary">
                 <MailIcon />

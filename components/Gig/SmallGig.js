@@ -191,4 +191,6 @@ const SmallGig = ({
   );
 };
 
+SmallGig.whyDidYouRender = true;
+
 export default withStyles(styles)(SmallGig);

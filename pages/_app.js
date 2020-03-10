@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import App from 'next/app';
 import { Helmet } from 'react-helmet';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import jwt from 'jsonwebtoken';
 import { UserContext } from '~/lib/contexts/UserContext';
 import { GlobalContextProvider } from '~/lib/contexts/GlobalContext';
-import { TranslationsContextProvider, TranslationsContext } from '~/lib/contexts/TranslationsContext';
+import { TranslationsContextProvider } from '~/lib/contexts/TranslationsContext';
 import { ThemeProvider } from '@material-ui/styles';
 import { LightTheme } from '~/lib/themes/light-theme';
 import { DarkTheme } from '~/lib/themes/dark-theme';
@@ -16,6 +16,11 @@ import cookies from 'next-cookies';
 import './_app.css';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import 'react-mde/lib/styles/css/react-mde-all.css';
+import whyDidYouRender from '@welldone-software/why-did-you-render';
+
+if (false && typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+  whyDidYouRender(React);
+}
 
 class NextApp extends App {
   static displayName = 'NextApp';

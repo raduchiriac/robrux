@@ -65,7 +65,7 @@ Now run `npm run start:dev` and create something nice. PRs are welcome.
 
 #### 📦 Try me out area
 
-- [ ] `npm i @welldone-software/why-did-you-render -SE`
+- [x] `npm i @welldone-software/why-did-you-render -SE`
 - [ ] `npm i next-seo -SE`
 - [ ] `npm i next-nookies-persist -SE`
 - [ ] `npm i next-session -SE`

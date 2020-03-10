@@ -336,7 +336,10 @@ const ServiceView = ({ gig, statusCode }) => {
 
 ServiceView.getInitialProps = async ctx => {
   const { query, apolloClient, res = {} } = ctx;
-  const result = await apolloClient.query({ query: GET_ONE_GIG, variables: { idOrSlug: query.id } });
+  const result = await apolloClient.query({
+    query: GET_ONE_GIG,
+    variables: { idOrSlug: encodeURIComponent(query.id) },
+  });
   let statusCode = (res && res.statusCode) || 200;
   if (!result.data.oneGig) statusCode = 404;
 

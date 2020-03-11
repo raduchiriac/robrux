@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { useRouter } from 'next/router';
 import { GET_NEWS } from '~/lib/graphql/news.strings';
 import withApollo from '~/lib/hocs/withApollo';
-import { WebsiteHeaderLayout } from '~/lib/layouts/WebsiteHeaderLayout';
+import { WebsiteHeaderFooterLayout } from '~/lib/layouts/WebsiteHeaderFooterLayout';
 import { GlobalContext } from '~/lib/contexts/GlobalContext';
 
 const useStyles = makeStyles(theme => ({
@@ -63,7 +63,7 @@ const News = ({ news }) => {
   );
 };
 
-News.Layout = WebsiteHeaderLayout;
+News.Layout = WebsiteHeaderFooterLayout;
 
 News.getInitialProps = async ({ apolloClient }) => {
   const result = await apolloClient.query({ query: GET_NEWS });

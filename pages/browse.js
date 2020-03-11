@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useLazyQuery } from '@apollo/react-hooks';
 import Grid from '@material-ui/core/Grid';
-import { WebsiteHeaderLayout } from '~/lib/layouts/WebsiteHeaderLayout';
+import { WebsiteHeaderFooterLayout } from '~/lib/layouts/WebsiteHeaderFooterLayout';
 import withApollo from '~/lib/hocs/withApollo';
 import Chip from '@material-ui/core/Chip';
 import Box from '@material-ui/core/Box';
@@ -158,6 +158,6 @@ Browse.getInitialProps = async ctx => {
   return { search: query.search, inLocation: query.location, category: query.category };
 };
 
-Browse.Layout = WebsiteHeaderLayout;
+Browse.Layout = WebsiteHeaderFooterLayout;
 
 export default withApollo(Browse);

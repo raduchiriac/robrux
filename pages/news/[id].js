@@ -8,7 +8,7 @@ import { Helmet } from 'react-helmet';
 import parse from 'html-react-parser';
 import withApollo from '~/lib/hocs/withApollo';
 import Link from '~/lib/hocs/withLink';
-import { WebsiteHeaderLayout } from '~/lib/layouts/WebsiteHeaderLayout';
+import { WebsiteHeaderFooterLayout } from '~/lib/layouts/WebsiteHeaderFooterLayout';
 import { GlobalContext } from '~/lib/contexts/GlobalContext';
 import { GET_ONE_NEWS } from '~/lib/graphql/news.strings';
 import Error from '~/pages/_error';
@@ -74,5 +74,5 @@ NewsId.getInitialProps = async ctx => {
   return { news: result.data.oneNews, statusCode };
 };
 
-NewsId.Layout = WebsiteHeaderLayout;
+NewsId.Layout = WebsiteHeaderFooterLayout;
 export default withApollo(NewsId);

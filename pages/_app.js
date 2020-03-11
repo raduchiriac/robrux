@@ -24,6 +24,7 @@ if (false && typeof window !== 'undefined' && process.env.NODE_ENV === 'developm
 class NextApp extends App {
   static displayName = 'NextApp';
   state = {
+    // TODO: Make this dynamic somehow
     theme: 'light',
     user: {},
   };

@@ -25,7 +25,7 @@ import parse from 'html-react-parser';
 import Link from '~/lib/hocs/withLink';
 import DialogHeight from '~/components/FormElements/DialogHeight';
 import { fade } from '@material-ui/core/styles/colorManipulator';
-import { WebsiteHeaderLayout } from '~/lib/layouts/WebsiteHeaderLayout';
+import { WebsiteHeaderFooterLayout } from '~/lib/layouts/WebsiteHeaderFooterLayout';
 import withApollo from '~/lib/hocs/withApollo';
 import TextField from '@material-ui/core/TextField';
 
@@ -328,7 +328,7 @@ const ServiceView = ({ gig, statusCode }) => {
         >
           <ContactForm placeholder={STRINGS.SERVICE_MESSAGE_TEXT} buttonText={STRINGS.SEND} />
         </DialogHeight>
-        <Box mt={2} mb={2} className={classes.serviceActions}>
+        <Box mt={2} mb={1} className={classes.serviceActions}>
           <Button variant="contained" color="primary" onClick={evt => handleContactFormModal()}>
             {STRINGS.SERVICE_CONTACT}
           </Button>
@@ -350,6 +350,6 @@ ServiceView.getInitialProps = async ctx => {
   return { gig: result.data.oneGig, statusCode };
 };
 
-ServiceView.Layout = WebsiteHeaderLayout;
+ServiceView.Layout = WebsiteHeaderFooterLayout;
 
 export default withApollo(ServiceView);

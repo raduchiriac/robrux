@@ -97,11 +97,12 @@ const User = mongoose.model('User', schema);
 // -----------------------------------------------------------
 // GraphQL declarations
 // -----------------------------------------------------------
-const { GraphQLID, GraphQLString, GraphQLObjectType, GraphQLNonNull, GraphQLList } = require('graphql');
+const { GraphQLID, GraphQLBoolean, GraphQLString, GraphQLObjectType, GraphQLNonNull, GraphQLList } = require('graphql');
 
 const fieldsInputLogin = {
   email: { type: GraphQLNonNull(GraphQLString) },
   password: { type: GraphQLNonNull(GraphQLString) },
+  rememberme: { type: GraphQLBoolean },
 };
 const fieldsAuth = {
   _id: { type: GraphQLID },

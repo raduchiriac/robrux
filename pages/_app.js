@@ -25,12 +25,13 @@ class NextApp extends App {
   static displayName = 'NextApp';
   state = {
     // TODO: Make this dynamic somehow
+    lang: 'ro',
     theme: 'light',
     user: {},
   };
 
   static async getInitialProps({ Component, ctx }) {
-    const { token } = cookies(ctx);
+    const { token, theme, lang } = cookies(ctx);
 
     const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
     const user = token ? jwt.verify(token, process.env.JWT_SECRET) : {};

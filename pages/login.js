@@ -89,8 +89,18 @@ const Form = ({ classes, errors, formErrors, values, handleChange, handleSubmit,
           helperText={errors.password}
         />
 
-        {/* TODO: Implement Remember Me (extend cookie life?) */}
-        <FormControlLabel control={<Checkbox value="remember" color="primary" />} label={STRINGS.LOGIN_REMEMBER} />
+        <FormControlLabel
+          control={
+            <Checkbox
+              onChange={evt => handleChange(evt.target.checked, 'rememberme')}
+              value={true}
+              id="rememberme"
+              name="rememberme"
+              color="primary"
+            />
+          }
+          label={STRINGS.LOGIN_REMEMBER}
+        />
         <Box color="error.main" className={classes.formErrors}>
           <Typography>{formErrors}</Typography>
         </Box>

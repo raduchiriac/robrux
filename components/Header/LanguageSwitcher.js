@@ -23,6 +23,7 @@ const styles = theme => ({
       display: 'block',
     },
   },
+  expandIcon: {},
   menu: {
     top: `${theme.spacing(5)}px !important`,
   },
@@ -58,7 +59,7 @@ const LanguageSwitcher = ({ classes }) => {
           <span className={classes.language}>
             {LANGUAGES_LABEL.filter(language => language.code === USER_LANG)[0].code}
           </span>
-          <ExpandMoreIcon fontSize="small" />
+          <ExpandMoreIcon fontSize="small" className={classes.expandIcon} />
         </Button>
       </Tooltip>
       <NoSsr>

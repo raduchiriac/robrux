@@ -42,15 +42,16 @@ const userMutations = {
     },
     resolve: async (rootValue, { input }, context) => {
       const user = await UserService.loginUser(input);
+
       const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-        expiresIn: '24h',
+        expiresIn: `${(input.rememberme && 14) || 2} days`,
       });
 
       context.res.setHeader(
         'Set-Cookie',
         cookie.serialize('token', token, {
           httpOnly: true,
-          maxAge: 24 * 60 * 60,
+          maxAge: 60 * 60 * 24 * ((input.rememberme && 14) || 2),
           path: '/',
           sameSite: 'lax',
           secure: process.env.NODE_ENV === 'production',

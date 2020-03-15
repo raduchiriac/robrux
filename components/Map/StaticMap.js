@@ -68,7 +68,7 @@ const StaticMap = ({ gig = {}, size = [300, 300], zoom = 13, withLink, withAddre
       <ConditionalWrap
         condition={withLink}
         wrap={children => (
-          <a target="_blank" rel="noreferrer" href={`https://maps.google.com/?q=${location}`}>
+          <a target="_blank" rel="nofollow noreferrer" href={`https://maps.google.com/?q=${location}`}>
             {children}
           </a>
         )}

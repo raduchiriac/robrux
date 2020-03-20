@@ -9,7 +9,7 @@ const GlobalDecorator = storyFn => <GlobalContextProvider>{storyFn()}</GlobalCon
 storiesOf('Small Gig', module)
   .addDecorator(GlobalDecorator)
   .addDecorator(withKnobs)
-  .add('Skeleton', () => <SmallGig loading={true} />)
+  .add('Skeleton', () => <SmallGig loading />)
   .add('With some data', () => (
     <SmallGig
       _onMouseEnter={() => {

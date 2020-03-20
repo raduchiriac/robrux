@@ -6,6 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import { Helmet } from 'react-helmet';
 import parse from 'html-react-parser';
+import moment from 'moment';
+import 'moment/locale/ro';
 import withApollo from '~/lib/hocs/withApollo';
 import Link from '~/lib/hocs/withLink';
 import { WebsiteHeaderAndFooterLayout } from '~/lib/layouts/WebsiteHeaderAndFooterLayout';
@@ -26,7 +28,8 @@ const useStyles = makeStyles(theme => ({
 
 const NewsId = ({ news, statusCode }) => {
   const classes = useStyles();
-  const { STRINGS } = useContext(GlobalContext).state;
+  const { USER_LANG, STRINGS } = useContext(GlobalContext).state;
+  moment.locale(USER_LANG);
 
   if (!news) return <Error statusCode={statusCode} />;
 
@@ -35,15 +38,7 @@ const NewsId = ({ news, statusCode }) => {
       <Helmet title={news.title} />
 
       <Typography gutterBottom component="p" variant="overline">
-        {/* TODO: Make this dynamic somehow */}
-        {new Date(news.createdAt).toLocaleDateString('ro-RO', {
-          weekday: 'long',
-          hour: 'numeric',
-          minute: 'numeric',
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        })}
+        {moment(news.createdAt).format('LL')}
       </Typography>
       <Typography gutterBottom variant="h2">
         {news.title}
@@ -53,7 +48,7 @@ const NewsId = ({ news, statusCode }) => {
         <div className={classes.paragraph}>{parse(news.richContent)}</div>
         <img src={news.images[1]} alt="" />
       </Box>
-      <Divider light={true} />
+      <Divider light />
       <Link className={classes.backlink2} href="/news" color="primary">
         {STRINGS.NEWS_BACK_TO_NEWS}
       </Link>

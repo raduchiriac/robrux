@@ -215,7 +215,7 @@ const ServiceView = ({ gig, statusCode }) => {
       <Helmet title={gig.title} />
       <Grid item xs={12} sm={4} md={4} lg={3}>
         <Box className={classes.staticMap}>
-          <StaticMap gig={gig} size={[600, 400]} zoom={16} withLink={true} withAddress={true} />
+          <StaticMap mapServiceProvider="osm" size={['100%', 400]} zoom={18} gig={gig} withAddress withLink />
         </Box>
       </Grid>
       <Grid className={classes.root} item xs={12} sm={8} md={8} lg={9}>
@@ -275,7 +275,7 @@ const ServiceView = ({ gig, statusCode }) => {
               <Typography variant="subtitle1" className={classes['service-avatar__name']}>
                 {`${gig._userId.firstName} ${gig._userId.lastName}`}
               </Typography>
-              <StarRating score={gig._rating} readOnly={true} size="small" />
+              <StarRating score={gig._rating} readOnly size="small" />
             </div>
           </Link>
           <div className={classes['service-description']}>{gig.richDescription && parse(gig.richDescription)}</div>
@@ -321,7 +321,8 @@ const ServiceView = ({ gig, statusCode }) => {
                     <Box mb={2} key={idx}>
                       <StarRating
                         score={rating.score}
-                        readOnly={true}
+                        readOnly
+                        date={rating.createdAt}
                         color="#f7a918"
                         title={rating._userId}
                         comment={rating.comment}

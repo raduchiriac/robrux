@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Fragment } from 'react';
 import Map from 'pigeon-maps';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -14,7 +14,16 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const OSMMap = ({ children, defaultZoom, defaultCenter, mapServiceProvider, maxZoom, minZoom, onChange }) => {
+const OSMMap = ({
+  children,
+  defaultZoom,
+  defaultCenter,
+  mapServiceProvider,
+  maxZoom,
+  minZoom,
+  blockDrag,
+  onChange = () => {},
+}) => {
   const classes = useStyles();
 
   // TODO: How to read window.devicePixelRatio with SSR?
@@ -38,12 +47,12 @@ const OSMMap = ({ children, defaultZoom, defaultCenter, mapServiceProvider, maxZ
       maxZoom={maxZoom}
       provider={providers[mapServiceProvider]}
       onBoundsChanged={onChange}
-      animate={true}
+      animate
+      zoomSnap
       metaWheelZoom={false}
-      twoFingerDrag={true}
-      zoomSnap={true}
-      mouseEvents={true}
-      touchEvents={true}
+      twoFingerDrag={!blockDrag}
+      mouseEvents={!blockDrag}
+      touchEvents={!blockDrag}
       attribution={false}
       attributionPrefix={false}
       boxClassname={classes[`mapTiles_${mapServiceProvider}`]}

@@ -10,7 +10,7 @@ const styles = theme => ({
   mapContainer: {
     borderRadius: `${theme.shape.borderRadius * 3}px`,
     transition: theme.transitions.create(),
-    margin: theme.spacing(1),
+    margin: theme.spacing(0, 0, 1),
     boxShadow: theme.shadows[1],
     overflow: 'hidden',
   },
@@ -25,6 +25,7 @@ const Map = ({
   center = [],
   city = 'bruxelles',
   defaultZoom = 13,
+  blockDrag = false,
   maxZoom = 15,
   minZoom = 9,
   mapServiceProvider = 'osm',
@@ -116,6 +117,7 @@ const Map = ({
           defaultZoom={options.defaultZoom}
           maxZoom={options.maxZoom}
           minZoom={options.minZoom}
+          blockDrag={blockDrag}
           onChange={({ center, zoom, bounds, initial }) => _onMapBoundsChange(center, zoom, bounds, initial)}
         >
           {markers}

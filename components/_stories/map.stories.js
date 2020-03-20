@@ -18,17 +18,21 @@ const gigs = {
   loading: false,
 };
 
-storiesOf('Maps: Google (API)', module)
+storiesOf('Google Maps', module)
   .add('With one marker', () => <Map gigs={gigs} mapServiceProvider="google" />)
-  .add('Static map (with address)', () => (
-    <StaticMap gig={gigs.data[0]} size={[300, 450]} zoom={16} withAddress={true} />
-  ))
-  .add('Static map (with link)', () => <StaticMap gig={gigs.data[0]} size={[300, 450]} zoom={16} withLink={true} />);
+  .add('Static map (with address)', () => <StaticMap gig={gigs.data[0]} size={[300, 450]} zoom={16} withAddress />)
+  .add('Static map (with link)', () => (
+    <StaticMap mapServiceProvider="google" gig={gigs.data[0]} size={[300, 450]} zoom={16} withLink />
+  ));
 
-storiesOf('Maps: Google (free layers)', module).add('With one marker', () => (
+storiesOf('Pigeon Maps: Free Google', module).add('With one marker', () => (
   <Map gigs={gigs} mapServiceProvider="gmaps" />
 ));
 
-storiesOf('Maps: OpenStreetMap', module).add('With one marker', () => <Map gigs={gigs} mapServiceProvider="osm" />);
+storiesOf('Pigeon Maps: OpenStreetMap', module)
+  .add('With one marker', () => <Map gigs={gigs} mapServiceProvider="osm" />)
+  .add('Static map (with address and link)', () => (
+    <StaticMap mapServiceProvider="osm" size={['100%', 150]} zoom={18} gig={gigs.data[0]} withAddress withLink />
+  ));
 
-storiesOf('Maps: Mapbox', module).add('With one marker', () => <Map gigs={gigs} mapServiceProvider="mapbox" />);
+storiesOf('Pigeon Maps: Mapbox', module).add('With one marker', () => <Map gigs={gigs} mapServiceProvider="mapbox" />);

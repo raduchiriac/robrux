@@ -22,6 +22,7 @@ storiesOf('Rating', module)
       comment={text('Comment', 'Awesome, great experience with this person')}
       score={number('Score', '4.823442')}
       size="large"
+      date={number('Date', 1564343598482)}
       disabled={boolean('Disabled', false)}
       readOnly={boolean('Read-only', false)}
       maxStars={10}

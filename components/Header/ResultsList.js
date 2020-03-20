@@ -22,7 +22,7 @@ export default function ResultsList({ results, searching }) {
   const classes = useStyles();
   return (
     <Grid item>
-      <List dense={true} className={classes['result-list__container']}>
+      <List dense className={classes['result-list__container']}>
         {results.map((result, idx) => (
           <Result
             key={idx}

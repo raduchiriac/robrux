@@ -9,7 +9,7 @@ import { GlobalContext } from '~/lib/contexts/GlobalContext';
 const styles = theme => ({
   'small-gigs-list__container': {
     flex: 1,
-    padding: theme.spacing(1),
+    padding: theme.spacing(0, 1),
   },
 });
 

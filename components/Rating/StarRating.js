@@ -1,9 +1,12 @@
-import React, { Fragment, useState, useEffect, useRef } from 'react';
+import React, { Fragment, useState, useEffect, useContext } from 'react';
 import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import usePrevious from '~/lib/hooks/usePrevious';
+import moment from 'moment';
+import 'moment/locale/ro';
 import Box from '@material-ui/core/Box';
+import { GlobalContext } from '~/lib/contexts/GlobalContext';
 
 const StarRating = ({
   title,
@@ -16,6 +19,7 @@ const StarRating = ({
   color,
   hoverColor,
   icon,
+  date,
   onChange = () => {},
 }) => {
   const [value, setValue] = useState(Math.round(score));
@@ -38,10 +42,18 @@ const StarRating = ({
     },
   })(Rating);
 
+  const { USER_LANG } = useContext(GlobalContext).state;
+  moment.locale(USER_LANG);
+
   return (
     <Fragment>
       <Box component="fieldset">
         <Typography component="legend">{title}</Typography>
+        {date && (
+          <Typography component="span" variant="caption" display="block" gutterBottom>
+            {moment(date).fromNow()}
+          </Typography>
+        )}
         <StyledStarRating
           name="star-rating"
           value={value}

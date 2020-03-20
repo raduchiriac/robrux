@@ -23,13 +23,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-// TODO: Make this dynamic somehow (and set it globally, once in a HOC)
-moment.locale('ro');
-
 const News = ({ news }) => {
   const classes = useStyles();
   const Router = useRouter();
-  const { STRINGS } = useContext(GlobalContext).state;
+  const { STRINGS, USER_LANG } = useContext(GlobalContext).state;
+  moment.locale(USER_LANG);
 
   return (
     <Container maxWidth="sm">

@@ -8,6 +8,7 @@ const client = new GraphQLClient(
     credentials: 'same-origin',
     mode: 'cors',
     headers: {
+      // TODO: Authorize mutations
       // authorization: 'Bearer MY_TOKEN',
     },
   }
@@ -68,7 +69,7 @@ const mockTheUsers = async () => {
       data => {
         users.push(data.register._id);
       },
-      99
+      66
     ),
   ];
   await Promise.all(promises);
@@ -103,7 +104,8 @@ const mockWithDependecies = async () => {
   gigs.forEach(gig => {
     const HOW_MANY_RATINGS = Math.round(Math.random() * 10) + 1;
     for (let i = 0; i < HOW_MANY_RATINGS; i++) {
-      // INFO: user._id should not rate his own gig, but too complicated to test here
+      // INFO: user._id should not be able to rate his own gig
+      // but it's too complicated to check that here
       const userId = randomFromArray(users);
       myFakeRatings.push(require('./models/ratings/rating.graphql.strings').FAKE_RATING_DATA({ gigId: gig, userId }));
     }
@@ -112,18 +114,28 @@ const mockWithDependecies = async () => {
 };
 
 const buildRelationships = async () => {
-  console.log('Creating relationships…');
+  console.log('Creating relationships between gigs and ratings…');
+  const updateGig = require('./models/gigs/gig.service').updateGig;
   const mutations = [];
   gigs.forEach(gig => {
     const filteredRatings = ratings.filter(rating => gig === rating._gigId + '');
-    const dataToMutateTheGig = {
-      _id: gig,
-      _ratings: filteredRatings.map(rating => rating._id),
-      _rating: filteredRatings.reduce((total, current) => total + current.score, 0) / filteredRatings.length,
-    };
-    mutations.push(dataToMutateTheGig);
+    mutations.push(
+      new Promise((resolve, reject) => {
+        resolve(
+          updateGig(
+            { _id: gig },
+            {
+              _ratings: filteredRatings.map(rating => rating._id),
+              _rating: filteredRatings.reduce((total, current) => total + current.score, 0) / filteredRatings.length,
+            }
+          )
+        );
+      })
+    );
   });
-  // TODO: Mutate gigs._ratings and gigs._rating based on dataToMutateGig[]._id
+  // TODO: Mutate the users._gigs with their respective gigs id
+  console.log('Creating relationships between gigs and users…');
+  await Promise.all(mutations);
 };
 
 cleanup()

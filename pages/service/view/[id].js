@@ -17,19 +17,22 @@ import HelpTwoToneIcon from '@material-ui/icons/HelpTwoTone';
 import Divider from '@material-ui/core/Divider';
 import Error from '~/pages/_error';
 import { GlobalContext } from '~/lib/contexts/GlobalContext';
+import { UserContext } from '~/lib/contexts/UserContext';
 import { GET_ONE_GIG } from '~/lib/graphql/gigs.strings';
 import StaticMap from '~/components/Map/StaticMap';
 import StarRating from '~/components/Rating/StarRating';
 import MaterialCarousel from '~/components/Carousel/MaterialCarousel';
 import parse from 'html-react-parser';
+import Router, { useRouter } from 'next/router';
 import Link from '~/lib/hocs/withLink';
 import DialogHeight from '~/components/FormElements/DialogHeight';
 import { fade } from '@material-ui/core/styles/colorManipulator';
-import { WebsiteHeaderFooterLayout } from '~/lib/layouts/WebsiteHeaderFooterLayout';
+import { WebsiteHeaderAndFooterLayout } from '~/lib/layouts/WebsiteHeaderAndFooterLayout';
 import withApollo from '~/lib/hocs/withApollo';
 import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme, mobileMapHeight = 150) => ({
+  root: {},
   container: {
     padding: theme.spacing(1, 2, 0),
     overflow: 'hidden',
@@ -104,6 +107,13 @@ const useStyles = makeStyles((theme, mobileMapHeight = 150) => ({
       flex: 1,
       margin: 0,
     },
+    [theme.breakpoints.down('xs')]: {
+      position: 'fixed',
+      zIndex: 99,
+      bottom: theme.spacing(1),
+      left: theme.spacing(2),
+      right: theme.spacing(2),
+    },
   },
   tags: {
     margin: theme.spacing(1, 0),
@@ -177,6 +187,8 @@ const ServiceView = ({ gig, statusCode }) => {
   const [anchorElFlag, setAnchorElFlag] = useState(null);
   const [openContactFormModal, setOpenContactFormModal] = useState(false);
   const openFlag = Boolean(anchorElFlag);
+  const { user } = useContext(UserContext);
+  const router = useRouter();
 
   const handleClickFlag = event => {
     setAnchorElFlag(event.currentTarget);
@@ -187,7 +199,11 @@ const ServiceView = ({ gig, statusCode }) => {
   if (!gig) return <Error statusCode={statusCode} />;
 
   const handleContactFormModal = evt => {
-    setOpenContactFormModal(true);
+    if (user._id) {
+      setOpenContactFormModal(true);
+    } else {
+      Router.push({ pathname: '/login', query: { redirect: router.asPath } });
+    }
   };
 
   const handleCloseContactFormModal = evt => {
@@ -202,7 +218,7 @@ const ServiceView = ({ gig, statusCode }) => {
           <StaticMap gig={gig} size={[600, 400]} zoom={16} withLink={true} withAddress={true} />
         </Box>
       </Grid>
-      <Grid item xs={12} sm={8} md={8} lg={9}>
+      <Grid className={classes.root} item xs={12} sm={8} md={8} lg={9}>
         <Paper className={classes.container}>
           <IconButton
             className={classes.flag}
@@ -299,17 +315,16 @@ const ServiceView = ({ gig, statusCode }) => {
               <MaterialCarousel images={gig.images} height={200}></MaterialCarousel>
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={6}>
-              {true && (
-                // TODO: Check above if there are reviews
+              {!!gig._ratings.length && (
                 <Box>
-                  {Array.apply(null, Array(4)).map((el, idx) => (
+                  {gig._ratings.map((rating, idx) => (
                     <Box mb={2} key={idx}>
                       <StarRating
-                        score={Math.random() * 5}
+                        score={rating.score}
                         readOnly={true}
                         color="#f7a918"
-                        title="Anonymous User"
-                        comment="Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio ea laudantium at! Officia aliquam sunt nulla? Eum totam velit ipsa molestias. Nihil aliquid temporibus voluptates eligendi ratione, nam corporis illum!"
+                        title={rating._userId}
+                        comment={rating.comment}
                       />
                     </Box>
                   ))}
@@ -330,7 +345,7 @@ const ServiceView = ({ gig, statusCode }) => {
         </DialogHeight>
         <Box mt={2} mb={1} className={classes.serviceActions}>
           <Button variant="contained" color="primary" onClick={evt => handleContactFormModal()}>
-            {STRINGS.SERVICE_CONTACT}
+            {(user._id && STRINGS.SERVICE_CONTACT) || STRINGS.SERVICE_CONTACT_NO_LOGIN}
           </Button>
         </Box>
       </Grid>
@@ -338,8 +353,7 @@ const ServiceView = ({ gig, statusCode }) => {
   );
 };
 
-ServiceView.getInitialProps = async ctx => {
-  const { query, apolloClient, res = {} } = ctx;
+ServiceView.getInitialProps = async ({ query, apolloClient, res = {} }) => {
   const result = await apolloClient.query({
     query: GET_ONE_GIG,
     variables: { idOrSlug: encodeURIComponent(query.id) },
@@ -350,6 +364,6 @@ ServiceView.getInitialProps = async ctx => {
   return { gig: result.data.oneGig, statusCode };
 };
 
-ServiceView.Layout = WebsiteHeaderFooterLayout;
+ServiceView.Layout = WebsiteHeaderAndFooterLayout;
 
 export default withApollo(ServiceView);

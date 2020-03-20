@@ -1,11 +1,11 @@
 import React from 'react';
 import withApollo from '~/lib/hocs/withApollo';
-import { WebsiteHeaderFooterLayout } from '~/lib/layouts/WebsiteHeaderFooterLayout';
+import { WebsiteHeaderAndFooterLayout } from '~/lib/layouts/WebsiteHeaderAndFooterLayout';
 import Container from '@material-ui/core/Container';
 
 const Contact = () => {
   return <Container>Contact</Container>;
 };
 
-Contact.Layout = WebsiteHeaderFooterLayout;
+Contact.Layout = WebsiteHeaderAndFooterLayout;
 export default withApollo(Contact);

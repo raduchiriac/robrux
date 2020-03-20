@@ -27,19 +27,19 @@ Now run `npm run start:dev` and create something nice. PRs are welcome.
 - [x] Option to use either Google Maps, Open Street Map or Mapbox
 - [x] Fuzzy-Search on MongoDB (include tags)
 - [x] News section (add to the seed file)
-- [ ] Send a newsletter using mongoose's `save` hook
 - [x] Send 404 if not found: Gig, News, Profile (do a fetch inside `getInitialProps()`)
 - [x] Dynamic `<title>` using Helmet
 - [x] Create a Category Page (linked from a gig page)
 - [x] Make components more accessible (storybook-a11y)
 - [x] Cache GraphQL requests
+- [ ] Send a newsletter using mongoose's `save` hook
 - [ ] Use `graphql-cookie-headers`
 - [ ] Add user roles (edit the seed file)
 - [ ] Protect GraphQL mutations (Authorization and [rate-limit](https://www.npmjs.com/package/graphql-rate-limit-directive))
 - [ ] Animations using React Spring [or similar](https://material-ui.com/components/transitions/) of page elements
-- [ ] Create a Rating Collection (add to the seed file)
+- [ ] Create a Rating Collection and methods (add to the seed file)
 - [ ] Option to flag Gigs (mutate to a Collection)
-- [ ] Cluster markers
+- [ ] Cluster near markers
 - [ ] (_Route_) New Gig (use Formik and yup, _protected route_, Stripe API)
 - [ ] (_Route_) My Profile (with edit option) (_protected route_)
 - [ ] (_Route_) View any user's profile (linked from a gig page)
@@ -50,13 +50,13 @@ Now run `npm run start:dev` and create something nice. PRs are welcome.
 - [ ] Login with social-media (at least Facebook Strategy)
 - [ ] Mailing System (Sparkpost or Mailgun API)
 - [ ] Audit everything with Lighthouse and wrap with `<NoSsr />` when needed
-- [ ] Create a dark-skin theme (stored in localStorage, remember to invert the map color with CSS and use `@media (prefers-color-scheme`)
+- [ ] Create a dark-skin theme (stored in the cookies, remember to invert the map color with CSS and use `@media (prefers-color-scheme`)
 - [ ] Generate a [sitemap.xml](https://gist.github.com/a-barbieri/9eb6d65ef96c2ead322bd97ae4862934)
 - [ ] Use propTypes everywhere with default props
 - [ ] Use [some of these](https://mui-treasury.com/components/card)
 - [ ] Write some Jest/Enzyme tests
 - [ ] Try to [lazy load your modules](https://flaviocopes.com/nextjs-lazy-load-modules/)
-- [ ] Pre-commit eslint (husky)
+- [ ] Pre-commit eslint (use [husky](https://www.npmjs.com/package/husky))
 - [ ] Write a better `.eslintrc` ([example](https://github.com/mui-org/material-ui/blob/master/.eslintrc.js))
 - [ ] Fix minZoom for React Google Maps ([issue](https://github.com/google-map-react/google-map-react/issues/505))
 - [ ] Use `reactStrictMode: true` documented [here](https://reactjs.org/docs/strict-mode.html)

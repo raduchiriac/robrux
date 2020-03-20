@@ -7,6 +7,7 @@ const schema = new Schema(
     _userId: {
       type: ObjectId,
       index: true,
+      ref: 'User',
       required: '_VALID_USER',
     },
     _gigId: {
@@ -32,6 +33,13 @@ const Rating = mongoose.model('Rating', schema);
 // GraphQL declarations
 // -----------------------------------------------------------
 const { GraphQLID, GraphQLString, GraphQLObjectType, GraphQLInt, GraphQLNonNull } = require('graphql');
+const TimestampType = require('../../_helpers/utils').TimestampType;
+const fields_user = require('../users/user.model').fields;
+
+const RatingUserTypeOutput = new GraphQLObjectType({
+  name: 'RatingUserTypeOutput',
+  fields: fields_user,
+});
 
 const fields = {
   _id: { type: GraphQLID },
@@ -39,6 +47,7 @@ const fields = {
   _gigId: { type: GraphQLNonNull(GraphQLID) },
   score: { type: GraphQLNonNull(GraphQLInt) },
   comment: { type: GraphQLString },
+  createdAt: { type: TimestampType },
 };
 
 const RatingType = new GraphQLObjectType({

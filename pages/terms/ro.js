@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import withApollo from '~/lib/hocs/withApollo';
-import { WebsiteHeaderFooterLayout } from '~/lib/layouts/WebsiteHeaderFooterLayout';
+import { WebsiteHeaderAndFooterLayout } from '~/lib/layouts/WebsiteHeaderAndFooterLayout';
 import Typography from '@material-ui/core/Typography';
 
 const TermsRO = () => {
@@ -21,5 +21,5 @@ const TermsRO = () => {
   );
 };
 
-TermsRO.Layout = WebsiteHeaderFooterLayout;
+TermsRO.Layout = WebsiteHeaderAndFooterLayout;
 export default withApollo(TermsRO);

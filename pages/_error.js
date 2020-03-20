@@ -1,7 +1,7 @@
 import React from 'react';
 import Error404 from '~/components/Error/404';
 import Error500 from '~/components/Error/500';
-import { WebsiteHeaderFooterLayout } from '~/lib/layouts/WebsiteHeaderFooterLayout';
+import { WebsiteHeaderAndFooterLayout } from '~/lib/layouts/WebsiteHeaderAndFooterLayout';
 
 function Error({ statusCode }) {
   if (statusCode === 404) return <Error404 />;
@@ -14,6 +14,6 @@ Error.getInitialProps = ({ res, err }) => {
   return { statusCode };
 };
 
-Error.Layout = WebsiteHeaderFooterLayout;
+Error.Layout = WebsiteHeaderAndFooterLayout;
 
 export default Error;

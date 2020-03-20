@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Form = ({ classes, errors, formErrors, values, handleChange, handleSubmit, STRINGS }) => {
+const Form = ({ classes, errors, formErrors, email = '', values, handleChange, handleSubmit, STRINGS }) => {
   return (
     <Fragment>
       <form className={classes.form} noValidate onSubmit={evt => handleSubmit(evt)}>
@@ -67,7 +67,7 @@ const Form = ({ classes, errors, formErrors, values, handleChange, handleSubmit,
           name="email"
           autoComplete="email"
           onChange={evt => handleChange(evt)}
-          value={values.email || ''}
+          value={values.email || email || ''}
           error={(errors.email && true) || false}
           autoFocus
           helperText={errors.email}
@@ -124,7 +124,7 @@ const Form = ({ classes, errors, formErrors, values, handleChange, handleSubmit,
   );
 };
 
-const Login = () => {
+const Login = ({ redirect, email }) => {
   const classes = useStyles();
   const { STRINGS } = useContext(GlobalContext).state;
 
@@ -151,8 +151,7 @@ const Login = () => {
       if (login._id) {
         // Force a reload of all the current queries now that the user is logged
         apolloClient.cache.reset().then(() => {
-          // TODO: Redirect to refferal
-          location.replace('/');
+          location.replace(redirect ? redirect : '/');
         });
       }
     },
@@ -180,6 +179,7 @@ const Login = () => {
             errors={errors}
             formErrors={formErrors}
             values={values}
+            email={email}
             STRINGS={STRINGS}
             handleChange={handleChange}
             handleSubmit={handleSubmit}
@@ -188,6 +188,11 @@ const Login = () => {
       </Grid>
     </Grid>
   );
+};
+
+Login.getInitialProps = async ({ query }) => {
+  const { redirect, email } = query;
+  return { redirect, email };
 };
 
 export default withApollo(Login);

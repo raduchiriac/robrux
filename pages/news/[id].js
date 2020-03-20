@@ -8,7 +8,7 @@ import { Helmet } from 'react-helmet';
 import parse from 'html-react-parser';
 import withApollo from '~/lib/hocs/withApollo';
 import Link from '~/lib/hocs/withLink';
-import { WebsiteHeaderFooterLayout } from '~/lib/layouts/WebsiteHeaderFooterLayout';
+import { WebsiteHeaderAndFooterLayout } from '~/lib/layouts/WebsiteHeaderAndFooterLayout';
 import { GlobalContext } from '~/lib/contexts/GlobalContext';
 import { GET_ONE_NEWS } from '~/lib/graphql/news.strings';
 import Error from '~/pages/_error';
@@ -65,8 +65,7 @@ const NewsId = ({ news, statusCode }) => {
   );
 };
 
-NewsId.getInitialProps = async ctx => {
-  const { query, apolloClient, res = {} } = ctx;
+NewsId.getInitialProps = async ({ query, apolloClient, res = {} }) => {
   const result = await apolloClient.query({ query: GET_ONE_NEWS, variables: { idOrSlug: query.id } });
   let statusCode = (res && res.statusCode) || 200;
   if (!result.data.oneNews) statusCode = 404;
@@ -74,5 +73,5 @@ NewsId.getInitialProps = async ctx => {
   return { news: result.data.oneNews, statusCode };
 };
 
-NewsId.Layout = WebsiteHeaderFooterLayout;
+NewsId.Layout = WebsiteHeaderAndFooterLayout;
 export default withApollo(NewsId);

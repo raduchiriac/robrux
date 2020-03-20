@@ -57,7 +57,7 @@ const fuzzySearch = async (string, limit) => {
 };
 
 const updateGig = async (filter, update) => {
-  // https://mongoosejs.com/docs/tutorials/findoneandupdate.html
+  return await Gig.updateOne(filter, update);
 };
 
 module.exports = {

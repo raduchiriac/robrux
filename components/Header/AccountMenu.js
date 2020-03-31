@@ -133,11 +133,11 @@ const AccountMenu = ({ className }) => {
             onMouseLeave={() => setHovered(false)}
             className={classes.avatar}
             alt=""
-            src={(user._id && data?.userInfo?.avatar) || '/avatars/user.svg'}
+            src={(!loading && user._id && data?.userInfo?.avatar) || '/avatars/user.svg'}
           />
         </Button>
       </Badge>
-      {user._id && (
+      {!loading && user._id && (
         <Typography className={classes.name} variant="subtitle2">
           {`${data?.userInfo?.firstName} ${data?.userInfo?.lastName}`}
         </Typography>
@@ -152,13 +152,13 @@ const AccountMenu = ({ className }) => {
                     <Badge variant="dot" className={classes.internalBadge} color="secondary" badgeContent={1}></Badge>
                     <MenuItem>{STRINGS.NEWS_NOW}</MenuItem>
                   </Link>
-                  {user._id && (
+                  {!loading && user._id && (
                     <Link href={`/profile/view`} className={classes.link}>
                       <MenuItem>{STRINGS.MY_PROFILE}</MenuItem>
                     </Link>
                   )}
                   <Divider />
-                  {!user._id && (
+                  {!loading && !user._id && (
                     <div>
                       <Link href="/login" className={classes.link}>
                         <MenuItem>{STRINGS.LOGIN_NOW}</MenuItem>
@@ -168,7 +168,7 @@ const AccountMenu = ({ className }) => {
                       </Link>
                     </div>
                   )}
-                  {user._id && (
+                  {!loading && user._id && (
                     <Link href="/logout" className={classes.link}>
                       <MenuItem>{STRINGS.LOGOUT}</MenuItem>
                     </Link>

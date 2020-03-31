@@ -34,8 +34,13 @@ const userInfo = async id => {
   return await User.findOne(selector).lean();
 };
 
+const updateUser = async (filter, update) => {
+  return await User.updateOne(filter, update);
+};
+
 module.exports = {
   createUser,
   loginUser,
   userInfo,
+  updateUser,
 };

@@ -116,6 +116,7 @@ const fieldsInputRegister = Object.assign({}, fieldsInputLogin, {
 });
 const fields = Object.assign({}, fieldsInputRegister, {
   _id: { type: GraphQLID },
+  _userId: { type: GraphQLID },
   _gigs: { type: GraphQLList(GraphQLID) },
   avatar: { type: GraphQLString },
 });

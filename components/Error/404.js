@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
+import LinkOffIcon from '@material-ui/icons/LinkOff';
 import { GlobalContext } from '~/lib/contexts/GlobalContext';
 
 const useStyles = makeStyles(theme => ({
@@ -14,6 +15,11 @@ const useStyles = makeStyles(theme => ({
       margin: theme.spacing(3),
     },
   },
+  icon: {
+    fontSize: '4em',
+    display: 'block',
+    margin: 'auto',
+  },
 }));
 
 const Error404 = () => {
@@ -23,8 +29,8 @@ const Error404 = () => {
   return (
     <Container>
       <Paper className={classes.paper}>
-        <Typography variant="h1" color="inherit" component="h2" gutterBottom>
-          404
+        <Typography color="inherit" component="h4" gutterBottom>
+          <LinkOffIcon color="primary" className={classes.icon} />
         </Typography>
 
         <Typography variant="h5" color="textSecondary">

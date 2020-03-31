@@ -88,7 +88,7 @@ const mockTheRest = async () => {
     ...createInsertQueries(
       require('./models/gigs/gig.graphql.strings').GIG_CREATE_FAKE,
       data => {
-        gigs.push(data.createGig._id);
+        gigs.push({ _id: data.createGig._id, _userId: data.createGig._userId._id });
       },
       100,
       () => ({ userId: randomFromArray(users) })
@@ -107,7 +107,9 @@ const mockWithDependecies = async () => {
       // INFO: user._id should not be able to rate his own gig
       // but it's too complicated to check that here
       const userId = randomFromArray(users);
-      myFakeRatings.push(require('./models/ratings/rating.graphql.strings').FAKE_RATING_DATA({ gigId: gig, userId }));
+      myFakeRatings.push(
+        require('./models/ratings/rating.graphql.strings').FAKE_RATING_DATA({ gigId: gig._id, userId })
+      );
     }
   });
   ratings = await addManyRatings(myFakeRatings);
@@ -116,14 +118,14 @@ const mockWithDependecies = async () => {
 const buildRelationships = async () => {
   console.log('Creating relationships between gigs and ratings…');
   const updateGig = require('./models/gigs/gig.service').updateGig;
-  const mutations = [];
+  let mutations = [];
   gigs.forEach(gig => {
-    const filteredRatings = ratings.filter(rating => gig === rating._gigId + '');
+    const filteredRatings = ratings.filter(rating => gig._id === rating._gigId + '');
     mutations.push(
       new Promise((resolve, reject) => {
         resolve(
           updateGig(
-            { _id: gig },
+            { _id: gig._id },
             {
               _ratings: filteredRatings.map(rating => rating._id),
               _rating: filteredRatings.reduce((total, current) => total + current.score, 0) / filteredRatings.length,
@@ -133,8 +135,30 @@ const buildRelationships = async () => {
       })
     );
   });
+  await Promise.all(mutations);
   // TODO: Mutate the users._gigs with their respective gigs id
   console.log('Creating relationships between gigs and users…');
+  const updateUser = require('./models/users/user.service').updateUser;
+  mutations.length = 0;
+  const dataToMutate = gigs.reduce((acc, curr) => {
+    if (!acc[curr._userId]) acc[curr._userId] = [];
+    acc[curr._userId].push(curr._id);
+    return acc;
+  }, {});
+  Object.keys(dataToMutate).forEach(key => {
+    mutations.push(
+      new Promise((resolve, reject) => {
+        resolve(
+          updateUser(
+            { _id: key },
+            {
+              _gigs: dataToMutate[key],
+            }
+          )
+        );
+      })
+    );
+  });
   await Promise.all(mutations);
 };
 

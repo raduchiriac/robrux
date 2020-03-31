@@ -2,6 +2,7 @@ import React from 'react';
 import App from 'next/app';
 import { Helmet } from 'react-helmet';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import cookies from 'next-cookies';
 import jwt from 'jsonwebtoken';
 import { UserContext } from '~/lib/contexts/UserContext';
 import { GlobalContextProvider } from '~/lib/contexts/GlobalContext';
@@ -9,8 +10,6 @@ import { ThemeProvider } from '@material-ui/styles';
 import { LightTheme } from '~/lib/themes/light-theme';
 import { DarkTheme } from '~/lib/themes/dark-theme';
 import { EmptyLayout } from '~/lib/layouts/EmptyLayout';
-
-import cookies from 'next-cookies';
 
 import './_app.css';
 import 'react-lazy-load-image-component/src/effects/blur.css';
@@ -25,8 +24,8 @@ class NextApp extends App {
   static displayName = 'NextApp';
   state = {
     // TODO: Make this dynamic somehow
-    lang: 'ro',
-    theme: 'light',
+    // lang: 'ro',
+    // theme: 'light',
     user: {},
   };
 

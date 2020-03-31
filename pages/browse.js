@@ -48,7 +48,6 @@ const Browse = ({ search, category, inLocation }) => {
   let gigs = { data: (data && data.gigs) || undefined, loading };
 
   const onMapBoundsChange = (center, zoom, bounds, marginBounds) => {
-    console.log('aaa');
     let bbox = [];
     if (typeof marginBounds == 'boolean') {
       if (isNaN(bounds.sw[0])) return;
@@ -95,8 +94,6 @@ const Browse = ({ search, category, inLocation }) => {
       query,
     });
   };
-
-  console.log(gigs);
 
   return (
     <Grid container className="home-page__container" spacing={1}>

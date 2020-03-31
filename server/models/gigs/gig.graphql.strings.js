@@ -38,6 +38,9 @@ const GIG_CREATE_FAKE = data => {
         priceRange: [${randomFromInterval(5, 40, true) * 10}, ${randomFromInterval(45, 90, true) * 10}]
       }) {
         _id
+        _userId {
+          _id
+        }
       }
     }
 `;

@@ -22,19 +22,19 @@ class NextApp extends App {
     user: {},
   };
 
-  static async getInitialProps({ Component, ctx }) {
-    const { token } = cookies(ctx);
+  // static async getInitialProps({ Component, ctx }) {
+  //   const { token } = cookies(ctx);
 
-    const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
-    const user = token ? jwt.verify(token, process.env.JWT_SECRET) : {};
+  //   const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
+  //   const user = token ? jwt.verify(token, process.env.JWT_SECRET) : {};
 
-    return { pageProps, user };
-  }
+  //   return { pageProps, user };
+  // }
 
   componentDidMount() {
     const { user } = this.props;
 
-    if (user._id) {
+    if (user?._id) {
       if (user._id !== this.state.user._id) {
         this.setState({ user });
       }

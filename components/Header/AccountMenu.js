@@ -44,13 +44,15 @@ const useStyles = props =>
     link: {
       position: 'relative',
       display: 'block',
+      color: theme.palette.primary.main,
       '&:hover': {
         textDecoration: 'none',
       },
     },
     name: {
       position: 'absolute',
-      background: 'white',
+      backgroundColor: theme.palette.background.paper,
+      color: theme.palette.action.active,
       transition: theme.transitions.create('opacity'),
       opacity: props.hovered ? 1 : 0,
       visibility: props.hovered ? 'visible' : 'hidden',

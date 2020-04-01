@@ -12,14 +12,7 @@ const markdownConverter = new showdown.Converter({
 });
 
 const randomStringGenerator = (loops = 1, prefix = '') => {
-  return [...Array(loops)].reduce(
-    (t, acc) =>
-      t +
-      Math.random()
-        .toString(36)
-        .replace('0.', ''),
-    prefix
-  );
+  return [...Array(loops)].reduce((t, acc) => t + Math.random().toString(36).replace('0.', ''), prefix);
 };
 
 const TimestampType = new GraphQLScalarType({

@@ -7,7 +7,9 @@ const useStyles = makeStyles(theme => ({
     filter: `invert(0)`,
   },
   mapTiles_osm: {
-    filter: 'contrast(0.88) brightness(0.88) invert(0) sepia(1) hue-rotate(180deg) saturate(0.8)',
+    filter: `contrast(0.88) brightness(0.88) invert(${
+      theme.palette.type == 'light' ? 0 : 1
+    }) sepia(1) hue-rotate(180deg) saturate(0.8)`,
   },
   mapTiles_mapbox: {
     filter: `invert(0)`,

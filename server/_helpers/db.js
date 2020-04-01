@@ -9,12 +9,12 @@ module.exports = {
       useUnifiedTopology: true,
     });
     const db = mongoose.connection;
-    db.on('error', function(err) {
+    db.on('error', err => {
       console.log('[☆] Failed to connect to database:', err);
       process.exit(1);
     });
 
-    db.once('open', function() {
+    db.once('open', () => {
       console.log('[★] Connected to MongoDB');
       callback();
     });

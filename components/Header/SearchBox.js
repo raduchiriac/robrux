@@ -40,7 +40,7 @@ export default function SearchBox() {
         alignItems: 'center',
       },
       circularProgress: {
-        color: 'white',
+        color: theme.palette.background.default,
         marginRight: theme.spacing(1),
       },
       searchIcon: {
@@ -64,7 +64,7 @@ export default function SearchBox() {
           width: 200,
         },
       },
-      clearIcon: { color: 'white', transform: 'scale(0.5)' },
+      clearIcon: { color: theme.palette.background.default, transform: 'scale(0.5)' },
     }))(props);
 
   const [searchTerm, setSearchTerm] = useState('');

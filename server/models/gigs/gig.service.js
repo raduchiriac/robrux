@@ -24,11 +24,7 @@ const getBboxGigs = async (limit = 0, sort = '', bbox = [], search = '', categor
   if (category >= 0) {
     selector.categories = { $in: [category] };
   }
-  return await Gig.find(selector)
-    .sort(sort)
-    .limit(limit)
-    .populate('_userId')
-    .lean();
+  return await Gig.find(selector).sort(sort).limit(limit).populate('_userId').lean();
 };
 
 const oneGig = async idOrSlug => {
@@ -36,10 +32,7 @@ const oneGig = async idOrSlug => {
   if (idOrSlug.match(/^[0-9a-fA-F]{24}$/)) {
     query.$or.push({ _id: idOrSlug });
   }
-  return await Gig.findOne(query)
-    .populate('_ratings')
-    .populate('_userId')
-    .lean();
+  return await Gig.findOne(query).populate('_ratings').populate('_userId').lean();
 };
 
 const fuzzySearch = async (string, limit) => {

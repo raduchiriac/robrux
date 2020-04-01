@@ -17,9 +17,9 @@ const useStyles = makeStyles(theme => ({
   },
   category: {
     margin: theme.spacing(0.5),
-    backgroundColor: 'white',
+    // backgroundColor: theme.palette.background.default,
     boxShadow: theme.shadows[1],
-    opacity: 0.76,
+    opacity: 0.9,
   },
 }));
 

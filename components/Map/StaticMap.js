@@ -66,13 +66,7 @@ const StaticMap = ({
       convertedStyle += `element:${style.elementType}|`;
     }
     if (style.stylers.length) {
-      convertedStyle += style.stylers
-        .map(s =>
-          JSON.stringify(s)
-            .replace(/[{}"]/g, '')
-            .replace('#', '0x')
-        )
-        .join('&');
+      convertedStyle += style.stylers.map(s => JSON.stringify(s).replace(/[{}"]/g, '').replace('#', '0x')).join('&');
     }
     return convertedStyle;
   }).join('&');

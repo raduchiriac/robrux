@@ -62,7 +62,7 @@ app.prepare().then(() => {
       uri: process.env.MONGO_URI,
       collection: 'sessions',
     });
-    store.on('error', function(error) {
+    store.on('error', error => {
       console.log(`🚨MongoDBStore error: ${JSON.stringify(error)}`);
     });
     server.use(

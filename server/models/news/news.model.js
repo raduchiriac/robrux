@@ -25,12 +25,8 @@ const schema = new Schema(
   { timestamps: true }
 );
 
-schema.pre('save', function(next) {
-  this.slug = encodeURI(
-    latinize(this.title)
-      .replace(/ /g, '-')
-      .toLowerCase()
-  );
+schema.pre('save', function (next) {
+  this.slug = encodeURI(latinize(this.title).replace(/ /g, '-').toLowerCase());
   this.richContent = markdownConverter.makeHtml(this.content);
   this.excerpt = strippedString(this.richContent).substring(0, 100) + '…';
   // TODO: Send a newsletter with this news

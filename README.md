@@ -32,6 +32,7 @@ Now run `npm run start:dev` and create something nice. PRs are welcome.
 - [x] Create a Category Page (linked from a gig page)
 - [x] Make components more accessible (storybook-a11y)
 - [x] Cache GraphQL requests
+- [x] Create a dark-skin theme (stored in the cookies, remember to invert the map color with CSS and use `@media (prefers-color-scheme`)
 - [ ] Send a newsletter using mongoose's `save` hook
 - [ ] Use `graphql-cookie-headers`
 - [ ] Add user roles (edit the seed file)
@@ -50,7 +51,6 @@ Now run `npm run start:dev` and create something nice. PRs are welcome.
 - [ ] Login with social-media (at least Facebook Strategy)
 - [ ] Mailing System (Sparkpost or Mailgun API)
 - [ ] Audit everything with Lighthouse and wrap with `<NoSsr />` when needed
-- [ ] Create a dark-skin theme (stored in the cookies, remember to invert the map color with CSS and use `@media (prefers-color-scheme`)
 - [ ] Generate a [sitemap.xml](https://gist.github.com/a-barbieri/9eb6d65ef96c2ead322bd97ae4862934)
 - [ ] Use propTypes everywhere with default props
 - [ ] Use [some of these](https://mui-treasury.com/components/card)

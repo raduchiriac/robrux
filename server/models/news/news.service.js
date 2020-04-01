@@ -16,10 +16,7 @@ const oneNews = async idOrSlug => {
 
 const getAllNews = async (limit, sort) => {
   const selector = { status: 'live' };
-  return await News.find(selector)
-    .sort(sort)
-    .limit(limit)
-    .lean();
+  return await News.find(selector).sort(sort).limit(limit).lean();
 };
 
 module.exports = {

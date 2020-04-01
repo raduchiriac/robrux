@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
@@ -10,7 +10,7 @@ import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import Button from '@material-ui/core/Button';
 import Fade from '@material-ui/core/Fade';
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import { fade, darken } from '@material-ui/core/styles/colorManipulator';
 import withApollo from '~/lib/hocs/withApollo';
 import AccountMenu from '~/components/Header/AccountMenu';
 import CategoriesTwoRows from '~/components/Categories/CategoriesTwoRows';
@@ -73,7 +73,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   indexPageSearchButton: {
-    marginLeft: `${theme.spacing(1) / 2}px`,
+    marginLeft: theme.spacing(0.5),
   },
   indexPageFormField: {
     flex: 1,
@@ -95,10 +95,14 @@ const useStyles = makeStyles(theme => ({
     height: 160,
     left: '50%',
     top: 0,
-    background: 'white',
+    backgroundColor: theme.palette.background.default,
     transform: 'translateX(-50%) translateY(-90%)',
     borderRadius: '50%',
     padding: theme.spacing(2),
+    '& object': {
+      filter: `invert(${theme.palette.type == 'light' ? 0 : 1})`,
+      transform: 'scale(1.24)',
+    },
   },
   indexPageFormControl: {
     margin: theme.spacing(1),
@@ -114,14 +118,9 @@ const useStyles = makeStyles(theme => ({
     right: theme.spacing(2),
     display: 'flex',
     alignItems: 'end',
+    color: theme.palette.background.default,
     '& > div': {
       margin: theme.spacing(0, 0, 0, 1),
-    },
-  },
-  browse: {
-    backgroundColor: 'white',
-    '&:hover': {
-      backgroundColor: fade('#FFF', 0.7),
     },
   },
   bottomCenterArea: {
@@ -129,6 +128,16 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
   },
 }));
+
+const BrowseButton = withStyles(theme => ({
+  root: {
+    color: theme.palette.primary.dark,
+    backgroundColor: theme.palette.background.paper,
+    '&:hover': {
+      backgroundColor: theme.palette.background.default,
+    },
+  },
+}))(Button);
 
 const Index = () => {
   const classes = useStyles();
@@ -145,7 +154,7 @@ const Index = () => {
       </Box>
       <Box className={classes.indexPageContent}>
         <Box className={classes.indexPageLogo}>
-          <img src="/robrux.png" alt="logo" />
+          <object type="image/svg+xml" data="/robrux.svg" aria-label={STRINGS.SITE_NAME}></object>
         </Box>
         <Paper component="form" action="/browse" className={classes.indexPageForm}>
           <SearchIcon className={classes.indexPageFormSearch} aria-label="search" />
@@ -186,9 +195,9 @@ const Index = () => {
         <CategoriesTwoRows location={citiesDropDownValue} categories={STRINGS.SERVICE_NEW_CATEGORIES} />
       </Box>
       <Box>
-        <Button size="small" variant="contained" className={classes.browse} href="/browse">
+        <BrowseButton size="small" color="primary" variant="contained" className={classes.browse} href="/browse">
           {STRINGS.INDEX_BROWSE_FREE}
-        </Button>
+        </BrowseButton>
       </Box>
       <Box component="div" className={classes.bottomCenterArea}>
         <Footer />

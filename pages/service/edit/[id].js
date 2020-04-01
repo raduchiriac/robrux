@@ -2,7 +2,7 @@ import React from 'react';
 import withApollo from '~/lib/hocs/withApollo';
 
 const ServiceEdit = ({ params }) => {
-  return <div>ServiceEdit: {params.idOrSlug}</div>;
+  return <div>Service edit: {params.idOrSlug}</div>;
 };
 
 ServiceEdit.getInitialProps = async ({ query: { id } }, res) => {

@@ -31,10 +31,10 @@ const catchErrors = err => {
 
 const createCustomer = async metadata =>
   stripe.customers.create(metadata).then(
-    function(result) {
+    result => {
       console.log('customer-create', result);
     },
-    function(err) {
+    err => {
       catchErrors(err);
     }
   );

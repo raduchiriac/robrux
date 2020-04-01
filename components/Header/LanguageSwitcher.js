@@ -14,7 +14,6 @@ const styles = theme => ({
   root: {
     display: 'flex',
     position: 'relative',
-    color: 'white',
   },
   language: {
     margin: theme.spacing(0, 0.5, 0, 1),

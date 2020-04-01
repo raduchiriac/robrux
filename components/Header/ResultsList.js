@@ -7,7 +7,7 @@ import Result from './Result';
 
 const useStyles = makeStyles(theme => ({
   'result-list__container': {
-    backgroundColor: 'white',
+    backgroundColor: theme.palette.background.default,
     position: 'absolute',
     padding: 0,
     width: '100%',

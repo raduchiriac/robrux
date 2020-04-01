@@ -142,7 +142,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   thumbClose: {
-    backgroundColor: 'white',
+    backgroundColor: theme.palette.background.default,
     borderRadius: '50%',
     position: 'absolute',
     fill: theme.palette.error.main,

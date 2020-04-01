@@ -1,14 +1,10 @@
 import React from 'react';
 import App from 'next/app';
-import { Helmet } from 'react-helmet';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import cookies from 'next-cookies';
 import jwt from 'jsonwebtoken';
 import { UserContext } from '~/lib/contexts/UserContext';
 import { GlobalContextProvider } from '~/lib/contexts/GlobalContext';
-import { ThemeProvider } from '@material-ui/styles';
-import { LightTheme } from '~/lib/themes/light-theme';
-import { DarkTheme } from '~/lib/themes/dark-theme';
 import { EmptyLayout } from '~/lib/layouts/EmptyLayout';
 
 import './_app.css';
@@ -23,14 +19,11 @@ if (false && typeof window !== 'undefined' && process.env.NODE_ENV === 'developm
 class NextApp extends App {
   static displayName = 'NextApp';
   state = {
-    // TODO: Make this dynamic somehow
-    // lang: 'ro',
-    // theme: 'light',
     user: {},
   };
 
   static async getInitialProps({ Component, ctx }) {
-    const { token, theme, lang } = cookies(ctx);
+    const { token } = cookies(ctx);
 
     const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
     const user = token ? jwt.verify(token, process.env.JWT_SECRET) : {};
@@ -61,26 +54,10 @@ class NextApp extends App {
     return (
       <GlobalContextProvider>
         <UserContext.Provider value={{ user: this.state.user }}>
-          <Helmet
-            // TODO: Make this dynamic somehow
-            htmlAttributes={{ lang: 'ro' }}
-            // TODO: Make this dynamic somehow STRINGS.SITE_NAME
-            defaultTitle="ro:brux"
-            titleTemplate="%s | ro:brux"
-            meta={[
-              {
-                name: 'viewport',
-                content: 'minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no',
-              },
-              { name: 'description', content: 'Romanian Professionals living in Belgium' },
-            ]}
-          />
-          <ThemeProvider theme={this.state.theme == 'light' ? LightTheme : DarkTheme}>
-            <CssBaseline />
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </ThemeProvider>
+          <CssBaseline />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
         </UserContext.Provider>
       </GlobalContextProvider>
     );

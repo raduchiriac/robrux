@@ -10,14 +10,14 @@ import { fade } from '@material-ui/core';
 const useStyles = props =>
   makeStyles(theme => ({
     root: {
-      backgroundColor: fade(props.color || '#FFF', 0.04),
+      backgroundColor: fade(props.color || theme.palette.background.default, 0.04),
       padding: theme.spacing(1),
       textAlign: 'center',
       borderRadius: theme.shape.borderRadius,
-      color: theme.palette.grey[300],
+      color: fade(props.color || theme.palette.background.default, 0.4),
     },
     link: {
-      color: props.color || 'white',
+      color: props.color || theme.palette.background.default,
       margin: theme.spacing(0, 1),
     },
   }))(props);

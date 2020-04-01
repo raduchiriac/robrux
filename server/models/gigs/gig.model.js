@@ -6,12 +6,7 @@ const { randomStringGenerator, markdownConverter } = require('../../_helpers/uti
 
 const uniqueValidator = require('mongoose-unique-validator');
 
-const generateSlug = title =>
-  encodeURIComponent(
-    latinize(title)
-      .replace(/ /g, '-')
-      .toLowerCase()
-  );
+const generateSlug = title => encodeURIComponent(latinize(title).replace(/ /g, '-').toLowerCase());
 
 // Read more about types here https://mongoosejs.com/docs/schematypes.html
 const schema = new Schema(
@@ -69,7 +64,7 @@ schema.index(
 );
 
 // INFO: Read about other hooks https://mongoosejs.com/docs/middleware.html
-schema.pre('save', function(next) {
+schema.pre('save', function (next) {
   this.slug = `${generateSlug(this.title)}${randomStringGenerator(1, '-')}`;
   this.richDescription = markdownConverter.makeHtml(this.description);
   next();

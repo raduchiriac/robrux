@@ -72,7 +72,7 @@ const schema = new Schema(
   },
   { timestamps: true }
 );
-schema.virtual('fullName').get(function() {
+schema.virtual('fullName').get(function () {
   return `${this.firstName} ${this.lastName}`;
 });
 

@@ -10,6 +10,7 @@ import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import Button from '@material-ui/core/Button';
 import Fade from '@material-ui/core/Fade';
+import SITE_NAME from '~/lib/constants/SITENAME';
 import { fade, darken } from '@material-ui/core/styles/colorManipulator';
 import withApollo from '~/lib/hocs/withApollo';
 import AccountMenu from '~/components/Header/AccountMenu';
@@ -154,7 +155,7 @@ const Index = () => {
       </Box>
       <Box className={classes.indexPageContent}>
         <Box className={classes.indexPageLogo}>
-          <object type="image/svg+xml" data="/robrux.svg" aria-label={STRINGS.SITE_NAME}></object>
+          <object type="image/svg+xml" data="/robrux.svg" aria-label={SITE_NAME}></object>
         </Box>
         <Paper component="form" action="/browse" className={classes.indexPageForm}>
           <SearchIcon className={classes.indexPageFormSearch} aria-label="search" />
@@ -206,4 +207,4 @@ const Index = () => {
   );
 };
 
-export default withApollo(Index);
+export default Index;

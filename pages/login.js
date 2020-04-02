@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useMutation, useApolloClient } from '@apollo/react-hooks';
 import { LOGIN_USER } from '~/lib/graphql/user.strings';
+import SITE_NAME from '~/lib/constants/SITENAME';
 import { GlobalContext } from '~/lib/contexts/GlobalContext';
 import useForm from '~/lib/hooks/useForm';
 import withApollo from '~/lib/hocs/withApollo';
@@ -171,7 +172,7 @@ const Login = ({ redirect, email }) => {
               <img src="/robrux.png" alt="Login Page" />
             </Avatar>
             <Typography component="h1" variant="h5">
-              {STRINGS.SITE_NAME}
+              {SITE_NAME}
             </Typography>
           </Link>
           <Form

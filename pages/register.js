@@ -17,6 +17,7 @@ import useForm from '~/lib/hooks/useForm';
 import { GlobalContext } from '~/lib/contexts/GlobalContext';
 import { CREATE_USER } from '~/lib/graphql/user.strings';
 import Link from '~/lib/hocs/withLink';
+import SITE_NAME from '~/lib/constants/SITENAME';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -73,7 +74,7 @@ const Form = ({ classes, errors, formErrors, values, handleChange, handleSubmit,
         <img src="/robrux.png" alt="Register Page" />
       </Avatar>
       <Typography component="h1" variant="h5">
-        {STRINGS.SITE_NAME}
+        {SITE_NAME}
       </Typography>
       <form className={classes.form} noValidate onSubmit={handleSubmit}>
         <Grid container spacing={2}>

@@ -12,6 +12,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Router from 'next/router';
+import SITE_NAME from '~/lib/constants/SITENAME';
 import SearchBox from '~/components/Header/SearchBox';
 import LanguageSwitcher from '~/components/Header/LanguageSwitcher';
 import ThemeSwitcher from '~/components/Header/ThemeSwitcher';
@@ -140,7 +141,7 @@ const HeaderWebsiteContainer = () => {
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>
             <Link href="/" underline="none" color="inherit">
-              {STRINGS.SITE_NAME}
+              {SITE_NAME}
             </Link>
           </Typography>
           <SearchBox />

@@ -1,10 +1,9 @@
 import React from 'react';
-import withApollo from '~/lib/hocs/withApollo';
 import { WebsiteHeaderAndFooterLayout } from '~/lib/layouts/WebsiteHeaderAndFooterLayout';
 
-const RO = () => {
+const FAQRO = () => {
   return <div>FAQ-RO</div>;
 };
 
-RO.Layout = WebsiteHeaderAndFooterLayout;
-export default withApollo(RO);
+FAQRO.Layout = WebsiteHeaderAndFooterLayout;
+export default FAQRO;

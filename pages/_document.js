@@ -23,16 +23,12 @@ class MyDocument extends Document {
 
   render() {
     return (
-      // TODO: Read the color #174AAD from the theme.palette.primary.main
       // eslint-disable-next-line jsx-a11y/html-has-lang
       <html {...this.helmetHtmlAttrComponents}>
         <Head>
           {this.helmetHeadComponents}
           <meta charSet="UTF-8" />
           <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
-          <meta name="theme-color" content="#174AAD" />
-          <meta name="msapplication-navbutton-color" content="#174AAD" />
-          <meta name="apple-mobile-web-app-status-bar-style" content="#174AAD" />
           <link rel="icon" type="image/png" href="/favicon.png" />
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
         </Head>

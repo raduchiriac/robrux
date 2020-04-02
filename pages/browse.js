@@ -11,6 +11,7 @@ import { SEARCH_BBOX_GIG } from '~/lib/graphql/gigs.strings';
 import { Helmet } from 'react-helmet';
 import CITIES from '~/lib/constants/CITIES';
 import Map from '~/components/Map/Map';
+import SITE_NAME from '~/lib/constants/SITENAME';
 import Breadcrumb from '~/components/Breadcrumb/Breadcrumb';
 import SmallGigsList from '~/components/Gig/SmallGigsList';
 
@@ -102,7 +103,7 @@ const Browse = ({ search, category, inLocation }) => {
         <Grid container>
           <Breadcrumb
             links={[
-              { href: '/', text: STRINGS.SITE_NAME },
+              { href: '/', text: SITE_NAME },
               _searchingInLocation &&
                 CITIES[_searchingInLocation] && {
                   href: `/browse?location=${_searchingInLocation}`,

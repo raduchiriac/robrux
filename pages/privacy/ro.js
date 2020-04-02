@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import withApollo from '~/lib/hocs/withApollo';
 import { WebsiteHeaderAndFooterLayout } from '~/lib/layouts/WebsiteHeaderAndFooterLayout';
 import Typography from '@material-ui/core/Typography';
 
@@ -22,4 +21,4 @@ const PrivacyRO = () => {
 };
 
 PrivacyRO.Layout = WebsiteHeaderAndFooterLayout;
-export default withApollo(PrivacyRO);
+export default PrivacyRO;

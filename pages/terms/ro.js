@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import withApollo from '~/lib/hocs/withApollo';
 import { WebsiteHeaderAndFooterLayout } from '~/lib/layouts/WebsiteHeaderAndFooterLayout';
 import Typography from '@material-ui/core/Typography';
 
@@ -22,4 +21,4 @@ const TermsRO = () => {
 };
 
 TermsRO.Layout = WebsiteHeaderAndFooterLayout;
-export default withApollo(TermsRO);
+export default TermsRO;

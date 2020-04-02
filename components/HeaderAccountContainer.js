@@ -19,6 +19,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import { GlobalContext } from '~/lib/contexts/GlobalContext';
 import Link from '~/lib/hocs/withLink';
+import SITE_NAME from '~/lib/constants/SITENAME';
 import withApollo from '~/lib/hocs/withApollo';
 
 const useStyles = props =>
@@ -118,7 +119,7 @@ const HeaderAccountContainer = () => {
           )}
           <Typography variant="h6" noWrap>
             <Link href="/" underline="none" color="inherit">
-              {STRINGS.SITE_NAME}
+              {SITE_NAME}
             </Link>
           </Typography>
           <div className={classes.grow} />

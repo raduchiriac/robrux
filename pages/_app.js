@@ -1,5 +1,4 @@
 import React from 'react';
-import App from 'next/app';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import cookies from 'next-cookies';
 import jwt from 'jsonwebtoken';
@@ -16,52 +15,60 @@ if (false && typeof window !== 'undefined' && process.env.NODE_ENV === 'developm
   whyDidYouRender(React);
 }
 
-class NextApp extends App {
-  static displayName = 'NextApp';
-  state = {
-    user: {},
-  };
+// class NextApp extends App {
+//   static displayName = 'NextApp';
+//   state = {
+//     user: {},
+//   };
 
-  // static async getInitialProps({ Component, ctx }) {
-  //   const { token } = cookies(ctx);
+//   static async getInitialProps({ Component, ctx }) {
+//     const { token } = cookies(ctx);
 
-  //   const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
-  //   const user = token ? jwt.verify(token, process.env.JWT_SECRET) : {};
+//     const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
+//     const user = token ? jwt.verify(token, process.env.JWT_SECRET) : {};
 
-  //   return { pageProps, user };
-  // }
+//     return { pageProps, user };
+//   }
 
-  componentDidMount() {
-    const { user } = this.props;
+//   componentDidMount() {
+//     const { user } = this.props;
 
-    if (user?._id) {
-      if (user._id !== this.state.user._id) {
-        this.setState({ user });
-      }
-    }
+//     if (user?._id) {
+//       if (user._id !== this.state.user._id) {
+//         this.setState({ user });
+//       }
+//     }
 
-    // Remove the server-side injected CSS.
-    const jssStyles = document.querySelector('#jss-server-side');
-    if (jssStyles) {
-      jssStyles.parentNode.removeChild(jssStyles);
-    }
-  }
+//     // Remove the server-side injected CSS.
+//     const jssStyles = document.querySelector('#jss-server-side');
+//     if (jssStyles) {
+//       jssStyles.parentNode.removeChild(jssStyles);
+//     }
+//   }
 
-  render() {
-    const { Component, pageProps } = this.props;
-    const Layout = Component.Layout || EmptyLayout;
+//   render() {
+//     const { Component, pageProps } = this.props;
 
-    return (
-      <GlobalContextProvider>
-        <UserContext.Provider value={{ user: this.state.user }}>
-          <CssBaseline />
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </UserContext.Provider>
-      </GlobalContextProvider>
-    );
-  }
+//     return (
+//     );
+//   }
+// }
+
+// export default NextApp;
+
+function MyApp({ Component, pageProps }) {
+  const Layout = Component.Layout || EmptyLayout;
+
+  return (
+    <GlobalContextProvider>
+      <UserContext.Provider value={{ user: {} }}>
+        <CssBaseline />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </UserContext.Provider>
+    </GlobalContextProvider>
+  );
 }
 
-export default NextApp;
+export default MyApp;

@@ -32,7 +32,7 @@ const OSMMap = ({
   const dpr = 2;
 
   const providers = {
-    gmap: (x, y, z) => `https://mt0.google.com/vt/lyrs=m&x=${x}&y=${y}&z=${z}`,
+    gmaps: (x, y, z) => `https://mt0.google.com/vt/lyrs=m&x=${x}&y=${y}&z=${z}`,
     osm: (x, y, z) => `https://stamen-tiles.a.ssl.fastly.net/toner/${z}/${x}/${y}${dpr >= 2 ? '@2x' : ''}.png`,
     mapbox: (x, y, z) =>
       `https://api.mapbox.com/v4/mapbox.outdoors/${z}/${x}/${y}${dpr >= 2 ? '@2x' : ''}.png?access_token=${

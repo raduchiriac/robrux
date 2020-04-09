@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import StarRating from '~/components/Rating/StarRating';
-import { withKnobs, text, boolean, number } from '@storybook/addon-knobs';
+import { withKnobs, text, boolean, number, color } from '@storybook/addon-knobs';
 
 storiesOf('Rating', module)
   .addDecorator(withKnobs)
@@ -11,8 +11,8 @@ storiesOf('Rating', module)
     <StarRating
       title="Do you like makeup?"
       score="3.3333"
-      color="red"
-      hoverColor="#00FF11"
+      color={color('Main color', '#ff0000')}
+      hoverColor={color('Hover color', '#40fc20')}
       icon={<FavoriteIcon fontSize="inherit" />}
     />
   ))

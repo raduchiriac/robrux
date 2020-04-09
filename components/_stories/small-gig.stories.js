@@ -24,7 +24,10 @@ storiesOf('Small Gig', module)
         title: text('Title', 'Abba'),
         _rating: number('Rating', 3.1111),
         price: number('Price', 540),
-        priceRange: [number('Price from', 100), number('Price to', 200)],
+        priceRange: [
+          number('Price from', 100, { range: true, max: 500, min: 0, step: 10 }),
+          number('Price to', 550, { range: true, min: 510, max: 990, step: 10 }),
+        ],
         slug: 'this-is-abba-slug',
         _userId: {
           _id: '443abba',

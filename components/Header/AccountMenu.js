@@ -116,12 +116,7 @@ const AccountMenu = ({ className }) => {
   // https://www.iconfinder.com/iconsets/user-pictures
   return (
     <div className={clsx(classes.root, className)}>
-      <Badge
-        className={classes.badge}
-        color="secondary"
-        badgeContent={1}
-        anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-      >
+      <Badge className={classes.badge} color="secondary" badgeContent={1} anchorOrigin={{ horizontal: 'right', vertical: 'top' }}>
         <Button
           ref={anchorRef}
           aria-controls={open ? 'account-menu-list-grow' : undefined}

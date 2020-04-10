@@ -83,15 +83,7 @@ const GoogleMapsAutocomplete = ({ onAddressFound = () => {}, label = '' }) => {
         onChange={(evt, val) => val && getGeocode(val.place_id)}
         disableOpenOnFocus
         renderInput={params => (
-          <TextField
-            {...params}
-            variant="outlined"
-            margin="dense"
-            fullWidth
-            required
-            label={label}
-            onChange={handleChange}
-          />
+          <TextField {...params} variant="outlined" margin="dense" fullWidth required label={label} onChange={handleChange} />
         )}
         renderOption={place => {
           const matches = place.structured_formatting.main_text_matched_substrings;

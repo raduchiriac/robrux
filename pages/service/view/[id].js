@@ -220,12 +220,7 @@ const ServiceView = ({ gig, statusCode }) => {
       </Grid>
       <Grid className={classes.root} item xs={12} sm={8} md={8} lg={9}>
         <Paper className={classes.container}>
-          <IconButton
-            className={classes.flag}
-            color="primary"
-            onClick={handleClickFlag}
-            aria-label={STRINGS.SERVICE_REPORT}
-          >
+          <IconButton className={classes.flag} color="primary" onClick={handleClickFlag} aria-label={STRINGS.SERVICE_REPORT}>
             <FlagTwoToneIcon fontSize="inherit" />
           </IconButton>
           <Popover

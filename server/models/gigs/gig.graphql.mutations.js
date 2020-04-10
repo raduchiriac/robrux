@@ -19,7 +19,7 @@ const gigMutations = {
       },
     },
     resolve: async (rootValue, { input }, context) => {
-      console.log(input);
+      // console.log(input);
       // return await GigService.updateGig(input);
     },
   },

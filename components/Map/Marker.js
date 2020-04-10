@@ -21,18 +21,7 @@ const styles = theme => ({
   },
 });
 
-const Marker = ({
-  classes,
-  hovered,
-  text,
-  onClick,
-  mapServiceProvider,
-  payload,
-  left,
-  top,
-  onMouseEnter,
-  onMouseLeave,
-}) => {
+const Marker = ({ classes, hovered, text, onClick, mapServiceProvider, payload, left, top, onMouseEnter, onMouseLeave }) => {
   if (mapServiceProvider == 'google') {
     const style = {
       left: '50%',

@@ -25,9 +25,7 @@ storiesOf('Google Maps', module)
     <StaticMap mapServiceProvider="google" gig={gigs.data[0]} size={[300, 450]} zoom={16} withLink />
   ));
 
-storiesOf('Pigeon Maps: Free Google', module).add('With one marker', () => (
-  <Map gigs={gigs} mapServiceProvider="gmaps" />
-));
+storiesOf('Pigeon Maps: Free Google', module).add('With one marker', () => <Map gigs={gigs} mapServiceProvider="gmaps" />);
 
 storiesOf('Pigeon Maps: OpenStreetMap', module)
   .add('With one marker', () => <Map gigs={gigs} mapServiceProvider="osm" />)

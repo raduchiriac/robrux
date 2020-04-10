@@ -17,7 +17,6 @@ const useStyles = makeStyles(theme => ({
   },
   category: {
     margin: theme.spacing(0.5),
-    // backgroundColor: theme.palette.background.default,
     boxShadow: theme.shadows[1],
     opacity: 0.9,
   },
@@ -44,13 +43,7 @@ const CategoriesTwoRows = ({ categories, location }) => {
         .map((service, idx) => ({ title: service, id: idx }))
         .sort(dynamicSort('title'))
         .map(service => (
-          <Category
-            location={location}
-            key={service.id}
-            id={service.id}
-            title={service.title}
-            classes={classes.category}
-          />
+          <Category location={location} key={service.id} id={service.id} title={service.title} classes={classes.category} />
         ))}
     </Box>
   );

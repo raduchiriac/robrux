@@ -43,14 +43,7 @@ const useStyles = props =>
       display: 'flex',
     },
   }))(props);
-const StaticMap = ({
-  gig = {},
-  size = [300, 300],
-  zoom = 13,
-  withLink,
-  withAddress,
-  mapServiceProvider = 'google',
-}) => {
+const StaticMap = ({ gig = {}, size = [300, 300], zoom = 13, withLink, withAddress, mapServiceProvider = 'google' }) => {
   const classes = useStyles({ size });
   if (!gig.location) {
     return <Fragment></Fragment>;
@@ -76,12 +69,7 @@ const StaticMap = ({
       <ConditionalWrap
         condition={withLink}
         wrap={children => (
-          <a
-            target="_blank"
-            className={classes.link}
-            rel="nofollow noreferrer"
-            href={`https://maps.google.com/?q=${location}`}
-          >
+          <a target="_blank" className={classes.link} rel="nofollow noreferrer" href={`https://maps.google.com/?q=${location}`}>
             {children}
           </a>
         )}
@@ -99,12 +87,7 @@ const StaticMap = ({
                 )}&maptype=roadmap&key=${process.env.GOOGLE_MAPS_API}&format=png&visual_refresh=true&${styling}`}
                 alt={gig.location.address}
               />
-              <img
-                data-value="marker"
-                src="/marker.png"
-                alt={gig.location.address}
-                className={classes.mapStaticMarker}
-              />
+              <img data-value="marker" src="/marker.png" alt={gig.location.address} className={classes.mapStaticMarker} />
             </Fragment>
           )}
           {mapServiceProvider == 'osm' && (

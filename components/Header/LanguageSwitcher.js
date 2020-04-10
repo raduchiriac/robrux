@@ -55,9 +55,7 @@ const LanguageSwitcher = ({ classes }) => {
           onClick={handleLanguageIconClick}
         >
           <LanguageIcon />
-          <span className={classes.language}>
-            {LANGUAGES_LABEL.filter(language => language.code === USER_LANG)[0].code}
-          </span>
+          <span className={classes.language}>{LANGUAGES_LABEL.filter(language => language.code === USER_LANG)[0].code}</span>
           <ExpandMoreIcon fontSize="small" className={classes.expandIcon} />
         </Button>
       </Tooltip>

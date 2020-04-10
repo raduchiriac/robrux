@@ -2,10 +2,9 @@
   "[javascript]": {
     "editor.formatOnSave": false
   },
-  "prettier.printWidth": 130,
   "eslint.enable": true,
   "editor.formatOnSave": true,
-  "prettier.disableLanguages": ["js"],
+  "prettier.disableLanguages": [],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   }

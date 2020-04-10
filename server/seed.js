@@ -107,9 +107,7 @@ const mockWithDependecies = async () => {
       // INFO: user._id should not be able to rate his own gig
       // but it's too complicated to check that here
       const userId = randomFromArray(users);
-      myFakeRatings.push(
-        require('./models/ratings/rating.graphql.strings').FAKE_RATING_DATA({ gigId: gig._id, userId })
-      );
+      myFakeRatings.push(require('./models/ratings/rating.graphql.strings').FAKE_RATING_DATA({ gigId: gig._id, userId }));
     }
   });
   ratings = await addManyRatings(myFakeRatings);

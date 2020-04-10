@@ -52,13 +52,7 @@ const Browse = ({ search, category, inLocation }) => {
     let bbox = [];
     if (typeof marginBounds == 'boolean') {
       if (isNaN(bounds.sw[0])) return;
-      bbox = [
-        [bounds.sw[0], bounds.ne[1]],
-        bounds.ne,
-        [bounds.ne[0], bounds.sw[1]],
-        bounds.sw,
-        [bounds.sw[0], bounds.ne[1]],
-      ];
+      bbox = [[bounds.sw[0], bounds.ne[1]], bounds.ne, [bounds.ne[0], bounds.sw[1]], bounds.sw, [bounds.sw[0], bounds.ne[1]]];
     } else {
       // INFO: The coordinates are stored as follows NW [lat, long] + NE + SE + SW + NW (again)
       bbox = [
@@ -133,11 +127,7 @@ const Browse = ({ search, category, inLocation }) => {
         {_category >= 0 && (
           <Grid container spacing={0}>
             <Box p={1}>
-              <Chip
-                color="primary"
-                onDelete={handleCategoryDeleteClick}
-                label={STRINGS.SERVICE_NEW_CATEGORIES[_category]}
-              />
+              <Chip color="primary" onDelete={handleCategoryDeleteClick} label={STRINGS.SERVICE_NEW_CATEGORIES[_category]} />
             </Box>
           </Grid>
         )}

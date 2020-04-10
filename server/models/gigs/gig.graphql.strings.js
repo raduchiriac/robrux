@@ -25,9 +25,7 @@ const GIG_CREATE_FAKE = data => {
           address: "${faker.address.streetAddress()}, ${faker.address.country()}",
           coordinates: [${randomFromInterval(50.75, 50.91)}, ${randomFromInterval(4.28, 4.45)}]
         },
-        categories: [${[
-          ...new Set([...Array(Math.round(Math.random() * 4))].map(() => Math.floor(Math.random() * 30))),
-        ]}],
+        categories: [${[...new Set([...Array(Math.round(Math.random() * 4))].map(() => Math.floor(Math.random() * 30)))]}],
         status: "valid",
         tags: [${faker.lorem
           .words()

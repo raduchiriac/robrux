@@ -201,9 +201,7 @@ const Basics = ({ STRINGS, values, errors, handleChange, classes, isMobile }) =>
         value={values.categories}
         getOptionSelected={el => values.categories.filter(v => v.title === el.title).length}
         className={classes.autocomplete}
-        options={STRINGS.SERVICE_NEW_CATEGORIES.map((service, idx) => ({ title: service, id: idx })).sort(
-          dynamicSort('title')
-        )}
+        options={STRINGS.SERVICE_NEW_CATEGORIES.map((service, idx) => ({ title: service, id: idx })).sort(dynamicSort('title'))}
         disableCloseOnSelect
         onChange={(evt, values) => handleChange(values, 'categories')}
         getOptionLabel={option => option.title}
@@ -628,12 +626,7 @@ const ServiceCreate = () => {
 
   return (
     <Container maxWidth="md">
-      <Stepper
-        nonLinear
-        className={classes.root}
-        activeStep={activeStep}
-        orientation={isMobile ? 'vertical' : 'horizontal'}
-      >
+      <Stepper nonLinear className={classes.root} activeStep={activeStep} orientation={isMobile ? 'vertical' : 'horizontal'}>
         {steps.map((label, index) => {
           const stepProps = {};
           if (isStepCompleted(index)) {
@@ -650,9 +643,7 @@ const ServiceCreate = () => {
               <StepButton onClick={handleStep(index)}>
                 <StepLabel {...labelProps}>{label}</StepLabel>
               </StepButton>
-              {isMobile && (
-                <StepContent className={classes.stepContentContainer}>{createContent(steps.length)}</StepContent>
-              )}
+              {isMobile && <StepContent className={classes.stepContentContainer}>{createContent(steps.length)}</StepContent>}
             </Step>
           );
         })}

@@ -104,15 +104,7 @@ const styles = theme => ({
   },
 });
 
-const SmallGig = ({
-  scrollPosition,
-  gig,
-  hovered,
-  classes,
-  loading,
-  _onMouseEnter = () => {},
-  _onMouseLeave = () => {},
-}) => {
+const SmallGig = ({ scrollPosition, gig, hovered, classes, loading, _onMouseEnter = () => {}, _onMouseLeave = () => {} }) => {
   const { STRINGS } = useContext(GlobalContext).state;
 
   return (

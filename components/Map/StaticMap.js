@@ -75,6 +75,7 @@ const StaticMap = ({ gig = {}, size = [300, 300], zoom = 13, withLink, withAddre
         )}
       >
         <div className={classes.mapStatic}>
+          {/* INFO: Some interesting things here: https://www.alessiokoci.com/cost-savings-google-maps-services/ */}
           {mapServiceProvider == 'google' && (
             <Fragment>
               <img

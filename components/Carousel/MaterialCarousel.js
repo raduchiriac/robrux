@@ -71,12 +71,24 @@ const MaterialCarousel = ({ images, width, height }) => {
         position="static"
         activeStep={activeStep}
         nextButton={
-          <Button size="small" key={1} onClick={handleNext} disabled={activeStep === maxSteps - 1}>
+          <Button
+            aria-label={theme.props.MuiTablePagination.nextIconButtonText}
+            size="small"
+            key={1}
+            onClick={handleNext}
+            disabled={activeStep === maxSteps - 1}
+          >
             {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
           </Button>
         }
         backButton={
-          <Button size="small" key={2} onClick={handleBack} disabled={activeStep === 0}>
+          <Button
+            aria-label={theme.props.MuiTablePagination.backIconButtonText}
+            size="small"
+            key={2}
+            onClick={handleBack}
+            disabled={activeStep === 0}
+          >
             {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
           </Button>
         }

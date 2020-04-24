@@ -33,6 +33,7 @@ Now run `npm run start:dev` and create something nice. PRs are welcome.
 - [x] Make components more accessible (storybook-a11y)
 - [x] Cache GraphQL requests
 - [x] Create a dark-skin theme (stored in the cookies, remember to invert the map color with CSS and use `@media (prefers-color-scheme`)
+- [ ] Move the backend to KeystoneJS or Stripe
 - [ ] Send a newsletter using mongoose's `save` hook
 - [ ] Use `graphql-cookie-headers`
 - [ ] Add user roles (edit the seed file)

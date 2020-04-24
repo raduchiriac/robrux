@@ -48,6 +48,7 @@ const Browse = ({ search, category, inLocation }) => {
 
   let gigs = { data: (data && data.gigs) || undefined, loading };
 
+  // TODO: Maybe debounce this function to 300ms
   const onMapBoundsChange = (center, zoom, bounds, marginBounds) => {
     let bbox = [];
     if (typeof marginBounds == 'boolean') {

@@ -8,8 +8,8 @@ const USER_CREATE_FAKE = data => {
         lastName: "${faker.name.lastName()}",
         email: "${data.email || faker.internet.email()}",
         avatar: "${faker.image.avatar()}",
-        password: "demo",
-        confirmPassword: "demo"
+        password: "demodemo",
+        confirmPassword: "demodemo"
         }) {
         _id
       }

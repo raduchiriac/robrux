@@ -5,7 +5,7 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import { GlobalContextProvider } from '~/lib/contexts/GlobalContext';
 import { StylesProvider } from '@material-ui/styles';
 
-import { LightTheme } from '../lib/themes/light-theme';
+import { LightTheme } from '~/lib/themes/light-theme';
 
 const StylesDecorator = storyFn => (
   <GlobalContextProvider>

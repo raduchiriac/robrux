@@ -8,7 +8,7 @@ Run `npm run storyboard` to see some of the components in action (some environme
 
 ### Appetite for development?
 
-Create and edit a valid `.env` file by doing `cp .env.sample .env`. Start your local MongoDB server or setup a remote one in the said `.env` file. Run `npm run seed` and wait for the mock data to be imported. Congratulations, you're all set! You can even login with these credentials `de@de.de` / `demo` when needed.
+Create and edit a valid `.env` file by doing `cp .env.sample .env`. Start your local MongoDB server or setup a remote one in the said `.env` file. Run `npm run seed` and wait for the mock data to be imported. Congratulations, you're all set! You can even login with these credentials `de@de.de` / `demodemo` when needed.
 
 Now run `npm run start:dev` and create something nice. PRs are welcome.
 

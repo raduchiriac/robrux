@@ -9,7 +9,7 @@ module.exports = {
   webpack: config => {
     config.plugins = config.plugins || [];
 
-    config.resolve.alias['~'] = path.resolve(__dirname);
+    config.resolve.alias['~'] = path.resolve(path.join(__dirname, '/src'));
 
     config.plugins = [
       ...config.plugins,

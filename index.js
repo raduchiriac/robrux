@@ -9,7 +9,7 @@ const { NextApp } = require('@keystonejs/app-next');
 const { StaticApp } = require('@keystonejs/app-static');
 
 const { staticRoute, staticPath, distDir } = require('./keystone/config');
-const { User } = require('./keystone/models/schema');
+const { User, Article } = require('./keystone/models/_schema');
 
 const keystone = new Keystone({
   name: '',
@@ -25,6 +25,7 @@ const keystone = new Keystone({
 });
 
 keystone.createList('User', User);
+keystone.createList('Article', Article);
 
 const authStrategy = keystone.createAuthStrategy({
   type: PasswordAuthStrategy,
@@ -40,6 +41,11 @@ const adminApp = new AdminUIApp({
 
 module.exports = {
   keystone,
-  apps: [new GraphQLApp(), new StaticApp({ path: staticRoute, src: staticPath }), adminApp, new NextApp({ dir: 'src' })],
+  apps: [
+    new GraphQLApp(),
+    new StaticApp({ path: staticRoute, src: staticPath }),
+    adminApp,
+    new NextApp({ dir: 'src' }),
+  ],
   distDir,
 };

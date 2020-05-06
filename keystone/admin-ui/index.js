@@ -19,5 +19,9 @@ export default {
       label: 'People',
       children: ['User'],
     },
+    {
+      label: 'News',
+      children: ['Article'],
+    },
   ],
 };

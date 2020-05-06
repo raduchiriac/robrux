@@ -34,6 +34,7 @@ Now run `npm run start:dev` and create something nice. PRs are welcome.
 - [x] Cache GraphQL requests
 - [x] Create a dark-skin theme (stored in the cookies, remember to invert the map color with CSS and use `@media (prefers-color-scheme`)
 - [ ] Move the backend to KeystoneJS or Stripe
+- [ ] News content need an image placeholder (that takes and id an a column size)
 - [ ] Send a newsletter using mongoose's `save` hook
 - [ ] Use `graphql-cookie-headers`
 - [ ] Add user roles (edit the seed file)

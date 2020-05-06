@@ -1,4 +1,4 @@
 {
-  "ignore": ["components/**/*.js", "lib/**/*.js", "pages/**/*.js"],
-  "watch": ["server/*"]
+  "ignore": ["src/*", ".storybook/*"],
+  "watch": ["server/**/*.js", "keystone/models/*.js"]
 }

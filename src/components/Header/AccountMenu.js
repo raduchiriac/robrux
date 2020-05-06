@@ -116,7 +116,12 @@ const AccountMenu = ({ className }) => {
   // https://www.iconfinder.com/iconsets/user-pictures
   return (
     <div className={clsx(classes.root, className)}>
-      <Badge className={classes.badge} color="secondary" badgeContent={1} anchorOrigin={{ horizontal: 'right', vertical: 'top' }}>
+      <Badge
+        className={classes.badge}
+        color="secondary"
+        badgeContent={1}
+        anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+      >
         <Button
           ref={anchorRef}
           aria-controls={open ? 'account-menu-list-grow' : undefined}
@@ -139,14 +144,26 @@ const AccountMenu = ({ className }) => {
           {`${data?.userInfo?.firstName} ${data?.userInfo?.lastName}`}
         </Typography>
       )}
-      <Popper open={open} placement="bottom-end" anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+      <Popper
+        open={open}
+        placement="bottom-end"
+        anchorEl={anchorRef.current}
+        role={undefined}
+        transition
+        disablePortal
+      >
         {({ TransitionProps }) => (
           <Grow {...TransitionProps} style={{ transformOrigin: 'center top' }}>
             <Paper elevation={6}>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList autoFocusItem={open} id="account-menu-list-grow" onKeyDown={handleListKeyDown}>
                   <Link href="/news" className={classes.link}>
-                    <Badge variant="dot" className={classes.internalBadge} color="secondary" badgeContent={1}></Badge>
+                    <Badge
+                      variant="dot"
+                      className={classes.internalBadge}
+                      color="secondary"
+                      badgeContent={1}
+                    ></Badge>
                     <MenuItem>{STRINGS.NEWS_NOW}</MenuItem>
                   </Link>
                   {!loading && user._id && (

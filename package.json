@@ -79,7 +79,7 @@
     "jsonwebtoken": "8.5.1",
     "latinize": "0.4.1",
     "material-ui-chip-input": "1.1.0",
-    "moment": "2.25.3",
+    "moment": "2.29.2",
     "mongodb": "3.5.7",
     "mongoose": "5.9.12",
     "mongoose-mongodb-errors": "0.0.2",
